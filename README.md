@@ -18,7 +18,6 @@ _command-line_ za git operacije.
 
 Pridržavati se sljedećeg:  
 [Kohana conventions][]  
-[Git branching model][]  
 [Commit messages][]
 
 Pošto sav development vršimo lokalno, dobro je dodati *virtual host* kako bi se 
@@ -31,6 +30,5 @@ sajtu moglo pristupiti preko http://dotaba/.
 [Stack Overflow]:      http://www.stackoverflow.com
 [GitHub for Windows]:  http://windows.github.com
 [Kohana conventions]:  http://www.kohanaframework.org/3.3/guide/kohana/conventions
-[Git branching model]: http://www.nvie.com/posts/a-successful-git-branching-model
 [Commit messages]:     http://www.tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 [Dodavanje vhosta]:    https://github.com/almirsarajcic/dotaba/wiki/Dodavanje-vhosta
