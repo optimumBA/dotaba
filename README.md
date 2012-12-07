@@ -25,6 +25,7 @@ Pošto sav development vršimo lokalno, dobro je dodati *virtual host* kako bi s
 sajtu moglo pristupiti preko http://dotaba/.  
 [Dodavanje vhosta][]
 
+[Uputstva]:            https://github.com/almirsarajcic/dotaba/wiki
 [Kohana guide]:        http://www.kohanaframework.org/3.3/guide
 [Try GitHub]:          http://try.github.com
 [Stack Overflow]:      http://www.stackoverflow.com
@@ -32,4 +33,4 @@ sajtu moglo pristupiti preko http://dotaba/.
 [Kohana conventions]:  http://www.kohanaframework.org/3.3/guide/kohana/conventions
 [Git branching model]: http://www.nvie.com/posts/a-successful-git-branching-model
 [Commit messages]:     http://www.tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
-[Uputstva]:            https://github.com/almirsarajcic/dotaba/wiki
+[Dodavanje vhosta]:    https://github.com/almirsarajcic/dotaba/wiki/Dodavanje-vhosta
