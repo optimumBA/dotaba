@@ -95,7 +95,8 @@ else
  */
 Kohana::init(array(
 	'base_url'   => '/',
-	'index_file' => FALSE
+	'index_file' => FALSE,
+	'profile'    => Kohana::$environment === Kohana::DEVELOPMENT
 ));
 
 /**
@@ -106,23 +107,22 @@ Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
-Kohana::$config->attach(new Config_File('config/'.Kohana::$environment));
+Kohana::$config->attach(new Config_File);
 
-$modules = array(
-	'database' => MODPATH.'database',
-	'orm'      => MODPATH.'orm'
-);
-
-if (Kohana::$environment === Kohana::DEVELOPMENT)
+switch (Kohana::$environment)
 {
-	$modules = array_merge($modules, array(
-		'codebench' => MODPATH.'codebench'
-	));
+	case Kohana::PRODUCTION:
+		Kohana::$config->attach(new Config_File('config/production'));
+		break;
+	
+	default:
+		Kohana::$config->attach(new Config_File('config/development'));
+		break;
 }
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
-Kohana::modules($modules);
+Kohana::modules(Kohana::$config->load('modules')->as_array());
 
 require_once APPPATH.'routes'.EXT;

@@ -6,5 +6,8 @@
 </head>
 <body>
 	<?php echo $content; ?>
+	<?php if (Kohana::$environment === Kohana::DEVELOPMENT): ?>
+		<?php echo View::factory('profiler/stats') ?>
+	<?php endif ?>
 </body>
 </html>

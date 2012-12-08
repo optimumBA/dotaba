@@ -13,6 +13,22 @@ abstract class Controller_Application extends Controller {
 	{
 		if ($this->request->is_initial() AND ! $this->request->is_ajax())
 		{
+			$title_format = Kohana::$config->load('site.title_format')->as_array();
+
+			if ($this->_title)
+			{
+				$this->_title = Text::populate($title_format['standard'], array(
+					'title'     => $this->_title,
+					'site_name' => $site_config->get('site_name')
+				));
+			}
+			else
+			{
+				$this->_title = Text::populate($title_format['without_title'], array(
+					'site_name' => $site_config->get('site_name')
+				));
+			}
+
 			$this->response->body(View::factory('template')
 				->set('title', $this->_title)
 				->set('content', $this->_content)
