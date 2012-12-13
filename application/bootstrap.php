@@ -64,6 +64,16 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 I18n::lang('en-us');
 
 /**
+ * Set the cookie salt
+ */
+Cookie::$salt = 's@nGf]!ZD5;=f#u#rT~I)k#ZS%z}3T,{S)fWlfZS9!yUv8Pd7g,skX0f?s!Tw_H';
+
+/**
+ * Set the default session adapter
+ */
+Session::$default = 'database';
+
+/**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
@@ -126,3 +136,4 @@ switch (Kohana::$environment)
 Kohana::modules(Kohana::$config->load('modules')->as_array());
 
 require_once APPPATH.'routes'.EXT;
+require_once Kohana::find_file('vendor', 'lightopenid/openid');

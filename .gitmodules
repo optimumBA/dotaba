@@ -28,3 +28,6 @@
 [submodule "modules/userguide"]
 	path = modules/userguide
 	url = git://github.com/kohana/userguide.git
+[submodule "application/vendor/lightopenid"]
+	path = application/vendor/lightopenid
+	url = git://gitorious.org/lightopenid/lightopenid.git
