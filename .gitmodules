@@ -31,3 +31,6 @@
 [submodule "application/vendor/lightopenid"]
 	path = application/vendor/lightopenid
 	url = git://gitorious.org/lightopenid/lightopenid.git
+[submodule "modules/pagination"]
+	path = modules/pagination
+	url = git://github.com/shadowhand/pagination.git
