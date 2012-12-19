@@ -4,9 +4,10 @@ return array
 (
 	'default' => array
 	(
-		'type'       => 'PDO',
+		'type'       => 'mysql',
 		'connection' => array(
-			'dsn'        => 'mysql:host='.$_SERVER['DB1_HOST'].';dbname='.$_SERVER['DB1_NAME'],
+			'hostname'   => $_SERVER['DB1_HOST'],
+			'database'   => $_SERVER['DB1_NAME'],
 			'username'   => $_SERVER['DB1_USER'],
 			'password'   => $_SERVER['DB1_PASS'],
 			'persistent' => FALSE,

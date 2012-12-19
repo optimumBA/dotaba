@@ -4,9 +4,10 @@ return array
 (
 	'default' => array
 	(
-		'type'       => 'PDO',
+		'type'       => 'mysql',
 		'connection' => array(
-			'dsn'        => 'mysql:host=localhost;dbname=dotaba',
+			'hostname'   => 'localhost',
+			'database'   => 'dotaba',
 			'username'   => 'dotaba',
 			'password'   => 'dotaba1234',
 			'persistent' => FALSE,
