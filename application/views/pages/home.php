@@ -1,0 +1,1 @@
+<?php echo Request::factory(Route::get('news')->uri())->execute(); ?>
