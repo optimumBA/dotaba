@@ -35,6 +35,10 @@ abstract class Controller_Application extends Controller {
 				->set('content', $this->_content)
 			);
 		}
+		else
+		{
+			$this->response->body($this->_content);
+		}
 	}
 
 }
