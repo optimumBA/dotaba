@@ -2,6 +2,7 @@
 
 return array(
 	'database'   => MODPATH.'database',
+	'email'      => MODPATH.'email',
 	'orm'        => MODPATH.'orm',
 	'pagination' => MODPATH.'pagination'
 );

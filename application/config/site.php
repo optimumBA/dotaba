@@ -5,5 +5,6 @@ return array(
 	'title_format' => array(
 		'standard'      => ':title - :site_name',
 		'without_title' => ':site_name'
-	)
+	),
+	'email'        => 'podrska@dota.ba',
 );

@@ -34,3 +34,6 @@
 [submodule "modules/pagination"]
 	path = modules/pagination
 	url = git://github.com/shadowhand/pagination.git
+[submodule "modules/email"]
+	path = modules/email
+	url = git://github.com/shadowhand/email.git
