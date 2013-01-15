@@ -62,4 +62,19 @@ class Steam {
 		return $this->id;
 	}
 
+	public static function app_news($count = 5, $max_length = 0, $app_id = NULL)
+	{
+		if ($app_id === NULL)
+		{
+			$app_id = Kohana::$config->load('steam')->get('app_id');
+		}
+
+		$response = json_decode(Request::factory('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/')
+			->query(array('appid' => $app_id, 'count' => $count, 'maxlength' => $max_length))
+			->execute()
+			->body());
+
+		return $response->appnews->newsitems;
+	}
+
 }
