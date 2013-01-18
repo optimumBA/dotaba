@@ -2,64 +2,72 @@
 
 class Steam {
 
-	private static $_instance;
+	private static $id, $api_key;
 
-	private $id, $api_key, $session;
-
-	public function __construct()
+	private static function api_key()
 	{
-		$this->api_key = Kohana::$config->load('steam')->get('api_key');
-		$this->session = Session::instance();
-		$this->id = $this->session->get('steam_id', FALSE);
-	}
-
-	public static function instance()
-	{
-		if ( ! self::$_instance)
+		if ( ! self::$api_key)
 		{
-			self::$_instance = new self;
+			self::$api_key = Kohana::$config->load('steam')->get('api_key');
 		}
 
-		return self::$_instance;
+		return self::$api_key;
+	}
+
+	private static function id()
+	{
+		if ( ! self::$id)
+		{
+			self::$id = Session::instance()->get('steamid', FALSE);
+		}
+
+		return self::$id;
+	}
+
+	public static function login()
+	{
+		if ( ! self::logged_in())
+		{
+			$config = Kohana::$config->load('steam');
+
+			$openid = new LightOpenID($config->get('domain'));
+			$openid->identity = $config->get('provider');
+
+			if ($openid->validate())
+			{
+				self::$id = substr($openid->identity, strlen($config->get('provider').'/id/'));
+				Session::instance()->set('steamid', self::$id);
+			}
+			else
+			{
+				HTTP::redirect($openid->authUrl(), 302);
+			}
+		}
 	}
 
 	public static function logged_in()
 	{
-		return (bool) Session::instance()->get('steam_id', FALSE);
+		return (bool) self::id();
 	}
 
-	public function login()
+	public static function logout()
 	{
-		if (self::logged_in() === TRUE)
-		{
-			return TRUE;
-		}
-
-		$openid = new LightOpenID('dotaba');
-		$openid->identity = Kohana::$config->load('steam')->get('provider');
-
-		if ($openid->validate())
-		{
-			$this->id = substr($openid->identity, 36);
-			$this->session->set('steam_id', $this->id);
-			return TRUE;
-		}
-		else
-		{
-			HTTP::redirect($openid->authUrl(), 302);
-		}
+		Session::instance()->restart();
 	}
 
-	public function logout()
+	public static function player_summary()
 	{
-		$this->session->restart();
-		self::$instance = new self;
-		return TRUE;
-	}
+		if ( ! self::logged_in())
+		{
+			return FALSE;
+		}
 
-	public function id()
-	{
-		return $this->id;
+		$response = json_decode(Request::factory('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/')
+			->query(array('key' => self::api_key(), 'steamids' => self::id()))
+			->execute()
+			->body());
+
+		return $response->response->players[0];
 	}
 
 	public static function app_news($count = 5, $max_length = 0, $app_id = NULL)
