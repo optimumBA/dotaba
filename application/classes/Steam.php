@@ -14,7 +14,7 @@ class Steam {
 		return self::$api_key;
 	}
 
-	private static function id()
+	public static function id()
 	{
 		if ( ! self::$id)
 		{

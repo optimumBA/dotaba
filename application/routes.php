@@ -6,6 +6,11 @@ Route::set('news', 'novosti(/<id>-<title>(/<action>))', array('title' => '[a-zA-
 		'action'     => 'index',
 	));
 
+Route::set('users', '<action>', array('action' => 'prijava|odjava'))
+	->defaults(array(
+		'controller' => 'users',
+	));
+
 Route::set('default', '')
 	->defaults(array(
 		'controller' => 'pages',
