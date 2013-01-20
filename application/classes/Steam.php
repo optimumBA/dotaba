@@ -55,6 +55,16 @@ class Steam {
 		Session::instance()->restart();
 	}
 
+	public static function players_summaries($ids)
+	{
+		$response = json_decode(Request::factory('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/')
+			->query(array('key' => self::api_key(), 'steamids' => $ids))
+			->execute()
+			->body());
+
+		return $response->response->players;
+	}
+
 	public static function player_summary()
 	{
 		if ( ! self::logged_in())
@@ -62,12 +72,7 @@ class Steam {
 			return FALSE;
 		}
 
-		$response = json_decode(Request::factory('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/')
-			->query(array('key' => self::api_key(), 'steamids' => self::id()))
-			->execute()
-			->body());
-
-		return $response->response->players[0];
+		return self::players_summaries(self::id())[0];
 	}
 
 	public static function app_news($count = 5, $max_length = 0, $app_id = NULL)

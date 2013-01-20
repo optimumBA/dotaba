@@ -12,14 +12,26 @@ class Controller_Users extends Controller_Application {
 		{
 			$summary = Steam::player_summary();
 
-			$user->values(array(
+			$values = array(
 				'steamid'    => $summary->steamid,
 				'username'   => $summary->personaname,
-				'name'       => $summary->realname,
 				'profileurl' => $summary->profileurl,
-				'avatar'     => $summary->avatar,
+				'avatar'     => $summary->avatarfull,
+				'status'     => $summary->personastate,
 				'created_at' => DB::expr('NOW()'),
-			))->create();
+			);
+
+			if (isset($summary->realname))
+			{
+				$values['name'] = $summary->realname;
+			}
+
+			if (isset($summary->loccountrycode))
+			{
+				$values['location'] = $summary->loccountrycode;
+			}
+
+			$user->values($values)->create();
 		}
 
 		Session::instance()->set('user', $user);
