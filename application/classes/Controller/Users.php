@@ -32,6 +32,8 @@ class Controller_Users extends Controller_Application {
 			}
 
 			$user->values($values)->create();
+
+			Avatar::cache($user->id, $user->avatar);
 		}
 
 		Session::instance()->set('user', $user);

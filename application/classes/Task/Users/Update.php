@@ -51,6 +51,11 @@ class Task_Users_Update extends Minion_Task {
 						$values['location'] = $summary->loccountrycode;
 					}
 
+					if ($user->avatar != $summary->avatarfull)
+					{
+						Avatar::cache($user->id, $summary->avatarfull);
+					}
+
 					$user->values($values)->update();
 				}
 			}

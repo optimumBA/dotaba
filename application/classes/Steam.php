@@ -75,52 +75,6 @@ class Steam {
 		return self::players_summaries(self::id())[0];
 	}
 
-	public static function get_avatar($id, $url, $size = NULL)
-	{
-		$config    = Kohana::$config->load('steam');
-		$path      = $config->get('avatars_path').DIRECTORY_SEPARATOR;
-		$extension = $config->get('extension');
-		$filename  = sha1($id);
-
-		$size = ($size === 'medium' || $size === 'full') ? '_'.$size : NULL;
-
-		$path .= $filename.$size.'.'.$extension;
-
-		if (file_exists($path))
-		{
-			$url = '/'.str_replace(DIRECTORY_SEPARATOR, '/', $path);
-		}
-		else
-		{
-			$url = str_replace('_full', $size, $url);
-		}
-
-		return $url;
-	}
-
-	public static function cache_avatar($id, $url)
-	{
-		$image = Request::factory($url)->execute()->body();
-
-		$config    = Kohana::$config->load('steam');
-		$path      = $config->get('avatars_path').DIRECTORY_SEPARATOR;
-		$extension = $config->get('extension');
-		$filename  = sha1($id);
-
-		$full = $path.$filename.'_full.'.$extension;
-
-		if (file_put_contents($full, $image) !== FALSE)
-		{
-			Image::factory($full)
-				->resize(64)
-				->save($path.$filename.'_medium.'.$extension);
-
-			Image::factory($full)
-				->resize(32)
-				->save($path.$filename.'.'.$extension);
-		}
-	}
-
 	public static function app_news($count = 5, $max_length = 0, $app_id = NULL)
 	{
 		if ($app_id === NULL)
