@@ -96,15 +96,25 @@ class Steam {
 
 		$request->client()->options(CURLOPT_SSL_VERIFYPEER, FALSE);
 
-		$response = $request->execute()
-			->body();
+		$response = $request->execute()->body();
 
 		$dom = new DOMDocument;
 		libxml_use_internal_errors(true);
 		$dom->loadHTML($response);
 
 		$xpath = new DomXPath($dom);
-		$winner = explode(' ', $xpath->query('//div[@class="match-result"]')->item(0)->nodeValue)[0];
+
+		$info = $xpath->query('//div[@id="content-header-secondary"]')->item(0)->getElementsByTagName('dd');
+		$stats['info']['id']       = $match_id;
+		$stats['info']['type']     = $info->item(0)->nodeValue;
+		$stats['info']['mode']     = $info->item(1)->nodeValue;
+		$duration = $info->item(2)->nodeValue;
+		preg_match('/(\d+):(\d+)/', $duration, $matches);
+		$stats['info']['duration'] = $matches[1]*Date::HOUR+$matches[2]*Date::MINUTE;
+		$stats['info']['region']   = $info->item(3)->nodeValue;
+		$stats['info']['date']     = strtotime($info->item(4)->childNodes->item(0)->getAttribute('datetime'));
+		$stats['info']['winner']   = explode(' ', $xpath->query('//div[@class="match-result"]')->item(0)->nodeValue)[0];
+
 		$teams = $xpath->query('//div[@class="team-results"]/section');
 
 		$headers = $teams->item(0)->getElementsByTagName('th');
