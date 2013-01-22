@@ -90,4 +90,65 @@ class Steam {
 		return $response->appnews->newsitems;
 	}
 
+	public static function match_results($match_id)
+	{
+		$request = Request::factory('https://dotabuff.com/matches/'.$match_id);
+
+		$request->client()->options(CURLOPT_SSL_VERIFYPEER, FALSE);
+
+		$response = $request->execute()
+			->body();
+
+		$dom = new DOMDocument;
+		libxml_use_internal_errors(true);
+		$dom->loadHTML($response);
+
+		$xpath = new DomXPath($dom);
+		$winner = explode(' ', $xpath->query('//div[@class="match-result"]')->item(0)->nodeValue)[0];
+		$teams = $xpath->query('//div[@class="team-results"]/section');
+
+		$headers = $teams->item(0)->getElementsByTagName('th');
+
+		for ($i = 2; $i <= 10; $i++)
+		{
+			$fields[$i - 2] = strtolower($headers->item($i)->nodeValue);
+		}
+
+		foreach ($teams as $team)
+		{
+			$name = ucfirst($team->getAttribute('class'));
+
+			$footers = $team->getElementsByTagName('tfoot')->item(0)->getElementsByTagName('td');
+
+			for ($i = 0; $i <= 8; $i++)
+			{
+				$stats['teams'][$name][$fields[$i]] = Text::convert_to_number($footers->item($i + 1)->nodeValue);
+			}
+
+			$players = $team->getElementsByTagName('tbody')->item(0)->getElementsByTagName('tr');
+
+			for ($i = 0; $i <= 4; $i++)
+			{
+				$cells = $players->item($i)->getElementsByTagName('td');
+				$links = $players->item($i)->getElementsByTagName('a');
+
+				preg_match('/\/players\/(\d+)/', $links->item(0)->getAttribute('href'), $match);
+				$stats['players'][$name][$i]['id'] = $match[1];
+				$stats['players'][$name][$i]['hero'] = $links->item(3)->nodeValue;
+
+				for ($j = 0; $j <= 8; $j++)
+				{
+					$stats['players'][$name][$i][$fields[$j]] = Text::convert_to_number($cells->item($j + 4)->nodeValue);
+				}
+
+				foreach ($cells->item(13)->getElementsByTagName('div') as $item)
+				{
+					$stats['players'][$name][$i]['items'][] = $item->getElementsByTagName('a')->item(0)->getElementsByTagName('img')->item(0)->getAttribute('alt');
+				}
+			}
+		}
+
+		return $stats;
+	}
+
 }
