@@ -1,0 +1,24 @@
+<?php
+
+class Migration_2013_01_25_12_55_43 extends MpmMigration
+{
+
+	public function up(PDO &$pdo)
+	{
+		$pdo->exec(
+			"CREATE TABLE IF NOT EXISTS `dotaba_modes` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`name` int(11) NOT NULL,
+				PRIMARY KEY (`id`)
+			) ENGINE=InnoDB AUTO_INCREMENT=1;"
+		);
+	}
+
+	public function down(PDO &$pdo)
+	{
+		$pdo->exec("DROP TABLE `dotaba_modes`;");
+	}
+
+}
+
+?>
