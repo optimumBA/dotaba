@@ -92,73 +92,19 @@ class Steam {
 
 	public static function match_results($match_id)
 	{
-		$request = Request::factory('https://dotabuff.com/matches/'.$match_id);
+		$response = Request::factory('http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/')
+			->query(array('key' => self::api_key(), 'match_id' => $match_id))
+			->execute()
+			->body();
 
-		$request->client()->options(CURLOPT_SSL_VERIFYPEER, FALSE);
+		$response = json_decode($response);
 
-		$response = $request->execute()->body();
-
-		$dom = new DOMDocument;
-		libxml_use_internal_errors(true);
-		$dom->loadHTML($response);
-
-		$xpath = new DomXPath($dom);
-
-		$info = $xpath->query('//div[@id="content-header-secondary"]')->item(0)->getElementsByTagName('dd');
-		$stats['info']['id']       = $match_id;
-		$stats['info']['type']     = $info->item(0)->nodeValue;
-		$stats['info']['mode']     = $info->item(1)->nodeValue;
-		$duration = $info->item(2)->nodeValue;
-		preg_match('/(\d+):(\d+)/', $duration, $matches);
-		$stats['info']['duration'] = $matches[1]*Date::HOUR+$matches[2]*Date::MINUTE;
-		$stats['info']['region']   = $info->item(3)->nodeValue;
-		$stats['info']['date']     = strtotime($info->item(4)->childNodes->item(0)->getAttribute('datetime'));
-		$stats['info']['winner']   = explode(' ', $xpath->query('//div[@class="match-result"]')->item(0)->nodeValue)[0];
-
-		$teams = $xpath->query('//div[@class="team-results"]/section');
-
-		$headers = $teams->item(0)->getElementsByTagName('th');
-
-		for ($i = 2; $i <= 10; $i++)
+		if ( ! isset($response->result))
 		{
-			$fields[$i - 2] = strtolower($headers->item($i)->nodeValue);
+			return FALSE;
 		}
 
-		foreach ($teams as $team)
-		{
-			$name = ucfirst($team->getAttribute('class'));
-
-			$footers = $team->getElementsByTagName('tfoot')->item(0)->getElementsByTagName('td');
-
-			for ($i = 0; $i <= 8; $i++)
-			{
-				$stats['teams'][$name][$fields[$i]] = Text::convert_to_number($footers->item($i + 1)->nodeValue);
-			}
-
-			$players = $team->getElementsByTagName('tbody')->item(0)->getElementsByTagName('tr');
-
-			for ($i = 0; $i <= 4; $i++)
-			{
-				$cells = $players->item($i)->getElementsByTagName('td');
-				$links = $players->item($i)->getElementsByTagName('a');
-
-				preg_match('/\/players\/(\d+)/', $links->item(0)->getAttribute('href'), $match);
-				$stats['players'][$name][$i]['id'] = $match[1];
-				$stats['players'][$name][$i]['hero'] = $links->item(3)->nodeValue;
-
-				for ($j = 0; $j <= 8; $j++)
-				{
-					$stats['players'][$name][$i][$fields[$j]] = Text::convert_to_number($cells->item($j + 4)->nodeValue);
-				}
-
-				foreach ($cells->item(13)->getElementsByTagName('div') as $item)
-				{
-					$stats['players'][$name][$i]['items'][] = $item->getElementsByTagName('a')->item(0)->getElementsByTagName('img')->item(0)->getAttribute('alt');
-				}
-			}
-		}
-
-		return $stats;
+		return $response->result;
 	}
 
 }
