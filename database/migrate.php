@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+C:\xampp\php
 <?php
 /**
  * This file is the main script which should be run on the command line in order to perform database migrations.

@@ -98,7 +98,7 @@ setcookie("DotaBa", $value, time()+3600, "#", "dota.ba", 1);
 				<ul>
 					
 					<li><a href="https://www.facebook.com/DotA.Balkan"><img src="resources/img/social/facebook.png" alt="Facebook" /></a></li>
-                    <li><a href="http://steamcommunity.com/groups/DOTA_Balkan"><img src="resources/img/social/steam.png" alt="Steam" /></a></li>
+                    <li><a href="http://steamcommunity.com/groups/Dota2_Balkan"><img src="resources/img/social/steam.png" alt="Steam" /></a></li>
 				
 				</ul>
 			</section>
