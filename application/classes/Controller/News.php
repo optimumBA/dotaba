@@ -2,6 +2,11 @@
 
 class Controller_News extends Controller_Application {
 
+	public function before()
+	{
+		$this->_layout = 'different_eki';
+	}
+
 	public function action_index()
 	{
 		/*$total = ORM::factory('news')

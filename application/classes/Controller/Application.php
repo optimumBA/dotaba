@@ -2,7 +2,7 @@
 
 abstract class Controller_Application extends Controller {
 
-	protected $_title, $_content, $_post;
+	protected $_title, $_content, $_post, $_layout = 'default';
 
 	public function before()
 	{
@@ -32,7 +32,7 @@ abstract class Controller_Application extends Controller {
 
 			$this->response->body(View::factory('template')
 				->set('title', $this->_title)
-				->set('content', $this->_content)
+				->set('layout', View::factory($this->_layout, array('content' => $this->_content)))
 			);
 		}
 		else
