@@ -117,8 +117,10 @@
                 <div class="navigation">
                 	<div id="smoothmenu1" class="ddsmoothmenu">
                     	<ul id="nav">
-                        	<li class="<?php if(Request::current()->controller() == 'Pages'):?>current-menu-item<?php endif;?>"><a href="/">Početna</a></li>
-                            <li class="<?php if(Request::current()->controller() == 'News'):?>current-menu-item<?php endif;?>"><a href="/novosti">Novosti</a></li>
+                        	<li class="<?php if(Request::current()->controller() == 'Pages') echo 'current-menu-item'; ?>"><a href="/">Početna</a></li>
+                            <li class="<?php if(Request::current()->controller() == 'News') echo 'current-menu-item'; ?>"><a href="/novosti">Novosti</a></li>
+                            
+
                             <li><a href="#">VOD's</a>
                             	<ul>
                                 	<li><a href="#">Snimci</a></li>
@@ -274,7 +276,8 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                 <!-- Column One End -->
                 <!-- Column Two Start -->
                 <div class="col2">
-                	<!-- Latest Videos Start -->
+                	<?php if(Request::current()->controller() == 'Pages'):?>
+                    <!-- Latest Videos Start -->
                 	<div class="latest-videos">
                     	<h1 class="heading colr">Posljednji snimci</h1>
                         <div class="video">
@@ -289,6 +292,7 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                         </div>
                     </div>
                     <!-- Latest Videos End -->
+                
                     <!-- Latest News Start -->
                     <div class="latest-news noback">
                     	<h1 class="heading colr">Posljednje novosti</h1>
@@ -325,13 +329,14 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                         <a href="news.html" class="buttonone">Pogledaj sve novosti</a>
                     </div>
                     <!-- Latest News End -->
+                       <?php endif;?>
                 </div>
                 <!-- Column Two End -->
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
                 	<!-- Top Sellers Start -->
                 	<div class="widget top-seller noback">
-                    	<h1 class="heading colr">Top novost</h1>
+                    	<h1 class="heading colr">Aktivni event</h1>
                         <div class="thumb">
                         	<a href="album-detail.html"><img src="/assets/images/advert1.jpg" alt="" /></a>
                         </div>
