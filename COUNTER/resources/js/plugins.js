@@ -1,1 +1,0 @@
-$("input.placeholder").each(function(){var b=$(this),a=$(this).val();$(this).focus(function(){if(b.val()==a){$(this).val("")}});$(this).blur(function(){if(b.val()==""){$(this).val(a)}})});
