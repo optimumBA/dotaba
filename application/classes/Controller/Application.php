@@ -32,7 +32,7 @@ abstract class Controller_Application extends Controller {
 
 			$this->response->body(View::factory('template')
 				->set('title', $this->_title)
-				->set('layout', View::factory($this->_layout, array('content' => $this->_content)))
+				->set('layout', View::factory('layouts/'.$this->_layout, array('content' => $this->_content)))
 			);
 		}
 		else
