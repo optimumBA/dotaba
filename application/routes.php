@@ -6,7 +6,7 @@ Route::set('news', 'novosti(/<page>)', array('page' => '\d+'))
 		'action'     => 'index',
 	));
 
-Route::set('article', 'novosti/<id>-<title>(/<action>)', array('title' => '[a-zA-Z0-9_-]+'))
+Route::set('article', 'novosti/<id>-<title>(/<action>)', array('id' => '\d+', 'title' => '[a-zA-Z0-9_-]+'))
 	->defaults(array(
 		'controller' => 'news',
 		'action'     => 'view',
