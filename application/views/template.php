@@ -121,27 +121,27 @@
                             <li class="<?php if(Request::current()->controller() == 'News') echo 'current-menu-item'; ?>"><a href="/novosti">Novosti</a></li>
                            
 
-                            <li><a href="#">VOD's</a>
+                            <li><a href="/vods">VOD's</a>
                             	<ul>
-                                	<li><a href="#">Snimci</a></li>
-                                    <li><a href="#">Stream-ovi</a></li>
-                                    <li><a href="#">Galerija</a></li>
+                                	<li><a href="/vods/snimci">Snimci</a></li>
+                                    <li><a href="/vods/stream">Stream-ovi</a></li>
+                                    <li><a href="/vods/galerija">Galerija</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Liga</a>            
+                            <li><a href="/liga">Liga</a>            
                             	<ul>
-                                	<li><a href="#">Turniri</a></li>
-                                   	<li><a href="#">Mečevi</a></li>
-                                    <li><a href="#">Timovi</a></li>
-                                    <li><a href="#">Igrači</a></li>
-                                   	<li><a href="#">Statistike</a></li>
+                                	<li><a href="/liga/turniri">Turniri</a></li>
+                                   	<li><a href="/liga/mecevi">Mečevi</a></li>
+                                    <li><a href="/liga/timovi">Timovi</a></li>
+                                    <li><a href="/liga/igraci">Igrači</a></li>
+                                   	<li><a href="/liga/statistike">Statistike</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Store</a>
-                            <li><a href="#">Vodiči</a>
+                            <li><a href="/#addMenu=Store&t=BETA&a=closed">Store</a>
+                            <li><a href="/guides">Vodiči</a>
                             	<ul>
-                  				 	<li><a href="#">Heroji</a></li>
-                                   	<li><a href="#">Item-i</a></li>
+                  				 	<li><a href="/guides/heroji">Heroji</a></li>
+                                   	<li><a href="/guides/itemi">Item-i</a></li>
                                 </ul>
                             </li>
                            
@@ -159,7 +159,7 @@
     
  <?php echo $layout;?>
  
- 
+
  
  
     <!-- Footer Start -->
