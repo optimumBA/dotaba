@@ -4,7 +4,7 @@ class Controller_News extends Controller_Application {
 
 	public function before()
 	{
-		$this->_layout = 'different_eki';
+		$this->_layout = 'news';
 	}
 
 	public function action_index()
@@ -25,5 +25,28 @@ class Controller_News extends Controller_Application {
 			->set('news', $news)
 			/*->set('pagination', $pagination)*/;
 	}
+
+
+	public function action_view()
+	{
+	
+	$news = ORM::factory('news', $this->request->param('id'));
+	
+		if($news->loaded()) {
+			
+			$this->_title 	= $news->title;
+			$this->_content = View::Factroy('news/view')
+							->set('news', $news);
+			
+			}
+		
+		else {
+			
+			$this->request->redirect();
+			
+			}	
+	}
+
+
 
 }
