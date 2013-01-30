@@ -5,6 +5,5 @@ return array(
 	'email'      => MODPATH.'email',
 	'image'      => MODPATH.'image',
 	'minion'     => MODPATH.'minion',
-	'orm'        => MODPATH.'orm',
 	'pagination' => MODPATH.'pagination'
 );

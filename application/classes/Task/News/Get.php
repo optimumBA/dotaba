@@ -13,18 +13,20 @@ class Task_News_Get extends Minion_Task {
 
 		foreach ($news as $n)
 		{
-			$article = ORM::factory('news', array('gid' => $n->gid));
+			$article = Model_News::find_by_attribute('gid', $n->gid);
 
-			if ( ! $article->loaded())
+			if ($article === FALSE)
 			{
-				$article->values(array(
+				$result = Model_News::insert(array(
 					'gid'        => $n->gid,
 					'title'      => $n->title,
 					'content'    => $n->contents,
 					'source'     => $n->feedlabel,
 					'url'        => $n->url,
 					'created_at' => date('Y-m-d H:i:s', $n->date),
-				))->create();
+				));
+
+				$article = Model_News::find($result[0]);
 
 				$email = Email::factory(Kohana::message('email', 'new_article'),
 					View::factory('email/new_article')

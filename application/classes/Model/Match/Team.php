@@ -1,18 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Model_Match_Team extends ORM {
+class Model_Match_Team extends Model_Database {
 
-	protected $_table_name = 'matches_teams';
-
-	protected $_belongs_to = array(
-		'match' => array(),
-	);
-
-	protected $_has_many = array(
-		'users' => array(
-			'model'   => 'User',
-			'through' => 'matches_teams_users',
-		),
-	);
+	public static $table_name = 'matches_teams';
 
 }
