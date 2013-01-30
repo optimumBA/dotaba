@@ -6,14 +6,15 @@ class Controller_Users extends Controller_Application {
 	{
 		Steam::login();
 
-		$user = ORM::factory('user', array('steamid' => Steam::id()));
+		$user = Model_User::find_by_attribute('steamid', Steam::id());
 
-		if ( ! $user->loaded())
+		if ($user === FALSE)
 		{
 			$summary = Steam::player_summary();
 
 			$values = array(
 				'steamid'    => $summary->steamid,
+				'accountid'  => Steam::convert_id($summary->steamid),
 				'username'   => $summary->personaname,
 				'profileurl' => $summary->profileurl,
 				'avatar'     => $summary->avatarfull,
@@ -31,9 +32,10 @@ class Controller_Users extends Controller_Application {
 				$values['location'] = $summary->loccountrycode;
 			}
 
-			$user->values($values)->create();
+			$result = Model_User::insert($values);
+			$user   = Model_User::find($result[0]);
 
-			Avatar::cache($user->id, $user->avatar);
+			Avatar::cache($user->id, $values['avatar']);
 		}
 
 		Session::instance()->set('user', $user);

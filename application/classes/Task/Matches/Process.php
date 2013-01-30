@@ -1,0 +1,20 @@
+<?php defined('SYSPATH') or die('No direct script access.');
+
+class Task_Matches_Process extends Minion_Task {
+
+	protected function _execute(array $params)
+	{
+		$matches = Model_Match::find_all_unprocessed();
+
+		foreach ($matches as $match)
+		{
+			$result = Steam::match_results($match->mid);
+
+			if ($result === FALSE)
+				continue;
+
+			Model_Match::process($match->id, $result);
+		}
+	}
+
+}

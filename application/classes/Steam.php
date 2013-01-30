@@ -72,7 +72,9 @@ class Steam {
 			return FALSE;
 		}
 
-		return self::players_summaries(self::id())[0];
+		$players_summaries = self::players_summaries(self::id());
+
+		return $players_summaries[0];
 	}
 
 	public static function app_news($count = 5, $max_length = 0, $app_id = NULL)
@@ -92,10 +94,19 @@ class Steam {
 
 	public static function match_results($match_id)
 	{
-		$response = Request::factory('http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/')
-			->query(array('key' => self::api_key(), 'match_id' => $match_id))
-			->execute()
-			->body();
+		$path = Kohana::$config->load('steam')->get('matches_path').DIRECTORY_SEPARATOR.$match_id.'.json';
+
+		if (file_exists($path))
+		{
+			$response = file_get_contents($path);
+		}
+		else
+		{
+			$response = Request::factory('http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/')
+				->query(array('key' => self::api_key(), 'match_id' => $match_id))
+				->execute()
+				->body();
+		}
 
 		$response = json_decode($response);
 
