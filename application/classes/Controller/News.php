@@ -16,13 +16,13 @@ class Controller_News extends Controller_Application {
 			'total_items' => $total
 		));*/
 
-		$news = Model_News::find_all(NULL, NULL, array('created_at', 'DESC'));
+	$news = Model_News::find_all(NULL, NULL, array('created_at', 'DESC'));
 			/*->limit($pagination->items_per_page)
 			->offset($pagination->offset)*/
 
-		$this->_title = 'Novosti';
+		$this->_title 	= 'Novosti';
 		$this->_content = View::factory('news/index')
-			->set('news', $news)
+						->set('news', $news)
 			/*->set('pagination', $pagination)*/;
 	}
 
@@ -30,21 +30,17 @@ class Controller_News extends Controller_Application {
 	public function action_view()
 	{
 	
-	$news = ORM::factory('news', $this->request->param('id'));
+	$news = Model_News::find(NULL, NULL, array('id', ''));
 	
 		if($news->loaded()) {
 			
-			$this->_title 	= $news->title;
-			$this->_content = View::Factroy('news/view')
-							->set('news', $news);
-			
-			}
+		$this->_title 	= 'Novosti';
+		$this->_content = View::factory('news/index')
+						->set('news', $news);
+						
+						
+		}
 		
-		else {
-			
-			$this->request->redirect();
-			
-			}	
 	}
 
 
