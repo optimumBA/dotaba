@@ -30,19 +30,15 @@ class Controller_News extends Controller_Application {
 	public function action_view()
 	{
 	
-	$news = Model_News::find(NULL, NULL, array('id', ''));
+	$news = Model_News::find(NULL, NULL, array($this->request->param('id')));
 	
-		if($news->loaded()) {
-			
+		
+		
 		$this->_title 	= 'Novosti';
-		$this->_content = View::factory('news/index')
+		$this->_content = View::factory('news/view')
 						->set('news', $news);
 						
-						
-		}
-		
+	
 	}
-
-
 
 }
