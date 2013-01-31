@@ -19,7 +19,7 @@ abstract class Model_Database extends Kohana_Model_Database {
 
 	public static function find_all($limit = NULL, $offset = NULL, $order_by = NULL)
 	{
-		return static::find_all_by_attribute('id', 0, $limit, $offset, $order_by, '>');
+		return static::find_all_by_attribute('', 1, $limit, $offset, $order_by, '');
 	}
 
 	public static function find_all_by_attribute($attribute, $value, $limit = NULL, $offset = NULL, $order_by = NULL, $operator = '=')
