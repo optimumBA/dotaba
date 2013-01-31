@@ -50,6 +50,33 @@ class Model_Match extends Model_Database {
 		}
 	}
 
+	public static function find_by_attribute($attribute, $value, $operator = '=')
+	{
+		$match = DB::select(self::$table_name.'.*', array('teams.name', 'winner'), array('modes.name', 'mode'))
+			->from(self::$table_name)
+			->join('teams')->on('teams.id', '=', 'matches.winner_id')
+			->join('modes')->on('modes.id', '=', 'matches.mode_id')
+			->where(self::$table_name.'.'.$attribute, $operator, $value)
+			->execute()
+			->as_array();
+
+		$match = $match[0];
+
+		$match['teams'] = Model_Match_Team::find_all_by_attribute('match_id', $match['id']);
+
+		for ($i = 0; $i < count($match['teams']); $i++)
+		{
+			$match['teams'][$i]['players'] = Model_Match_Team_User::find_all_by_attribute('match_team_id', $match['teams'][$i]['id']);
+
+			for ($j = 0; $j < count($match['teams'][$i]['players']); $j++)
+			{
+				$match['teams'][$i]['players'][$j]['items'] = Model_Match_Team_User_Item::find_all_by_attribute('match_team_user_id', $match['teams'][$i]['players'][$j]['id']);
+			}
+		}
+
+		return json_decode(json_encode($match));
+	}
+
 	public static function process($id, $result)
 	{
 		$players = array();

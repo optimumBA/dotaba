@@ -205,6 +205,9 @@
     <div class="clear"></div>
 </div>
 <!-- Outer Wrapper End -->
+<?php if (Kohana::$environment === Kohana::DEVELOPMENT): ?>
+	<?php echo View::factory('profiler/stats') ?>
+<?php endif ?>
 </body>
 
 

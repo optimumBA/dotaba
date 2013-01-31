@@ -33,6 +33,23 @@ abstract class Model_Database extends Kohana_Model_Database {
 			->execute();
 	}
 
+	public static function find_all_by_attribute($attribute, $value, $limit = NULL, $offset = NULL, $order_by = NULL, $operator = '=')
+	{
+		$rows = DB::select()
+			->from(static::$table_name)
+			->where($attribute, $operator, $value)
+			->limit($limit)
+			->offset($offset);
+
+		if (is_array($order_by))
+		{
+			$rows->order_by($order_by[0], $order_by[1]);
+		}
+
+		return $rows->as_object()
+			->execute();
+	}
+
 	public static function count_all()
 	{
 		return DB::select(DB::expr('COUNT(*) as total'))
