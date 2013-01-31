@@ -31,9 +31,10 @@ class Controller_News extends Controller_Application {
 	{
 		$article = Model_News::find($this->request->param('id'));
 
+		if(!$article === FALSE) {
 		$this->_title 	= $article->title;
 		$this->_content = View::factory('news/view')
-			->set('article', $article);
+			->set('article', $article);}
 	}
 
 }

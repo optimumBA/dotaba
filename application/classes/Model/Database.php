@@ -68,5 +68,9 @@ abstract class Model_Database extends Kohana_Model_Database {
 			->where($attribute, $operator, $value)
 			->execute();
 	}
-
+	
+	public static function frontpage_last_news()
+	{
+		
+	}
 }
