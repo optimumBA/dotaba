@@ -29,16 +29,11 @@ class Controller_News extends Controller_Application {
 
 	public function action_view()
 	{
-	
-	$news = Model_News::find(NULL, NULL, array($this->request->param('id')));
-	
-		
-		
-		$this->_title 	= 'Novosti';
+		$article = Model_News::find($this->request->param('id'));
+
+		$this->_title 	= $article->title;
 		$this->_content = View::factory('news/view')
-						->set('news', $news);
-						
-	
+			->set('article', $article);
 	}
 
 }
