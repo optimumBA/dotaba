@@ -132,4 +132,14 @@ class Steam {
 		return $response->result;
 	}
 
+	public static function heroes()
+	{
+		$response = json_decode(Request::factory('http://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/')
+			->query(array('key' => self::api_key(), 'language' => 'en_us'))
+			->execute()
+			->body());
+
+		return $response->result->heroes;
+	}
+
 }
