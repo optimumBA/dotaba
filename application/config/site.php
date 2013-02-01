@@ -6,9 +6,9 @@ return array(
 		'standard'      => ':title - :site_name',
 		'without_title' => ':site_name'
 	),
-	'date_format' => 'j.n.Y. G:i:s',
+	'date_format'  => 'j.n.Y. G:i:s',
 	'email'        => 'podrska@dota.ba',
-	'translators'  => array(
+	'admins'       => array(
 		'grifon@dota.ba',
 		'sixr@dota.ba',
 	),

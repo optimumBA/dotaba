@@ -9,7 +9,7 @@ class Task_News_Get extends Minion_Task {
 		$site_config = Kohana::$config->load('site');
 		$site_name   = $site_config->get('site_name');
 		$site_email  = $site_config->get('email');
-		$translators = $site_config->get('translators');
+		$admins      = $site_config->get('admins');
 
 		foreach ($news as $n)
 		{
@@ -34,9 +34,9 @@ class Task_News_Get extends Minion_Task {
 						->render(),
 					'text/html');
 				
-				foreach ($translators as $t)
+				foreach ($admins as $a)
 				{
-					$email->to($t);
+					$email->to($a);
 				}
 				
 				$email->from($site_email, $site_name)

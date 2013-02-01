@@ -35,7 +35,7 @@ class Controller_Users extends Controller_Application {
 			$result = Model_User::insert($values);
 			$user   = Model_User::find($result[0]);
 
-			Avatar::cache($user->id, $values['avatar']);
+			Media_Avatar::cache($user->id, $values['avatar']);
 		}
 
 		Session::instance()->set('user', $user);

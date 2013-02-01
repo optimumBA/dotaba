@@ -53,7 +53,7 @@ class Task_Users_Update extends Minion_Task {
 
 					if ($user->avatar != $summary->avatarfull)
 					{
-						Avatar::cache($user->id, $summary->avatarfull);
+						Media_Avatar::cache($user->id, $summary->avatarfull);
 					}
 
 					Model_User::update($user->id, $values);
