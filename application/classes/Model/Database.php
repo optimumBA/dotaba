@@ -69,8 +69,14 @@ abstract class Model_Database extends Kohana_Model_Database {
 			->execute();
 	}
 	
-	public static function frontpage_last_news()
+	public static function frontpage_last_news($limit, $offset)
 	{
-		
+		return $news 	= DB::select()
+								->from('news')	
+								->order_by('created_at', 'DESC')
+								->limit($limit)
+								->offset($offset)
+								->as_object()
+								->execute();
 	}
 }

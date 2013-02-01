@@ -141,34 +141,29 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                     <div class="latest-news noback">
                     	<h1 class="heading colr">Posljednje novosti</h1>
                         <ul class="news-list">
-                        	<li>
-                            	<div class="thumb">
-                                	<a href="blog-detail.html">
-                                    	<img src="/assets/images/img8.jpg" alt="" />
-                                        <span>VEIW</span>
-                                    </a>
-                                </div>
-                                <div class="desc">
-                                	<h4><a href="blog-detail.html" class="white">Smile Dip (Dave Barnes)</a></h4>
-                                    <p class="post-opts">08 HOurs ago / <a href="#">4 comments</a></p>
-                                    <p class="txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tellus orci, semper et ornare dictum, varius ut tellus.</p>
-                                </div>
-                            </li>
-                            <li>
-                            	<div class="thumb">
-                                	<a href="blog-detail.html">
-                                    	<img src="/assets/images/img9.jpg" alt="" />
-                                        <span>VEIW</span>
-                                    </a>
-                                </div>
-                                <div class="desc">
-                                	<h4><a href="blog-detail.html" class="white">Smile Dip (Dave Barnes)</a></h4>
-                                    <div class="post-opts">
-                                    	<p>08 HOurs ago / <a href="#">4 comments</a></p>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tellus orci, semper et ornare dictum, varius ut tellus.</p>
-                                </div>
-                            </li>
+                        	
+							<?php $news = Model_News::frontpage_last_news(2, NULL); 
+									foreach($news as $article) 
+									{
+										echo '
+									<li>
+                            			<div class="thumb">
+                                			<a href="/novosti/'.$article->id.'-'.URL::title($article->title).'">
+                                    			<img src="/assets/images/img8.jpg" alt="" />
+                                        		<span>Pogledaj</span>
+                                    		</a>
+                                		</div>
+                                		<div class="desc">
+                                				<h4><a href="/novosti/'.$article->id.'-'.URL::title($article->title).'" class="white">'.$article->title.'</a></h4>
+                                    			<p class="post-opts">'.date('d M Y - G:i', strtotime($article->created_at)).' / <a href="#">4 comments</a></p>
+                                   				<p class="txt">'.Text::limit_words(strip_tags($article->content), 40).'</p>
+                               			</div>
+                            		</li>';
+									
+									}
+							?>
+                         
+                            
                         </ul>
                         <a href="news.html" class="buttonone">Pogledaj sve novosti</a>
                     </div>
