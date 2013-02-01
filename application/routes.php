@@ -17,7 +17,7 @@ Route::set('users', '<action>', array('action' => 'prijava|odjava'))
 		'controller' => 'users',
 	));
 
-Route::set('default', '')
+Route::set('default', '(<action>)')
 	->defaults(array(
 		'controller' => 'pages',
 		'action'     => 'home',
