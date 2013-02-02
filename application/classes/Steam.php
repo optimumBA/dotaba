@@ -142,4 +142,28 @@ class Steam {
 		return $response->result->heroes;
 	}
 
+	public static function items()
+	{
+		$path = Kohana::$config->load('steam')->get('items_path');
+
+		if ( ! file_exists($path))
+		{
+			return array();
+		}
+
+		$data    = file_get_contents($path);
+		$pattern = '/\/\/={113}[^(?:\/\/)]*\/\/ ([\sa-z0-9_-]+)[^(?:\/\/)]*[^"]*"([\sa-z0-9_-]+)"[^{]*{[^"]*"ID"\t{7}"(\d+)"/im';
+
+		preg_match_all($pattern, $data, $matches, PREG_SET_ORDER);
+
+		for ($i = 0; $i < count($matches); $i++)
+		{
+			$items[$i]['id']             = $matches[$i][3];
+			$items[$i]['name']           = $matches[$i][2];
+			$items[$i]['localized_name'] = $matches[$i][1];
+		}
+
+		return json_decode(json_encode($items));
+	}
+
 }

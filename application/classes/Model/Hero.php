@@ -23,7 +23,7 @@ class Model_Hero extends Model_Database {
 			{
 				$changes['added'][] = $remote_hero;
 
-				Model_Hero::insert(array(
+				self::insert(array(
 					'id'             => $remote_hero->id,
 					'name'           => $remote_hero->name,
 					'localized_name' => $remote_hero->localized_name,
@@ -42,7 +42,7 @@ class Model_Hero extends Model_Database {
 
 						if ($update == TRUE)
 						{
-							Model_Hero::update($remote_hero->id, array(
+							self::update($remote_hero->id, array(
 								'name'           => $remote_hero->name,
 								'localized_name' => $remote_hero->localized_name,
 								'image'          => $image,
