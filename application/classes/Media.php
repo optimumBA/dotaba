@@ -34,6 +34,11 @@ abstract class Media {
 		return static::$type;
 	}
 
+	protected static function suffix($size)
+	{
+		return ($size === 'medium' || $size === 'full') ? '_'.$size : NULL;
+	}
+
 	protected static function path()
 	{
 		if ( ! static::$path)
@@ -61,7 +66,7 @@ abstract class Media {
 		$filename = static::filename($id);
 		$full     = static::path().$filename.'_full.'.static::extension();
 
-		if (file_put_contents($full, $image) !== FALSE)
+		if (file_put_contents($full, $image) !== FALSE AND @getimagesize($full))
 		{
 			Image::factory($full)
 				->resize(64)
@@ -75,34 +80,29 @@ abstract class Media {
 
 	public static function get($id, $url, $size = NULL)
 	{
-		$size = ($size === 'medium' || $size === 'full') ? '_'.$size : NULL;
-		$path = static::path().static::filename($id).$size.'.'.static::extension();
+		$suffix = static::suffix($size);
+		$path   = static::path().static::filename($id).$suffix.'.'.static::extension();
 
-		$image_url = '/'.str_replace(DIRECTORY_SEPARATOR, '/', $path);
-
-		if ( ! file_exists($path))
+		if (file_exists($path))
 		{
-			if (mt_rand(1, 10) === 1)
-			{
-				static::cache($id, $url);
-			}
-			else
-			{
-				$image_url = str_replace('_full', $size, $url);
-			}
+			$url = '/'.str_replace(DIRECTORY_SEPARATOR, '/', $path);
+		}
+		else
+		{
+			$url = str_replace('_full', $suffix, $url);
 		}
 
-		return $image_url;
+		return $url;
 	}
 
 	public static function remove($id)
 	{
 		$filename = static::filename($id);
-		$sizes    = ['', '_medium', '_full'];
+		$suffixes = ['', '_medium', '_full'];
 
-		foreach ($sizes as $size)
+		foreach ($suffixes as $suffix)
 		{
-			$path = static::path().$filename.$size.'.'.static::extension();
+			$path = static::path().$filename.$suffix.'.'.static::extension();
 
 			if (file_exists($path))
 			{
