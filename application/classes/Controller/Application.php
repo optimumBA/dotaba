@@ -2,11 +2,12 @@
 
 abstract class Controller_Application extends Controller {
 
-	protected $_title, $_content, $_post, $_layout = 'default';
+	protected $_title, $_content, $_post, $_layout = 'default', $_user;
 
 	public function before()
 	{
 		$this->_post = Arr::map('Security::xss_clean', Arr::map('trim', $this->request->post()));
+		$this->_user = Session::instance()->get('user');
 	}
 
 	public function after()
@@ -38,6 +39,11 @@ abstract class Controller_Application extends Controller {
 		else
 		{
 			$this->response->body($this->_content);
+		}
+
+		if (Session::instance()->get('user') AND isset($this->_user))
+		{
+			Session::instance()->set('user', $this->_user);
 		}
 	}
 
