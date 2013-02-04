@@ -4,13 +4,16 @@ class Task_Users_Update extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
-		$count = Model_User::count_all();
+		$count = ORM::factory('user')->count_all();
 
 		$offset = 0;
 		$limit  = 100;
 
 		do {
-			$users = Model_User::find_all($limit, $offset)->find_all();
+			$users = ORM::factory('user')
+				->limit($limit)
+				->offset($offset)
+				->find_all();
 
 			for ($i = 0; $i < count($users); $i++)
 			{
@@ -32,7 +35,7 @@ class Task_Users_Update extends Minion_Task {
 
 				foreach ($summaries as $summary)
 				{
-					$user = Model_User::find_by_attribute('steamid', $summary->steamid);
+					$user = ORM::factory('user', array('steamid' => $summary->steamid));
 
 					$values = array(
 						'username'   => $summary->personaname,
@@ -56,7 +59,7 @@ class Task_Users_Update extends Minion_Task {
 						Media_Avatar::cache($user->id, $summary->avatarfull);
 					}
 
-					Model_User::update($user->id, $values);
+					$user->values($values)->update();
 				}
 			}
 

@@ -142,7 +142,7 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                     	<h1 class="heading colr">Posljednje novosti</h1>
                         <ul class="news-list">
                         	
-							<?php $news = Model_News::frontpage_last_news(2, NULL); 
+							<?php $news = ORM::factory('news')->order_by('created_at', 'DESC')->limit(2)->find_all(); 
 									foreach($news as $article) 
 									{
 										echo '

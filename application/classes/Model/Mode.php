@@ -1,7 +1,9 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Model_Mode extends Model_Database {
+class Model_Mode extends ORM {
 
-	public static $table_name = 'items';
+	protected $_has_many = array(
+		'matches' => array(),
+	);
 
 }

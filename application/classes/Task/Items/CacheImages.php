@@ -4,7 +4,7 @@ class Task_Items_CacheImages extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
-		$items = Model_Item::find_all();
+		$items = ORM::factory('item')->find_all();
 
 		foreach ($items as $item)
 		{

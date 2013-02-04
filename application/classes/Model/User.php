@@ -1,7 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Model_User extends Model_Database {
+class Model_User extends ORM {
 
-	public static $table_name = 'users';
+	protected $_has_many = array(
+		'matches_teams' => array(
+			'model'   => 'Match_Team',
+			'through' => 'matches_teams_users',
+		),
+	);
 
 }

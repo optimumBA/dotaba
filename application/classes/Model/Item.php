@@ -1,8 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Model_Item extends Model_Database {
+class Model_Item extends ORM {
 
-	public static $table_name = 'items';
+	protected $_has_many = array(
+		'matches_teams_users' => array(
+			'model'   => 'Match_Team_User',
+			'through' => 'matches_teams_users_items',
+		),
+		'matches_teams_users_items' => array(
+			'model' => 'Match_Team_User_Item',
+		),
+	);
 
 	public static function populate($remote_items, $update)
 	{
@@ -15,20 +23,20 @@ class Model_Item extends Model_Database {
 
 		foreach ($remote_items as $remote_item)
 		{
-			$item = self::find($remote_item->id);
+			$item = ORM::factory('item', $remote_item->id);
 
 			$image = 'http://media.steampowered.com/apps/dota2/images/items/'.substr($remote_item->name, 5).'_lg.png';
 
-			if ($item === FALSE)
+			if ( ! $item->loaded())
 			{
 				$changes['added'][] = $remote_item;
 
-				self::insert(array(
+				$item->values(array(
 					'id'             => $remote_item->id,
 					'name'           => $remote_item->name,
 					'localized_name' => $remote_item->localized_name,
 					'image'          => $image,
-				));
+				))->create();
 
 				Media_Item::cache($remote_item->id, $image);
 			}
@@ -36,17 +44,20 @@ class Model_Item extends Model_Database {
 			{
 				foreach ($item as $key => $value)
 				{
+					if (strpos($key, '_') === 0)
+						continue;
+
 					if ($remote_item->{$key} != $value)
 					{
 						$changes['altered'][] = array('remote' => $remote_item, 'local' => $item);
 
 						if ($update == TRUE)
 						{
-							self::update($remote_item->id, array(
+							$item->values(array(
 								'name'           => $remote_item->name,
 								'localized_name' => $remote_item->localized_name,
 								'image'          => $image,
-							));
+							))->update();
 						}
 
 						break;

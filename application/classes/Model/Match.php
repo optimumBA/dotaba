@@ -1,78 +1,57 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Model_Match extends Model_Database {
+class Model_Match extends ORM {
 
-	public static $table_name = 'matches';
+	protected $_belongs_to = array(
+		'mode'   => array(),
+		'winner' => array(
+			'model'       => 'Team',
+			'foreign_key' => 'winner_id',
+		),
+	);
 
-	private static $processed;
-
-	public static function find_all_processed($limit = NULL, $offset = NULL, $order_by = NULL)
+	public static function match_details($id)
 	{
-		self::$processed = TRUE;
-		return self::find_all($limit, $offset, $order_by);
-	}
-
-	public static function find_all_unprocessed($limit = NULL, $offset = NULL, $order_by = NULL)
-	{
-		self::$processed = FALSE;
-		return self::find_all($limit, $offset, $order_by);
-	}
-
-	public static function find_all($limit = NULL, $offset = NULL, $order_by = NULL)
-	{
-		$processed = self::$processed;
-
-		self::$processed = NULL;
-
-		if ($processed === NULL)
-		{
-			return parent::find_all($limit, $offset, $order_by);
-		}
-		else
-		{
-			$operator = 'IS';
-
-			$operator .= ($processed === TRUE) ? ' NOT' : '';
-
-			$rows = DB::select()
-				->from(self::$table_name)
-				->limit($limit)
-				->offset($offset)
-				->where('winner_id', $operator, NULL);
-
-			if (is_array($order_by))
-			{
-				$rows->order_by($order_by[0], $order_by[1]);
-			}
-
-			return $rows->as_object()
-				->execute();
-		}
-	}
-
-	public static function find_by_attribute($attribute, $value, $operator = '=')
-	{
-		$match = DB::select(self::$table_name.'.*', array('teams.name', 'winner'), array('modes.name', 'mode'))
-			->from(self::$table_name)
-			->join('teams')->on('teams.id', '=', 'matches.winner_id')
-			->join('modes')->on('modes.id', '=', 'matches.mode_id')
-			->where(self::$table_name.'.'.$attribute, $operator, $value)
-			->execute()
+		$match = ORM::factory('match')
+			->with('winner')
+			->with('mode')
+			->find($id)
 			->as_array();
 
-		$match = $match[0];
+		$teams = ORM::factory('match_team')
+			->with('team')
+			->where('match_id', '=', $match['id'])
+			->find_all();
 
-		$match['teams'] = Model_Match_Team::find_all_by_attribute('match_id', $match['id']);
-
-		for ($i = 0; $i < count($match['teams']); $i++)
+		for ($i = 0; $i < count($teams); $i++)
 		{
-			$match['teams'][$i]['players'] = Model_Match_Team_User::find_all_by_attribute('match_team_id', $match['teams'][$i]['id']);
+			$match['teams'][$i] = $teams[$i]->as_array();
+			$players = ORM::factory('match_team_user')
+				->with('user')
+				->with('hero')
+				->where('match_team_id', '=', $match['teams'][$i]['id'])
+				->find_all();
 
-			for ($j = 0; $j < count($match['teams'][$i]['players']); $j++)
+			for ($j = 0; $j < count($players); $j++)
 			{
-				$match['teams'][$i]['players'][$j]['items'] = Model_Match_Team_User_Item::find_all_by_attribute('match_team_user_id', $match['teams'][$i]['players'][$j]['id']);
+				$match['teams'][$i]['players'][$j] = $players[$j]->as_array();
+				$items = ORM::factory('match_team_user_item')
+					->with('item')
+					->where('match_team_user_id', '=', $match['teams'][$i]['players'][$j]['id'])
+					->find_all();
+
+				for ($k = 0; $k < count($items); $k++)
+				{
+					$match['teams'][$i]['players'][$j]['items'][$k] = $items[$k]->as_array();
+				}
+
+				unset($items);
 			}
+
+			unset($players);
 		}
+
+		unset($teams);
 
 		return json_decode(json_encode($match));
 	}
@@ -80,18 +59,20 @@ class Model_Match extends Model_Database {
 	public static function process($id, $result)
 	{
 		$players = array();
+		$users   = array();
 
 		foreach ($result->players as $player)
 		{
 			if ($player->player_slot < 0 OR $player->player_slot > 4 AND $player->player_slot < 128 OR $player->player_slot > 132)
 				continue;
 
-			$user = Model_User::find_by_attribute('accountid', $player->account_id);
+			$user = ORM::factory('user', array('accountid' => $player->account_id));
 
-			if ($user === FALSE)
-				return FALSE;
+			if ( ! $user->loaded())
+				ORM::factory('user')->values(array('accountid' => $player->account_id))->create();//return FALSE;
 
 			$players[] = $player;
+			$users[]   = $user;
 		}
 
 		$db = Database::instance();
@@ -100,67 +81,70 @@ class Model_Match extends Model_Database {
 		{
 			$db->begin();
 
-			self::update($id, array(
-				'winner_id'        => ($result->radiant_win === TRUE) ? 1 : 2,
-				'mode_id'          => $result->game_mode,
-				'duration'         => $result->duration,
-				'first_blood_time' => $result->first_blood_time,
-				'date'             => date('Y-m-d H:i:s', $result->starttime),
-			));
+			$match = ORM::factory('match', $id)
+				->values(array(
+					'winner_id'        => ($result->radiant_win === TRUE) ? 1 : 2,
+					'mode_id'          => $result->game_mode,
+					'duration'         => $result->duration,
+					'first_blood_time' => $result->first_blood_time,
+					'date'             => date('Y-m-d H:i:s', $result->start_time),
+				))->update();
 
-			$match_team[1] = Model_Match_Team::insert(array(
-				'match_id'        => $id,
-				'team_id'         => 1,
-				'tower_status'    => $result->tower_status_radiant,
-				'barracks_status' => $result->barracks_status_radiant,
-			));
+			$match_team[1] = ORM::factory('match_team')
+				->values(array(
+					'match_id'        => $id,
+					'team_id'         => 1,
+					'tower_status'    => $result->tower_status_radiant,
+					'barracks_status' => $result->barracks_status_radiant,
+				))->create();
 
-			$match_team[2] = Model_Match_Team::insert(array(
-				'match_id'        => $id,
-				'team_id'         => 2,
-				'tower_status'    => $result->tower_status_dire,
-				'barracks_status' => $result->barracks_status_dire,
-			));
+			$match_team[2] = ORM::factory('match_team')
+				->values(array(
+					'match_id'        => $id,
+					'team_id'         => 2,
+					'tower_status'    => $result->tower_status_dire,
+					'barracks_status' => $result->barracks_status_dire,
+				))->create();
 
-			foreach ($players as $player)
+			for ($i = 0; $i < count($players); $i++)
 			{
-				$team_id = ($player->player_slot <= 4) ? 1 : 2;
+				$team_id = ($players[$i]->player_slot <= 4) ? 1 : 2;
 
-				$user = Model_User::find_by_attribute('accountid', $player->account_id);
+				$match_team_user = ORM::factory('match_team_user')
+					->values(array(
+						'match_team_id' => $match_team[$team_id]->id,
+						'user_id'       => $users[$i]->id,
+						'player_slot'   => $players[$i]->player_slot,
+						'hero_id'       => $players[$i]->hero_id,
+						'kills'         => $players[$i]->kills,
+						'deaths'        => $players[$i]->deaths,
+						'assists'       => $players[$i]->assists,
+						'leaver_status' => $players[$i]->leaver_status,
+						'gold'          => $players[$i]->gold,
+						'last_hits'     => $players[$i]->last_hits,
+						'denies'        => $players[$i]->denies,
+						'gold_per_min'  => $players[$i]->gold_per_min,
+						'xp_per_min'    => $players[$i]->xp_per_min,
+						'gold_spent'    => $players[$i]->gold_spent,
+						'hero_damage'   => $players[$i]->hero_damage,
+						'tower_damage'  => $players[$i]->tower_damage,
+						'hero_healing'  => $players[$i]->hero_healing,
+						'level'         => $players[$i]->level,
+					))->create();
 
-				$result = Model_Match_Team_User::insert(array(
-					'match_team_id' => $match_team[$team_id][0],
-					'user_id'       => $user->id,
-					'player_slot'   => $player->player_slot,
-					'hero_id'       => $player->hero_id,
-					'kills'         => $player->kills,
-					'deaths'        => $player->deaths,
-					'assists'       => $player->assists,
-					'leaver_status' => $player->leaver_status,
-					'gold'          => $player->gold,
-					'last_hits'     => $player->last_hits,
-					'denies'        => $player->denies,
-					'gold_per_min'  => $player->gold_per_min,
-					'xp_per_min'    => $player->xp_per_min,
-					'gold_spent'    => $player->gold_spent,
-					'hero_damage'   => $player->hero_damage,
-					'tower_damage'  => $player->tower_damage,
-					'hero_healing'  => $player->hero_healing,
-					'level'         => $player->level,
-				));
-
-				for ($i = 0; $i <= 5; $i++)
+				for ($j = 0; $j <= 5; $j++)
 				{
-					$item_id = $player->{'item_'.$i};
+					$item_id = $players[$i]->{'item_'.$j};
 
 					if ($item_id === 0)
 						continue;
 
-					Model_Match_Team_User_Item::insert(array(
-						'match_team_user_id' => $result[0],
-						'item_id'            => $item_id,
-						'slot'               => $i,
-					));
+					ORM::factory('match_team_user_item')
+						->values(array(
+							'match_team_user_id' => $match_team_user->id,
+							'item_id'            => $item_id,
+							'slot'               => $j,
+						))->create();
 				}
 			}
 

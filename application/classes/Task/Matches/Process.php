@@ -4,7 +4,9 @@ class Task_Matches_Process extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
-		$matches = Model_Match::find_all_unprocessed();
+		$matches = ORM::factory('match')
+			->where('winner_id', 'IS', NULL)
+			->find_all();
 
 		foreach ($matches as $match)
 		{

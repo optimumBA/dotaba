@@ -1,8 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Model_Hero extends Model_Database {
+class Model_Hero extends ORM {
 
-	public static $table_name = 'heroes';
+	protected $_has_many = array(
+		'matches_teams_users' => array(
+			'model' => 'Match_Team_User'
+		),
+	);
 
 	public static function populate($remote_heroes, $update)
 	{
@@ -15,20 +19,20 @@ class Model_Hero extends Model_Database {
 
 		foreach ($remote_heroes as $remote_hero)
 		{
-			$hero = self::find($remote_hero->id);
+			$hero = ORM::factory('hero', $remote_hero->id);
 
 			$image = 'http://media.steampowered.com/apps/dota2/images/heroes/'.substr($remote_hero->name, 14).'_full.png';
 
-			if ($hero === FALSE)
+			if ( ! $hero->loaded())
 			{
 				$changes['added'][] = $remote_hero;
 
-				self::insert(array(
+				$hero->values(array(
 					'id'             => $remote_hero->id,
 					'name'           => $remote_hero->name,
 					'localized_name' => $remote_hero->localized_name,
 					'image'          => $image,
-				));
+				))->create();
 
 				Media_Hero::cache($remote_hero->id, $image);
 			}
@@ -36,17 +40,20 @@ class Model_Hero extends Model_Database {
 			{
 				foreach ($hero as $key => $value)
 				{
+					if (strpos($key, '_') === 0)
+						continue;
+
 					if ($remote_hero->{$key} != $value)
 					{
 						$changes['altered'][] = array('remote' => $remote_hero, 'local' => $hero);
 
 						if ($update == TRUE)
 						{
-							self::update($remote_hero->id, array(
+							$hero->values(array(
 								'name'           => $remote_hero->name,
 								'localized_name' => $remote_hero->localized_name,
 								'image'          => $image,
-							));
+							))->update();
 						}
 
 						break;
