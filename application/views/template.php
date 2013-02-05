@@ -4,7 +4,7 @@
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 
-<!-- Downloaded from www.scriptgates.com - go for more! -->
+
 <head>
 <meta charset="utf-8">
 <title><?php echo $title; ?></title>
@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="/assets/stylesheets/player.css" />
 <link rel="stylesheet" href="/assets/stylesheets/fancybox.css" />
 
-<link rel="stylesheet" type="text/css" href="/assets/stylesheets/color.css" title="styles7" media="screen" />
+<link rel="stylesheet" type="text/css" href="/assets/stylesheets/color.css" title="styles2" media="screen" />
 
 <link rel="alternate stylesheet" type="text/css" href="/assets/stylesheets/blue.css" title="styles2" media="screen" />
 
@@ -84,31 +84,11 @@
                             </div>
                         </li>
                         <li>
-                            <a href="javascript:animatedcollapse.toggle('login-box')" class="colr">Prijava</a>
-                            <div id="login-box">
-                                <h4 class="white backcolr">User Login <a href="javascript:animatedcollapse.hide('login-box')" class="closeit">&nbsp;</a></h4>
-                                <ul>
-                                    <li>
-                                        <input name="" value="yourname@email.com"
-                                        onfocus="if(this.value=='yourname@email.com') {this.value='';}"
-                                        onblur="if(this.value=='') {this.value='yourname@email.com';}"   type="text" class="bar" />
-                                    </li>
-                                    <li>
-                                        <input name="" value="password"
-                                        onfocus="if(this.value=='password') {this.value='';}"
-                                        onblur="if(this.value=='') {this.value='password';}"   type="password" class="bar" />
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="left" />
-                                        <p>Remember me</p>
-                                        <a href="#" class="right">Forget Password?</a>
-                                    </li>
-                                    <li>
-                                        <button class="backcolrhover">Login</button>
-                                    </li>
-                                </ul>
-                                <div class="clear"></div>
-                            </div>
+                            <?php if(!Steam::logged_in()):?>
+                            <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a>
+							<?php else:?>
+                            <a href="/odjava" class="colr">Odjava</a><?php endif;?>
+                           
                         </li>
                     </ul>
                     <!-- Top Links End -->
@@ -170,11 +150,12 @@
         	<!-- Footer Left Start -->
             <div class="ft-left">
             	<h4><a href="#" class="colr">Brzi pregled</a></h4>
-                <ul class="links">
-                	<li><a href="#">Početna</a></li>
-                    <li><a href="/webteam">Tim</a></li>
+                <ul class="links"> 
+                    <li><a href="/site/webteam">Tim</a></li>
                     <li><a href="/advertisments">Oglašavanje</a></li>
-                    <li><a href="/api">API</a></li>
+                    <li><a href="/site/api">API</a></li>
+                    <li><a href="/site/privacy">Privacy</a></li>
+                    <li><a href="/site/terms">Terms</a></li>
                     <li><a href="/changelog?setVrID=latest&order=VrID">Changelog</a></li>
           
                 </ul>

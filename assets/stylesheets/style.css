@@ -2359,6 +2359,37 @@ li:hover .gal-caption{
 	display:inline-block;
 	background:url(../images/gotop.png) no-repeat;
 }
+
+/* STEAM
+================================================== */
+.SteamSITSLarge {
+	display: block;
+	width: 250px;
+	height: 70px;
+	background: url(../images/UI/SteamSITSLargeBlue.png) bottom;
+	text-indent: -99999px;
+
+ }
+
+ .SteamSITSLarge:hover {
+ background-position: 0 0;
+ background: url(../images/UI/SteamSITSLargeDark.png) bottom;
+ }
+
+.SteamSITSSmall {
+	display: block;
+	width: 165px;
+	height: 35px;
+	top: -255px;
+	background: url(../images/UI/SteamSITSSmallBlue.png) bottom;
+	text-indent: -99999px;
+
+ }
+
+ .SteamSITSSmall:hover {
+ background-position: 0 0;
+ background: url(../images/UI/SteamSITSSmallDark.png) bottom;
+ }
 /*
 =======================================================================
 	Stylesheet Switcher Rules
