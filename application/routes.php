@@ -34,3 +34,9 @@ Route::set('default', '(<action>)')
 		'controller' => 'pages',
 		'action'     => 'home',
 	));
+	
+Route::set('search', '<action>')
+	->defaults(array(
+		'controller' => 'search',
+		'action' 	 => 'index',
+));

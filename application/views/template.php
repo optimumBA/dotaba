@@ -77,10 +77,16 @@
                         <li>
                             <h4 class="colr">Pretraga</h4>
                             <div id="search-box">
-                                <input name="" value="Unesite pojam za pretragu"
-                                onfocus="if(this.value=='Enter any keyword') {this.value='';}"
-                                onblur="if(this.value=='') {this.value='Enter any keyword';}" type="text" class="bar" />
+                                <form id="searchbox" class="" action="/pretraga">
+                                <input name="q" value="Unesite pojam za pretragu" type="text" class="bar input-medium search-query" />
                                 <button>Traži</button>
+                                </form>
+								<script type="text/javascript">
+$(".js-search-action").on("click", function() {
+$("form.navbar-search").submit();
+});
+
+</script>
                             </div>
                         </li>
                         <li>
