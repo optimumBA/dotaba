@@ -12,13 +12,13 @@ Route::set('article', 'novosti/<id>-<title>(/<action>)', array('id' => '\d+', 't
 		'action'     => 'view',
 	));
 
-Route::set('videos', 'vod/snimci(/<action>)(/<page>)', array('action' => 'dodaj', 'page' => '\d+'))
+Route::set('videos', 'vods/snimci(/<action>)(/<page>)', array('action' => 'dodaj', 'page' => '\d+'))
 	->defaults(array(
 		'controller' => 'videos',
 		'action'     => 'index',
 	));
 
-Route::set('video', 'vod/snimci/<id>-<name>(/<action>)', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
+Route::set('video', 'vods/snimci/<id>-<name>(/<action>)', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
 	->defaults(array(
 		'controller' => 'videos',
 		'action'     => 'view',

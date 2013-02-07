@@ -124,16 +124,21 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                     <!-- Latest Videos Start -->
                 	<div class="latest-videos">
                     	<h1 class="heading colr">Posljednji snimci</h1>
-                        <div class="video">
-                        	<iframe height="231" src="http://www.youtube.com/embed/_LmAcfO9lyg" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <div class="desc">
-                        	<h4><a href="blog-detail.html" class="white">Smile Dip (Dave Barnes)</a></h4>
+                       <?php $videos = ORM::factory('video')->order_by('created_at', 'DESC')->limit(2)->find_all(); 
+					   foreach($videos as $video) {
+					   echo' <div class="desc">
+                        	<h4><a href="/vods/snimci/'.$video->id.'-'.URL::title($video->name).'" class="white">'.$video->name.'</a></h4>
                             <p>
-                            	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tellus orci, semper et ornare dictum, varius ut tellus.
+                            	'.$video->description.'
                             </p>
-                            <a href="blog-detail.html" class="buttonone">Pogledaj sve snimke</a>
+                            
                         </div>
+                        <div class="video">
+                        	<iframe height="231" src="http://www.youtube.com/embed/'.$video->vid.'" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                       ';}
+                   ?>
+                   <a href="/vods/snimci" class="buttonone">Pogledaj sve snimke</a>
                     </div>
                     <!-- Latest Videos End -->
                 

@@ -2,6 +2,13 @@
 
 class Controller_Videos extends Controller_Application {
 
+	public function before()
+	{
+		$this->_layout	= 'VodsVideo';
+	}
+	
+	
+	
 	public function action_index()
 	{
 		$videos = ORM::factory('video')
@@ -9,8 +16,8 @@ class Controller_Videos extends Controller_Application {
 			->find_all();
 
 		$this->_title 	= 'Snimci';
-		$this->_content = View::factory('videos/index')
-			->set('videos', $videos);
+		$this->_content = View::factory('vods/videos/index')
+						->set('videos', $videos);
 	}
 
 
@@ -21,8 +28,8 @@ class Controller_Videos extends Controller_Application {
 		if ($video->loaded())
 		{
 			$this->_title 	= $video->name;
-			$this->_content = View::factory('videos/view')
-				->set('video', $video);
+			$this->_content = View::factory('vods/videos/view')
+							->set('video', $video);
 		}
 	}
 
@@ -38,8 +45,8 @@ class Controller_Videos extends Controller_Application {
 					$this->_post['created_at'] = DB::expr('NOW()');
 
 					$video = ORM::factory('video')
-						->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
-						->create();
+							->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
+							->create();
 
 					HTTP::redirect('vod/snimci/'.$video->id.'-'.URL::title($video->name));
 				}
@@ -50,9 +57,9 @@ class Controller_Videos extends Controller_Application {
 			}
 
 			$this->_title   = 'Dodaj snimak';
-			$this->_content = View::factory('videos/dodaj')
-				->set('values', $this->_post)
-				->set('errors', ($errors) ? $errors : array());
+			$this->_content = View::factory('vods/videos//dodaj')
+							->set('values', $this->_post)
+							->set('errors', ($errors) ? $errors : array());
 		}
 	}
 
@@ -82,9 +89,9 @@ class Controller_Videos extends Controller_Application {
 
 			$this->_title   = 'Izmijeni snimak - '.$video->name;
 			$this->_content = View::factory('videos/izmijeni')
-				->set('values', (empty($this->_post)) ? $video->as_array() : $this->_post)
-				->set('errors', ($errors) ? $errors : array())
-				->set('video', $video);
+							->set('values', (empty($this->_post)) ? $video->as_array() : $this->_post)
+							->set('errors', ($errors) ? $errors : array())
+							->set('video', $video);
 		}
 	}
 
