@@ -29,14 +29,14 @@ Route::set('users', '<action>', array('action' => 'prijava|odjava'))
 		'controller' => 'users',
 	));
 
+Route::set('search', 'pretraga')
+	->defaults(array(
+		'controller' => 'search',
+		'action' 	 => 'index',
+	));
+
 Route::set('default', '(<action>)')
 	->defaults(array(
 		'controller' => 'pages',
 		'action'     => 'home',
 	));
-	
-Route::set('search', '<action>')
-	->defaults(array(
-		'controller' => 'search',
-		'action' 	 => 'index',
-));
