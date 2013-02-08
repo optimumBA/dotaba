@@ -66,6 +66,11 @@ abstract class Media {
 		$filename = static::filename($id);
 		$full     = static::path().$filename.'_full.'.static::extension();
 
+		static::save($full, $image);
+	}
+
+	public static function save($full, $image)
+	{
 		if (file_put_contents($full, $image) !== FALSE AND @getimagesize($full))
 		{
 			Image::factory($full)
