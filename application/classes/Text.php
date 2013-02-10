@@ -26,12 +26,4 @@ class Text extends Kohana_Text {
 		return $str;
 	}
 
-	public static function convert_to_number($string)
-	{
-		$string = str_replace(',', '', $string);
-		$map = array('' => 1, 'k' => 1000, 'm' => 1000000);
-		list($value, $suffix) = sscanf($string, '%f%s');
-		return $value * $map[$suffix];
-	}
-
 }
