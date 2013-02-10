@@ -34,7 +34,7 @@ class Controller_Users extends Controller_Application {
 
 			$user->values($values)->create();
 
-			Media_Avatar::cache($user->id, $values['avatar']);
+			Media_Remote_Avatar::cache($user->id, $values['avatar']);
 		}
 
 		Session::instance()->set('user', $user);

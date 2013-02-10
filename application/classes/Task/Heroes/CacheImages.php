@@ -10,7 +10,7 @@ class Task_Heroes_CacheImages extends Minion_Task {
 
 		foreach ($heroes as $hero)
 		{
-			Media_Hero::cache($hero->id, $hero->image);
+			Media_Remote_Hero::cache($hero->id, $hero->image);
 		}
 	}
 

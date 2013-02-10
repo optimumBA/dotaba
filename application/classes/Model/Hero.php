@@ -34,7 +34,7 @@ class Model_Hero extends ORM {
 					'image'          => $image,
 				))->create();
 
-				Media_Hero::cache($remote_hero->id, $image);
+				Media_Remote_Hero::cache($remote_hero->id, $image);
 			}
 			else
 			{

@@ -8,7 +8,7 @@ class Task_Items_CacheImages extends Minion_Task {
 
 		foreach ($items as $item)
 		{
-			Media_Item::cache($item->id, $item->image);
+			Media_Remote_Item::cache($item->id, $item->image);
 		}
 	}
 

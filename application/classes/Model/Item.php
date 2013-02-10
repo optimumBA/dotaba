@@ -38,7 +38,7 @@ class Model_Item extends ORM {
 					'image'          => $image,
 				))->create();
 
-				Media_Item::cache($remote_item->id, $image);
+				Media_Remote_Item::cache($remote_item->id, $image);
 			}
 			else
 			{

@@ -28,15 +28,21 @@ abstract class Media {
 	{
 		if ( ! static::$type)
 		{
-			static::$type = Inflector::plural(strtolower(substr(get_called_class(), 6)));
+			$class = explode('_', get_called_class());
+			static::$type = Inflector::plural(strtolower(array_pop($class)));
 		}
 
 		return static::$type;
 	}
 
-	protected static function suffix($size)
+	protected static function suffix($type)
 	{
-		return ($size === 'medium' || $size === 'full') ? '_'.$size : NULL;
+		if ( ! in_array($type, array_keys(static::$types)))
+		{
+			$type = 'default';
+		}
+
+		return static::$types[$type]['suffix'];
 	}
 
 	protected static function path()
@@ -59,48 +65,11 @@ abstract class Media {
 		return sha1($id);
 	}
 
-	public static function cache($id, $url)
-	{
-		$image = Request::factory($url)->execute()->body();
-
-		$filename = static::filename($id);
-		$full     = static::path().$filename.'_full.'.static::extension();
-
-		if (file_put_contents($full, $image) !== FALSE AND @getimagesize($full))
-		{
-			Image::factory($full)
-				->resize(64)
-				->save(static::path().$filename.'_medium.'.static::extension());
-
-			Image::factory($full)
-				->resize(32)
-				->save(static::path().$filename.'.'.static::extension());
-		}
-	}
-
-	public static function get($id, $url, $size = NULL)
-	{
-		$suffix = static::suffix($size);
-		$path   = static::path().static::filename($id).$suffix.'.'.static::extension();
-
-		if (file_exists($path))
-		{
-			$url = '/'.str_replace(DIRECTORY_SEPARATOR, '/', $path);
-		}
-		else
-		{
-			$url = str_replace('_full', $suffix, $url);
-		}
-
-		return $url;
-	}
-
 	public static function remove($id)
 	{
 		$filename = static::filename($id);
-		$suffixes = ['', '_medium', '_full'];
 
-		foreach ($suffixes as $suffix)
+		foreach (static::$types as $suffix)
 		{
 			$path = static::path().$filename.$suffix.'.'.static::extension();
 
