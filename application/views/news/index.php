@@ -57,7 +57,7 @@
 	Trenutno nema novosti.
 <?php endif; ?>
 
-<?php /*echo $pagination;*/ ?>
+<?php echo $pagination; ?>
 
    
                     </div>

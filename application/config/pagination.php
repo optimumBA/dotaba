@@ -2,7 +2,7 @@
 
 return array(
 	'default' => array(
-		'current_page'      => array('source' => 'route', 'key' => 'page_num'),
+		'current_page'      => array('source' => 'route', 'key' => 'page'),
 		'total_items'       => 0,
 		'items_per_page'    => 5,
 		'view'              => 'pagination/basic',

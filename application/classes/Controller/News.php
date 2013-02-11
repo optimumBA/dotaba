@@ -9,13 +9,22 @@ class Controller_News extends Controller_Application {
 
 	public function action_index()
 	{
+		$count = ORM::factory('news')->count_all();
+
+		$pagination = Pagination::factory(array(
+			'total_items' => $count,
+		));
+
 		$news = ORM::factory('news')
 			->order_by('created_at', 'DESC')
+			->limit($pagination->items_per_page)
+			->offset($pagination->offset)
 			->find_all();
 
 		$this->_title 	= 'Novosti';
 		$this->_content = View::factory('news/index')
-			->set('news', $news);
+			->set('news', $news)
+			->set('pagination', $pagination);
 	}
 
 
