@@ -95,4 +95,15 @@ class Controller_Videos extends Controller_Application {
 		}
 	}
 
+	public function action_home()
+	{
+		$videos 			= ORM::factory('video')
+							->order_by('created_at', 'DESC')
+							->find_all();
+		
+		$this->_title		= 'Vods';
+		$this->_content		= View::factory('vods/index')
+							->set('videos', $videos);	
+	}
+
 }

@@ -12,6 +12,12 @@ Route::set('article', 'novosti/<id>-<title>(/<action>)', array('id' => '\d+', 't
 		'action'     => 'view',
 	));
 
+Route::set('vods', 'vods')
+	->defaults(array(
+		'controller' => 'videos',
+		'action'	 => 'home',
+	));
+
 Route::set('videos', 'vods/snimci(/<action>)(/<page>)', array('action' => 'dodaj', 'page' => '\d+'))
 	->defaults(array(
 		'controller' => 'videos',
