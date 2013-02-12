@@ -2,6 +2,10 @@
 
 class Model_User extends ORM {
 
+	protected $_belongs_to = array(
+		'clan' => array(),
+	);
+
 	protected $_has_many = array(
 		'matches_teams' => array(
 			'model'   => 'Match_Team',
