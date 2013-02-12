@@ -10,6 +10,9 @@ class Model_Clan extends ORM {
 	);
 
 	protected $_has_many = array(
+		'matches_teams' => array(
+			'model' => 'Match_Team',
+		),
 		'users' => array(),
 	);
 

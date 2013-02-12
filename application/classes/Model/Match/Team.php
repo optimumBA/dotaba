@@ -5,6 +5,7 @@ class Model_Match_Team extends ORM {
 	protected $_table_name = 'matches_teams';
 
 	protected $_belongs_to = array(
+		'clan'  => array(),
 		'match' => array(),
 		'team'  => array(),
 	);
