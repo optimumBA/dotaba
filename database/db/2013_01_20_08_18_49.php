@@ -17,7 +17,7 @@ class Migration_2013_01_20_08_18_49 extends MpmMigration
 	{
 		$pdo->exec("ALTER TABLE `dotaba_users`
 			DROP `location`,
-			ADD `location` varchar(75) DEFAULT NULL AFTER `name`,,
+			ADD `location` varchar(75) DEFAULT NULL AFTER `name`,
 			DROP `avatar`,
 			ADD `avatar` varchar(255) DEFAULT NULL AFTER `profileurl`,
 			DROP `status`;");
