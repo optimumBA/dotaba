@@ -75,8 +75,7 @@ class Controller_Videos extends Controller_Application {
 				{
 					$this->_post['updated_at'] = DB::expr('NOW()');
 
-					$video = ORM::factory('video')
-						->values($this->_post, array('vid', 'name', 'description', 'updated_at'))
+					$video->values($this->_post, array('vid', 'name', 'description', 'updated_at'))
 						->update();
 
 					HTTP::redirect('vod/snimci/'.$video->id.'-'.URL::title($video->name));
