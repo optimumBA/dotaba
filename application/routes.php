@@ -42,7 +42,7 @@ Route::set('clan', 'liga/klanovi/<id>-<title>(/<action>)', array('id' => '\d+', 
 		'action'     => 'view',
 	));
 
-Route::set('videos', 'liga/turniri(/<action>)(/<page>)', array('action' => 'organiziraj', 'page' => '\d+'))
+Route::set('tournaments', 'liga/turniri(/<action>)(/<page>)', array('action' => 'organiziraj', 'page' => '\d+'))
 	->defaults(array(
 		'controller' => 'tournaments',
 		'action'     => 'index',
