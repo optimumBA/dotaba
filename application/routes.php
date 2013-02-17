@@ -30,7 +30,7 @@ Route::set('video', 'vods/snimci/<id>-<name>(/<action>)', array('id' => '\d+', '
 		'action'     => 'view',
 	));
 
-Route::set('clans', 'liga/klanovi(/<page>)', array('page' => '\d+'))
+Route::set('clans', 'liga/klanovi(/<action>)(/<page>)', array('action' => 'napravi', 'page' => '\d+'))
 	->defaults(array(
 		'controller' => 'clans',
 		'action'     => 'index',

@@ -19,4 +19,25 @@ class Model_Clan extends ORM {
 		),
 	);
 
+	public function labels()
+	{
+		return array(
+			'name' => 'naziv',
+		);
+	}
+
+	public function rules()
+	{
+		return array(
+			'name' => array(
+				array('not_empty'),
+				array('max_length', array(':value', 255)),
+			),
+			'tag' => array(
+				array('not_empty'),
+				array('max_length', array(':value', 15)),
+			),
+		);
+	}
+
 }

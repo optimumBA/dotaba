@@ -38,4 +38,65 @@ class Controller_Clans extends Controller_Application {
 		}
 	}
 
+	public function action_napravi()
+	{
+		if ($this->_user)
+		{
+			if ($this->_post)
+			{
+				try
+				{
+					$this->_post['lord_id']    = $this->_user->id;
+					$this->_post['created_at'] = DB::expr('NOW()');
+
+					$clan = ORM::factory('clan')
+						->values($this->_post, array('name', 'tag', 'lord_id', 'created_at'))
+						->create();
+
+					HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				}
+				catch (ORM_Validation_Exception $e)
+				{
+					$errors = $e->errors('models');
+				}
+			}
+
+			$this->_title   = 'Napravi klan';
+			$this->_content = View::factory('clans/napravi')
+				->set('values', $this->_post)
+				->set('errors', ($errors) ? $errors : array());
+		}
+	}
+
+	public function action_izmijeni()
+	{
+		$clan = ORM::factory('clan', $this->request->param('id'));
+
+		if ($clan->loaded() AND $this->_user AND $this->_user->has('clans', $clan))
+		{
+			if ($this->_post)
+			{
+				try
+				{
+					$this->_post['updated_at'] = DB::expr('NOW()');
+
+					$clan->values($this->_post, array('name', 'tag', 'updated_at'))
+						->update();
+
+					HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				}
+				catch (ORM_Validation_Exception $e)
+				{
+					$errors = $e->errors('models');
+				}
+			}
+
+			$this->_title   = 'Izmijeni turnir - '.$clan->name;
+			$this->_content = View::factory('clans/izmijeni')
+				->set('values', (empty($this->_post)) ? $clan->as_array() : $this->_post)
+				->set('errors', ($errors) ? $errors : array())
+				->set('clan', $clan);
+		}
+	}
+
 }
