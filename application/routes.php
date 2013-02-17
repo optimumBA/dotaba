@@ -42,6 +42,18 @@ Route::set('clan', 'liga/klanovi/<id>-<title>(/<action>)', array('id' => '\d+', 
 		'action'     => 'view',
 	));
 
+Route::set('videos', 'liga/turniri(/<action>)(/<page>)', array('action' => 'organiziraj', 'page' => '\d+'))
+	->defaults(array(
+		'controller' => 'tournaments',
+		'action'     => 'index',
+	));
+
+Route::set('tournament', 'liga/turniri/<id>-<title>(/<action>)', array('id' => '\d+', 'title' => '[a-zA-Z0-9_-]+'))
+	->defaults(array(
+		'controller' => 'tournaments',
+		'action'     => 'view',
+	));
+
 Route::set('users', '<action>', array('action' => 'prijava|odjava'))
 	->defaults(array(
 		'controller' => 'users',

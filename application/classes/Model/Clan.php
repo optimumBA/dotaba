@@ -14,6 +14,9 @@ class Model_Clan extends ORM {
 			'model' => 'Match_Team',
 		),
 		'users' => array(),
+		'tournaments' => array(
+			'through' => 'clans_tournaments',
+		),
 	);
 
 }
