@@ -16,6 +16,9 @@ class Model_User extends ORM {
 			'model'   => 'Match_Team',
 			'through' => 'matches_teams_users',
 		),
+		'roles'         => array(
+			'through' => 'roles_users',
+		),
 		'videos'        => array(),
 	);
 
