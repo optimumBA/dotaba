@@ -1,11 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Task_Matches_Process extends Minion_Task {
+class Task_Matches_Update extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
 		$matches = ORM::factory('match')
-			->where('radiant_win', 'IS', NULL)
+			->where('updated_at', '<', DB::expr('DATE_SUB(NOW(), INTERVAL 7 DAY)'))
 			->find_all();
 
 		foreach ($matches as $match)

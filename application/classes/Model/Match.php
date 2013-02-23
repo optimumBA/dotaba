@@ -3,79 +3,64 @@
 class Model_Match extends ORM {
 
 	protected $_belongs_to = array(
-		'mode'   => array(),
-		'type'   => array(),
-		'winner' => array(
+		'radiant_clan' => array(
+			'model'       => 'Clan',
+			'foreign_key' => 'radiant_clan',
+		),
+		'dire_clan' => array(
+			'model'       => 'Clan',
+			'foreign_key' => 'dire_clan',
+		),
+		'mode'         => array(),
+		'type'         => array(),
+		'winner'       => array(
 			'model'       => 'Team',
 			'foreign_key' => 'winner_id',
+		),
+	);
+
+	protected $_has_many = array(
+		'slots' => array(),
+		'users' => array(
+			'through' => 'slots',
 		),
 	);
 
 	public static function match_details($id)
 	{
 		$match = ORM::factory('match')
-			->with('winner')
+			->with('type')
+			->with('tournament')
+			->with('radiant_clan')
+			->with('dire_clan')
 			->with('mode')
-			->find($id)
-			->as_array();
+			->find($id);
 
-		$teams = ORM::factory('match_team')
-			->with('team')
-			->where('match_id', '=', $match['id'])
+		$slots = $match->slots
+			->with('user')
+			->with('hero')
+			->with('item_0')
+			->with('item_1')
+			->with('item_2')
+			->with('item_3')
+			->with('item_4')
+			->with('item_5')
 			->find_all();
 
-		for ($i = 0; $i < count($teams); $i++)
+		$match = $match->as_array();
+
+		foreach ($slots as $slot)
 		{
-			$match['teams'][$i] = $teams[$i]->as_array();
-			$players = ORM::factory('match_team_user')
-				->with('user')
-				->with('hero')
-				->where('match_team_id', '=', $match['teams'][$i]['id'])
-				->find_all();
-
-			for ($j = 0; $j < count($players); $j++)
-			{
-				$match['teams'][$i]['players'][$j] = $players[$j]->as_array();
-				$items = ORM::factory('match_team_user_item')
-					->with('item')
-					->where('match_team_user_id', '=', $match['teams'][$i]['players'][$j]['id'])
-					->find_all();
-
-				for ($k = 0; $k < count($items); $k++)
-				{
-					$match['teams'][$i]['players'][$j]['items'][$k] = $items[$k]->as_array();
-				}
-
-				unset($items);
-			}
-
-			unset($players);
+			$match['slots'][] = $slot->as_array();
 		}
 
-		unset($teams);
+		unset($slots);
 
 		return json_decode(json_encode($match));
 	}
 
 	public static function process($id, $result)
 	{
-		$players = array();
-		$users   = array();
-
-		foreach ($result->players as $player)
-		{
-			if ($player->player_slot < 0 OR $player->player_slot > 4 AND $player->player_slot < 128 OR $player->player_slot > 132)
-				continue;
-
-			$user = ORM::factory('user', array('accountid' => $player->account_id));
-
-			if ( ! $user->loaded())
-				ORM::factory('user')->values(array('accountid' => $player->account_id))->create();//return FALSE;
-
-			$players[] = $player;
-			$users[]   = $user;
-		}
-
 		$db = Database::instance();
 
 		try
@@ -84,68 +69,69 @@ class Model_Match extends ORM {
 
 			$match = ORM::factory('match', $id)
 				->values(array(
-					'winner_id'        => ($result->radiant_win === TRUE) ? 1 : 2,
-					'mode_id'          => $result->game_mode,
-					'duration'         => $result->duration,
-					'first_blood_time' => $result->first_blood_time,
-					'date'             => date('Y-m-d H:i:s', $result->start_time),
+					'mode_id'                 => $result->game_mode,
+					'cluster'                 => $result->cluster,
+					'radiant_win'             => $result->radiant_win,
+					'tower_status_radiant'    => $result->tower_status_radiant,
+					'tower_status_dire'       => $result->tower_status_dire,
+					'barracks_status_radiant' => $result->barracks_status_radiant,
+					'barracks_status_dire'    => $result->barracks_status_dire,
+					'human_players'           => $result->human_players,
+					'duration'                => $result->duration,
+					'first_blood_time'        => $result->first_blood_time,
+					'date'                    => date('Y-m-d H:i:s', $result->start_time),
+					'updated_at'              => DB::expr('NOW()'),
 				))->update();
 
-			$match_team[1] = ORM::factory('match_team')
-				->values(array(
-					'match_id'        => $id,
-					'team_id'         => 1,
-					'tower_status'    => $result->tower_status_radiant,
-					'barracks_status' => $result->barracks_status_radiant,
-				))->create();
-
-			$match_team[2] = ORM::factory('match_team')
-				->values(array(
-					'match_id'        => $id,
-					'team_id'         => 2,
-					'tower_status'    => $result->tower_status_dire,
-					'barracks_status' => $result->barracks_status_dire,
-				))->create();
-
-			for ($i = 0; $i < count($players); $i++)
+			foreach ($result->players as $player)
 			{
-				$team_id = ($players[$i]->player_slot <= 4) ? 1 : 2;
+				$user = ORM::factory('user', array('accountid' => $player->account_id));
 
-				$match_team_user = ORM::factory('match_team_user')
-					->values(array(
-						'match_team_id' => $match_team[$team_id]->id,
-						'user_id'       => $users[$i]->id,
-						'player_slot'   => $players[$i]->player_slot,
-						'hero_id'       => $players[$i]->hero_id,
-						'kills'         => $players[$i]->kills,
-						'deaths'        => $players[$i]->deaths,
-						'assists'       => $players[$i]->assists,
-						'leaver_status' => $players[$i]->leaver_status,
-						'gold'          => $players[$i]->gold,
-						'last_hits'     => $players[$i]->last_hits,
-						'denies'        => $players[$i]->denies,
-						'gold_per_min'  => $players[$i]->gold_per_min,
-						'xp_per_min'    => $players[$i]->xp_per_min,
-						'gold_spent'    => $players[$i]->gold_spent,
-						'hero_damage'   => $players[$i]->hero_damage,
-						'tower_damage'  => $players[$i]->tower_damage,
-						'hero_healing'  => $players[$i]->hero_healing,
-						'level'         => $players[$i]->level,
-					))->create();
+				if ( ! $user->loaded())
+					continue;
 
-				for ($j = 0; $j <= 5; $j++)
+				$values = array(
+					'player_slot'   => $player->player_slot,
+					'hero_id'       => $player->hero_id,
+					'item_0'        => $player->item_0,
+					'item_1'        => $player->item_1,
+					'item_2'        => $player->item_2,
+					'item_3'        => $player->item_3,
+					'item_4'        => $player->item_4,
+					'item_5'        => $player->item_5,
+					'kills'         => $player->kills,
+					'deaths'        => $player->deaths,
+					'assists'       => $player->assists,
+					'leaver_status' => $player->leaver_status,
+					'gold'          => $player->gold,
+					'last_hits'     => $player->last_hits,
+					'denies'        => $player->denies,
+					'gold_per_min'  => $player->gold_per_min,
+					'xp_per_min'    => $player->xp_per_min,
+					'gold_spent'    => $player->gold_spent,
+					'hero_damage'   => $player->hero_damage,
+					'tower_damage'  => $player->tower_damage,
+					'hero_healing'  => $player->hero_healing,
+					'level'         => $player->level,
+				);
+
+				$slot = ORM::factory('slot', array(
+					'match_id' => $match->id,
+					'user_id'  => $user->id
+				));
+
+				if ($slot->loaded())
 				{
-					$item_id = $players[$i]->{'item_'.$j};
+					$slot->values($values)->update();
+				}
+				else
+				{
+					$values = array_merge($values, array(
+						'match_id' => $match->id,
+						'user_id'  => $user->id,
+					));
 
-					if ($item_id === 0)
-						continue;
-
-					ORM::factory('match_team_user_item')
-						->values(array(
-							'match_team_user_id' => $match_team_user->id,
-							'item_id'            => $item_id,
-							'slot'               => $j,
-						))->create();
+					$slot->values($values)->create();
 				}
 			}
 

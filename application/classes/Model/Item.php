@@ -3,12 +3,29 @@
 class Model_Item extends ORM {
 
 	protected $_has_many = array(
-		'matches_teams_users' => array(
-			'model'   => 'Match_Team_User',
-			'through' => 'matches_teams_users_items',
+		'slots_as_0' => array(
+			'model'       => 'Slot',
+			'foreign_key' => 'item_0',
 		),
-		'matches_teams_users_items' => array(
-			'model' => 'Match_Team_User_Item',
+		'slots_as_1' => array(
+			'model'       => 'Slot',
+			'foreign_key' => 'item_1',
+		),
+		'slots_as_2' => array(
+			'model'       => 'Slot',
+			'foreign_key' => 'item_2',
+		),
+		'slots_as_3' => array(
+			'model'       => 'Slot',
+			'foreign_key' => 'item_3',
+		),
+		'slots_as_4' => array(
+			'model'       => 'Slot',
+			'foreign_key' => 'item_4',
+		),
+		'slots_as_5' => array(
+			'model'       => 'Slot',
+			'foreign_key' => 'item_5',
 		),
 	);
 

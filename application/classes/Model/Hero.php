@@ -3,9 +3,7 @@
 class Model_Hero extends ORM {
 
 	protected $_has_many = array(
-		'matches_teams_users' => array(
-			'model' => 'Match_Team_User'
-		),
+		'slots' => array(),
 	);
 
 	public static function populate($remote_heroes, $update)

@@ -12,13 +12,10 @@ class Model_User extends ORM {
 			'model'       => 'Ban',
 			'foreign_key' => 'executioner_id',
 		),
-		'matches_teams' => array(
-			'model'   => 'Match_Team',
-			'through' => 'matches_teams_users',
-		),
 		'roles'         => array(
 			'through' => 'roles_users',
 		),
+		'slots'         => array(),
 		'videos'        => array(),
 	);
 

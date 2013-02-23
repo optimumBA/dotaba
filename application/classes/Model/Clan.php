@@ -10,8 +10,13 @@ class Model_Clan extends ORM {
 	);
 
 	protected $_has_many = array(
-		'matches_teams' => array(
-			'model' => 'Match_Team',
+		'matches_as_radiant' => array(
+			'model'       => 'Match',
+			'foreign_key' => 'radiant_clan',
+		),
+		'matches_as_dire' => array(
+			'model'       => 'Match',
+			'foreign_key' => 'dire_clan',
 		),
 		'users' => array(),
 		'tournaments' => array(

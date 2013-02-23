@@ -106,11 +106,11 @@ class Steam {
 		return $response->appnews->newsitems;
 	}
 
-	public static function match_results($match_id)
+	public static function match_results($match_id, $cached = TRUE)
 	{
 		$path = Kohana::$config->load('steam')->get('matches_path').DIRECTORY_SEPARATOR.$match_id.'.json';
 
-		if (file_exists($path))
+		if (file_exists($path) AND $cached === TRUE)
 		{
 			$response = file_get_contents($path);
 		}
@@ -120,6 +120,8 @@ class Steam {
 				->query(array('key' => self::api_key(), 'match_id' => $match_id))
 				->execute()
 				->body();
+
+			file_put_contents($path, $response);
 		}
 
 		$response = json_decode($response);
