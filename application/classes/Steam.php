@@ -200,5 +200,16 @@ class Steam {
 
 		return json_decode(json_encode($items));
 	}
+	
+	public static function userinfo($InfoType)
+	{
+		if(Steam::logged_in()) {
+		$user = ORM::factory('user', array($InfoType => Steam::id()))->find();
+		return $user->$InfoType;
+		
+		// Callback: Steam::userinfo('username');
+		}
+
+	}
 
 }

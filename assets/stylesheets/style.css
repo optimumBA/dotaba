@@ -1074,6 +1074,8 @@ ul.news-list li .desc p.post-opts a:hover{
 .alert {
 	padding: 8px 35px 8px 14px;
 	margin-bottom: 18px;
+	margin-left: 300px;
+	margin-right: 300px;
 	color: #c09853;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 	background-color: #fcf8e3;
@@ -1084,6 +1086,9 @@ ul.news-list li .desc p.post-opts a:hover{
 }
 .alert-heading {
 	color: inherit;
+}
+.alert-introtext {
+	font-style: strong;
 }
 .alert .close {
 	position: relative;
@@ -1671,7 +1676,60 @@ a.print{
 .inquiry form{
 	float:left;
 }
-/* Album Shelves
+
+/* Steam avatar
+================================================== */
+img.steam-avatar-small {
+	display:inline; 
+	float:inherit;
+	margin:0 15px 5px 0;
+	vertical-align:auto;
+	width:32px;
+	height:32px;
+	
+}
+/* Statusi
+================================================== */
+img.frame {
+	border: 1px solid rgba(0, 0, 0, 0.75);
+	background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.7);
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.6);
+	max-width: 98.8%;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
+}
+img.offline-status {
+	border: 1px solid #727272;
+	background: none repeat scroll 0% 0% #727272;
+	box-shadow: 0px 1px 5px #727272;
+	max-width: 98.8%;
+	padding: 3px;
+}
+img.default-status {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+	padding: 3px;
+}
+img.ingame-status {
+	border: 1px solid #81B900;
+	background: none repeat scroll 0% 0% #81B900;
+	box-shadow: 0px 1px 5px #81B900;
+	max-width: 98.8%;
+	padding: 3px;
+}
+.offline-status {
+	color:#727272;
+}
+.default-status {
+	color:#5CB1FE;
+}
+.ingame-status {
+	color:#81B900;
+}
+
+/* User team
 ================================================== */
 #album-shelves {
 	width:100%;

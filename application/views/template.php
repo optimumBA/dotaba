@@ -89,11 +89,14 @@ $("form.navbar-search").submit();
 </script>
                             </div>
                         </li>
-                        <li>
+                        
                             <?php if(!Steam::logged_in()):?>
-                            <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a>
+                           <li> <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a></li>
 							<?php else:?>
-                            <a href="/odjava" class="colr">Odjava</a><?php endif;?>
+                            <li><img class="steam-avatar-small offline-status" src="<?=Steam::userinfo('avatar');?>" title="<?=Steam::userinfo('username');?>-ov avatar"> <a href="#profil" class="offline-status"><?=Steam::userinfo('username');?></a></li>
+                           
+                            <li><a href="/odjava" class="colr">Odjava</a>
+							<?php endif;?>
                            
                         </li>
                     </ul>
@@ -139,8 +142,17 @@ $("form.navbar-search").submit();
                 <div class="clear"></div>
             </div>
             <!-- Container End -->
-        </div>
+       </div>
     </div>
+   
+
+	
+	 
+
+    <!-- Notification box -->
+  
+    <!-- Notification box End-->
+	  
     
     
  <?php echo $layout;?>
