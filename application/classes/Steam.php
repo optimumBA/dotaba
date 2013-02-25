@@ -106,6 +106,39 @@ class Steam {
 		return $response->appnews->newsitems;
 	}
 
+	public static function match_history($account_id, $date_min = NULL, $start_at_match_id = NULL, $matches_requested = 25)
+	{
+		$matches = array();
+
+		do {
+			$response = Request::factory('http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/');
+
+			$response->client()->options(CURLOPT_ENCODING, 'gzip');
+
+			$response = $response->query(array(
+				'key'               => self::api_key(),
+				'account_id'        => $account_id,
+				'date_min'          => $date_min,
+				'start_at_match_id' => $start_at_match_id,
+				'matches_requested' => $matches_requested,
+			))
+				->execute()
+				->body();
+
+			$response = json_decode($response);
+
+			$matches = array_merge($matches, $response->result->matches);
+
+			if ($response->result->results_remaining > 0)
+			{
+				$start_at_match_id = end($response->result->matches)->match_id;
+				sleep(1);
+			}
+		} while ($response->result->results_remaining > 0);
+
+		return $matches;
+	}
+
 	public static function match_results($match_id, $cached = TRUE)
 	{
 		$path = Kohana::$config->load('steam')->get('matches_path').DIRECTORY_SEPARATOR.$match_id.'.json';
