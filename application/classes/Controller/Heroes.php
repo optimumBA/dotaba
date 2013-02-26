@@ -4,6 +4,7 @@ class Controller_Heroes extends Controller_Application {
 
 	public function before()
 	{
+		parent::before();
 		$this->_layout	= 'heroes';
 	}
 	

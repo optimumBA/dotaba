@@ -204,7 +204,7 @@ class Steam {
 	public static function userinfo($InfoType)
 	{
 		if(Steam::logged_in()) {
-		$user = ORM::factory('user', array($InfoType => Steam::id()))->find();
+		$user = Session::instance()->get('user');
 		return $user->$InfoType;
 		
 		// Callback: Steam::userinfo('username');

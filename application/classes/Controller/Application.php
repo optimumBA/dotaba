@@ -6,7 +6,7 @@ abstract class Controller_Application extends Controller {
 
 	public function before()
 	{
-		$this->_post = Arr::map('Security::xss_clean', Arr::map('trim', $this->request->post()));
+		$this->_post = Arr::map('strip_tags', Arr::map('trim', $this->request->post()));
 		$this->_user = Session::instance()->get('user');
 	}
 

@@ -4,6 +4,7 @@ class Controller_Search extends Controller_Application {
 	
 	public function before()
 	{
+		parent::before();
 		$this->_layout	= 'search';
 	}
 	
