@@ -2,6 +2,12 @@
 
 class Controller_Clans extends Controller_Application {
 
+	public function before()
+	{
+		parent::before();
+		$this->_layout = 'news';
+	}
+
 	public function action_index()
 	{
 		$count = ORM::factory('clan')->count_all();
@@ -11,6 +17,7 @@ class Controller_Clans extends Controller_Application {
 		));
 
 		$clans = ORM::factory('clan')
+			->with('lord')
 			->order_by('created_at', 'DESC')
 			->limit($pagination->items_per_page)
 			->offset($pagination->offset)
@@ -53,6 +60,8 @@ class Controller_Clans extends Controller_Application {
 						->values($this->_post, array('name', 'tag', 'lord_id', 'created_at'))
 						->create();
 
+					$this->_user->values(array('clan_id' => $clan->id))->update();
+
 					HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
 				}
 				catch (ORM_Validation_Exception $e)
@@ -64,7 +73,7 @@ class Controller_Clans extends Controller_Application {
 			$this->_title   = 'Napravi klan';
 			$this->_content = View::factory('clans/napravi')
 				->set('values', $this->_post)
-				->set('errors', ($errors) ? $errors : array());
+				->set('errors', (isset($errors)) ? $errors : array());
 		}
 	}
 
@@ -72,7 +81,7 @@ class Controller_Clans extends Controller_Application {
 	{
 		$clan = ORM::factory('clan', $this->request->param('id'));
 
-		if ($clan->loaded() AND $this->_user AND $this->_user->has('clans', $clan))
+		if ($clan->loaded() AND $this->_user AND $clan->lord_id == $this->_user->id)
 		{
 			if ($this->_post)
 			{
@@ -80,7 +89,7 @@ class Controller_Clans extends Controller_Application {
 				{
 					$this->_post['updated_at'] = DB::expr('NOW()');
 
-					$clan->values($this->_post, array('name', 'tag', 'updated_at'))
+					$clan->values($this->_post, array('name', 'tag', 'lord_id', 'updated_at'))
 						->update();
 
 					HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
@@ -91,11 +100,21 @@ class Controller_Clans extends Controller_Application {
 				}
 			}
 
-			$this->_title   = 'Izmijeni turnir - '.$clan->name;
+			$users = $clan->users->find_all();
+
+			$users_array = array();
+
+			foreach ($users as $user)
+			{
+				$users_array[$user->id] = $user->username;
+			}
+
+			$this->_title   = 'Izmijeni klan - '.$clan->name;
 			$this->_content = View::factory('clans/izmijeni')
 				->set('values', (empty($this->_post)) ? $clan->as_array() : $this->_post)
-				->set('errors', ($errors) ? $errors : array())
-				->set('clan', $clan);
+				->set('errors', (isset($errors)) ? $errors : array())
+				->set('clan', $clan)
+				->set('users', $users_array);
 		}
 	}
 
