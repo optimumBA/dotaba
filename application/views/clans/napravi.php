@@ -7,5 +7,6 @@
 	<?php echo Form::input('tag', Arr::path($values, 'tag')); ?>
 	<?php echo Arr::path($errors, 'tag'); ?>
 
+	<?php echo Form::hidden('csrf', Security::token()); ?>
 	<?php echo Form::submit(NULL, 'Napravi'); ?>
 <?php echo Form::close(); ?>

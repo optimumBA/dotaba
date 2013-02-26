@@ -9,6 +9,18 @@ abstract class Controller_Application extends Controller {
 		$this->_post     = Arr::map('strip_tags', Arr::map('trim', $this->request->post()));
 		$this->_user     = Session::instance()->get('user');
 		$this->_messages = Session::instance()->get_once('messages', array());
+
+		if ($this->request->method === Request::POST AND ! Security::check($this->_post['csrf']))
+		{
+			$this->_messages[] = array(
+				'type'   => 'warning',
+				'values' => 'Samo probaj još jednom ako smiješ',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			$this->redirect();
+		}
 	}
 
 	public function after()

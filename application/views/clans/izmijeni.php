@@ -11,5 +11,6 @@
 	<?php echo Form::select('lord_id', $users, Arr::path($values, 'lord_id')); ?>
 	<?php echo Arr::path($errors, 'lord_id'); ?>
 
+	<?php echo Form::hidden('csrf', Security::token()); ?>
 	<?php echo Form::submit(NULL, 'Izmijeni'); ?>
 <?php echo Form::close(); ?>
