@@ -62,10 +62,22 @@ class Controller_Clans extends Controller_Application {
 
 					$this->_user->values(array('clan_id' => $clan->id))->update();
 
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Klan je uspješno napravljen.',
+					);
+
+					Session::instance()->set('messages', $this->_messages);
+
 					HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
 				}
 				catch (ORM_Validation_Exception $e)
 				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nepravilan unos.',
+					);
+
 					$errors = $e->errors('models');
 				}
 			}
@@ -92,10 +104,22 @@ class Controller_Clans extends Controller_Application {
 					$clan->values($this->_post, array('name', 'tag', 'lord_id', 'updated_at'))
 						->update();
 
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Klan je uspješno izmijenjen.',
+					);
+
+					Session::instance()->set('messages', $this->_messages);
+
 					HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
 				}
 				catch (ORM_Validation_Exception $e)
 				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nepravilan unos.',
+					);
+
 					$errors = $e->errors('models');
 				}
 			}

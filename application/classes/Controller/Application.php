@@ -2,12 +2,13 @@
 
 abstract class Controller_Application extends Controller {
 
-	protected $_title, $_content, $_post, $_layout = 'default', $_user;
+	protected $_title, $_content, $_post, $_layout = 'default', $_user, $_messages;
 
 	public function before()
 	{
-		$this->_post = Arr::map('strip_tags', Arr::map('trim', $this->request->post()));
-		$this->_user = Session::instance()->get('user');
+		$this->_post     = Arr::map('strip_tags', Arr::map('trim', $this->request->post()));
+		$this->_user     = Session::instance()->get('user');
+		$this->_messages = Session::instance()->get_once('messages', array());
 	}
 
 	public function after()
@@ -33,6 +34,7 @@ abstract class Controller_Application extends Controller {
 
 			$this->response->body(View::factory('template')
 				->set('title', $this->_title)
+				->set('messages', $this->_messages)
 				->set('layout', View::factory('layouts/'.$this->_layout, array('content' => $this->_content)))
 			);
 		}

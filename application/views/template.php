@@ -145,7 +145,9 @@ $("form.navbar-search").submit();
        </div>
     </div>
    
-
+    <?php foreach ($messages as $message): ?>
+        <div class="<?php echo $message['type']; ?>"><?php echo $message['value']; ?></div>
+    <?php endforeach ?>
 	
 	 
 
