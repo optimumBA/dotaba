@@ -38,6 +38,17 @@ class Controller_Users extends Controller_Application {
 		}
 
 		Session::instance()->set('user', $user);
+
+		$uri = Session::instance()->get('redirect');
+
+		if ($uri)
+		{
+			HTTP::redirect($uri);
+		}
+		else
+		{
+			HTTP::redirect();
+		}
 	}
 
 	public function action_odjava()

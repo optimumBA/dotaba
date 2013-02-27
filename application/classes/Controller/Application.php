@@ -10,7 +10,7 @@ abstract class Controller_Application extends Controller {
 		$this->_user     = Session::instance()->get('user');
 		$this->_messages = Session::instance()->get_once('messages', array());
 
-		if ($this->request->method === Request::POST AND ! Security::check($this->_post['csrf']))
+		if ($this->request->method() === Request::POST AND ! Security::check($this->_post['csrf']))
 		{
 			$this->_messages[] = array(
 				'type'   => 'warning',
@@ -20,6 +20,11 @@ abstract class Controller_Application extends Controller {
 			Session::instance()->set('messages', $this->_messages);
 
 			$this->redirect();
+		}
+
+		if ( ! $this->_user AND ( ! in_array($this->request->action(), array('provjera', 'prijava'))))
+		{
+			Session::instance()->set('redirect', $this->request->uri());
 		}
 	}
 

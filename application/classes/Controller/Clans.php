@@ -43,11 +43,15 @@ class Controller_Clans extends Controller_Application {
 				->set('clan', $clan)
 				->set('users', $users);
 		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Nepostojeći klan');
+		}
 	}
 
 	public function action_napravi()
 	{
-		if ($this->_user)
+		if ($this->_user AND $this->_user->clan_id === NULL)
 		{
 			if ($this->_post)
 			{
@@ -86,6 +90,30 @@ class Controller_Clans extends Controller_Application {
 			$this->_content = View::factory('clans/napravi')
 				->set('values', $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array());
+		}
+		elseif (isset($this->_user->clan_id))
+		{
+			$clan = ORM::factory('clan', $this->_user->clan_id);
+
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Već imaš klan.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+		}
+		else
+		{
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Moraš biti ulogovan/na da bi napravio/la klan.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('provjera');
 		}
 	}
 
@@ -139,6 +167,34 @@ class Controller_Clans extends Controller_Application {
 				->set('errors', (isset($errors)) ? $errors : array())
 				->set('clan', $clan)
 				->set('users', $users_array);
+		}
+		elseif ($clan->lord_id != $this->_user->id)
+		{
+			$clan = ORM::factory('clan', $this->_user->clan_id);
+
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Nisi lord ovog klana.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+		}
+		elseif ( ! $this->_user)
+		{
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Moraš biti ulogovan/na da bi izmijenio/la klan.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('provjera');
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Nepostojeći klan');
 		}
 	}
 
