@@ -31,8 +31,10 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_view()
 	{
-		$clan = ORM::factory('clan', $this->request->param('id'))
-			->with('lord');
+		$clan = ORM::factory('clan')
+			->with('lord')
+			->where('clan.id', '=', $this->request->param('id'))
+			->find();
 
 		if ($clan->loaded())
 		{
@@ -45,7 +47,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		else
 		{
-			throw HTTP_Exception::factory(404, 'Nepostojeći klan');
+			throw HTTP_Exception::factory(404, 'Klan nije pronađen.');
 		}
 	}
 
@@ -96,7 +98,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'error',
+				'type'  => 'warning',
 				'value' => 'Već imaš klan.',
 			);
 
@@ -107,7 +109,7 @@ class Controller_Clans extends Controller_Application {
 		else
 		{
 			$this->_messages[] = array(
-				'type'  => 'error',
+				'type'  => 'warning',
 				'value' => 'Moraš biti ulogovan/na da bi napravio/la klan.',
 			);
 
@@ -165,15 +167,14 @@ class Controller_Clans extends Controller_Application {
 			$this->_content = View::factory('clans/izmijeni')
 				->set('values', (empty($this->_post)) ? $clan->as_array() : $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array())
-				->set('clan', $clan)
 				->set('users', $users_array);
 		}
-		elseif ($clan->lord_id != $this->_user->id)
+		elseif ($clan->loaded() AND $clan->lord_id != $this->_user->id)
 		{
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'error',
+				'type'  => 'warning',
 				'value' => 'Nisi lord ovog klana.',
 			);
 
@@ -184,7 +185,7 @@ class Controller_Clans extends Controller_Application {
 		elseif ( ! $this->_user)
 		{
 			$this->_messages[] = array(
-				'type'  => 'error',
+				'type'  => 'warning',
 				'value' => 'Moraš biti ulogovan/na da bi izmijenio/la klan.',
 			);
 
@@ -194,7 +195,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		else
 		{
-			throw HTTP_Exception::factory(404, 'Nepostojeći klan');
+			throw HTTP_Exception::factory(404, 'Klan nije pronađen.');
 		}
 	}
 

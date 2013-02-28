@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-Route::set('news', 'novosti(/<page>)', array('page' => '\d+'))
+Route::set('news', 'novosti(/<action>)(/<page>)', array('action' => 'objavi', 'page' => '\d+'))
 	->defaults(array(
 		'controller' => 'news',
 		'action'     => 'index',

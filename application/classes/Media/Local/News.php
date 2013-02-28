@@ -7,6 +7,11 @@ class Media_Local_News extends Media_Local {
 	protected static $types = array(
 		'default' => array(
 			'suffix' => '',
+			'rules'  => array(
+				array('Upload::image'),
+				array('Upload::size', array(':value', '1M')),
+				array('Upload::type', array(':value', array('jpg', 'png'))),
+			),
 		),
 	);
 

@@ -17,6 +17,7 @@ class Controller_News extends Controller_Application {
 		));
 
 		$news = ORM::factory('news')
+			->with('user')
 			->order_by('created_at', 'DESC')
 			->limit($pagination->items_per_page)
 			->offset($pagination->offset)
@@ -31,13 +32,196 @@ class Controller_News extends Controller_Application {
 
 	public function action_view()
 	{
-		$article = ORM::factory('news', $this->request->param('id'));
+		$article = ORM::factory('news')
+			->with('user')
+			->where('news.id', '=', $this->request->param('id'))
+			->find();
 
 		if ($article->loaded())
 		{
 			$this->_title 	= $article->title;
 			$this->_content = View::factory('news/view')
 				->set('article', $article);
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Novost nije pronađena.');
+		}
+	}
+
+	public function action_objavi()
+	{
+		if ($this->_user AND $this->_user->has('roles', ORM::factory('role', array('name' => 'Novinar/ka'))))
+		{
+			if ($this->_post)
+			{
+				try
+				{
+					$files = Media_Local_News::validate($_FILES);
+
+					if ( ! is_uploaded_file($_FILES['default']['tmp_name']) OR $files->check())
+					{
+						$this->_post['user_id']    = $this->_user->id;
+						$this->_post['created_at'] = DB::expr('NOW()');
+
+						$article = ORM::factory('news')
+							->values($this->_post, array('title', 'content', 'user_id', 'source', 'url', 'created_at'))
+							->create();
+
+						Media_Local_News::save($article->id, $files);
+
+						$this->_messages[] = array(
+							'type'  => 'success',
+							'value' => 'Novost je objavljena.',
+						);
+
+						Session::instance()->set('messages', $this->_messages);
+
+						HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title));
+					}
+					else
+					{
+						$this->_messages[] = array(
+							'type'  => 'error',
+							'value' => 'Nepravilan unos.',
+						);
+
+						$errors = $files->errors('media');
+					}
+				}
+				catch (ORM_Validation_Exception $e)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nepravilan unos.',
+					);
+
+					$errors = $e->errors('models');
+				}
+			}
+
+			$this->_title   = 'Objavi novost';
+			$this->_content = View::factory('news/objavi')
+				->set('values', $this->_post)
+				->set('errors', (isset($errors)) ? $errors : array());
+		}
+		elseif ($this->_user)
+		{
+			$this->_messages[] = array(
+				'type'  => 'warning',
+				'value' => 'Nisi novinar/ka.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('novosti');
+		}
+		else
+		{
+			$this->_messages[] = array(
+				'type'  => 'warning',
+				'value' => 'Moraš biti ulogovan/na da bi objavio/la novost.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('provjera');
+		}
+	}
+
+	public function action_izmijeni()
+	{
+		$article = ORM::factory('news', $this->request->param('id'));
+
+		if ($article->loaded() AND $this->_user AND $this->_user->has('roles', ORM::factory('role', array('name' => 'Novinar/ka'))) AND $article->user_id == $this->_user->id)
+		{
+			if ($this->_post)
+			{
+				try
+				{
+					$files = Media_Local_News::validate($_FILES);
+
+					if ( ! is_uploaded_file($_FILES['default']['tmp_name']) OR $files->check())
+					{
+						$this->_post['updated_at'] = DB::expr('NOW()');
+
+						$article = ORM::factory('news')
+							->values($this->_post, array('title', 'content', 'source', 'url', 'updated_at'))
+							->create();
+
+						Media_Local_News::save($article->id, $files);
+
+						$this->_messages[] = array(
+							'type'  => 'success',
+							'value' => 'Novost je izmijenjena.',
+						);
+
+						Session::instance()->set('messages', $this->_messages);
+
+						HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title));
+					}
+					else
+					{
+						$this->_messages[] = array(
+							'type'  => 'error',
+							'value' => 'Nepravilan unos.',
+						);
+
+						$errors = $files->errors('media');
+					}
+				}
+				catch (ORM_Validation_Exception $e)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nepravilan unos.',
+					);
+
+					$errors = $e->errors('models');
+				}
+			}
+
+			$this->_title   = 'Izmijeni novost - '.$article->title;
+			$this->_content = View::factory('news/izmijeni')
+				->set('values', $this->_post)
+				->set('errors', (isset($errors)) ? $errors : array());
+		}
+		elseif ( ! $this->_user)
+		{
+			$this->_messages[] = array(
+				'type'  => 'warning',
+				'value' => 'Moraš biti ulogovan/na da bi izmijenio/la novost.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('provjera');
+		}
+		elseif ($article->loaded() AND $this->_user->id != $article->user_id)
+		{
+			$this->_messages[] = array(
+				'type'  => 'warning',
+				'value' => 'Nisi autor/ica ove novosti.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('novosti');
+		}
+		elseif ($article->loaded())
+		{
+			$this->_messages[] = array(
+				'type'  => 'warning',
+				'value' => 'Nisi novinar/ka.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('novosti');
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Novost nije pronađena.');
 		}
 	}
 

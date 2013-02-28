@@ -1,0 +1,27 @@
+<?php defined('SYSPATH') OR die('No direct script access.');
+
+return array(
+	'alpha'         => 'Polje ":field" može sadržavati samo slova.',
+	'alpha_dash'    => 'Polje ":field" može sadržavati samo slova, brojeve i crticu.',
+	'alpha_numeric' => 'Polje ":field" može sadržavati samo slova i brojeve.',
+	'color'         => 'Vrijednost polja ":field" mora biti boja.',
+	'credit_card'   => 'Polje ":field" mora sadržavati broj kreditne kartice.',
+	'date'          => 'Polje ":field" mora sadržavati validan datum.',
+	'decimal'       => 'Polje ":field" mora sadržavati decimalan broj sa :param2 decimale.',
+	'digit'         => 'Polje ":field" mora sadržavati cijeli broj.',
+	'email'         => 'Polje ":field" mora sadržavati email adresu.',
+	'email_domain'  => 'Polje ":field" imati validnu email domenu.',
+	'equals'        => 'Vrijednost polja ":field" mora biti jednaka :param2.',
+	'exact_length'  => 'Polje ":field" mora sadržavati tačno :param2 znakova.',
+	'in_array'      => 'Vrijednost polja ":field" mora biti jedna od ponuđenih opcija.',
+	'ip'            => 'Polje ":field" mora sadržavati IP adresu.',
+	'matches'       => 'Vrijednost polja ":field" mora biti jednaka vrijednosti polja ":param2".',
+	'min_length'    => 'Polje ":field" mora sadržavati najmanje :param2 znakova.',
+	'max_length'    => 'Polje ":field" može sadržavati najviše :param2 znakova.',
+	'not_empty'     => 'Polje ":field" mora biti popunjeno.',
+	'numeric'       => 'Polje ":field" mora sadržavati broj.',
+	'phone'         => 'Polje ":field" mora sadržavati broj telefona.',
+	'range'         => 'Vrijednost polja ":field" može biti između :param2 i :param3.',
+	'regex'         => 'Polje ":field" mora biti odgovarajućeg formata.',
+	'url'           => 'Polje ":field" mora sadržavati internetsku adresu.',
+);
