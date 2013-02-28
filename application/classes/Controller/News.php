@@ -116,17 +116,6 @@ class Controller_News extends Controller_Application {
 
 			HTTP::redirect('novosti');
 		}
-		else
-		{
-			$this->_messages[] = array(
-				'type'  => 'warning',
-				'value' => 'Moraš biti ulogovan/na da bi objavio/la novost.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('provjera');
-		}
 	}
 
 	public function action_izmijeni()
@@ -185,17 +174,6 @@ class Controller_News extends Controller_Application {
 			$this->_content = View::factory('news/izmijeni')
 				->set('values', $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array());
-		}
-		elseif ( ! $this->_user)
-		{
-			$this->_messages[] = array(
-				'type'  => 'warning',
-				'value' => 'Moraš biti ulogovan/na da bi izmijenio/la novost.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('provjera');
 		}
 		elseif ($article->loaded() AND $this->_user->id != $article->user_id)
 		{

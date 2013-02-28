@@ -106,17 +106,6 @@ class Controller_Clans extends Controller_Application {
 
 			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
 		}
-		else
-		{
-			$this->_messages[] = array(
-				'type'  => 'warning',
-				'value' => 'Moraš biti ulogovan/na da bi napravio/la klan.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('provjera');
-		}
 	}
 
 	public function action_izmijeni()
@@ -181,17 +170,6 @@ class Controller_Clans extends Controller_Application {
 			Session::instance()->set('messages', $this->_messages);
 
 			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
-		}
-		elseif ( ! $this->_user)
-		{
-			$this->_messages[] = array(
-				'type'  => 'warning',
-				'value' => 'Moraš biti ulogovan/na da bi izmijenio/la klan.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('provjera');
 		}
 		else
 		{

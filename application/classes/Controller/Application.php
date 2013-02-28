@@ -26,6 +26,18 @@ abstract class Controller_Application extends Controller {
 		{
 			Session::instance()->set('redirect', $this->request->uri());
 		}
+
+		if ( ! $this->_user AND (in_array($this->request->action(), array('objavi', 'dodaj', 'organiziraj', 'izmijeni'))))
+		{
+			$this->_messages[] = array(
+				'type'  => 'warning',
+				'value' => 'Nisi ulogovan/na.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('provjera');
+		}
 	}
 
 	public function after()
