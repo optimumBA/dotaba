@@ -13,7 +13,7 @@ abstract class Controller_Application extends Controller {
 		if ($this->request->method() === Request::POST AND ! Security::check($this->_post['csrf']))
 		{
 			$this->_messages[] = array(
-				'type'   => 'warning',
+				'type'   => 'error',
 				'values' => 'Samo probaj još jednom ako smiješ',
 			);
 
@@ -30,7 +30,7 @@ abstract class Controller_Application extends Controller {
 		if ( ! $this->_user AND (in_array($this->request->action(), array('objavi', 'dodaj', 'organiziraj', 'izmijeni'))))
 		{
 			$this->_messages[] = array(
-				'type'  => 'warning',
+				'type'  => 'error',
 				'value' => 'Nisi ulogovan/na.',
 			);
 

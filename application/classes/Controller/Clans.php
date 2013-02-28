@@ -98,7 +98,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'warning',
+				'type'  => 'alert',
 				'value' => 'Već imaš klan.',
 			);
 
@@ -163,7 +163,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'warning',
+				'type'  => 'alert',
 				'value' => 'Nisi lord ovog klana.',
 			);
 
