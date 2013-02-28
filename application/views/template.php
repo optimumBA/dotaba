@@ -76,9 +76,9 @@
                     <ul class="top-links">
                         <li>
                             <h4 class="colr">Pretraga</h4>
-                            <div id="search-box">
-                                <form id="searchbox" class="" action="/pretraga">
-                                <input name="q" value="Unesite pojam za pretragu" type="text" class="bar input-medium search-query" />
+                            <div id="search-box"><span class="js-search-action"></span>
+                                <form id="searchbox" class="navbar-search" action="/pretraga">
+                                <input name="q" placeholder="Unesite pojam za pretragu" type="text" class="bar input-medium search-query" />
                                 <button>Traži</button>
                                 </form>
 								<script type="text/javascript">
