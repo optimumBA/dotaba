@@ -27,7 +27,7 @@
 	<!-- Post Start -->
                         <div class="post">
                         	<div class="thumb">
-                            	<a href="/novosti/<?=$article->id.'-'.URL::title($article->title);?>"><img src="/media/images/img14.jpg" alt="<?php echo $article->title;?>" /></a>
+                            	<a href="/novosti/<?=$article->id.'-'.URL::title($article->title);?>"><img src="<?=Media_Local_News::get($article->id);?>" alt="<?php echo $article->title;?>" /></a>
                             </div>
                             <div class="desc">
                             	<div class="date">
@@ -37,7 +37,7 @@
                                 <div class="desc-sec">
                                 	<h3><a href="/novosti/<?=$article->id.'-'.URL::title($article->title);?>"><?php echo $article->title; ?></a></h3>
                                     <div class="post-opts">
-                                    	<p>Objavio <a href="#">{var.username}</a></p>
+                                    	<p>Objavio <a href="#"><?=$article->user->username;?></a></p>
                                         <p><?php echo $article->created_at/*Date::formatted_time($article->created_at, $user->date_format, $user->timezone)*/; ?></p>
                                         <p><a href="#">{NULL} komentara</a></p>
                                     </div>
