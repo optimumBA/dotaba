@@ -11,6 +11,11 @@ class Migration_2013_02_28_16_48_11 extends MpmMigration
 		);
 	}
 
+	public function down(PDO &$pdo)
+	{
+		$pdo->exec("DELETE FROM `dotaba_users` WHERE `id` = 2;");
+	}
+
 }
 
 ?>

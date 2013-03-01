@@ -27,7 +27,7 @@ abstract class Controller_Application extends Controller {
 			Session::instance()->set('redirect', $this->request->uri());
 		}
 
-		if ( ! $this->_user AND (in_array($this->request->action(), array('objavi', 'dodaj', 'organiziraj', 'izmijeni'))))
+		if ( ! $this->_user AND (in_array($this->request->action(), array('objavi', 'dodaj', 'organiziraj', 'izmijeni', 'prijavi'))))
 		{
 			$this->_messages[] = array(
 				'type'  => 'error',

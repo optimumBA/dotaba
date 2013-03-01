@@ -24,7 +24,10 @@ class Controller_Videos extends Controller_Application {
 
 	public function action_view()
 	{
-		$video = ORM::factory('video', $this->request->param('id'));
+		$video = ORM::factory('video')
+			->with('user')
+			->where('video.id', '=', $this->request->param('id'))
+			->find();
 
 		if ($video->loaded())
 		{
@@ -32,43 +35,44 @@ class Controller_Videos extends Controller_Application {
 			$this->_content = View::factory('vods/videos/view')
 							->set('video', $video);
 		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Snimak nije pronađen.');
+		}
 	}
 
 	public function action_dodaj()
 	{
-		if ($this->_user)
+		if ($this->_post)
 		{
-			if ($this->_post)
+			try
 			{
-				try
-				{
-					$this->_post['user_id']    = $this->_user->id;
-					$this->_post['created_at'] = DB::expr('NOW()');
+				$this->_post['user_id']    = $this->_user->id;
+				$this->_post['created_at'] = DB::expr('NOW()');
 
-					$video = ORM::factory('video')
-							->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
-							->create();
+				$video = ORM::factory('video')
+						->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
+						->create();
 
-					HTTP::redirect('vod/snimci/'.$video->id.'-'.URL::title($video->name));
-				}
-				catch (ORM_Validation_Exception $e)
-				{
-					$errors = $e->errors('models');
-				}
+				HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name));
 			}
-
-			$this->_title   = 'Dodaj snimak';
-			$this->_content = View::factory('vods/videos//dodaj')
-							->set('values', $this->_post)
-							->set('errors', ($errors) ? $errors : array());
+			catch (ORM_Validation_Exception $e)
+			{
+				$errors = $e->errors('models');
+			}
 		}
+
+		$this->_title   = 'Dodaj snimak';
+		$this->_content = View::factory('vods/videos/dodaj')
+			->set('values', $this->_post)
+			->set('errors', ($errors) ? $errors : array());
 	}
 
 	public function action_izmijeni()
 	{
 		$video = ORM::factory('video', $this->request->param('id'));
 
-		if ($video->loaded() AND $this->_user AND $this->_user->has('videos', $video))
+		if ($video->loaded() AND $this->_user->has('videos', $video))
 		{
 			if ($this->_post)
 			{
@@ -79,7 +83,7 @@ class Controller_Videos extends Controller_Application {
 					$video->values($this->_post, array('vid', 'name', 'description', 'updated_at'))
 						->update();
 
-					HTTP::redirect('vod/snimci/'.$video->id.'-'.URL::title($video->name));
+					HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name));
 				}
 				catch (ORM_Validation_Exception $e)
 				{
@@ -89,9 +93,23 @@ class Controller_Videos extends Controller_Application {
 
 			$this->_title   = 'Izmijeni snimak - '.$video->name;
 			$this->_content = View::factory('videos/izmijeni')
-							->set('values', (empty($this->_post)) ? $video->as_array() : $this->_post)
-							->set('errors', ($errors) ? $errors : array())
-							->set('video', $video);
+				->set('values', (empty($this->_post)) ? $video->as_array() : $this->_post)
+				->set('errors', ($errors) ? $errors : array());
+		}
+		elseif ($video->loaded())
+		{
+			$this->_messages[] = array(
+				'type'  => 'alert',
+				'value' => 'Nisi autor/ica ovog snimka.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name));
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Snimak nije pronađen.');
 		}
 	}
 

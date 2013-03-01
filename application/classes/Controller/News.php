@@ -51,7 +51,7 @@ class Controller_News extends Controller_Application {
 
 	public function action_objavi()
 	{
-		if ($this->_user AND $this->_user->has('roles', ORM::factory('role', array('name' => 'Novinar/ka'))))
+		if ($this->_user->has('roles', ORM::factory('role', array('name' => 'Novinar/ka'))))
 		{
 			if ($this->_post)
 			{
@@ -105,10 +105,10 @@ class Controller_News extends Controller_Application {
 				->set('values', $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array());
 		}
-		elseif ($this->_user)
+		else
 		{
 			$this->_messages[] = array(
-				'type'  => 'warning',
+				'type'  => 'alert',
 				'value' => 'Nisi novinar/ka.',
 			);
 
@@ -122,7 +122,7 @@ class Controller_News extends Controller_Application {
 	{
 		$article = ORM::factory('news', $this->request->param('id'));
 
-		if ($article->loaded() AND $this->_user AND $this->_user->has('roles', ORM::factory('role', array('name' => 'Novinar/ka'))) AND $article->user_id == $this->_user->id)
+		if ($article->loaded() AND $this->_user->has('roles', ORM::factory('role', array('name' => 'Novinar/ka'))) AND $article->user_id == $this->_user->id)
 		{
 			if ($this->_post)
 			{
@@ -178,24 +178,24 @@ class Controller_News extends Controller_Application {
 		elseif ($article->loaded() AND $this->_user->id != $article->user_id)
 		{
 			$this->_messages[] = array(
-				'type'  => 'warning',
+				'type'  => 'alert',
 				'value' => 'Nisi autor/ica ove novosti.',
 			);
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('novosti');
+			HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title));
 		}
 		elseif ($article->loaded())
 		{
 			$this->_messages[] = array(
-				'type'  => 'warning',
+				'type'  => 'alert',
 				'value' => 'Nisi novinar/ka.',
 			);
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('novosti');
+			HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title));
 		}
 		else
 		{

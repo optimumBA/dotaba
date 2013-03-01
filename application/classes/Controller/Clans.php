@@ -53,7 +53,7 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_napravi()
 	{
-		if ($this->_user AND $this->_user->clan_id === NULL)
+		if ($this->_user->clan_id === NULL)
 		{
 			if ($this->_post)
 			{
@@ -93,7 +93,7 @@ class Controller_Clans extends Controller_Application {
 				->set('values', $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array());
 		}
-		elseif (isset($this->_user->clan_id))
+		else
 		{
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
@@ -112,7 +112,7 @@ class Controller_Clans extends Controller_Application {
 	{
 		$clan = ORM::factory('clan', $this->request->param('id'));
 
-		if ($clan->loaded() AND $this->_user AND $clan->lord_id == $this->_user->id)
+		if ($clan->loaded() AND $clan->lord_id == $this->_user->id)
 		{
 			if ($this->_post)
 			{
@@ -158,7 +158,7 @@ class Controller_Clans extends Controller_Application {
 				->set('errors', (isset($errors)) ? $errors : array())
 				->set('users', $users_array);
 		}
-		elseif ($clan->loaded() AND $clan->lord_id != $this->_user->id)
+		elseif ($clan->loaded())
 		{
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
