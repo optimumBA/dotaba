@@ -12,11 +12,11 @@ class Model_Clan extends ORM {
 	protected $_has_many = array(
 		'matches_as_radiant' => array(
 			'model'       => 'Match',
-			'foreign_key' => 'radiant_clan',
+			'foreign_key' => 'radiant_clan_id',
 		),
 		'matches_as_dire' => array(
 			'model'       => 'Match',
-			'foreign_key' => 'dire_clan',
+			'foreign_key' => 'dire_clan_id',
 		),
 		'users' => array(),
 		'tournaments' => array(

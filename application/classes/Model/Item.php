@@ -5,27 +5,27 @@ class Model_Item extends ORM {
 	protected $_has_many = array(
 		'slots_as_0' => array(
 			'model'       => 'Slot',
-			'foreign_key' => 'item_0',
+			'foreign_key' => 'item_0_id',
 		),
 		'slots_as_1' => array(
 			'model'       => 'Slot',
-			'foreign_key' => 'item_1',
+			'foreign_key' => 'item_1_id',
 		),
 		'slots_as_2' => array(
 			'model'       => 'Slot',
-			'foreign_key' => 'item_2',
+			'foreign_key' => 'item_2_id',
 		),
 		'slots_as_3' => array(
 			'model'       => 'Slot',
-			'foreign_key' => 'item_3',
+			'foreign_key' => 'item_3_id',
 		),
 		'slots_as_4' => array(
 			'model'       => 'Slot',
-			'foreign_key' => 'item_4',
+			'foreign_key' => 'item_4_id',
 		),
 		'slots_as_5' => array(
 			'model'       => 'Slot',
-			'foreign_key' => 'item_5',
+			'foreign_key' => 'item_5_id',
 		),
 	);
 

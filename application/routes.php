@@ -36,7 +36,7 @@ Route::set('clans', 'liga/klanovi(/<action>)(/<page>)', array('action' => 'napra
 		'action'     => 'index',
 	));
 
-Route::set('clan', 'liga/klanovi/<id>-<title>(/<action>)', array('id' => '\d+', 'title' => '[a-zA-Z0-9_-]+'))
+Route::set('clan', 'liga/klanovi/<id>-<name>(/<action>)', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
 	->defaults(array(
 		'controller' => 'clans',
 		'action'     => 'view',
@@ -48,9 +48,21 @@ Route::set('tournaments', 'liga/turniri(/<action>)(/<page>)', array('action' => 
 		'action'     => 'index',
 	));
 
-Route::set('tournament', 'liga/turniri/<id>-<title>(/<action>)', array('id' => '\d+', 'title' => '[a-zA-Z0-9_-]+'))
+Route::set('tournament', 'liga/turniri/<id>-<name>(/<action>)', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
 	->defaults(array(
 		'controller' => 'tournaments',
+		'action'     => 'view',
+	));
+
+Route::set('matches', 'liga/mecevi(/<action>)', array('action' => 'dodaj'))
+	->defaults(array(
+		'controller' => 'matches',
+		'action'     => 'index',
+	));
+
+Route::set('match', 'liga/mecevi/<id>(/<action>)', array('id' => '\d+'))
+	->defaults(array(
+		'controller' => 'matches',
 		'action'     => 'view',
 	));
 

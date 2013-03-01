@@ -212,4 +212,25 @@ class Steam {
 
 	}
 
+	public static function convert_player_slot($player_slot)
+	{
+		if ($player_slot > 10)
+		{
+			$binary = sprintf('%08b', $player_slot);
+			$team   = substr($binary, 0, 1);
+			$slot   = bindec(substr($binary, 1));
+
+			$result = $team * 5 + $slot;
+		}
+		else
+		{
+			$team = $player_slot / 5;
+			$slot = $player_slot % 5;
+
+			$result = bindec($team.sprintf('%07b', $slot));
+		}
+
+		return $result;
+	}
+
 }

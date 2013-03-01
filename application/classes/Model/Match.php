@@ -5,13 +5,14 @@ class Model_Match extends ORM {
 	protected $_belongs_to = array(
 		'radiant_clan' => array(
 			'model'       => 'Clan',
-			'foreign_key' => 'radiant_clan',
+			'foreign_key' => 'radiant_clan_id',
 		),
 		'dire_clan' => array(
 			'model'       => 'Clan',
-			'foreign_key' => 'dire_clan',
+			'foreign_key' => 'dire_clan_id',
 		),
 		'mode'         => array(),
+		'tournament'   => array(),
 		'type'         => array(),
 		'winner'       => array(
 			'model'       => 'Team',
@@ -26,7 +27,7 @@ class Model_Match extends ORM {
 		),
 	);
 
-	public static function match_details($id)
+	public static function details($id)
 	{
 		$match = ORM::factory('match')
 			->with('type')
@@ -35,6 +36,11 @@ class Model_Match extends ORM {
 			->with('dire_clan')
 			->with('mode')
 			->find($id);
+
+		if ( ! $match->loaded())
+		{
+			return FALSE;
+		}
 
 		$slots = $match->slots
 			->with('user')
@@ -49,9 +55,14 @@ class Model_Match extends ORM {
 
 		$match = $match->as_array();
 
+		$match['radiant_slots'] = array();
+		$match['dire_slots']    = array();
+
 		foreach ($slots as $slot)
 		{
-			$match['slots'][] = $slot->as_array();
+			$team = ($slot->player_slot <= 4) ? 'radiant' : 'dire';
+
+			$match[$team.'_slots'][] = $slot->as_array();
 		}
 
 		unset($slots);
@@ -91,14 +102,14 @@ class Model_Match extends ORM {
 					continue;
 
 				$values = array(
-					'player_slot'   => $player->player_slot,
+					'player_slot'   => Steam::convert_player_slot($player->player_slot),
 					'hero_id'       => $player->hero_id,
-					'item_0'        => $player->item_0,
-					'item_1'        => $player->item_1,
-					'item_2'        => $player->item_2,
-					'item_3'        => $player->item_3,
-					'item_4'        => $player->item_4,
-					'item_5'        => $player->item_5,
+					'item_0_id'     => $player->item_0,
+					'item_1_id'     => $player->item_1,
+					'item_2_id'     => $player->item_2,
+					'item_3_id'     => $player->item_3,
+					'item_4_id'     => $player->item_4,
+					'item_5_id'     => $player->item_5,
 					'kills'         => $player->kills,
 					'deaths'        => $player->deaths,
 					'assists'       => $player->assists,
