@@ -48,7 +48,7 @@ abstract class Controller_Application extends Controller {
 		$maintenance = Kohana::$config->load('site.maintenance');
 
 		if ( ! in_array($this->request->action(), array('offline', 'prijava')) AND $maintenance['start'] AND
-			strtotime($maintenance['start']) <= time() AND strtotime($maintenance['end']) >= time() AND
+			strtotime($maintenance['start']) <= time() AND ( ! $maintenance['end'] OR strtotime($maintenance['end']) >= time()) AND
 			( ! $this->_user OR ! $this->_user->has('roles', ORM::factory('role', array('name' => 'Administrator/ica')))))
 		{
 			HTTP::redirect('offline');

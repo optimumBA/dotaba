@@ -67,7 +67,8 @@ class Controller_Pages extends Controller_Application {
 	{
 		$maintenance = Kohana::$config->load('site.maintenance');
 
-		if ($maintenance['start'] AND strtotime($maintenance['start']) <= time() AND strtotime($maintenance['end']) >= time())
+		if ($maintenance['start'] AND strtotime($maintenance['start']) <= time() AND
+			( ! $maintenance['end'] OR strtotime($maintenance['end']) >= time()))
 		{
 			$this->_title   = 'offline';
 			$this->_content = View::factory('pages/offline');
