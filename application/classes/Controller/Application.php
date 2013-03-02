@@ -31,7 +31,7 @@ abstract class Controller_Application extends Controller {
 		}
 
 		// Redirect to login page and show message if the action requires authorization
-		if ( ! $this->_user AND (in_array($this->request->action(), array('objavi', 'dodaj', 'organiziraj', 'izmijeni', 'prijavi'))))
+		if ( ! $this->_user AND (in_array($this->request->action(), array('objavi', 'dodaj', 'organiziraj', 'izmijeni', 'prijavi', 'napravi'))))
 		{
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -43,7 +43,8 @@ abstract class Controller_Application extends Controller {
 			HTTP::redirect('provjera');
 		}
 
-		// Redirect to '/offline' if site is under maintenance and user isn't admin
+		// Redirect to '/offline' if site is under maintenance and user isn't admin.
+		// If the site is soon going under maintenance, show the message to user.
 		$maintenance = Kohana::$config->load('site.maintenance');
 
 		if ( ! in_array($this->request->action(), array('offline', 'prijava')) AND $maintenance['start'] AND
@@ -51,6 +52,16 @@ abstract class Controller_Application extends Controller {
 			( ! $this->_user OR ! $this->_user->has('roles', ORM::factory('role', array('name' => 'Administrator/ica')))))
 		{
 			HTTP::redirect('offline');
+		}
+		elseif ($maintenance['start'] AND strtotime($maintenance['start']) > time())
+		{
+			$date_format = Kohana::$config->load('site.date_format');
+			$this->_messages['maintenance'] = array(
+				'type'  => 'info',
+				'value' => 'Rad stranice će biti obustavljen radi dodatnih radova od '
+					.date($date_format, strtotime($maintenance['start'])).' do '
+					.(($maintenance['end']) ? date($date_format, strtotime($maintenance['end'])) : 'daljnjeg').'.',
+			);
 		}
 	}
 

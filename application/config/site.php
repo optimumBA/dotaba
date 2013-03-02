@@ -4,7 +4,7 @@ return array(
 	'site_name'    => 'Dota 2 Balkan Community',
 	'title_format' => array(
 		'standard'      => ':title - :site_name',
-		'without_title' => ':site_name'
+		'without_title' => ':site_name',
 	),
 	'date_format'  => 'j.n.Y. G:i:s',
 	'email'        => 'podrska@dota.ba',
@@ -14,6 +14,6 @@ return array(
 	),
 	'maintenance' => array(
 		'start'  => FALSE,
-		'end'    => '2014-01-01 01:00:00',
+		'end'    => FALSE,
 	),
 );
