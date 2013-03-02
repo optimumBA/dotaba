@@ -2,6 +2,12 @@
 
 class Controller_Pages extends Controller_Application {
 
+	public function before()
+	{
+		parent::before();
+		$this->_layout = 'news';
+	}
+
 	public function action_home()
 	{
 		$this->_content = View::factory('pages/home');
@@ -22,11 +28,11 @@ class Controller_Pages extends Controller_Application {
 		$this->_content	= View::factory('pages/site/team');
 	}
 	
-	public function action_advertisments()
+	public function action_advertisements()
 	{
 		$this->_layout	= 'Ads';
 		$this->_title	= 'Advertisments';
-		$this->_content	= View::factory('pages/advertisments');
+		$this->_content	= View::factory('pages/advertisements');
 	}
 	
 	public function action_api()
@@ -50,10 +56,25 @@ class Controller_Pages extends Controller_Application {
 		$this->_content	= View::factory('pages/site/terms');	
 	}
 	
-	public function action_changelong()
+	public function action_changelog()
 	{
 		$this->_layout	= 'Changelog';
 		$this->_title	= 'Changelog';
 		$this->_content	= View::factory('pages/changelog');	
+	}
+
+	public function action_offline()
+	{
+		$maintenance = Kohana::$config->load('site.maintenance');
+
+		if ($maintenance['start'] AND strtotime($maintenance['start']) <= time() AND strtotime($maintenance['end']) >= time())
+		{
+			$this->_title   = 'offline';
+			$this->_content = View::factory('pages/offline');
+		}
+		else
+		{
+			HTTP::redirect();
+		}
 	}
 }

@@ -12,4 +12,8 @@ return array(
 		'grifon@dota.ba',
 		'sixr@dota.ba',
 	),
+	'maintenance' => array(
+		'start'  => FALSE,
+		'end'    => '2014-01-01 01:00:00',
+	),
 );
