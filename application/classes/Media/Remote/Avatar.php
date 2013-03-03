@@ -18,4 +18,26 @@ class Media_Remote_Avatar extends Media_Remote {
 		),
 	);
 
+	public static function cache($id, $url)
+	{
+		if ($url != static::config()->get('default_avatar'))
+		{
+			parent::cache($id, $url);
+		}
+	}
+
+	public static function get($id, $url, $type = NULL)
+	{
+		if ($url == static::config()->get('default_avatar'))
+		{
+			$url = static::path().'default'.static::suffix($type).'.'.static::extension();
+		}
+		else
+		{
+			$url = parent::get($id, $url, $type);
+		}
+
+		return $url;
+	}
+
 }
