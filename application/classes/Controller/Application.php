@@ -2,7 +2,48 @@
 
 abstract class Controller_Application extends Controller {
 
-	protected $_title, $_content, $_post, $_layout = 'default', $_user, $_messages;
+	/**
+	 * Designates which template file to use
+	 * @var string
+	 */
+	protected $_template = 'template';
+
+	/**
+	 * Designates which layout file to use.
+	 * Nedded only if the default template is used.
+	 * @var string
+	 */
+	protected $_layout = 'default';
+
+	/**
+	 * HTML title
+	 * @var string
+	 */
+	protected $_title;
+
+	/**
+	 * Template content
+	 * @var string
+	 */
+	protected $_content;
+
+	/**
+	 * Clean $_POST variable
+	 * @var array
+	 */
+	protected $_post;
+
+	/**
+	 * Model_User instance from session
+	 * @var Model_User
+	 */
+	protected $_user;
+
+	/**
+	 * Flash messages
+	 * @var array
+	 */
+	protected $_messages;
 
 	public function before()
 	{
@@ -88,11 +129,17 @@ abstract class Controller_Application extends Controller {
 				));
 			}
 
-			$this->response->body(View::factory('template')
-				->set('title', $this->_title)
-				->set('messages', $this->_messages)
-				->set('layout', View::factory('layouts/'.$this->_layout, array('content' => $this->_content)))
-			);
+			$view = View::factory($this->_template);
+
+			// If template is the default one, assign the variables to it
+			if ($this->_template == 'template')
+			{
+				$view->title    = $this->_title;
+				$view->messages = $this->_messages;
+				$view->layout   = View::factory('layouts/'.$this->_layout, array('content' => $this->_content));
+			}
+
+			$this->response->body($view);
 		}
 		else
 		{

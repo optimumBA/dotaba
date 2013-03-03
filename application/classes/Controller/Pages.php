@@ -2,12 +2,6 @@
 
 class Controller_Pages extends Controller_Application {
 
-	public function before()
-	{
-		parent::before();
-		$this->_layout = 'news';
-	}
-
 	public function action_home()
 	{
 		$this->_content = View::factory('pages/home');
@@ -70,8 +64,7 @@ class Controller_Pages extends Controller_Application {
 		if ($maintenance['start'] AND strtotime($maintenance['start']) <= time() AND
 			( ! $maintenance['end'] OR strtotime($maintenance['end']) >= time()))
 		{
-			$this->_title   = 'offline';
-			$this->_content = View::factory('pages/offline');
+			$this->_template = 'maintenance';
 		}
 		else
 		{
