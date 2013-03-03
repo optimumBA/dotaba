@@ -8,8 +8,6 @@ class Controller_Videos extends Controller_Application {
 		$this->_layout	= 'VodsVideo';
 	}
 	
-	
-	
 	public function action_index()
 	{
 		$videos = ORM::factory('video')
@@ -18,9 +16,8 @@ class Controller_Videos extends Controller_Application {
 
 		$this->_title 	= 'Snimci';
 		$this->_content = View::factory('vods/videos/index')
-						->set('videos', $videos);
+			->set('videos', $videos);
 	}
-
 
 	public function action_view()
 	{
@@ -33,7 +30,7 @@ class Controller_Videos extends Controller_Application {
 		{
 			$this->_title 	= $video->name;
 			$this->_content = View::factory('vods/videos/view')
-							->set('video', $video);
+				->set('video', $video);
 		}
 		else
 		{
@@ -51,8 +48,8 @@ class Controller_Videos extends Controller_Application {
 				$this->_post['created_at'] = DB::expr('NOW()');
 
 				$video = ORM::factory('video')
-						->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
-						->create();
+					->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
+					->create();
 
 				HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name));
 			}
@@ -65,14 +62,14 @@ class Controller_Videos extends Controller_Application {
 		$this->_title   = 'Dodaj snimak';
 		$this->_content = View::factory('vods/videos/dodaj')
 			->set('values', $this->_post)
-			->set('errors', ($errors) ? $errors : array());
+			->set('errors', (isset($errors)) ? $errors : array());
 	}
 
 	public function action_izmijeni()
 	{
 		$video = ORM::factory('video', $this->request->param('id'));
 
-		if ($video->loaded() AND $this->_user->has('videos', $video))
+		if ($video->loaded() AND $this->_user->id == $video->user_id)
 		{
 			if ($this->_post)
 			{
@@ -80,7 +77,7 @@ class Controller_Videos extends Controller_Application {
 				{
 					$this->_post['updated_at'] = DB::expr('NOW()');
 
-					$video->values($this->_post, array('vid', 'name', 'description', 'updated_at'))
+					$video->values($this->_post, array('name', 'description', 'updated_at'))
 						->update();
 
 					HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name));
@@ -92,9 +89,9 @@ class Controller_Videos extends Controller_Application {
 			}
 
 			$this->_title   = 'Izmijeni snimak - '.$video->name;
-			$this->_content = View::factory('videos/izmijeni')
+			$this->_content = View::factory('vods/videos/izmijeni')
 				->set('values', (empty($this->_post)) ? $video->as_array() : $this->_post)
-				->set('errors', ($errors) ? $errors : array());
+				->set('errors', (isset($errors)) ? $errors : array());
 		}
 		elseif ($video->loaded())
 		{

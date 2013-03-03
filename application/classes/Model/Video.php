@@ -23,7 +23,8 @@ class Model_Video extends ORM {
 			),
 			'vid' => array(
 				array('not_empty'),
-				array('max_length', array(':value', 255)),
+				array('alpha_numeric'),
+				array('exact_length', array(':value', 11)),
 			),
 		);
 	}
