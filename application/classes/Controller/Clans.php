@@ -40,10 +40,21 @@ class Controller_Clans extends Controller_Application {
 		{
 			$users = $clan->users->find_all();
 
+			$matches = ORM::factory('match')
+				->with('type')
+				->with('tournament')
+				->with('radiant_clan')
+				->with('dire_clan')
+				->with('mode')
+				->where('radiant_clan_id', '=', $clan->id)
+				->or_where('dire_clan_id', '=', $clan->id)
+				->find_all();
+
 			$this->_title 	= $clan->name;
 			$this->_content = View::factory('clans/view')
 				->set('clan', $clan)
-				->set('users', $users);
+				->set('users', $users)
+				->set('matches', $matches);
 		}
 		else
 		{
