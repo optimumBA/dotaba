@@ -70,23 +70,39 @@ class Controller_Clans extends Controller_Application {
 			{
 				try
 				{
-					$this->_post['lord_id']    = $this->_user->id;
-					$this->_post['created_at'] = DB::expr('NOW()');
+					$files = Media_Local_News::validate($_FILES);
 
-					$clan = ORM::factory('clan')
-						->values($this->_post, array('name', 'tag', 'lord_id', 'created_at'))
-						->create();
+					if ( ! is_uploaded_file($files['default']['tmp_name']) OR $files->check())
+					{
+						$this->_post['lord_id']    = $this->_user->id;
+						$this->_post['created_at'] = DB::expr('NOW()');
 
-					$this->_user->values(array('clan_id' => $clan->id))->update();
+						$clan = ORM::factory('clan')
+							->values($this->_post, array('name', 'tag', 'lord_id', 'created_at'))
+							->create();
 
-					$this->_messages[] = array(
-						'type'  => 'success',
-						'value' => 'Klan je uspješno napravljen.',
-					);
+						$this->_user->values(array('clan_id' => $clan->id))->update();
 
-					Session::instance()->set('messages', $this->_messages);
+						Media_Local_Clan::save($clan->id, $files);
 
-					HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+						$this->_messages[] = array(
+							'type'  => 'success',
+							'value' => 'Klan je uspješno napravljen.',
+						);
+
+						Session::instance()->set('messages', $this->_messages);
+
+						HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+					}
+					else
+					{
+						$this->_messages[] = array(
+							'type'  => 'error',
+							'value' => 'Nepravilan unos.',
+						);
+
+						$errors = $files->errors('media');
+					}
 				}
 				catch (ORM_Validation_Exception $e)
 				{

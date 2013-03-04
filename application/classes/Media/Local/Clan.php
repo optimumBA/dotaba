@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Media_Local_News extends Media_Local {
+class Media_Local_Clan extends Media_Local {
 
 	protected static $type, $path;
 

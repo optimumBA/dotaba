@@ -59,7 +59,7 @@ class Controller_News extends Controller_Application {
 				{
 					$files = Media_Local_News::validate($_FILES);
 
-					if ( ! is_uploaded_file($_FILES['default']['tmp_name']) OR $files->check())
+					if ( ! is_uploaded_file($files['default']['tmp_name']) OR $files->check())
 					{
 						$this->_post['user_id']    = $this->_user->id;
 						$this->_post['created_at'] = DB::expr('NOW()');

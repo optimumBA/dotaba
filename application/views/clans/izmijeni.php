@@ -1,4 +1,4 @@
-<?php echo Form::open(); ?>
+<?php echo Form::open(NULL, array('enctype' => 'multipart/form-data')); ?>
 	<?php echo Form::label('name', 'Naziv:'); ?>
 	<?php echo Form::input('name', Arr::path($values, 'name')); ?>
 	<?php echo Arr::path($errors, 'name'); ?>
@@ -10,6 +10,10 @@
 	<?php echo Form::label('lord_id', 'Lord:'); ?>
 	<?php echo Form::select('lord_id', $users, Arr::path($values, 'lord_id')); ?>
 	<?php echo Arr::path($errors, 'lord_id'); ?>
+
+	<?php echo Form::label('default', 'Logo:'); ?>
+	<?php echo Form::file('default'); ?>
+	<?php echo Arr::path($errors, 'default'); ?>
 
 	<?php echo Form::hidden('csrf', Security::token()); ?>
 	<?php echo Form::submit(NULL, 'Izmijeni'); ?>
