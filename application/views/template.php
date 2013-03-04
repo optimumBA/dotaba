@@ -104,7 +104,7 @@ $("form.navbar-search").submit();
                             <?php if(!Steam::logged_in()):?>
                            <li> <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a></li>
 							<?php else:?>
-                            <li><img class="steam-avatar-small offline-status" src="<?=Steam::userinfo('avatar');?>" title="<?=Steam::userinfo('username');?>-ov avatar"> <a href="#profil" class="offline-status"><?=Steam::userinfo('username');?></a></li>
+                            <li><img class="steam-avatar-small offline-status" src="<?=Steam::userinfo('avatar');?>" title="<?=Steam::userinfo('username');?>-ov avatar"> <a href="/igraci/<?=Steam::userinfo('accountid');?>" class="offline-status"><?=Steam::userinfo('username');?></a></li>
                            
                             <li><a href="/odjava" class="colr">Odjava</a>
 							<?php endif;?>
@@ -184,7 +184,7 @@ $("form.navbar-search").submit();
                 <ul class="links"> 
                     <li><a href="/site/webteam">Tim</a></li>
                     <li><a href="/advertisments">Oglašavanje</a></li>
-                    <li><a href="/site/api">API</a></li>
+                    <li><a href="/site/valve">Copyright - Valve</a></li>
                     <li><a href="/site/privacy">Privacy</a></li>
                     <li><a href="/site/terms">Terms</a></li>
                     <li><a href="/changelog?setVrID=latest&order=VrID">Changelog</a></li>
