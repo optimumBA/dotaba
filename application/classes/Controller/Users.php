@@ -57,4 +57,33 @@ class Controller_Users extends Controller_Application {
 		HTTP::redirect();
 	}
 
+	public function action_view()
+	{
+		$user = ORM::factory('user')
+			->with('clan')
+			->where('accountid', '=', $this->request->param('id'))
+			->find();
+
+		if ($user->loaded())
+		{
+			$matches = $user->matches
+				->with('type')
+				->with('tournament')
+				->with('radiant_clan')
+				->with('dire_clan')
+				->with('mode')
+				->find_all();
+
+			$this->_layout  = 'news';
+			$this->_title 	= $user->username;
+			$this->_content = View::factory('users/view')
+				->set('user', $user)
+				->set('matches', $matches);
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Igrač nije pronađen.');
+		}
+	}
+
 }

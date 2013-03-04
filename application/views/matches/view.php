@@ -23,11 +23,11 @@
 		<?php foreach ($match->{$team.'_slots'} as $slot): ?>
 			<tr>
 				<td>
-					<img src="<?php echo Media_Remote_Avatar::get($slot->user->id, $slot->user->avatar); ?>" alt="<?php echo $slot->user->username; ?>" />
-					<?php echo HTML::anchor('igraci/'.$slot->user->username, $slot->user->username); ?>
+					<?php echo HTML::image(Media_Remote_Avatar::get($slot->user->id, $slot->user->avatar), array('alt' => $slot->user->username)); ?>
+					<?php echo HTML::anchor('igraci/'.$slot->user->accountid, $slot->user->username); ?>
 				</td>
 				<td>
-					<img src="<?php echo Media_Remote_Hero::get($slot->hero->id, $slot->hero->image); ?>" alt="<?php echo $slot->hero->localized_name; ?>" />
+					<?php echo HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image), array('alt' => $slot->hero->localized_name)); ?>
 					<?php echo $slot->hero->localized_name; ?>
 				</td>
 				<td><?php echo $slot->level; ?></td>
@@ -44,7 +44,7 @@
 				<td><?php echo $slot->hero_healing; ?></td>
 				<td>
 					<?php for ($i = 0; $i < 6; $i++): ?>
-						<img src="<?php echo Media_Remote_Item::get($slot->{'item_'.$i}->id, $slot->{'item_'.$i}->image); ?>" alt="<?php echo $slot->{'item_'.$i}->localized_name; ?>" />
+						<?php echo HTML::image(Media_Remote_Item::get($slot->{'item_'.$i}->id, $slot->{'item_'.$i}->image), array('alt' => $slot->{'item_'.$i}->localized_name)); ?>
 					<?php endfor; ?>
 				</td>
 			</tr>

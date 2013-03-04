@@ -71,6 +71,12 @@ Route::set('users', '<action>', array('action' => 'prijava|odjava'))
 		'controller' => 'users',
 	));
 
+Route::set('user_profile', 'igraci/<id>', array('id' => '\d+'))
+	->defaults(array(
+		'controller' => 'users',
+		'action'     => 'view',
+	));
+
 Route::set('search', 'pretraga')
 	->defaults(array(
 		'controller' => 'search',
