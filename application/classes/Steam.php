@@ -61,7 +61,7 @@ class Steam {
 
 	public static function logged_in()
 	{
-		return (bool) self::id();
+		return (bool) Session::instance()->get('user');
 	}
 
 	public static function logout()

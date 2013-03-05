@@ -37,6 +37,23 @@ class Controller_Users extends Controller_Application {
 			Media_Remote_Avatar::cache($user->id, $values['avatar']);
 		}
 
+		$ban = $user->bans
+			->where('expires_at', '>', DB::expr('NOW()'))
+			->order_by('expires_at', 'DESC')
+			->find();
+
+		if ($ban->loaded())
+		{
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Banovan/a si do '.date('j.n.Y. G:i:s', strtotime($ban->expires_at)).'. Razlog: '.$ban->reason.'.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect();
+		}
+
 		Session::instance()->set('user', $user);
 
 		$uri = Session::instance()->get('redirect');

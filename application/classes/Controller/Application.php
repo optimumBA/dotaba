@@ -57,12 +57,12 @@ abstract class Controller_Application extends Controller {
 		{
 			$this->_messages[] = array(
 				'type'   => 'error',
-				'values' => 'Samo probaj još jednom ako smiješ',
+				'value'  => 'Samo probaj još jednom ako smiješ',
 			);
 
 			Session::instance()->set('messages', $this->_messages);
 
-			$this->redirect();
+			HTTP::redirect();
 		}
 
 		// Set redirection path to current URI for users not logged in
