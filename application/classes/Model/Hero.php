@@ -4,6 +4,9 @@ class Model_Hero extends ORM {
 
 	protected $_has_many = array(
 		'slots' => array(),
+		'users' => array(
+			'foreign_key' => 'featured_hero_id',
+		),
 	);
 
 	public static function populate($remote_heroes, $update)

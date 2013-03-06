@@ -4,6 +4,11 @@
 <p>URL: <?php echo HTML::anchor($user->profileurl); ?></p>
 <p>Registrovan/a: <?php echo date('d M Y H:i:s', strtotime($user->created_at)); ?></p>
 <p>Klan: <?php echo ($user->clan_id) ? HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name), $user->clan->name) : ''; ?></p>
+<?php if ($user->featured_hero_id): ?>
+	<p>
+		Omiljeni heroj: <?php echo HTML::image(Media_Remote_Hero::get($user->featured_hero->id, $user->featured_hero->image), array('alt' => $user->featured_hero->name)); ?>>
+	</p>
+<?php endif ?>
 
 <?php echo HTML::image(Media_Remote_Avatar::get($user->id, $user->avatar), array('alt' => $user->username)); ?>
 

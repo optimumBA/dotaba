@@ -12,6 +12,10 @@ class Model_User extends ORM {
 			'model'       => 'Ban',
 			'foreign_key' => 'executioner_id',
 		),
+		'featured_hero' => array(
+			'model'       => 'Hero',
+			'foreign_key' => 'featured_hero_id',
+		),
 		'matches'       => array(
 			'through' => 'slots',
 		),
