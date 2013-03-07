@@ -159,15 +159,12 @@ $("form.navbar-search").submit();
     
 	
 	 
-
+<div class="clear"></div>
     <!-- Notification box -->
   <?php foreach ($messages as $message): ?>
-        <div class="alert alert-<?php echo $message['type']; ?>"><?php echo $message['value']; ?></div>
+        <div class="alert-top alert-<?php echo $message['type']; ?>"><?php echo $message['value']; ?></div>
     <?php endforeach ?>
     <!-- Notification box End-->
-	  
-    
-    
  <?php echo $layout;?>
  
 

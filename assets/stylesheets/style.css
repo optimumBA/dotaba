@@ -1071,24 +1071,39 @@ ul.news-list li .desc p.post-opts a:hover{
 }
 /* Messages box
 ================================================== */
-.alert {
+.alert-top {
 	padding: 8px 35px 8px 14px;
 	margin-bottom: 18px;
 	margin-left: 300px;
 	margin-right: 300px;
-	color: #c09853;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-	background-color: #fcf8e3;
-	border: 1px solid #fbeed5;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+	text-shadow:black 0.1em 0.2em 0.2em;
+
+
+}
+.alert {
+	padding: 8px 35px 8px 14px;
+	margin: 15px 0px;
+    margin-top: 15px;
+    margin-right-value: 0px;
+    margin-bottom: 15px;
+    margin-left-value: 0px;
+    margin-left-ltr-source: physical;
+    margin-left-rtl-source: physical;
+    margin-right-ltr-source: physical;
+    margin-right-rtl-source: physical;
+}
+
+.link {
+	color: inherit !important;
+	text-decoration: underline;
+	font-weight: bold;
+	
 }
 .alert-heading {
 	color: inherit;
 }
-.alert-introtext {
-	font-style: strong;
+.introtext {
+	font-style: italic;
 }
 .alert .close {
 	position: relative;
@@ -1097,23 +1112,310 @@ ul.news-list li .desc p.post-opts a:hover{
 	line-height: 18px;
 }
 
-.alert-success {
-	color: #468847;
-	background-color: #dff0d8;
-	border-color: #d6e9c6;
-}
-.alert-danger,
-.alert-error {
-	color: #b94a48;
-	background-color: #f2dede;
-	border-color: #eed3d7;
-}
-.alert-info {
-	color: #3a87ad;
-	background-color: #d9edf7;
-	border-color: #bce8f1;
+.alert-note {
+	border-color: rgba(255, 255, 255, 0.16);
+    border-top-color: rgba(255, 255, 255, 0.16);
+    border-right-color-value: rgba(255, 255, 255, 0.16);
+    border-bottom-color: rgba(255, 255, 255, 0.16);
+    border-left-color-value: rgba(255, 255, 255, 0.16);
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+	background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	color: rgb(204, 204, 204);
+	
+	border-style: solid;
+    border-top-style: solid;
+    border-right-style-value: solid;
+    border-bottom-style: solid;
+    border-left-style-value: solid;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+border-width: 1px;
+    border-top-width: 1px;
+    border-right-width-value: 1px;
+    border-bottom-width: 1px;
+    border-left-width-value: 1px;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+border-radius: 5px 5px 5px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
+.alert-success {
+	border-color: rgba(90, 132, 0, 0.5);
+    border-top-color: rgba(90, 132, 0, 0.5);
+    border-right-color-value: rgba(90, 132, 0, 0.5);
+    border-bottom-color: rgba(90, 132, 0, 0.5);
+    border-left-color-value: rgba(90, 132, 0, 0.5);
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+	background: url(../images/UI/success.png) no-repeat scroll 0px 0px rgba(90, 132, 0, 0.2);
+    background-color: rgba(90, 132, 0, 0.2);
+    background-image: url(../images/UI/success.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 0px 0px;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	color: rgb(186, 205, 134);
+	
+	border-style: solid;
+    border-top-style: solid;
+    border-right-style-value: solid;
+    border-bottom-style: solid;
+    border-left-style-value: solid;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+border-width: 1px;
+    border-top-width: 1px;
+    border-right-width-value: 1px;
+    border-bottom-width: 1px;
+    border-left-width-value: 1px;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+border-radius: 5px 5px 5px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+	
+	padding-left: 40px;
+    padding-left-value: 40px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+}
+.alert-download {
+	border-color: rgba(90, 132, 0, 0.5);
+    border-top-color: rgba(90, 132, 0, 0.5);
+    border-right-color-value: rgba(90, 132, 0, 0.5);
+    border-bottom-color: rgba(90, 132, 0, 0.5);
+    border-left-color-value: rgba(90, 132, 0, 0.5);
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+	background: url(../images/UI/download.png) no-repeat scroll 0px 0px rgba(90, 132, 0, 0.2);
+    background-color: rgba(90, 132, 0, 0.2);
+    background-image: url(../images/UI/download.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 0px 0px;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	color: rgb(186, 205, 134);
+	
+	border-style: solid;
+    border-top-style: solid;
+    border-right-style-value: solid;
+    border-bottom-style: solid;
+    border-left-style-value: solid;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+border-width: 1px;
+    border-top-width: 1px;
+    border-right-width-value: 1px;
+    border-bottom-width: 1px;
+    border-left-width-value: 1px;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+border-radius: 5px 5px 5px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+	
+	padding-left: 40px;
+    padding-left-value: 40px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+}
+
+.alert-danger,
+.alert-error {
+	border-color: rgba(190, 40, 40, 0.4);
+    border-top-color: rgba(190, 40, 40, 0.4);
+    border-right-color-value: rgba(190, 40, 40, 0.4);
+    border-bottom-color: rgba(190, 40, 40, 0.4);
+    border-left-color-value: rgba(190, 40, 40, 0.4);
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+	
+	background: url(../images/UI/warning.png) no-repeat scroll 0px 0px rgba(145, 0, 0, 0.2);
+    background-color: rgba(145, 0, 0, 0.2);
+    background-image: url(../images/UI/warning.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 0px 0px;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	color: rgb(214, 127, 118);
+	
+	border-style: solid;
+    border-top-style: solid;
+    border-right-style-value: solid;
+    border-bottom-style: solid;
+    border-left-style-value: solid;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+border-width: 1px;
+    border-top-width: 1px;
+    border-right-width-value: 1px;
+    border-bottom-width: 1px;
+    border-left-width-value: 1px;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+border-radius: 5px 5px 5px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+	
+	padding-left: 40px;
+    padding-left-value: 40px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+}
+.alert-info {
+
+	border-color: rgba(70, 120, 185, 0.4);
+    border-top-color: rgba(70, 120, 185, 0.4);
+    border-right-color-value: rgba(70, 120, 185, 0.4);
+    border-bottom-color: rgba(70, 120, 185, 0.4);
+    border-left-color-value: rgba(70, 120, 185, 0.4);
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+	
+	background: url(../images/UI/info.png) no-repeat scroll 0px 0px rgba(0, 87, 132, 0.2);
+    background-color: rgba(0, 87, 132, 0.2);
+    background-image: url(../images/UI/info.png);
+    background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: 0px 0px;
+	background-clip: border-box;
+	background-origin: padding-box;
+	background-size: auto auto;
+	color: rgb(100, 178, 222);
+
+	border-style: solid;
+    border-top-style: solid;
+    border-right-style-value: solid;
+    border-bottom-style: solid;
+    border-left-style-value: solid;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+	border-width: 1px;
+    border-top-width: 1px;
+    border-right-width-value: 1px;
+    border-bottom-width: 1px;
+    border-left-width-value: 1px;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+	border-radius: 5px 5px 5px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+	
+	padding-left: 40px;
+    padding-left-value: 40px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+	
+}
+.alert-notice {
+	border-color: rgba(142, 98, 0, 0.5);
+    border-top-color: rgba(142, 98, 0, 0.5);
+    border-right-color-value: rgba(142, 98, 0, 0.5);
+    border-bottom-color: rgba(142, 98, 0, 0.5);
+    border-left-color-value: rgba(142, 98, 0, 0.5);
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+	background: url(../images/UI/notice.png) no-repeat scroll 0px 0px rgba(142, 98, 0, 0.2);
+    background-color: rgba(142, 98, 0, 0.2);
+    background-image: url(../images/UI/notice.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 0px 0px;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	color: rgb(240, 168, 104);
+	
+	border-style: solid;
+    border-top-style: solid;
+    border-right-style-value: solid;
+    border-bottom-style: solid;
+    border-left-style-value: solid;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+border-width: 1px;
+    border-top-width: 1px;
+    border-right-width-value: 1px;
+    border-bottom-width: 1px;
+    border-left-width-value: 1px;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+border-radius: 5px 5px 5px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+	
+	padding-left: 40px;
+    padding-left-value: 40px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+	
+	
+}
 .alert-block {
 	padding-top: 14px;
 	padding-bottom: 14px;

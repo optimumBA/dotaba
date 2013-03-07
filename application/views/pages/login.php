@@ -17,22 +17,17 @@
                     	<h1 class="heading colr">Steam autentifikacija</h1>
                         <!-- Contact Us Start -->
                         <div class="contact-page">
-                        	<div class="cont-sec">
+                        	  <div class="alert alert-info">Da bi se autentifikovali na stranicu i dobili željene podatke, potrebno je kliknuti na duge Steam autentifikacije, koja će vas nakon toga preusmjeriti na službenu stranicu Steam-a.</div>
+                              <div class="alert alert-info">Klikom na dugme prijave se slažete sa našim pravima i uvijetima, te pravilima privatnosti.</div>
+                              
+                              <div class="alert alert-notice">Ukoliko je korisnički račun blokiran (banovan), prijava nije moguća.</div>
+                            <div class="cont-sec">
                                
-                                <div class="desc">
-                                    <h3 class="colr">Provjera</h3>
-                                    <p>
-                                        
-                                        
-                                       Da bi se autentifikovali na stranicu i dobili željene podatke, potrebno je kliknuti na duge Steam autentifikacije, koja će vas nakon toga preusmjeriti na službenu stranicu Steam-a.
-                                       <br /><br />Klikom na dugme prijave se slažete sa našim pravima i uvijetima, te pravilima privatnosti.
-                                       
-                                    </p>
-                                </div>
+                                
                             </div>
                             <div class="inquiry">
                             	<h1 class="heading colr">Potvrda</h1>
-                               
+                             
                                <a href="/prijava">
                                <div class="SteamSITSLarge"></div>
                                </a>
