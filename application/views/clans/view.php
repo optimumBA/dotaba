@@ -4,7 +4,7 @@
 <?php if (isset($clan->updated_at)): ?>
 	<p>Izmijenjen: <?php echo date('d M Y', strtotime($clan->updated_at)) ?></p>
 <?php endif ?>
-
+<p><?php echo HTML::image(Media_Local_Clan::get($clan->id), array('alt' => $clan->name)); ?></p>
 <p>
 	Članovi:
 	<ul>
