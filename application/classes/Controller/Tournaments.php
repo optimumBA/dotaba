@@ -11,6 +11,7 @@ class Controller_Tournaments extends Controller_Application {
 		));
 
 		$tournaments = ORM::factory('tournament')
+			->with('user')
 			->order_by('created_at', 'DESC')
 			->limit($pagination->items_per_page)
 			->offset($pagination->offset)
@@ -33,10 +34,16 @@ class Controller_Tournaments extends Controller_Application {
 		{
 			$clans = $tournament->clans->find_all();
 
+			$matches = $tournament->matches
+				->with('radiant_clan')
+				->with('dire_clan')
+				->find_all();
+
 			$this->_title 	= $tournament->name;
 			$this->_content = View::factory('tournaments/view')
 				->set('tournament', $tournament)
-				->set('clans', $clans);
+				->set('clans', $clans)
+				->set('matches', $matches);
 		}
 	}
 
@@ -46,17 +53,45 @@ class Controller_Tournaments extends Controller_Application {
 		{
 			try
 			{
-				$this->_post['user_id']    = $this->_user->id;
-				$this->_post['created_at'] = DB::expr('NOW()');
+				$files = Media_Local_Tournament::validate($_FILES);
 
-				$tournament = ORM::factory('tournament')
-					->values($this->_post, array('name', 'description', 'user_id', 'created_at'))
-					->create();
+				if ( ! is_uploaded_file($files['default']['tmp_name']) OR $files->check())
+				{
+					$this->_post['user_id']    = $this->_user->id;
+					$this->_post['created_at'] = DB::expr('NOW()');
 
-				HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+					$tournament = ORM::factory('tournament')
+						->values($this->_post, array('name', 'description', 'user_id', 'created_at'))
+						->create();
+
+					Media_Local_Tournament::save($tournament->id, $files);
+
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Turnir je uspješno napravljen.',
+					);
+
+					Session::instance()->set('messages', $this->_messages);
+
+					HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+				}
+				else
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nepravilan unos.',
+					);
+
+					$errors = $files->errors('media');
+				}
 			}
 			catch (ORM_Validation_Exception $e)
 			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nepravilan unos.',
+				);
+
 				$errors = $e->errors('models');
 			}
 		}
@@ -71,18 +106,41 @@ class Controller_Tournaments extends Controller_Application {
 	{
 		$tournament = ORM::factory('tournament', $this->request->param('id'));
 
-		if ($tournament->loaded() AND $this->_user->has('tournaments', $tournament))
+		if ($tournament->loaded() AND $tournament->user_id == $this->_user->id)
 		{
 			if ($this->_post)
 			{
 				try
 				{
-					$this->_post['updated_at'] = DB::expr('NOW()');
+					$files = Media_Local_Tournament::validate($_FILES);
 
-					$tournament->values($this->_post, array('name', 'description', 'updated_at'))
-						->update();
+					if ( ! is_uploaded_file($files['default']['tmp_name']) OR $files->check())
+					{
+						$this->_post['updated_at'] = DB::expr('NOW()');
 
-					HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+						$tournament->values($this->_post, array('name', 'description', 'updated_at'))
+							->update();
+
+						Media_Local_Tournament::save($tournament->id, $files);
+
+						$this->_messages[] = array(
+							'type'  => 'success',
+							'value' => 'Turnir je uspješno izmijenjen.',
+						);
+
+						Session::instance()->set('messages', $this->_messages);
+
+						HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+					}
+					else
+					{
+						$this->_messages[] = array(
+							'type'  => 'error',
+							'value' => 'Nepravilan unos.',
+						);
+
+						$errors = $files->errors('media');
+					}
 				}
 				catch (ORM_Validation_Exception $e)
 				{
@@ -93,8 +151,7 @@ class Controller_Tournaments extends Controller_Application {
 			$this->_title   = 'Izmijeni turnir - '.$tournament->name;
 			$this->_content = View::factory('tournaments/izmijeni')
 				->set('values', (empty($this->_post)) ? $tournament->as_array() : $this->_post)
-				->set('errors', ($errors) ? $errors : array())
-				->set('tournament', $tournament);
+				->set('errors', ($errors) ? $errors : array());
 		}
 		elseif ($tournament->loaded())
 		{
