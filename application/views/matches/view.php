@@ -53,3 +53,15 @@
 	<p>Tornjevi: <?php echo $match->{'tower_status_'.$team}; ?></p>
 	<p>Barake: <?php echo $match->{'barracks_status_'.$team}; ?></p>
 <?php endforeach; ?>
+
+<?php if (count($match->picksbans) > 0): ?>
+	<ul>
+		<?php foreach ($match->picksbans as $pickban): ?>
+			<li>
+				<?php echo ($pickban->is_pick) ? 'pick' : 'ban'; ?>
+				<?php echo ($pick->ban == 0) ? 'Radiant' : 'Dire'; ?>
+				<?php echo HTML::image(Media_Remote_Hero::get($pickban->hero->id, $pickban->hero->image), array('alt' => $pickban->hero->localized_name)); ?>
+			</li>
+		<?php endforeach ?>
+	</ul>
+<?php endif ?>

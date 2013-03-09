@@ -21,8 +21,9 @@ class Model_Match extends ORM {
 	);
 
 	protected $_has_many = array(
-		'slots' => array(),
-		'users' => array(
+		'picksbans' => array(),
+		'slots'     => array(),
+		'users'     => array(
 			'through' => 'slots',
 		),
 	);
@@ -53,6 +54,11 @@ class Model_Match extends ORM {
 			->with('item_5')
 			->find_all();
 
+		$picksbans = $match->picksbans
+			->with('hero')
+			->order_by('order')
+			->find_all();
+
 		$match = $match->as_array();
 
 		$match['radiant_slots'] = array();
@@ -66,6 +72,15 @@ class Model_Match extends ORM {
 		}
 
 		unset($slots);
+
+		$match['picksbans'] = array();
+
+		foreach ($picksbans as $pickban)
+		{
+			$match['picksbans'][] = $pickban->as_array();
+		}
+
+		unset($picksbans);
 
 		return json_decode(json_encode($match));
 	}
@@ -143,6 +158,36 @@ class Model_Match extends ORM {
 					));
 
 					$slot->values($values)->create();
+				}
+			}
+
+			if (isset($result->picks_bans))
+			{
+				foreach ($result->picks_bans as $pick_ban)
+				{
+					$values = array(
+						'team'  => $pick_ban->team,
+						'order' => $pick_ban->order,
+					);
+
+					$pickban = ORM::factory('pickban', array(
+						'match_id' => $match->id,
+						'hero_id'  => $pick_ban->hero_id
+					));
+
+					if ($pickban->loaded())
+					{
+						$pickban->values($values)->update();
+					}
+					else
+					{
+						$values = array_merge($values, array(
+							'match_id' => $match->id,
+							'hero_id'  => $pick_ban->hero_id
+						));
+
+						$pickban->values($values)->create();
+					}
 				}
 			}
 
