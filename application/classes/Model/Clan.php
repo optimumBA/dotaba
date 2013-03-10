@@ -10,6 +10,7 @@ class Model_Clan extends ORM {
 	);
 
 	protected $_has_many = array(
+		'applications' => array(),
 		'matches_as_radiant' => array(
 			'model'       => 'Match',
 			'foreign_key' => 'radiant_clan_id',

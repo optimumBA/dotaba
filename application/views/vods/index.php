@@ -49,7 +49,7 @@
                                   <?php endforeach ?>
 <?php else: ?>
 	Trenutno nema videa.
-<?php endif; ?> 
+<?php endif ?> 
                  
                  <div class="month">
                         	<a href="/vods/steam" class="button">Stream-ovi</a>

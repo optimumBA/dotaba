@@ -55,7 +55,7 @@
 	<?php endforeach ?>
 <?php else: ?>
 	Trenutno nema novosti.
-<?php endif; ?>
+<?php endif ?>
 
 <?php echo $pagination; ?>
 

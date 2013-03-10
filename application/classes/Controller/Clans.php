@@ -50,11 +50,21 @@ class Controller_Clans extends Controller_Application {
 				->or_where('dire_clan_id', '=', $clan->id)
 				->find_all();
 
+			if ($can_apply = ($this->_user->clan_id === NULL))
+			{
+				$application = $this->_user->applications
+					->where('clan_id', '=', $clan->id)
+					->count_all();
+
+				$can_apply = ($application == 0);
+			}
+
 			$this->_title 	= $clan->name;
 			$this->_content = View::factory('clans/view')
 				->set('clan', $clan)
 				->set('users', $users)
-				->set('matches', $matches);
+				->set('matches', $matches)
+				->set('can_apply', $can_apply);
 		}
 		else
 		{
@@ -126,7 +136,7 @@ class Controller_Clans extends Controller_Application {
 
 			$this->_messages[] = array(
 				'type'  => 'alert',
-				'value' => 'Već imaš klan.',
+				'value' => 'Već si u klanu.',
 			);
 
 			Session::instance()->set('messages', $this->_messages);
@@ -212,11 +222,272 @@ class Controller_Clans extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
+			if ($clan->loaded())
+			{
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			}
+			else
+			{
+				HTTP::redirect('liga/klanovi');
+			}
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Klan nije pronađen.');
+		}
+	}
+
+	public function action_prijava()
+	{
+		$clan = ORM::factory('clan', $this->request->param('id'));
+
+		if ($clan->loaded() AND $this->_user->clan_id === NULL)
+		{
+			if ($this->request->method() === Request::POST)
+			{
+				$application = $clan->applications
+					->where('user_id', '=', $this->_user->id)
+					->find();
+
+				if ( ! $application->loaded())
+				{
+					$application->values(array('clan_id' => $clan->id, 'user_id' => $this->_user->id))
+						->create();
+
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Uspješno si se prijavio/la u klan.',
+					);
+				}
+				else
+				{
+					$this->_messages[] = array(
+						'type'  => 'alert',
+						'value' => 'Već si se prijavio/la u klan.',
+					);
+				}
+
+				Session::instance()->set('messages', $this->_messages);
+
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			}
+			else
+			{
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			}
+		}
+		elseif ($this->_user->clan_id)
+		{
+			$clan = ORM::factory('clan', $this->_user->clan_id);
+
+			$this->_messages[] = array(
+				'type'  => 'alert',
+				'value' => 'Već si u klanu.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
 			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
 		}
 		else
 		{
 			throw HTTP_Exception::factory(404, 'Klan nije pronađen.');
+		}
+	}
+
+	public function action_prijave()
+	{
+		$clan = ORM::factory('clan', $this->request->param('id'));
+
+		if ($clan->loaded() AND $clan->lord_id == $this->_user->id)
+		{
+			$applications = $clan->applications
+				->with('user')
+				->order_by('id', 'DESC')
+				->find_all();
+
+			$this->_title   = 'Prijave - '.$clan->name;
+			$this->_content = View::factory('clans/prijave')
+				->set('clan', $clan)
+				->set('applications', $applications);
+		}
+		elseif ($clan->loaded())
+		{
+			$clan = ORM::factory('clan', $this->_user->clan_id);
+
+			$this->_messages[] = array(
+				'type'  => 'alert',
+				'value' => 'Nisi lord ovog klana.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			if ($clan->loaded())
+			{
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			}
+			else
+			{
+				HTTP::redirect('liga/klanovi');
+			}
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Klan nije pronađen.');
+		}
+	}
+
+	public function action_review_application()
+	{
+		$clan        = ORM::factory('clan', $this->request->param('id'));
+		$application = $clan->applications
+			->with('user')
+			->where('application.id', '=', $this->request->param('id2'))
+			->find();
+
+		if ($clan->loaded() AND $application->loaded() AND $clan->lord_id == $this->_user->id)
+		{
+			if ($this->request->method() === Request::POST)
+			{
+				if ($this->request->param('operation') == 'odobri' AND $application->user->clan_id == NULL)
+				{
+					$application->user->values(array('clan_id' => $clan->id))->update();
+				}
+
+				$application->delete();
+
+				if ($this->request->param('operation') == 'odobri')
+				{
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Prijava je odobrena.',
+					);
+				}
+				else
+				{
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Prijava je odbijena.',
+					);
+				}
+
+				Session::instance()->set('messages', $this->_messages);
+
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/prijave');
+			}
+			else
+			{
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/prijave');
+			}
+		}
+		elseif ($clan->lord_id != $this->_user->id)
+		{
+			$clan = ORM::factory('clan', $this->_user->clan_id);
+
+			$this->_messages[] = array(
+				'type'  => 'alert',
+				'value' => 'Nisi lord ovog klana.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			if ($clan->loaded())
+			{
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			}
+			else
+			{
+				HTTP::redirect('liga/klanovi');
+			}
+		}
+		elseif ( ! $clan->loaded())
+		{
+			throw HTTP_Exception::factory(404, 'Klan nije pronađen.');
+		}
+		elseif ( ! $application->loaded())
+		{
+			$this->_messages[] = array(
+				'type'  => 'alert',
+				'value' => 'Nepostojeća prijava.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/prijave');
+		}
+	}
+
+	public function action_izbaci()
+	{
+		$clan = ORM::factory('clan', $this->request->param('id'));
+		$user = $clan->users
+			->where('id', '=', $this->request->param('id2'))
+			->find();
+
+		if ($clan->loaded() AND $user->loaded() AND $clan->lord_id == $this->_user->id)
+		{
+			if ($this->request->method() === Request::POST)
+			{
+				if ($user->id != $clan->lord->id)
+				{
+					$user->values(array('clan_id' => NULL))->update();
+
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Igrač je izbačen iz klana.',
+					);
+				}
+				else
+				{
+					$this->_messages[] = array(
+						'type'  => 'alert',
+						'value' => 'Lord klana ne može biti izbačen.',
+					);
+				}
+
+				Session::instance()->set('messages', $this->_messages);
+
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			}
+			else
+			{
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			}
+		}
+		elseif ($clan->lord_id != $this->_user->id)
+		{
+			$clan = ORM::factory('clan', $this->_user->clan_id);
+
+			$this->_messages[] = array(
+				'type'  => 'alert',
+				'value' => 'Nisi lord ovog klana.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			if ($clan->loaded())
+			{
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			}
+			else
+			{
+				HTTP::redirect('liga/klanovi');
+			}
+		}
+		elseif ( ! $clan->loaded())
+		{
+			throw HTTP_Exception::factory(404, 'Klan nije pronađen.');
+		}
+		elseif ( ! $user->loaded())
+		{
+			$this->_messages[] = array(
+				'type'  => 'alert',
+				'value' => 'Igrač nije u klanu.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
 		}
 	}
 

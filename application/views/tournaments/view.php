@@ -33,6 +33,6 @@
 				<td><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name), $match->dire_clan->name) : NULL; ?></td>
 				<td><?php echo date('d M Y H:i:s', strtotime($match->date)); ?></td>
 			</tr>
-		<?php endforeach; ?>
+		<?php endforeach ?>
 	</table>
 </p>

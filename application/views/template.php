@@ -24,6 +24,8 @@
 
 <link rel="alternate stylesheet" type="text/css" href="/assets/stylesheets/blue.css" title="styles2" media="screen" />
 
+<link rel="stylesheet" type="text/css" href="/assets/stylesheets/application.css" />
+
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -46,6 +48,7 @@
 <script type="text/javascript" src="/assets/javascript/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery.mCustomScrollbar.js"></script>
+<script type="text/javascript" src="/assets/javascript/application.js"></script>
 
 <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -107,7 +110,7 @@ $("form.navbar-search").submit();
                             <li><img class="steam-avatar-small offline-status" src="<?=Steam::userinfo('avatar');?>" title="<?=Steam::userinfo('username');?>-ov avatar"> <a href="/igraci/<?=Steam::userinfo('accountid');?>" class="offline-status"><?=Steam::userinfo('username');?></a></li>
                            
                             <li><a href="/odjava" class="colr">Odjava</a>
-							<?php endif;?>
+							<?php endif ?>
                            
                         </li>
                     </ul>

@@ -72,7 +72,9 @@ abstract class Controller_Application extends Controller {
 		}
 
 		// Redirect to login page and show message if the action requires authorization
-		if ( ! $this->_user AND (in_array($this->request->action(), array('objavi', 'dodaj', 'organiziraj', 'izmijeni', 'prijavi', 'napravi'))))
+		if ( ! $this->_user AND (in_array($this->request->action(),
+			array('objavi', 'dodaj', 'organiziraj', 'izmijeni', 'prijavi', 'napravi', 'prijave', 'review_application')) OR
+			$this->request->action() == 'prijava' AND $this->request->controller() != 'Users'))
 		{
 			$this->_messages[] = array(
 				'type'  => 'error',

@@ -36,6 +36,20 @@ Route::set('clans', 'liga/klanovi(/<action>)(/<page>)', array('action' => 'napra
 		'action'     => 'index',
 	));
 
+Route::set('clan_prijava', 'liga/klanovi/<id>-<name>/prijave/<id2>/<operation>',
+	array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+', 'id2' => '\d+', 'operation' => 'odobri|odbij'))
+	->defaults(array(
+		'controller' => 'clans',
+		'action'     => 'review_application',
+	));
+
+Route::set('clan_izbaci', 'liga/klanovi/<id>-<name>/igraci/<id2>/izbaci',
+	array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+', 'id2' => '\d+'))
+	->defaults(array(
+		'controller' => 'clans',
+		'action'     => 'izbaci',
+	));
+
 Route::set('clan', 'liga/klanovi/<id>-<name>(/<action>)', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
 	->defaults(array(
 		'controller' => 'clans',

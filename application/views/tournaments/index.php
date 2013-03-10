@@ -8,6 +8,6 @@
 	<?php endforeach ?>
 <?php else: ?>
 	Trenutno nema turnira.
-<?php endif; ?>
+<?php endif ?>
 
 <?php echo $pagination; ?>

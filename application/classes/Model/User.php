@@ -7,6 +7,7 @@ class Model_User extends ORM {
 	);
 
 	protected $_has_many = array(
+		'applications'  => array(),
 		'bans'          => array(),
 		'executions'    => array(
 			'model'       => 'Ban',

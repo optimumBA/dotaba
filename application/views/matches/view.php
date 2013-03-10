@@ -45,14 +45,14 @@
 				<td>
 					<?php for ($i = 0; $i < 6; $i++): ?>
 						<?php echo HTML::image(Media_Remote_Item::get($slot->{'item_'.$i}->id, $slot->{'item_'.$i}->image), array('alt' => $slot->{'item_'.$i}->localized_name)); ?>
-					<?php endfor; ?>
+					<?php endfor ?>
 				</td>
 			</tr>
-		<?php endforeach; ?>
+		<?php endforeach ?>
 	</table>
 	<p>Tornjevi: <?php echo $match->{'tower_status_'.$team}; ?></p>
 	<p>Barake: <?php echo $match->{'barracks_status_'.$team}; ?></p>
-<?php endforeach; ?>
+<?php endforeach ?>
 
 <?php if (count($match->picksbans) > 0): ?>
 	<ul>

@@ -27,7 +27,7 @@
                         <?php endforeach ?>
 <?php else: ?>
 	Trenutno nema videa.
-<?php endif; ?>
+<?php endif ?>
                         
 					</ul>
                 </section>
