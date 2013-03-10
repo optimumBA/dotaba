@@ -100,7 +100,7 @@ abstract class Controller_Application extends Controller {
 		{
 			$date_format = Kohana::$config->load('site.date_format');
 			$this->_messages['maintenance'] = array(
-				'type'  => 'info',
+				'type'  => 'notice',
 				'value' => 'Rad stranice će biti obustavljen radi dodatnih radova od '
 					.date($date_format, strtotime($maintenance['start'])).' do '
 					.(($maintenance['end']) ? date($date_format, strtotime($maintenance['end'])) : 'daljnjeg').'.',

@@ -156,7 +156,7 @@ class Controller_Tournaments extends Controller_Application {
 		elseif ($tournament->loaded())
 		{
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi organizator/ica ovog turnira.',
 			);
 
@@ -194,7 +194,7 @@ class Controller_Tournaments extends Controller_Application {
 			else
 			{
 				$this->_messages[] = array(
-					'type'  => 'alert',
+					'type'  => 'error',
 					'value' => 'Nisi lord klana.',
 				);
 

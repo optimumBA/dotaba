@@ -135,7 +135,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Već si u klanu.',
 			);
 
@@ -216,7 +216,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi lord ovog klana.',
 			);
 
@@ -262,7 +262,7 @@ class Controller_Clans extends Controller_Application {
 				else
 				{
 					$this->_messages[] = array(
-						'type'  => 'alert',
+						'type'  => 'error',
 						'value' => 'Već si se prijavio/la u klan.',
 					);
 				}
@@ -281,7 +281,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Već si u klanu.',
 			);
 
@@ -316,7 +316,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi lord ovog klana.',
 			);
 
@@ -385,7 +385,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi lord ovog klana.',
 			);
 
@@ -407,7 +407,7 @@ class Controller_Clans extends Controller_Application {
 		elseif ( ! $application->loaded())
 		{
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nepostojeća prijava.',
 			);
 
@@ -440,7 +440,7 @@ class Controller_Clans extends Controller_Application {
 				else
 				{
 					$this->_messages[] = array(
-						'type'  => 'alert',
+						'type'  => 'error',
 						'value' => 'Lord klana ne može biti izbačen.',
 					);
 				}
@@ -459,7 +459,7 @@ class Controller_Clans extends Controller_Application {
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi lord ovog klana.',
 			);
 
@@ -481,7 +481,7 @@ class Controller_Clans extends Controller_Application {
 		elseif ( ! $user->loaded())
 		{
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Igrač nije u klanu.',
 			);
 

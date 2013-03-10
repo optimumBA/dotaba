@@ -96,7 +96,7 @@ class Controller_Videos extends Controller_Application {
 		elseif ($video->loaded())
 		{
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi autor/ica ovog snimka.',
 			);
 

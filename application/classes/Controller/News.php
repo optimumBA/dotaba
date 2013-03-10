@@ -108,7 +108,7 @@ class Controller_News extends Controller_Application {
 		else
 		{
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi novinar/ka.',
 			);
 
@@ -178,7 +178,7 @@ class Controller_News extends Controller_Application {
 		elseif ($article->loaded() AND $this->_user->id != $article->user_id)
 		{
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi autor/ica ove novosti.',
 			);
 
@@ -189,7 +189,7 @@ class Controller_News extends Controller_Application {
 		elseif ($article->loaded())
 		{
 			$this->_messages[] = array(
-				'type'  => 'alert',
+				'type'  => 'error',
 				'value' => 'Nisi novinar/ka.',
 			);
 
