@@ -3,7 +3,7 @@
     <!-- Banner Start -->
     <div id="sub-banner">
     	<div class="in">
-        	<a href="#"><img src="/media/images/sub-banner3.jpg" alt="" /></a>
+        	<a href="#"><img src="/assets/images/sub-banner3.jpg" alt="" /></a>
         </div>
     </div>
     <!-- Banner End -->
@@ -37,7 +37,8 @@
                                 <div class="desc-sec">
                                 	<h3><a href="/novosti/<?=$article->id.'-'.URL::title($article->title);?>"><?php echo $article->title; ?></a></h3>
                                     <div class="post-opts">
-                                    	<p>Objavio <a href="#"><?=$article->user->username;?></a></p>
+                                    	<p>Objavio <a href="/igraci/<?=$article->user->accountid;?>"><?=$article->user->username;?></a></p>
+                                         <p><img class="" src="<?=$article->user->avatar;?>" width="16px" height="16px" align="absmiddle" /></p>
                                         <p><?php echo $article->created_at/*Date::formatted_time($article->created_at, $user->date_format, $user->timezone)*/; ?></p>
                                         <p><a href="#">{NULL} komentara</a></p>
                                     </div>
@@ -52,17 +53,21 @@
 	
 	
 	
-	<?php endforeach ?>
+	<?php endforeach; ?>
 <?php else: ?>
 	Trenutno nema novosti.
 <?php endif ?>
 
-<?php echo $pagination; ?>
+ <?php echo $pagination; ?>
 
    
                     </div>
                 </div>
+            
+                
                 <!-- Column One End -->
+              
+                
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
                 	<!-- Top Sellers Start -->
