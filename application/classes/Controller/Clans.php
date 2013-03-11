@@ -50,7 +50,7 @@ class Controller_Clans extends Controller_Application {
 				->or_where('dire_clan_id', '=', $clan->id)
 				->find_all();
 
-			if ($can_apply = ($this->_user->clan_id === NULL))
+			if ($can_apply = ($clan->open AND $this->_user->clan_id === NULL))
 			{
 				$application = $this->_user->applications
 					->where('clan_id', '=', $clan->id)
@@ -88,7 +88,7 @@ class Controller_Clans extends Controller_Application {
 						$this->_post['created_at'] = DB::expr('NOW()');
 
 						$clan = ORM::factory('clan')
-							->values($this->_post, array('name', 'tag', 'lord_id', 'created_at'))
+							->values($this->_post, array('name', 'tag', 'lord_id', 'open', 'created_at'))
 							->create();
 
 						$this->_user->values(array('clan_id' => $clan->id))->update();
@@ -161,7 +161,7 @@ class Controller_Clans extends Controller_Application {
 					{
 						$this->_post['updated_at'] = DB::expr('NOW()');
 
-						$clan->values($this->_post, array('name', 'tag', 'lord_id', 'updated_at'))
+						$clan->values($this->_post, array('name', 'tag', 'lord_id', 'open', 'updated_at'))
 							->update();
 
 						Media_Local_Clan::save($clan->id, $files);
@@ -241,7 +241,7 @@ class Controller_Clans extends Controller_Application {
 	{
 		$clan = ORM::factory('clan', $this->request->param('id'));
 
-		if ($clan->loaded() AND $this->_user->clan_id === NULL)
+		if ($clan->loaded() AND $this->_user->clan_id === NULL AND $clan->open)
 		{
 			if ($this->request->method() === Request::POST)
 			{
@@ -275,6 +275,17 @@ class Controller_Clans extends Controller_Application {
 			{
 				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
 			}
+		}
+		elseif ( ! $clan->open)
+		{
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Klan nije otvoren za nove prijave.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
 		}
 		elseif ($this->_user->clan_id)
 		{

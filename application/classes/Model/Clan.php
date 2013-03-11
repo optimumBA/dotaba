@@ -25,6 +25,20 @@ class Model_Clan extends ORM {
 		),
 	);
 
+	public function filters()
+	{
+		return array(
+			'open' => array(
+				array(
+					function($value)
+					{
+						return (bool) $value;
+					}
+				),
+			),
+		);
+	}
+
 	public function labels()
 	{
 		return array(

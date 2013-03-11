@@ -7,6 +7,10 @@
 	<?php echo Form::input('tag', Arr::path($values, 'tag')); ?>
 	<?php echo Arr::path($errors, 'tag'); ?>
 
+	<?php echo Form::label('open', 'Omogućene prijave:'); ?>
+	<?php echo Form::checkbox('open', 1, (bool) Arr::path($values, 'open', 1)); ?>
+	<?php echo Arr::path($errors, 'open'); ?>
+
 	<?php echo Form::label('default', 'Logo:'); ?>
 	<?php echo Form::file('default'); ?>
 	<?php echo Arr::path($errors, 'default'); ?>
