@@ -27,7 +27,7 @@
 	<!-- Post Start -->
                         <div class="post">
                         	<div class="thumb">
-                            	<a href="/novosti/<?=$article->id.'-'.URL::title($article->title);?>"><img src="<?=Media_Local_News::get($article->id);?>" alt="<?php echo $article->title;?>" /></a>
+                            	<a href="/novosti/<?=$article->id.'-'.URL::title($article->title, '-', TRUE);?>"><img src="<?=Media_Local_News::get($article->id);?>" alt="<?php echo $article->title;?>" /></a>
                             </div>
                             <div class="desc">
                             	<div class="date">
@@ -35,7 +35,7 @@
                                     <h1><?php echo date('M', strtotime($article->created_at));?></h1>
                                 </div>
                                 <div class="desc-sec">
-                                	<h3><a href="/novosti/<?=$article->id.'-'.URL::title($article->title);?>"><?php echo $article->title; ?></a></h3>
+                                	<h3><a href="/novosti/<?=$article->id.'-'.URL::title($article->title, '-', TRUE);?>"><?php echo $article->title; ?></a></h3>
                                     <div class="post-opts">
                                     	<p>Objavio <a href="/igraci/<?=$article->user->accountid;?>"><?=$article->user->username;?></a></p>
                                          <p><img class="" src="<?=$article->user->avatar;?>" width="16px" height="16px" align="absmiddle" /></p>
@@ -45,7 +45,7 @@
                                     <p>
                                     	<?=Text::limit_words(strip_tags($article->content), 40);?>
                                     </p>
-                                    <a href="/novosti/<?=$article->id.'-'.URL::title($article->title);?>" class="readmore">Nastavi čitati</a>
+                                    <a href="/novosti/<?=$article->id.'-'.URL::title($article->title, '-', TRUE);?>" class="readmore">Nastavi čitati</a>
                                 </div>
                             </div>
                         </div>
