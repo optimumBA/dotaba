@@ -26,7 +26,7 @@
                                     <p><img class="" src="<?=$article->user->avatar;?>" width="16px" height="16px" align="absmiddle" /></p>
                                     <p><?php echo $article->created_at/*Date::formatted_time($article->created_at, $user->date_format, $user->timezone)*/; ?></p>
                                     <p>Izvor <a href="<?=$article->url;?>"><?=$article->source;?></a></p>
-                                    <p>0 komentara</p>
+                                    <p><?php echo count($comments) ?> komentara</p>
                                    
                                 </div>
                                 <p>
@@ -49,7 +49,15 @@
                         <!-- Comments Start -->
                         <div class="comments">
                             <h1 class="heading colr">Komentari</h1>
-                           <div class="alert alert-info">Trenutno nema komentara za ovu vijest.</div>
+                            <?php if (count($comments)): ?>
+                                <ul>
+                                    <?php foreach ($comments as $comment): ?>
+                                        <li><?php echo $comment->body; ?></li>
+                                    <?php endforeach ?>
+                                </ul>
+                            <?php else: ?>
+                                <div class="alert alert-info">Trenutno nema komentara za ovu vijest.</div>
+                            <?php endif; ?>
                         </div>
                         <!-- Comments End -->
                         <!-- Leave a Reply Start -->
