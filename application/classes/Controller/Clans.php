@@ -102,7 +102,7 @@ class Controller_Clans extends Controller_Application {
 
 						Session::instance()->set('messages', $this->_messages);
 
-						HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+						HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 					}
 					else
 					{
@@ -141,7 +141,7 @@ class Controller_Clans extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 		}
 	}
 
@@ -173,7 +173,7 @@ class Controller_Clans extends Controller_Application {
 
 						Session::instance()->set('messages', $this->_messages);
 
-						HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+						HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 					}
 					else
 					{
@@ -224,7 +224,7 @@ class Controller_Clans extends Controller_Application {
 
 			if ($clan->loaded())
 			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
 			else
 			{
@@ -269,11 +269,11 @@ class Controller_Clans extends Controller_Application {
 
 				Session::instance()->set('messages', $this->_messages);
 
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
 			else
 			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
 		}
 		elseif ( ! $clan->open)
@@ -285,7 +285,7 @@ class Controller_Clans extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 		}
 		elseif ($this->_user->clan_id)
 		{
@@ -298,7 +298,7 @@ class Controller_Clans extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 		}
 		else
 		{
@@ -335,7 +335,7 @@ class Controller_Clans extends Controller_Application {
 
 			if ($clan->loaded())
 			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
 			else
 			{
@@ -384,11 +384,11 @@ class Controller_Clans extends Controller_Application {
 
 				Session::instance()->set('messages', $this->_messages);
 
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/prijave');
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
 			}
 			else
 			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/prijave');
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
 			}
 		}
 		elseif ($clan->lord_id != $this->_user->id)
@@ -404,7 +404,7 @@ class Controller_Clans extends Controller_Application {
 
 			if ($clan->loaded())
 			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
 			else
 			{
@@ -424,7 +424,7 @@ class Controller_Clans extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/prijave');
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
 		}
 	}
 
@@ -458,11 +458,11 @@ class Controller_Clans extends Controller_Application {
 
 				Session::instance()->set('messages', $this->_messages);
 
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
 			else
 			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
 		}
 		elseif ($clan->lord_id != $this->_user->id)
@@ -478,7 +478,7 @@ class Controller_Clans extends Controller_Application {
 
 			if ($clan->loaded())
 			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
 			else
 			{
@@ -498,7 +498,7 @@ class Controller_Clans extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 		}
 	}
 

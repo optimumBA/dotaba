@@ -57,13 +57,13 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
     <!-- Content Section Start -->
     <div id="content-sec">
     	<div class="inner">
-      
+
             <!-- Columns Section Start -->
             <div class="columns-sec shade">
             	<div class="threecol">
             	<!-- Column One Start -->
                 <div class="col1">
-                	
+
                     <!-- Upcoming Events Start -->
                 	<div class="widget upcoming-eve">
                     	<h1 class="heading colr">Nadolazeći mečevi</h1>
@@ -120,18 +120,18 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                 <!-- Column One End -->
                 <!-- Column Two Start -->
                 <div class="col2">
-         
+
                     <!-- Latest Videos Start -->
                 	<div class="latest-videos">
                     	<h1 class="heading colr">Posljednji snimci</h1>
                        <?php $videos = ORM::factory('video')->order_by('created_at', 'DESC')->limit(2)->find_all(); 
 					   foreach($videos as $video) {
 					   echo' <div class="desc">
-                        	<h4><a href="/vods/snimci/'.$video->id.'-'.URL::title($video->name).'" class="white">'.$video->name.'</a></h4>
+                        	<h4><a href="/vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE).'" class="white">'.$video->name.'</a></h4>
                             <p>
                             	'.$video->description.'
                             </p>
-                            
+
                         </div>
                         <div class="video">
                         	<iframe height="231" src="http://www.youtube.com/embed/'.$video->vid.'" frameborder="0" allowfullscreen></iframe>
@@ -141,7 +141,7 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                    <a href="/vods/snimci" class="buttonone">Pogledaj sve snimke</a>
                     </div>
                     <!-- Latest Videos End -->
-                
+
                     <!-- Latest News Start -->
                     <div class="latest-news noback">
                     	<h1 class="heading colr">Posljednje novosti</h1>
@@ -153,13 +153,13 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
 										echo '
 									<li>
                             			<div class="thumb">
-                                			<a href="/novosti/'.$article->id.'-'.URL::title($article->title).'">
+                                			<a href="/novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE).'">
                                     			<img src="/assets/images/img8.jpg" alt="" />
                                         		<span>Pogledaj</span>
                                     		</a>
                                 		</div>
                                 		<div class="desc">
-                                				<h4><a href="/novosti/'.$article->id.'-'.URL::title($article->title).'" class="white">'.$article->title.'</a></h4>
+                                				<h4><a href="/novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE).'" class="white">'.$article->title.'</a></h4>
                                     			<p class="post-opts">'.date('d M Y - G:i', strtotime($article->created_at)).' / <a href="#">4 comments</a></p>
                                    				<p class="txt">'.Text::limit_words(strip_tags($article->content), 40).'</p>
                                			</div>
@@ -167,13 +167,13 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
 									
 									}
 							?>
-                         
+
                             
                         </ul>
                         <a href="news.html" class="buttonone">Pogledaj sve novosti</a>
                     </div>
                     <!-- Latest News End -->
-                    
+
                 </div>
                 <!-- Column Two End -->
                 <!-- Column One Start -->
@@ -193,15 +193,15 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                     </div>
                     <!-- Top Sellers End -->
 
-    
-    
-                  
+
+
+
                     <!-- Facebook Start -->
                     <div class="widget facebook">
                        <div class="fb-like-box" data-href="https://www.facebook.com/DotA.Balkan" data-width="234" data-height="325" data-show-faces="true" data-colorscheme="dark" data-stream="false" data-header="false" border-color="#151515"></div>
                     </div>
                     <!-- Facebook End -->
-              	  
+
                 </div>
                 <!-- Column One End -->
                 </div>

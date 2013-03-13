@@ -51,7 +51,7 @@ class Controller_Videos extends Controller_Application {
 					->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
 					->create();
 
-				HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name));
+				HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE));
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -80,7 +80,7 @@ class Controller_Videos extends Controller_Application {
 					$video->values($this->_post, array('name', 'description', 'updated_at'))
 						->update();
 
-					HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name));
+					HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE));
 				}
 				catch (ORM_Validation_Exception $e)
 				{
@@ -102,7 +102,7 @@ class Controller_Videos extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name));
+			HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE));
 		}
 		else
 		{

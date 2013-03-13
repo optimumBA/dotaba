@@ -45,6 +45,10 @@ class Controller_Tournaments extends Controller_Application {
 				->set('clans', $clans)
 				->set('matches', $matches);
 		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Turnir nije pronađen.');
+		}
 	}
 
 	public function action_organiziraj()
@@ -73,7 +77,7 @@ class Controller_Tournaments extends Controller_Application {
 
 					Session::instance()->set('messages', $this->_messages);
 
-					HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+					HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
 				}
 				else
 				{
@@ -130,7 +134,7 @@ class Controller_Tournaments extends Controller_Application {
 
 						Session::instance()->set('messages', $this->_messages);
 
-						HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+						HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
 					}
 					else
 					{
@@ -162,7 +166,7 @@ class Controller_Tournaments extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name));
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 		}
 		else
 		{
@@ -174,22 +178,32 @@ class Controller_Tournaments extends Controller_Application {
 	{
 		$tournament = ORM::factory('tournament', $this->request->param('id'));
 
-		if ($this->request->method() === Request::POST)
+		if ($tournament->loaded() AND $this->request->method() === Request::POST)
 		{
 			$clan = ORM::factory('clan', array('lord_id' => $this->_user->id));
 
 			if ($clan->loaded())
 			{
-				$tournament->add('clans', $clan);
+				if ($tournament->has('clans', $clan))
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Klan je već prijavljen na ovaj turnir.',
+					);
+				}
+				else
+				{
+					$tournament->add('clans', $clan);
 
-				$this->_messages[] = array(
-					'type'  => 'success',
-					'value' => 'Klan je prijavljen na turnir.',
-				);
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Klan je prijavljen na turnir.',
+					);
+				}
 
 				Session::instance()->set('messages', $this->_messages);
 
-				HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+				HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
 			}
 			else
 			{
@@ -200,12 +214,16 @@ class Controller_Tournaments extends Controller_Application {
 
 				Session::instance()->set('messages', $this->_messages);
 
-				HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+				HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
 			}
+		}
+		elseif ($tournament->loaded())
+		{
+			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
 		}
 		else
 		{
-			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name));
+			throw HTTP_Exception::factory(404, 'Turnir nije pronađen.');
 		}
 	}
 

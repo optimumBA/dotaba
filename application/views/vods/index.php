@@ -30,7 +30,7 @@
                                     <h1><?php echo date('M', strtotime($video->created_at));?></h1>
                                 </div>
                                 <div class="desc">
-                                    <a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name);?>" class="thumb"><img src="http://i.ytimg.com/vi/<?=$video->vid;?>/1.jpg" alt="" /></a>
+                                    <a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name, '-', TRUE);?>" class="thumb"><img src="http://i.ytimg.com/vi/<?=$video->vid;?>/1.jpg" alt="" /></a>
                                     <div class="txt-sec">
                                         <h3><a href="blog-detail.html"><?=$video->name;?></a></h3>
                                         <p class="time"><?php echo $video->created_at;?></p>
@@ -39,7 +39,7 @@
                                         <p class="txt">
                                             <?=$video->description;?>
                                         </p>
-                                        <a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name);?>" class="readmore">Pogledaj</a>
+                                        <a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name, '-', TRUE);?>" class="readmore">Pogledaj</a>
                                     </div>
                                 </div>
                             </div>

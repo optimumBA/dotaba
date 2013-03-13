@@ -80,7 +80,7 @@ class Controller_News extends Controller_Application {
 
 						Session::instance()->set('messages', $this->_messages);
 
-						HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title));
+						HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
 					}
 					else
 					{
@@ -150,7 +150,7 @@ class Controller_News extends Controller_Application {
 
 						Session::instance()->set('messages', $this->_messages);
 
-						HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title));
+						HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
 					}
 					else
 					{
@@ -187,7 +187,7 @@ class Controller_News extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title));
+			HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
 		}
 		elseif ($article->loaded())
 		{
@@ -198,7 +198,7 @@ class Controller_News extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title));
+			HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
 		}
 		else
 		{

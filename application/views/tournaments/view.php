@@ -11,7 +11,7 @@
 		<?php foreach ($clans as $clan): ?>
 			<li>
 				<?php echo HTML::image(Media_Local_Clan::get($clan->id), array('alt' => $clan->name)); ?>
-				<?php echo HTML::anchor('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name), $clan->name); ?>
+				<?php echo HTML::anchor('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE), $clan->name); ?>
 			</li>
 		<?php endforeach ?>
 	</ul>

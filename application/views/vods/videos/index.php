@@ -11,14 +11,14 @@
                 </div>
                 <section id="gal-container">
                 	<ul class="gallery-two-col" id="stage">
-                         
+
                <?php if (count($videos) > 0): ?>
 	<?php foreach ($videos as $video): ?>          
                          
                          <li data-tags="Videos">
-                        	<a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name);?>" class="thumb play"><img src="http://i.ytimg.com/vi/<?=$video->vid;?>/0.jpg" alt="" /></a>
+                        	<a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name, '-', TRUE);?>" class="thumb play"><img src="http://i.ytimg.com/vi/<?=$video->vid;?>/0.jpg" alt="" /></a>
                             <div class="gal-caption">
-                            	<h3><a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name);?>" class="colr play"><?=$video->name;?></a></h3>
+                            	<h3><a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name, '-', TRUE);?>" class="colr play"><?=$video->name;?></a></h3>
                                 <p>
                                 	<?=$video->description;?>
                                 </p>
@@ -28,7 +28,7 @@
 <?php else: ?>
 	Trenutno nema videa.
 <?php endif ?>
-                        
+
 					</ul>
                 </section>
             </div>
