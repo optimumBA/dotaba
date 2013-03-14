@@ -40,7 +40,7 @@
                                     	<p>Objavio <a href="/igraci/<?=$article->user->accountid;?>"><?=$article->user->username;?></a></p>
                                          <p><img class="" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
                                         <p><?php echo $article->created_at/*Date::formatted_time($article->created_at, $user->date_format, $user->timezone)*/; ?></p>
-                                        <p><a href="#">{NULL} komentara</a></p>
+                                       
                                     </div>
                                     <p>
                                     	<?=Text::limit_words(strip_tags($article->content), 40);?>

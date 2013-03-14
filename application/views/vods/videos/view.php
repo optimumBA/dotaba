@@ -5,14 +5,25 @@
 
 <div class="comments">
 	<h1 class="heading colr">Komentari</h1>
+	
+	<?php if (!Steam::logged_in()): ?>
+	<div class="alert alert-error">Moraš biti prijavljen/a kako bi ostavio/la komentar. Prijavi se <a href="/provjera">ovdje</a></div>
+	<?php endif; ?>
+    <div class="clear"></div>
+	
 	<?php if (count($comments)): ?>
 		<ul>
 			<?php foreach ($comments as $comment): ?>
 				<li>
-					<?php echo HTML::image(Media_Remote_Avatar::get($comment->user->id, $comment->user->avatar), array('alt' => $comment->user->username)); ?>
-					<?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?>
-					<?php echo $comment->created_at; ?>
-					<?php echo $comment->body; ?>
+					<div class="avatar">
+					<?php echo HTML::image(Media_Remote_Avatar::get($comment->user->id, $comment->user->avatar), array('alt' => $comment->user->username, 'width' => 60, 'height' => 60)); ?>
+                    </div>
+					
+                    	<div class="desc">
+							<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
+							<p class="ago"><?php echo $comment->created_at; ?></p>
+							<p class="txt"><?php echo $comment->body; ?></p>
+                        </div>
 				</li>
 			<?php endforeach ?>
 		</ul>

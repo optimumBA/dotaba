@@ -1796,7 +1796,6 @@ a.print{
 	float:left;
 }
 .comments ul li .desc{
-	float:right;
 	width:auto;
 	display:block;
 	padding:15px;
