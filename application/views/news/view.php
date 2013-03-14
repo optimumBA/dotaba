@@ -52,46 +52,39 @@
                             <?php if (count($comments)): ?>
                                 <ul>
                                     <?php foreach ($comments as $comment): ?>
-                                        <li><?php echo $comment->body; ?></li>
+                                        <li>
+                                            <?php echo HTML::image(Media_Remote_Avatar::get($comment->user->id, $comment->user->avatar), array('alt' => $comment->user->username)); ?>
+                                            <?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?>
+                                            <?php echo $comment->created_at; ?>
+                                            <?php echo $comment->body; ?>
+                                        </li>
                                     <?php endforeach ?>
                                 </ul>
                             <?php else: ?>
-                                <div class="alert alert-info">Trenutno nema komentara za ovu vijest.</div>
+                                <div class="alert alert-info">Trenutno nema komentara.</div>
                             <?php endif; ?>
                         </div>
                         <!-- Comments End -->
-                        <!-- Leave a Reply Start -->
-                        <div class="leavereply">
-                            <h1 class="heading colr">Dodaj komentar</h1>
-                            <form class="forms">
-                            <ul>
-                                <li>
-                                    <input name="" value="Enter Name"
-                                    onfocus="if(this.value=='Enter Name') {this.value='';}"
-                                    onblur="if(this.value=='') {this.value='Enter Name';}" type="text" />
-                                </li>
-                                <li>
-                                    <input name="" value="Enter Email"
-                                    onfocus="if(this.value=='Enter Email') {this.value='';}"
-                                    onblur="if(this.value=='') {this.value='Enter Email';}" type="text" />
-                                </li>
-                                <li>
-                                    <input name="" value="Enter Company Name"
-                                    onfocus="if(this.value=='Enter Company Name') {this.value='';}"
-                                    onblur="if(this.value=='') {this.value='Enter Company Name';}" type="text" />
-                                </li>
-                                <li>
-                                    <textarea rows="" cols=""
-                                    onfocus="if(this.value=='Enter Massage') {this.value='';}"
-                                    onblur="if(this.value=='') {this.value='Enter Massage';}" />Enter Massage</textarea>
-                                </li>
-                                <li>
-                                    <button>Submit Comment</button>
-                                </li>
-                            </ul>
-                            </form>
-                        </div>
-                        <!-- Leave a Reply End -->
+                        <?php if (Steam::logged_in()): ?>
+                            <!-- Leave a Reply Start -->
+                            <div class="leavereply">
+                                <h1 class="heading colr">Dodaj komentar</h1>
+                                <?php echo Form::open('komentari/dodaj', array('class' => 'forms')); ?>
+                                    <ul>
+                                        <li>
+                                            <?php echo Form::textarea('body', '', array('placeholder' => 'Tekst')); ?>
+                                        </li>
+                                        <li>
+                                            <?php echo Form::hidden('object_id', $article->id); ?>
+                                            <?php echo Form::hidden('object_type', 'News'); ?>
+                                            <?php echo Form::hidden('csrf', Security::token()); ?>
+                                            <?php echo Form::submit(NULL, 'Pošalji'); ?>
+                                        </li>
+                                    </ul>
+                                <?php echo Form::close(); ?>
+                            </div>
+                            <!-- Leave a Reply End -->
+                        <?php endif ?>
                     </div>
                 </div>
                 <!-- Column One End -->

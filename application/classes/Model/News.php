@@ -25,7 +25,6 @@ class Model_News extends ORM {
 			),
 			'content' => array(
 				array('not_empty'),
-				array('max_length', array(':value', 255)),
 			),
 			'source' => array(
 				array('max_length', array(':value', 255)),

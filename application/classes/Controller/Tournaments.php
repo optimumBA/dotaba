@@ -39,11 +39,14 @@ class Controller_Tournaments extends Controller_Application {
 				->with('dire_clan')
 				->find_all();
 
+			$comments = Model_Tournament::comments($tournament->id);
+
 			$this->_title 	= $tournament->name;
 			$this->_content = View::factory('tournaments/view')
 				->set('tournament', $tournament)
 				->set('clans', $clans)
-				->set('matches', $matches);
+				->set('matches', $matches)
+				->set('comments', $comments);
 		}
 		else
 		{

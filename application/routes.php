@@ -97,6 +97,11 @@ Route::set('search', 'pretraga')
 		'action' 	 => 'index',
 	));
 
+Route::set('comments', 'komentari(/<action>)')
+	->defaults(array(
+		'controller' => 'comments',
+	));
+
 Route::set('default', '(<action>)')
 	->defaults(array(
 		'controller' => 'pages',

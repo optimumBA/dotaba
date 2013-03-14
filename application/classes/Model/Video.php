@@ -9,22 +9,23 @@ class Model_Video extends ORM {
 	public function labels()
 	{
 		return array(
-			'name' => 'naziv',
-			'vid'  => 'YouTube ID',
+			'vid'         => 'YouTube ID',
+			'name'        => 'naziv',
+			'description' => 'opis',
 		);
 	}
 
 	public function rules()
 	{
 		return array(
-			'name' => array(
-				array('not_empty'),
-				array('max_length', array(':value', 255)),
-			),
 			'vid' => array(
 				array('not_empty'),
 				array('alpha_numeric'),
 				array('exact_length', array(':value', 11)),
+			),
+			'name' => array(
+				array('not_empty'),
+				array('max_length', array(':value', 255)),
 			),
 		);
 	}

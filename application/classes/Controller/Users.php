@@ -92,11 +92,14 @@ class Controller_Users extends Controller_Application {
 				->with('mode')
 				->find_all();
 
+			$comments = Model_User::comments($user->id);
+
 			$this->_layout  = 'news';
 			$this->_title 	= $user->username;
 			$this->_content = View::factory('users/view')
 				->set('user', $user)
-				->set('matches', $matches);
+				->set('matches', $matches)
+				->set('comments', $comments);
 		}
 		else
 		{

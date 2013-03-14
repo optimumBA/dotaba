@@ -6,4 +6,20 @@ class Model_Comment extends ORM {
 		'user' => array(),
 	);
 
+	public function labels()
+	{
+		return array(
+			'body' => 'tekst',
+		);
+	}
+
+	public function rules()
+	{
+		return array(
+			'body' => array(
+				array('not_empty'),
+			),
+		);
+	}
+
 }

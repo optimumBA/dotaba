@@ -36,8 +36,11 @@ class Controller_Matches extends Controller_Application {
 				$this->_title .= ' - '.$match->radiant_clan->name.' protiv '.$match->dire_clan->name;
 			}
 
+			$comments = Model_Match::comments($match->id);
+
 			$this->_content = View::factory('matches/view')
-				->set('match', $match);
+				->set('match', $match)
+				->set('comments', $comments);
 		}
 		else
 		{
