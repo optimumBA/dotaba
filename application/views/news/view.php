@@ -23,7 +23,7 @@
                             <div class="desc">
                                 <div class="post-opts">
                                 	<p>Objavio <a href="/igraci/<?=$article->user->accountid;?>"> <?=$article->user->username;?></a></p>
-                                    <p><img class="" src="<?=$article->user->avatar;?>" width="16px" height="16px" align="absmiddle" /></p>
+                                    <p><img class="" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
                                     <p><?php echo $article->created_at/*Date::formatted_time($article->created_at, $user->date_format, $user->timezone)*/; ?></p>
                                     <p>Izvor <a href="<?=$article->url;?>"><?=$article->source;?></a></p>
                                     <p><?php echo count($comments) ?> komentara</p>
