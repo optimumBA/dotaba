@@ -137,3 +137,4 @@ Kohana::modules(Kohana::$config->load('modules')->as_array());
 
 require_once APPPATH.'routes'.EXT;
 require_once Kohana::find_file('vendor', 'lightopenid/openid');
+require_once Kohana::find_file('vendor', 'bbcode/bbcode.class');

@@ -1,5 +1,5 @@
 <p>Naziv: <?php echo $tournament->name; ?></p>
-<p>Opis: <?php echo $tournament->description; ?></p>
+<p>Opis: <?php echo HTML::parse_bbcode($tournament->description); ?></p>
 <p>Napravljen: <?php echo date('d M Y', strtotime($tournament->created_at)); ?></p>
 <?php if (isset($clan->updated_at)): ?>
 	<p>Izmijenjen: <?php echo date('d M Y', strtotime($tournament->updated_at)) ?></p>
@@ -56,7 +56,7 @@
                         <div class="desc">
 							<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
 							<p class="ago"><?php echo $comment->created_at; ?></p>
-							<p class="txt"><?php echo $comment->body; ?></p>
+							<p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></p>
                         </div>
 				</li>
 			<?php endforeach ?>

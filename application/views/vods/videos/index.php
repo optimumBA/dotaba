@@ -20,7 +20,7 @@
                             <div class="gal-caption">
                             	<h3><a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name, '-', TRUE);?>" class="colr play"><?=$video->name;?></a></h3>
                                 <p>
-                                	<?=$video->description;?>
+                                    <?=Text::limit_words(strip_tags(HTML::parse_bbcode($video->description)), 10);?>
                                 </p>
                             </div>
                         </li>

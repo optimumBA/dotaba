@@ -34,3 +34,6 @@
 [submodule "modules/email"]
 	path = modules/email
 	url = git://github.com/almirsarajcic/email.git
+[submodule "application/vendor/bbcode"]
+	path = application/vendor/bbcode
+	url = git://github.com/develogix/bbcode.git

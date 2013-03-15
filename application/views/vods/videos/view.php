@@ -1,7 +1,7 @@
 <?php echo $video->name; ?>
 <iframe src="http://www.youtube.com/embed/<?php echo $video->vid; ?>?origin=<?php echo URL::base(); ?>" frameborder="0"/>
 <?php echo HTML::anchor('igraci/'.$video->user->accountid, $video->user->username); ?>
-<?php echo $video->description; ?>
+<?php echo HTML::parse_bbcode($video->description); ?>
 
 <div class="comments">
 	<h1 class="heading colr">Komentari</h1>
@@ -22,7 +22,7 @@
                     	<div class="desc">
 							<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
 							<p class="ago"><?php echo $comment->created_at; ?></p>
-							<p class="txt"><?php echo $comment->body; ?></p>
+							<p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></p>
                         </div>
 				</li>
 			<?php endforeach ?>

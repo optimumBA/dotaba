@@ -43,7 +43,7 @@
                                        
                                     </div>
                                     <p>
-                                    	<?=Text::limit_words(strip_tags($article->content), 40);?>
+                                        <?=Text::limit_words(strip_tags(HTML::parse_bbcode($article->content)), 40);?>
                                     </p>
                                     <a href="/novosti/<?=$article->id.'-'.URL::title($article->title, '-', TRUE);?>" class="readmore">Nastavi čitati</a>
                                 </div>

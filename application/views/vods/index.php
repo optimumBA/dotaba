@@ -37,7 +37,7 @@
                                         <p class="location">YouTube</p>
                                         <div class="clear"></div>
                                         <p class="txt">
-                                            <?=$video->description;?>
+                                            <?=Text::limit_words(strip_tags(HTML::parse_bbcode($video->description)), 10);?>
                                         </p>
                                         <a href="/vods/snimci/<?=$video->id.'-'.URL::title($video->name, '-', TRUE);?>" class="readmore">Pogledaj</a>
                                     </div>

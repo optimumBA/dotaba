@@ -129,7 +129,7 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
 					   echo' <div class="desc">
                         	<h4><a href="/vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE).'" class="white">'.$video->name.'</a></h4>
                             <p>
-                            	'.$video->description.'
+                                '.Text::limit_words(strip_tags(HTML::parse_bbcode($video->description)), 10).'
                             </p>
 
                         </div>
@@ -161,7 +161,7 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                                 		<div class="desc">
                                 				<h4><a href="/novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE).'" class="white">'.$article->title.'</a></h4>
                                     			<p class="post-opts">'.date('d M Y - G:i', strtotime($article->created_at)).' / <a href="#">4 comments</a></p>
-                                   				<p class="txt">'.Text::limit_words(strip_tags($article->content), 40).'</p>
+                                                <p class="txt">'.Text::limit_words(strip_tags(HTML::parse_bbcode($article->content)), 40).'</p>
                                			</div>
                             		</li>';
 									

@@ -30,7 +30,7 @@
                                    
                                 </div>
                                 <p>
-                                	<?=$article->content;?>
+                                    <?=HTML::parse_bbcode($article->content);?>
                                 </p>
                                 <div class="clear"></div>
                               
@@ -65,7 +65,7 @@
 				 					<div class="desc">
 				 		 			<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
                                     <p class="ago"> <?php echo $comment->created_at; ?></p>
-                                    <p class="txt"><?php echo $comment->body; ?> </p>
+                                    <p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?> </p>
                                     <div class="clear"></div>    
                                    
                                    
