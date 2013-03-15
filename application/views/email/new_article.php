@@ -5,5 +5,5 @@
 </p>
 
 <p>
-	<em><?php echo HTML::anchor($article->url, $article->source); ?></em>, <?php echo date(Kohana::$config->load('site')->get('date_format'), strtotime($article->created_at)); ?>
+	<em><?php echo HTML::anchor($article->url, $article->source); ?></em>, <?php echo Date::formatted_time($article->created_at); ?>
 </p>

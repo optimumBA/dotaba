@@ -31,15 +31,14 @@
                             </div>
                             <div class="desc">
                             	<div class="date">
-                                	<h1><?php echo date('d', strtotime($article->created_at));?></h1>
-                                    <h1><?php echo date('M', strtotime($article->created_at));?></h1>
+                                    <h1><?php echo Date::formatted_time($article->created_at);?></h1>
                                 </div>
                                 <div class="desc-sec">
                                 	<h3><a href="/novosti/<?=$article->id.'-'.URL::title($article->title, '-', TRUE);?>"><?php echo $article->title; ?></a></h3>
                                     <div class="post-opts">
                                     	<p>Objavio <a href="/igraci/<?=$article->user->accountid;?>"><?=$article->user->username;?></a></p>
                                          <p><img class="" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
-                                        <p><?php echo $article->created_at/*Date::formatted_time($article->created_at, $user->date_format, $user->timezone)*/; ?></p>
+                                        <p><?php echo Date::formatted_time($article->created_at); ?></p>
                                        
                                     </div>
                                     <p>

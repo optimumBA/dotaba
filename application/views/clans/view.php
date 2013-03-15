@@ -1,8 +1,8 @@
 <p>Naziv: <?php echo $clan->name; ?></p>
 <p>Tag: <?php echo $clan->tag; ?></p>
-<p>Napravljen: <?php echo date('d M Y', strtotime($clan->created_at)); ?></p>
+<p>Napravljen: <?php echo Date::formatted_time($clan->created_at); ?></p>
 <?php if (isset($clan->updated_at)): ?>
-	<p>Izmijenjen: <?php echo date('d M Y', strtotime($clan->updated_at)) ?></p>
+	<p>Izmijenjen: <?php echo Date::formatted_time($clan->updated_at); ?></p>
 <?php endif ?>
 <p><?php echo HTML::image(Media_Local_Clan::get($clan->id), array('alt' => $clan->name)); ?></p>
 <p>
@@ -73,7 +73,7 @@
 					</div>
 						<div class="desc">
 							<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
-							<p class="ago"><?php echo $comment->created_at; ?></p>
+							<p class="ago"><?php echo Date::formatted_time($comment->created_at); ?></p>
 							<p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></p>
                             <div class="clear"></div>
                         </div>

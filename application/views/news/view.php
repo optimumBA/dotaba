@@ -24,7 +24,7 @@
                                 <div class="post-opts">
                                 	<p>Objavio <a href="/igraci/<?=$article->user->accountid;?>"> <?=$article->user->username;?></a></p>
                                     <p><img class="" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
-                                    <p><?php echo $article->created_at/*Date::formatted_time($article->created_at, $user->date_format, $user->timezone)*/; ?></p>
+                                    <p><?php echo Date::formatted_time($article->created_at); ?></p>
                                     <p>Izvor <a href="<?=$article->url;?>"><?=$article->source;?></a></p>
                                     <p><?php echo count($comments) ?> komentara</p>
                                    
@@ -64,7 +64,7 @@
                  
 				 					<div class="desc">
 				 		 			<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
-                                    <p class="ago"> <?php echo $comment->created_at; ?></p>
+                                    <p class="ago"> <?php echo Date::formatted_time($comment->created_at); ?></p>
                                     <p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?> </p>
                                     <div class="clear"></div>    
                                    

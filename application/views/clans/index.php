@@ -15,8 +15,8 @@
 			<td><?php echo HTML::anchor('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE), $clan->name); ?></td>
 			<td><?php echo $clan->tag; ?></td>
 			<td><?php echo HTML::anchor('igraci/'.$clan->lord->accountid, $clan->lord->username); ?></td>
-			<td><?php echo date('d M Y', strtotime($clan->created_at)); ?></td>
-			<td><?php echo (isset($clan->updated_at)) ? date('d M Y', strtotime($clan->updated_at)) : '-'; ?></td>
+			<td><?php echo Date::formatted_time($clan->created_at); ?></td>
+			<td><?php echo (isset($clan->updated_at)) ? Date::formatted_time($clan->updated_at) : '-'; ?></td>
 		</tr>
 	<?php endforeach ?>
 </table>

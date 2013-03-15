@@ -2,7 +2,7 @@
 <p>Ime: <?php echo $user->name; ?></p>
 <p>Država: <?php echo $user->location; ?></p>
 <p>URL: <?php echo HTML::anchor($user->profileurl); ?></p>
-<p>Registrovan/a: <?php echo date('d M Y H:i:s', strtotime($user->created_at)); ?></p>
+<p>Registrovan/a: <?php echo Date::formatted_time($user->created_at); ?></p>
 <p>Klan: <?php echo ($user->clan_id) ? HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name, '-', TRUE), $user->clan->name) : ''; ?></p>
 <?php if ($user->featured_hero_id): ?>
 	<p>
@@ -32,7 +32,7 @@
 				<td><?php echo ($match->tournament_id) ? HTML::anchor('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE), $match->tournament->name) : NULL; ?></td>
 				<td><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name), $match->radiant_clan->name) : NULL; ?></td>
 				<td><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name), $match->dire_clan->name) : NULL; ?></td>
-				<td><?php echo date('d M Y H:i:s', strtotime($match->date)); ?></td>
+				<td><?php echo Date::formatted_time($match->date); ?></td>
 			</tr>
 		<?php endforeach ?>
 	</table>
@@ -56,7 +56,7 @@
 						
                         <div class="desc">
 							<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
-							<p class="ago"><?php echo $comment->created_at; ?></p>
+							<p class="ago"><?php echo Date::formatted_time($comment->created_at); ?></p>
 							<p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></p>
                         </div>
 				</li>

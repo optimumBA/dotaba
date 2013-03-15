@@ -30,7 +30,7 @@ date_default_timezone_set('Europe/Sarajevo');
  * @link http://kohanaframework.org/guide/using.configuration
  * @link http://www.php.net/manual/function.setlocale
  */
-setlocale(LC_ALL, 'en_US.utf-8');
+setlocale(LC_ALL, 'bs_BA.utf-8');
 
 /**
  * Enable the Kohana auto-loader.
@@ -134,6 +134,11 @@ switch (Kohana::$environment)
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(Kohana::$config->load('modules')->as_array());
+
+/**
+ * Set the default timestamp format
+ */
+Date::$timestamp_format = Kohana::$config->load('site')->get('date_format');
 
 require_once APPPATH.'routes'.EXT;
 require_once Kohana::find_file('vendor', 'lightopenid/openid');

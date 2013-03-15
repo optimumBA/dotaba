@@ -1,8 +1,8 @@
 <p>Naziv: <?php echo $tournament->name; ?></p>
 <p>Opis: <?php echo HTML::parse_bbcode($tournament->description); ?></p>
-<p>Napravljen: <?php echo date('d M Y', strtotime($tournament->created_at)); ?></p>
+<p>Napravljen: <?php echo Date::formatted_time($tournament->created_at); ?></p>
 <?php if (isset($clan->updated_at)): ?>
-	<p>Izmijenjen: <?php echo date('d M Y', strtotime($tournament->updated_at)) ?></p>
+	<p>Izmijenjen: <?php echo Date::formatted_time($tournament->updated_at); ?></p>
 <?php endif ?>
 <p><?php echo HTML::image(Media_Local_Tournament::get($tournament->id), array('alt' => $tournament->name)); ?></p>
 <p>
@@ -31,7 +31,7 @@
 				<td><?php echo HTML::anchor('liga/mecevi/'.$match->id, $match->id); ?></td>
 				<td><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name), $match->radiant_clan->name) : NULL; ?></td>
 				<td><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name), $match->dire_clan->name) : NULL; ?></td>
-				<td><?php echo date('d M Y H:i:s', strtotime($match->date)); ?></td>
+				<td><?php echo Date::formatted_time($match->date); ?></td>
 			</tr>
 		<?php endforeach ?>
 	</table>
@@ -55,7 +55,7 @@
 						
                         <div class="desc">
 							<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
-							<p class="ago"><?php echo $comment->created_at; ?></p>
+							<p class="ago"><?php echo Date::formatted_time($comment->created_at); ?></p>
 							<p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></p>
                         </div>
 				</li>
