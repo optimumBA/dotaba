@@ -39,20 +39,12 @@ class Task_Users_Update extends Minion_Task {
 
 					$values = array(
 						'username'   => $summary->personaname,
+						'name'       => (isset($summary->realname)) ? $summary->realname : NULL,
+						'location'   => (isset($summary->loccountrycode)) ? $summary->loccountrycode : NULL,
 						'profileurl' => $summary->profileurl,
 						'avatar'     => $summary->avatarfull,
 						'status'     => $summary->personastate,
 					);
-
-					if (isset($summary->realname))
-					{
-						$values['name'] = $summary->realname;
-					}
-
-					if (isset($summary->loccountrycode))
-					{
-						$values['location'] = $summary->loccountrycode;
-					}
 
 					if ($user->avatar != $summary->avatarfull)
 					{

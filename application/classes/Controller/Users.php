@@ -16,21 +16,13 @@ class Controller_Users extends Controller_Application {
 				'steamid'    => $summary->steamid,
 				'accountid'  => Steam::convert_id($summary->steamid),
 				'username'   => $summary->personaname,
+				'name'       => (isset($summary->realname)) ? $summary->realname : NULL,
+				'location'   => (isset($summary->loccountrycode)) ? $summary->loccountrycode : NULL,
 				'profileurl' => $summary->profileurl,
 				'avatar'     => $summary->avatarfull,
 				'status'     => $summary->personastate,
 				'created_at' => DB::expr('NOW()'),
 			);
-
-			if (isset($summary->realname))
-			{
-				$values['name'] = $summary->realname;
-			}
-
-			if (isset($summary->loccountrycode))
-			{
-				$values['location'] = $summary->loccountrycode;
-			}
 
 			$user->values($values)->create();
 
