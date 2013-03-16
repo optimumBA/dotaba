@@ -82,6 +82,7 @@ class Controller_Users extends Controller_Application {
 				->with('radiant_clan')
 				->with('dire_clan')
 				->with('mode')
+				->where('processed', '=', TRUE)
 				->find_all();
 
 			$comments = Model_User::comments($user->id);

@@ -18,7 +18,9 @@ class Task_Matches_Get extends Minion_Task {
 				->order_by('date', 'DESC')
 				->find();
 
-			$date = ($last_match != FALSE) ? strtotime($last_match->date) : NULL;
+			$last_match_date = ($last_match != FALSE) ? strtotime($last_match->date) : 0;
+			$last_month      = strtotime('-1 month');
+			$date            = ($last_month > $last_match_date) ? $last_month : $last_match_date;
 
 			$matches = Steam::match_history($user->account_id, $date);
 
@@ -32,6 +34,19 @@ class Task_Matches_Get extends Minion_Task {
 						'mid' => $m->match_id,
 						'type_id' => $type->id
 					))->create();
+				}
+				elseif ($match->loaded())
+				{
+					$slot = $match->slots
+						->where('user_id', '=', $user->id)
+						->count_all();
+
+					if ($slot == 0)
+					{
+						$match->values(array(
+							'processed' => FALSE,
+						))->update();
+					}
 				}
 			}
 		}

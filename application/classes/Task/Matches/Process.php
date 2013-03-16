@@ -5,7 +5,8 @@ class Task_Matches_Process extends Minion_Task {
 	protected function _execute(array $params)
 	{
 		$matches = ORM::factory('match')
-			->where('radiant_win', 'IS', NULL)
+			->where('mid', 'IS NOT', NULL)
+			->where('processed', '=', FALSE)
 			->find_all();
 
 		foreach ($matches as $match)

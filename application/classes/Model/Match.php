@@ -36,6 +36,7 @@ class Model_Match extends ORM {
 			->with('radiant_clan')
 			->with('dire_clan')
 			->with('mode')
+			->where('processed', '=', TRUE)
 			->find($id);
 
 		if ( ! $match->loaded())
@@ -107,6 +108,7 @@ class Model_Match extends ORM {
 					'first_blood_time'        => $result->first_blood_time,
 					'date'                    => date('Y-m-d H:i:s', $result->start_time),
 					'updated_at'              => DB::expr('NOW()'),
+					'processed'               => TRUE,
 				))->update();
 
 			foreach ($result->players as $player)
@@ -116,7 +118,17 @@ class Model_Match extends ORM {
 				if ( ! $user->loaded())
 					continue;
 
+				$slot = ORM::factory('slot', array(
+					'match_id' => $match->id,
+					'user_id'  => $user->id
+				));
+
+				if ($slot->loaded())
+					continue;
+
 				$values = array(
+					'match_id'      => $match->id,
+					'user_id'       => $user->id,
 					'player_slot'   => Steam::convert_player_slot($player->player_slot),
 					'hero_id'       => $player->hero_id,
 					'item_0_id'     => $player->item_0,
@@ -141,52 +153,28 @@ class Model_Match extends ORM {
 					'level'         => $player->level,
 				);
 
-				$slot = ORM::factory('slot', array(
-					'match_id' => $match->id,
-					'user_id'  => $user->id
-				));
-
-				if ($slot->loaded())
-				{
-					$slot->values($values)->update();
-				}
-				else
-				{
-					$values = array_merge($values, array(
-						'match_id' => $match->id,
-						'user_id'  => $user->id,
-					));
-
-					$slot->values($values)->create();
-				}
+				$slot->values($values)->create();
 			}
 
 			if (isset($result->picks_bans))
 			{
-				foreach ($result->picks_bans as $pick_ban)
+				$count = ORM::factory('pickban')
+					->where('match_id', '=', $match->id)
+					->count_all();
+
+				if ($count == 0)
 				{
-					$values = array(
-						'team'  => $pick_ban->team,
-						'order' => $pick_ban->order,
-					);
-
-					$pickban = ORM::factory('pickban', array(
-						'match_id' => $match->id,
-						'hero_id'  => $pick_ban->hero_id
-					));
-
-					if ($pickban->loaded())
+					foreach ($result->picks_bans as $pick_ban)
 					{
-						$pickban->values($values)->update();
-					}
-					else
-					{
-						$values = array_merge($values, array(
+						$values = array(
 							'match_id' => $match->id,
-							'hero_id'  => $pick_ban->hero_id
-						));
+							'is_pick'  => $pick_ban->is_pick,
+							'hero_id'  => $pick_ban->hero_id,
+							'team'     => $pick_ban->team,
+							'order'    => $pick_ban->order,
+						);
 
-						$pickban->values($values)->create();
+						ORM::factory('pickban')->values($values)->create();
 					}
 				}
 			}

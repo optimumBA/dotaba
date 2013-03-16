@@ -139,11 +139,11 @@ class Steam {
 		return $matches;
 	}
 
-	public static function match_results($match_id, $cached = TRUE)
+	public static function match_results($match_id)
 	{
 		$path = Kohana::$config->load('steam')->get('matches_path').DIRECTORY_SEPARATOR.$match_id.'.json';
 
-		if (file_exists($path) AND $cached === TRUE)
+		if (file_exists($path))
 		{
 			$response = file_get_contents($path);
 		}

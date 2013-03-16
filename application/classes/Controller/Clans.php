@@ -46,8 +46,11 @@ class Controller_Clans extends Controller_Application {
 				->with('radiant_clan')
 				->with('dire_clan')
 				->with('mode')
-				->where('radiant_clan_id', '=', $clan->id)
+				->where('processed', '=', TRUE)
+				->where_open()
+				->or_where('radiant_clan_id', '=', $clan->id)
 				->or_where('dire_clan_id', '=', $clan->id)
+				->where_close()
 				->find_all();
 
 			if ($can_apply = ($clan->open AND $this->_user->clan_id === NULL))
