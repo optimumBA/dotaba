@@ -17,7 +17,20 @@
 					<div class="desc">
 						<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
 						<p class="ago"><?php echo Date::formatted_time($comment->created_at); ?></p>
-						<p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></p>
+						<?php if (Steam::userinfo('id') == $comment->user_id): ?>
+							<?php echo HTML::anchor('#', 'izmijeni', array('class' => 'edit_comment')); ?>
+							<?php echo HTML::anchor('#', 'obriši', array('class' => 'form_submit', 'data-form' => 'delete')); ?>
+							<?php echo Form::open('komentari/'.$comment->id.'/obrisi', array('class' => 'hidden delete')); ?>
+								<?php echo Form::hidden('csrf', Security::token()); ?>
+							<?php echo Form::close(); ?>
+							<?php echo Form::open('komentari/'.$comment->id.'/izmijeni', array('class' => 'hidden edit')); ?>
+								<?php echo Form::textarea('body', $comment->body); ?>
+								<?php echo Form::hidden('csrf', Security::token()); ?>
+								<?php echo Form::submit(NULL, 'Pošalji'); ?>
+								<?php echo HTML::image('assets/images/ajax-loader.gif', array('alt' => 'AJAX loader', 'class' => 'hidden ajax-loader')); ?>
+							<?php echo Form::close(); ?>
+						<?php endif ?>
+						<div class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></div>
 						<div class="clear"></div>
 					</div>
 				</li>
