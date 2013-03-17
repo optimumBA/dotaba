@@ -168,6 +168,10 @@ $("form.navbar-search").submit();
 	 
 <div class="clear"></div>
     <!-- Notification box -->
+  	<?php if(!Steam::logged_in()):?>
+    <div class="alert-top alert-info">Dobrodošli na <a class="link">Dota 2 Balkan Community</a>. Ukoliko je ovo Vaša prva posjeta, pročitajte <a class="link" href="/site/help">uputstvo za korištenje</a> stranice. Ako ste već korisnik ove stranice, molimo da se <a class="link" href="/provjera?mod=Prijava">prijavite</a>, kako bi imali sve mogućnosti stranice. U slučaju da nemate korisnički račun, možete se <a class="link" href="/provjera?mod=Registracija">registrovati</a>.</div>
+ 	<?php endif;?>
+ 
   <?php foreach ($messages as $message): ?>
         <div class="alert-top alert-<?php echo $message['type']; ?>"><?php echo $message['value']; ?></div>
     <?php endforeach ?>
