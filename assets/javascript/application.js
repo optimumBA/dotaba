@@ -1,5 +1,5 @@
 jQuery(function($) {
-	$('a[class="form_submit"]').on('click', function(e) {
+	$('a[class="obrisi"]').on('click', function(e) {
 		var self = $(this);
 
 		if (confirm('Jesi li siguran/na?')) {
@@ -9,7 +9,7 @@ jQuery(function($) {
 		e.preventDefault();
 	});
 
-	$('a[class="edit_comment"]').on('click', function(e) {
+	$('a[class="izmijeni"]').on('click', function(e) {
 		var self         = $(this);
 		var text         = self.siblings('.txt').slideUp();
 		var editForm     = self.siblings('form.edit').slideDown();
