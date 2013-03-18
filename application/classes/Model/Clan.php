@@ -19,9 +19,10 @@ class Model_Clan extends ORM {
 			'model'       => 'Match',
 			'foreign_key' => 'dire_clan_id',
 		),
+		'participations' => array(),
 		'users' => array(),
 		'tournaments' => array(
-			'through' => 'clans_tournaments',
+			'through' => 'participations',
 		),
 	);
 

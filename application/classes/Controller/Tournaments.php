@@ -33,7 +33,7 @@ class Controller_Tournaments extends Controller_Application {
 		if ($tournament->loaded())
 		{
 			$clans = $tournament->clans
-				->where('approved', '=', TRUE)
+				->where('is_approved', '=', TRUE)
 				->find_all();
 
 			$matches = $tournament->matches
@@ -232,6 +232,80 @@ class Controller_Tournaments extends Controller_Application {
 				'type'  => 'error',
 				'value' => 'Turnir je već započeo.',
 			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Turnir nije pronađen.');
+		}
+	}
+
+	public function action_start()
+	{
+		$tournament = ORM::factory('tournament', $this->request->param('id'));
+
+		if ($tournament->loaded())
+		{
+			if ($this->request->method() === Request::POST)
+			{
+				$participations = $tournament->participations
+					->where('is_approved', '=', TRUE);
+
+				$count = $participations->count_all();
+
+				if ($tournament->user_id == $this->_user->id AND $tournament->is_started == FALSE AND $count == $tournament->num_clans)
+				{
+					$type = ORM::factory('type', array('name' => 'Turnir'));
+
+					$participations = $participations->find_all()->as_array();
+
+					shuffle($participations);
+
+					for ($i = 0; $i < $count; $i += 2)
+					{
+						ORM::factory('match')
+							->values(array(
+								'type_id'         => $type->id,
+								'tournament_id'   => $tournament->id,
+								'radiant_clan_id' => $participations[$i]->clan_id,
+								'dire_clan_id'    => $participations[$i+1]->clan_id,
+								'mode_id'         => $tournament->mode_id,
+							))->create();
+					}
+
+					$tournament->values(array('is_started' => TRUE, 'updated_at' => DB::expr('NOW()')))
+						->update();
+
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Turnir je započeo.',
+					);
+				}
+				elseif ($tournament->user_id != $this->_user->id)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nisi organizator/ica ovog turnira.',
+					);
+				}
+				elseif ($count != $tournament->num_clans)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nedovoljan broj klanova.',
+					);
+				}
+				elseif ($tournament->is_started)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Turnir je već počeo.',
+					);
+				}
+			}
 
 			Session::instance()->set('messages', $this->_messages);
 
