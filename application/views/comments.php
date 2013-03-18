@@ -17,7 +17,6 @@
 					<div class="desc">
 						<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
 						<p class="ago"><?php echo Date::formatted_time($comment->created_at); ?></p>
-<<<<<<< HEAD
 						<?php if ($comment->removed): ?>
 							<div class="clear"></div>
 							<div class="txt"><em>Komentar je obrisan.</em></div>
@@ -40,7 +39,7 @@
 							<?php endif ?>
 							<div class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></div>
 						<?php endif ?>
-=======
+
 						<?php if (Steam::userinfo('id') == $comment->user_id): ?>
 							<?php echo HTML::anchor('#', 'izmijeni', array('class' => 'izmijeni')); ?>
 							<?php echo HTML::anchor('#', 'obriši', array('class' => 'obrisi', 'data-form' => 'delete')); ?>
@@ -57,7 +56,7 @@
                        <div class="clear"></div>
 						<p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></p>
 						<div class="clear"></div>
->>>>>>> Fix comments style
+
 					</div>
 				</li>
 			<?php endforeach ?>
