@@ -79,7 +79,8 @@ class Controller_Comments extends Controller_Application {
 		if ($comment->loaded() AND ($comment->user_id == $this->_user->id OR 
 			$this->_user->has('roles', ORM::factory('role', array('name' => 'Administrator/ica')))))
 		{
-			$comment->delete();
+			$comment->values(array('removed' => TRUE, 'updated_at' => DB::expr('NOW()')))
+				->update();
 
 			$this->_messages[] = array(
 				'type'  => 'success',
