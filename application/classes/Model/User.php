@@ -7,10 +7,10 @@ class Model_User extends ORM {
 	);
 
 	protected $_has_many = array(
-		'applications'  => array(),
-		'bans'          => array(),
-		'comments'      => array(),
-		'executions'    => array(
+		'applications' => array(),
+		'bans'         => array(),
+		'comments'     => array(),
+		'executions'   => array(
 			'model'       => 'Ban',
 			'foreign_key' => 'executioner_id',
 		),
@@ -18,15 +18,18 @@ class Model_User extends ORM {
 			'model'       => 'Hero',
 			'foreign_key' => 'featured_hero_id',
 		),
-		'matches'       => array(
+		'matches' => array(
 			'through' => 'slots',
 		),
-		'news'          => array(),
-		'roles'         => array(
+		'news'           => array(),
+		'participations' => array(
+			'through' => 'participations_users',
+		),
+		'roles' => array(
 			'through' => 'roles_users',
 		),
-		'slots'         => array(),
-		'videos'        => array(),
+		'slots'  => array(),
+		'videos' => array(),
 	);
 
 }

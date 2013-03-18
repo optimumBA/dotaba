@@ -32,7 +32,9 @@ class Controller_Tournaments extends Controller_Application {
 
 		if ($tournament->loaded())
 		{
-			$clans = $tournament->clans->find_all();
+			$clans = $tournament->clans
+				->where('approved', '=', TRUE)
+				->find_all();
 
 			$matches = $tournament->matches
 				->with('radiant_clan')
@@ -169,7 +171,7 @@ class Controller_Tournaments extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
+			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
 		}
 		else
 		{
@@ -181,7 +183,7 @@ class Controller_Tournaments extends Controller_Application {
 	{
 		$tournament = ORM::factory('tournament', $this->request->param('id'));
 
-		if ($tournament->loaded() AND $this->request->method() === Request::POST)
+		if ($tournament->loaded() AND $tournament->is_started == FALSE AND $this->request->method() === Request::POST)
 		{
 			$clan = ORM::factory('clan', array('lord_id' => $this->_user->id));
 
@@ -220,8 +222,19 @@ class Controller_Tournaments extends Controller_Application {
 				HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
 			}
 		}
+		elseif ($tournament->loaded() AND $tournament->is_started == FALSE)
+		{
+			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
+		}
 		elseif ($tournament->loaded())
 		{
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Turnir je već započeo.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
 			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
 		}
 		else

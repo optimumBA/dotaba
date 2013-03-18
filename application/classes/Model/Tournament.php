@@ -7,10 +7,11 @@ class Model_Tournament extends ORM {
 	);
 
 	protected $_has_many = array(
-		'matches' => array(),
 		'clans' => array(
-			'through' => 'clans_tournaments',
+			'through' => 'participations',
 		),
+		'matches' => array(),
+		'participations' => array(),
 	);
 
 	public function labels()
