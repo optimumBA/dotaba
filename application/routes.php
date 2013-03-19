@@ -107,6 +107,17 @@ Route::set('comment', 'komentari/<id>/<action>', array('id' => '\d+', 'action' =
 		'controller' => 'comments',
 	));
 
+Route::set('requests', 'pozivnice(/<action>)', array('action' => 'trazi'))
+	->defaults(array(
+		'controller' => 'requests',
+		'action'     => 'index',
+	));
+
+Route::set('request', 'pozivnice/<id>/<action>', array('id' => '\d+', 'action' => 'posalji|obrisi|otkazi'))
+	->defaults(array(
+		'controller' => 'requests',
+	));
+
 Route::set('default', '(<action>)')
 	->defaults(array(
 		'controller' => 'pages',

@@ -18,6 +18,10 @@ class Model_User extends ORM {
 			'model'       => 'Hero',
 			'foreign_key' => 'featured_hero_id',
 		),
+		'giveaways' => array(
+			'model'       => 'Request',
+			'foreign_key' => 'giver_id',
+		),
 		'matches' => array(
 			'through' => 'slots',
 		),
@@ -25,7 +29,8 @@ class Model_User extends ORM {
 		'participations' => array(
 			'through' => 'participations_users',
 		),
-		'roles' => array(
+		'requests' => array(),
+		'roles'    => array(
 			'through' => 'roles_users',
 		),
 		'slots'  => array(),
