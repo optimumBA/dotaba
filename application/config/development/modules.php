@@ -2,5 +2,5 @@
 
 return array(
 	'codebench' => MODPATH.'codebench',
-	'userguide' => MODPATH.'userguide'
+	'userguide' => MODPATH.'userguide',
 );

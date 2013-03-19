@@ -1,15 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-return array
-(
-	'default' => array
-	(
+return array(
+	'default' => array(
 		'type'       => 'mysql',
 		'connection' => array(
-			'hostname'   => $_SERVER['DB1_HOST'],
-			'database'   => $_SERVER['DB1_NAME'],
-			'username'   => $_SERVER['DB1_USER'],
-			'password'   => $_SERVER['DB1_PASS'],
+			'hostname'   => 'localhost',
+			'database'   => 'bhcomp_dotaba',
+			'username'   => 'bhcomp_dotaba',
+			'password'   => 's2?^{Ch[Zqe%b@h7[K',
 			'persistent' => FALSE,
 		),
 		'table_prefix' => 'dotaba_',
