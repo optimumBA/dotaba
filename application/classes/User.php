@@ -57,7 +57,7 @@ class User {
 
 	public function get($attribute)
 	{
-		return $this->user->$attribute;
+		return ($this->user) ? $this->user->$attribute : FALSE;
 	}
 
 	public function has_role($role)
@@ -167,7 +167,10 @@ class User {
 			$values = $attribute;
 		}
 
-		$this->user->values($values)->update();
+		if ($user)
+		{
+			$this->user->values($values)->update();
+		}
 	}
 
 }
