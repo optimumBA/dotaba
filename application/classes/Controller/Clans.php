@@ -97,7 +97,7 @@ class Controller_Clans extends Controller_Application {
 							->values($this->_post, array('name', 'tag', 'lord_id', 'open', 'created_at'))
 							->create();
 
-						$this->_user->values(array('clan_id' => $clan->id))->update();
+						$this->_user->clan_id = $clan->id;
 
 						Media_Local_Clan::save($clan->id, $files);
 

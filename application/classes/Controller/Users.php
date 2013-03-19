@@ -4,30 +4,7 @@ class Controller_Users extends Controller_Application {
 
 	public function action_prijava()
 	{
-		Steam::login();
-
-		$user = ORM::factory('user', array('steamid' => Steam::id()));
-
-		if ( ! $user->loaded())
-		{
-			$summary = Steam::player_summary();
-
-			$values = array(
-				'steamid'    => $summary->steamid,
-				'accountid'  => Steam::convert_id($summary->steamid),
-				'username'   => $summary->personaname,
-				'name'       => (isset($summary->realname)) ? $summary->realname : NULL,
-				'location'   => (isset($summary->loccountrycode)) ? $summary->loccountrycode : NULL,
-				'profileurl' => $summary->profileurl,
-				'avatar'     => $summary->avatarfull,
-				'status'     => $summary->personastate,
-				'created_at' => DB::expr('NOW()'),
-			);
-
-			$user->values($values)->create();
-
-			Media_Remote_Avatar::cache($user->id, $values['avatar']);
-		}
+		$user = User::instance()->login();
 
 		$ban = $user->bans
 			->where('expires_at', '>', DB::expr('NOW()'))
@@ -36,6 +13,8 @@ class Controller_Users extends Controller_Application {
 
 		if ($ban->loaded())
 		{
+			$user->logout();
+
 			$this->_messages[] = array(
 				'type'  => 'error',
 				'value' => 'Banovan/a si do '.date('j.n.Y. G:i:s', strtotime($ban->expires_at)).'. Razlog: '.$ban->reason.'.',
@@ -45,8 +24,6 @@ class Controller_Users extends Controller_Application {
 
 			HTTP::redirect();
 		}
-
-		Session::instance()->set('user', $user);
 
 		$uri = Session::instance()->get('redirect');
 
@@ -62,7 +39,7 @@ class Controller_Users extends Controller_Application {
 
 	public function action_odjava()
 	{
-		Steam::logout();
+		User::instance()->logout();
 		HTTP::redirect();
 	}
 

@@ -54,7 +54,7 @@ class Controller_News extends Controller_Application {
 
 	public function action_objavi()
 	{
-		if ($this->_user->has('roles', ORM::factory('role', array('name' => 'Novinar/ka'))))
+		if ($this->_user->has_role('Novinar/ka'))
 		{
 			if ($this->_post)
 			{
@@ -125,7 +125,7 @@ class Controller_News extends Controller_Application {
 	{
 		$article = ORM::factory('news', $this->request->param('id'));
 
-		if ($article->loaded() AND $this->_user->has('roles', ORM::factory('role', array('name' => 'Novinar/ka'))) AND $article->user_id == $this->_user->id)
+		if ($article->loaded() AND $this->_user->has_role('Novinar/ka') AND $article->user_id == $this->_user->id)
 		{
 			if ($this->_post)
 			{

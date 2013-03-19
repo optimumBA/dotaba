@@ -1,7 +1,7 @@
 <div class="comments">
 	<h1 class="heading colr">Komentari</h1>
 
-	<?php if ( ! Steam::logged_in()): ?>
+	<?php if ( ! User::instance()->logged_in()): ?>
 		<div class="alert alert-error">Moraš biti prijavljen/a kako bi ostavio/la komentar. Prijavi se <a href="/provjera">ovdje</a></div>
 	<?php endif; ?>
 
@@ -21,7 +21,7 @@
 							<div class="clear"></div>
 							<div class="txt"><em>Komentar je obrisan.</em></div>
 						<?php else: ?>
-							<?php if (Steam::userinfo('id') == $comment->user_id): ?>
+							<?php if (User::instance()->id == $comment->user_id): ?>
 								<?php echo HTML::anchor('#', 'izmijeni', array('class' => 'edit_comment izmijeni')); ?>
 								<?php echo HTML::anchor('#', 'obriši', array('class' => 'form_submit obrisi', 'data-form' => 'delete')); ?>
 								<?php echo Form::open('komentari/'.$comment->id.'/obrisi', array('class' => 'hidden delete')); ?>
@@ -49,7 +49,7 @@
 		<div class="alert alert-info">Trenutno nema komentara.</div>
 	<?php endif; ?>
 </div>
-<?php if (Steam::logged_in()): ?>
+<?php if (User::instance()->logged_in()): ?>
 	<div class="leavereply">
 		<h1 class="heading colr">Dodaj komentar</h1>
 		<?php echo Form::open('komentari/dodaj', array('class' => 'forms')); ?>

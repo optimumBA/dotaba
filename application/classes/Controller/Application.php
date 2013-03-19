@@ -49,7 +49,7 @@ abstract class Controller_Application extends Controller {
 	{
 		// Set values for instance variables
 		$this->_post     = Arr::map('strip_tags', Arr::map('trim', $this->request->post()));
-		$this->_user     = Session::instance()->get('user');
+		$this->_user     = User::instance();
 		$this->_messages = Session::instance()->get_once('messages', array());
 
 		// Check the CSRF token for POST requests
@@ -66,13 +66,13 @@ abstract class Controller_Application extends Controller {
 		}
 
 		// Set redirection path to current URI for users not logged in
-		if ( ! $this->_user AND ( ! in_array($this->request->action(), array('provjera', 'prijava'))))
+		if ( ! $this->_user->logged_in() AND ( ! in_array($this->request->action(), array('provjera', 'prijava'))))
 		{
 			Session::instance()->set('redirect', $this->request->uri());
 		}
 
 		// Redirect to login page and show message if the action requires authorization
-		if ( ! $this->_user AND (in_array($this->request->action(),
+		if ( ! $this->_user->logged_in() AND (in_array($this->request->action(),
 			array('objavi', 'dodaj', 'organiziraj', 'izmijeni', 'prijavi', 'napravi', 'prijave', 'review_application', 'obrisi', 'start')) OR
 			$this->request->action() == 'prijava' AND $this->request->controller() != 'Users'))
 		{
@@ -92,7 +92,7 @@ abstract class Controller_Application extends Controller {
 
 		if ( ! in_array($this->request->action(), array('offline', 'prijava')) AND $maintenance['start'] AND
 			strtotime($maintenance['start']) <= time() AND ( ! $maintenance['end'] OR strtotime($maintenance['end']) >= time()) AND
-			( ! $this->_user OR ! $this->_user->has('roles', ORM::factory('role', array('name' => 'Administrator/ica')))))
+			( ! $this->_user->logged_in() OR ! $this->_user->has_role('Administrator/ica')))
 		{
 			HTTP::redirect('offline');
 		}
@@ -149,10 +149,7 @@ abstract class Controller_Application extends Controller {
 		}
 
 		// Save the fresh instance of User ORM model in session
-		if (Session::instance()->get('user') AND isset($this->_user))
-		{
-			Session::instance()->set('user', $this->_user);
-		}
+		$this->_user->refresh();
 	}
 
 }

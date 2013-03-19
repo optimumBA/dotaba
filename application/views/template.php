@@ -108,10 +108,10 @@ $("form.navbar-search").submit();
                             </div>
                         </li>
                         
-                            <?php if(!Steam::logged_in()):?>
+                            <?php if( ! User::instance()->logged_in()):?>
                            <li> <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a></li>
 							<?php else:?>
-                            <li><img class="steam-avatar-small offline-status" src="<?=Steam::userinfo('avatar');?>" title="<?=Steam::userinfo('username');?>-ov avatar" /> <a href="/igraci/<?=Steam::userinfo('accountid');?>" class="offline-status"><?=Steam::userinfo('username');?></a></li>
+                            <li><img class="steam-avatar-small offline-status" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <a href="/igraci/<?=User::instance()->accountid;?>" class="offline-status"><?=User::instance()->username;?></a></li>
                            
                             <li><a href="/odjava" class="colr">Odjava</a>
 							<?php endif ?>
@@ -168,7 +168,7 @@ $("form.navbar-search").submit();
 	 
 <div class="clear"></div>
     <!-- Notification box -->
-  	<?php if(!Steam::logged_in()):?>
+  	<?php if( ! User::instance()->logged_in()):?>
     <div class="alert-top alert-info">Dobrodošli na <a class="link">Dota 2 Balkan Community</a>. Ukoliko je ovo Vaša prva posjeta, pročitajte <a class="link" href="/site/help">uputstvo za korištenje</a> stranice. Ako ste već korisnik ove stranice, molimo da se <a class="link" href="/provjera?mod=Prijava">prijavite</a>, kako bi imali sve mogućnosti stranice. U slučaju da nemate korisnički račun, možete se <a class="link" href="/provjera?mod=Registracija">registrovati</a>.</div>
  	<?php endif;?>
  

@@ -77,7 +77,7 @@ class Controller_Comments extends Controller_Application {
 		$comment = ORM::factory('comment', $this->request->param('id'));
 
 		if ($comment->loaded() AND ($comment->user_id == $this->_user->id OR 
-			$this->_user->has('roles', ORM::factory('role', array('name' => 'Administrator/ica')))))
+			$this->_user->has_role('Administrator/ica')))
 		{
 			$comment->values(array('removed' => TRUE, 'updated_at' => DB::expr('NOW()')))
 				->update();

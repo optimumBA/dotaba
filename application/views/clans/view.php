@@ -11,7 +11,7 @@
 		<?php foreach ($users as $user): ?>
 			<li>
 				<?php echo HTML::anchor('igraci/'.$user->accountid, $user->username); ?>
-				<?php if (Steam::userinfo('id') == $clan->lord_id AND Steam::userinfo('id') != $user->id): ?>
+				<?php if (User::instance()->id == $clan->lord_id AND User::instance()->id != $user->id): ?>
 					<?php echo HTML::anchor('#', 'Izbaci', array('class' => 'form_submit', 'data-form' => 'izbaci')); ?>
 					<?php echo Form::open('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/igraci/'.$user->id.'/izbaci', array('class' => 'hidden izbaci')); ?>
 						<?php echo Form::hidden('csrf', Security::token()); ?>

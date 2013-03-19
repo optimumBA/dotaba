@@ -14,61 +14,6 @@ class Steam {
 		return self::$api_key;
 	}
 
-	public static function id()
-	{
-		if ( ! self::$id)
-		{
-			self::$id = Session::instance()->get('steamid', FALSE);
-		}
-
-		return self::$id;
-	}
-
-	public static function convert_id($id)
-	{
-		if (strlen($id) === 17)
-		{
-			$converted = substr($id, 3) - 61197960265728;
-		}
-		else
-		{
-			$converted = '765'.($id + 61197960265728);
-		}
-
-		return (string) $converted;
-	}
-
-	public static function login()
-	{
-		if ( ! self::logged_in())
-		{
-			$config = Kohana::$config->load('steam');
-
-			$openid = new LightOpenID($config->get('domain'));
-			$openid->identity = $config->get('provider');
-
-			if ($openid->validate())
-			{
-				self::$id = substr($openid->identity, strlen($config->get('provider').'/id/'));
-				Session::instance()->set('steamid', self::$id);
-			}
-			else
-			{
-				HTTP::redirect($openid->authUrl(), 302);
-			}
-		}
-	}
-
-	public static function logged_in()
-	{
-		return (bool) Session::instance()->get('user');
-	}
-
-	public static function logout()
-	{
-		Session::instance()->restart();
-	}
-
 	public static function players_summaries($ids)
 	{
 		$response = json_decode(Request::factory('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/')
@@ -77,33 +22,6 @@ class Steam {
 			->body());
 
 		return $response->response->players;
-	}
-
-	public static function player_summary()
-	{
-		if ( ! self::logged_in())
-		{
-			return FALSE;
-		}
-
-		$players_summaries = self::players_summaries(self::id());
-
-		return $players_summaries[0];
-	}
-
-	public static function app_news($count = 5, $max_length = 0, $app_id = NULL)
-	{
-		if ($app_id === NULL)
-		{
-			$app_id = Kohana::$config->load('steam')->get('app_id');
-		}
-
-		$response = json_decode(Request::factory('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/')
-			->query(array('appid' => $app_id, 'count' => $count, 'maxlength' => $max_length))
-			->execute()
-			->body());
-
-		return $response->appnews->newsitems;
 	}
 
 	public static function match_history($account_id, $date_min = NULL, $start_at_match_id = NULL, $matches_requested = 25)
@@ -199,17 +117,6 @@ class Steam {
 		}
 
 		return json_decode(json_encode($items));
-	}
-	
-	public static function userinfo($InfoType)
-	{
-		if(Steam::logged_in()) {
-		$user = Session::instance()->get('user');
-		return $user->$InfoType;
-		
-		// Callback: Steam::userinfo('username');
-		}
-
 	}
 
 	public static function convert_player_slot($player_slot)
