@@ -154,4 +154,31 @@ class Controller_Requests extends Controller_Application {
 		HTTP::redirect('pozivnice');
 	}
 
+	public function action_zavrsi()
+	{
+		$request = ORM::factory('request', $this->request->param('id'));
+
+		if ($request->loaded() AND $this->_user->id == $request->user_id AND $request->giver_id)
+		{
+			$request->values(array('processed' => TRUE, 'updated_at' => DB::expr('NOW()')))
+				->update();
+
+			$this->_messages[] = array(
+				'type'  => 'success',
+				'value' => 'Postupak je završen.',
+			);
+		}
+		else
+		{
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Greška.',
+			);
+		}
+
+		Session::instance()->set('messages', $this->_messages);
+
+		HTTP::redirect('pozivnice');
+	}
+
 }

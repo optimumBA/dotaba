@@ -1,12 +1,19 @@
 Pozivnica poslano: <?php echo $count; ?>.<br />
 <?php if ($max->loaded()): ?>
-	Najviše poslao/la <?php echo HTML::anchor('igraci/'.$max->user->accountid, $max->user->username); ?> (<?php echo $max->count; ?>).
+	Najviše poslao/la <?php echo HTML::anchor('igraci/'.$max->giver->accountid, $max->giver->username); ?> (<?php echo $max->count; ?>).
 <?php endif ?>
 
 <div class="request">
 	<?php if ($request->loaded()): ?>
 		<?php if ($request->removed OR $request->processed): ?>
 			Već si slao/la zahtjev.
+		<?php elseif ($request->giver_id): ?>
+			Korisnik/ca <?php echo HTML::anchor('igraci/'.$request->giver->accountid, $request->giver->username); ?> je odgovorio/la na zahtjev. 
+			Ukoliko si primio/la pozivnicu, klikni na sljedeći link da obrišeš zahtjev:
+			<?php echo HTML::anchor('#', 'završi', array('class' => 'form_submit', 'data-form' => 'zavrsi')); ?>
+			<?php echo Form::open('pozivnice/'.$request->id.'/zavrsi', array('class' => 'hidden zavrsi')); ?>
+				<?php echo Form::hidden('csrf', Security::token()); ?>
+			<?php echo Form::close(); ?>
 		<?php else: ?>
 			Niko se još nije prijavio da ti pošalje pozivnicu. Ako već imaš DOTA2, obriši zahtjev.
 			<?php echo HTML::anchor('#', 'obriši', array('class' => 'form_submit', 'data-form' => 'obrisi')); ?>

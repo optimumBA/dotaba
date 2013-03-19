@@ -113,7 +113,7 @@ Route::set('requests', 'pozivnice(/<action>)', array('action' => 'trazi'))
 		'action'     => 'index',
 	));
 
-Route::set('request', 'pozivnice/<id>/<action>', array('id' => '\d+', 'action' => 'posalji|obrisi|otkazi'))
+Route::set('request', 'pozivnice/<id>/<action>', array('id' => '\d+', 'action' => 'posalji|obrisi|otkazi|zavrsi'))
 	->defaults(array(
 		'controller' => 'requests',
 	));
