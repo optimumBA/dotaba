@@ -14,16 +14,30 @@ class User {
 		return self::$instance;
 	}
 
+	/**
+	 * 64-bit Steam ID
+	 * @var string
+	 */
 	private $steamid;
 
+	/**
+	 * User ORM model
+	 * @var Model_User
+	 */
 	private $user;
 
-	private $roles = array();
+	/**
+	 * User's roles
+	 * @var array
+	 */
+	private $roles;
 
 	public function __construct()
 	{
-		$this->steamid = Session::instance()->get('steamid');
-		$this->user    = Session::instance()->get('user');
+		$session = Session::instance();
+		$this->steamid = $session->get('steamid');
+		$this->user    = $session->get('user');
+		$this->roles   = $session->get('roles', array());
 	}
 
 	public function __get($attribute)
