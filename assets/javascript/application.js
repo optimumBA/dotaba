@@ -1,5 +1,5 @@
 jQuery(function($) {
-	$('a[class="obrisi"]').on('click', function(e) {
+	$('a.form_submit').on('click', function(e) {
 		var self = $(this);
 
 		if (confirm('Jesi li siguran/na?')) {
@@ -9,10 +9,10 @@ jQuery(function($) {
 		e.preventDefault();
 	});
 
-	$('a[class="izmijeni"]').on('click', function(e) {
+	$('a.edit_comment').on('click', function(e) {
 		var self         = $(this);
-		var text         = self.siblings('.txt').slideUp();
-		var editForm     = self.siblings('form.edit').slideDown();
+		var text         = self.siblings('.txt').slideUp('fast');
+		var editForm     = self.siblings('form.edit').slideDown('fast');
 		var textarea     = editForm.find('textarea[name="body"]').focus();
 		var unparsedText = textarea.val();
 
@@ -30,20 +30,34 @@ jQuery(function($) {
 				processData: false,
 				contentType: false
 			}).done(function(response) {
-				editForm.slideUp();
+				editForm.slideUp('fast', function() {
+					if (typeof response.status == 'undefined' || response.status == 'ERROR') {
+						editForm.find('textarea[name="body"]').val(unparsedText);
+					}
+				});
 
 				if (typeof response.status != 'undefined' && response.status == 'OK') {
 					text.html(response.parsed);
-				} else {
-					editForm.find('textarea[name="body"]').val(unparsedText);
 				}
 
-				text.slideDown();
+				text.slideDown('fast');
 				loader.hide();
 			});
 
+			self.off('click.cancel');
 			e.stopImmediatePropagation();
 			return false;
+		});
+
+		self.on('click.cancel', function(e) {
+			editForm.slideUp('fast', function() {
+				editForm.find('textarea[name="body"]').val(unparsedText);
+			});
+
+			text.slideDown('fast');
+
+			self.off('click.cancel');
+			e.preventDefault();
 		});
 
 		e.preventDefault();

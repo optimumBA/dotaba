@@ -22,8 +22,8 @@
 							<div class="txt"><em>Komentar je obrisan.</em></div>
 						<?php else: ?>
 							<?php if (Steam::userinfo('id') == $comment->user_id): ?>
-								<?php echo HTML::anchor('#', 'izmijeni', array('class' => 'izmijeni')); ?>
-								<?php echo HTML::anchor('#', 'obriši', array('class' => 'obrisi', 'data-form' => 'delete')); ?>
+								<?php echo HTML::anchor('#', 'izmijeni', array('class' => 'edit_comment izmijeni')); ?>
+								<?php echo HTML::anchor('#', 'obriši', array('class' => 'form_submit obrisi', 'data-form' => 'delete')); ?>
 								<?php echo Form::open('komentari/'.$comment->id.'/obrisi', array('class' => 'hidden delete')); ?>
 									<?php echo Form::hidden('csrf', Security::token()); ?>
 								<?php echo Form::close(); ?>
@@ -37,14 +37,10 @@
 							<?php else: ?>
 								<div class="clear"></div>
 							<?php endif ?>
-							 <div class="clear"></div>
-							<p class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></p>
+							<div class="clear"></div>
+							<div class="txt"><?php echo HTML::parse_bbcode($comment->body); ?></div>
 							<div class="clear"></div>
 						<?php endif ?>
-
-					
-                      
-
 					</div>
 				</li>
 			<?php endforeach ?>
