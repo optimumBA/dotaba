@@ -105,32 +105,16 @@
                     	<ul id="nav">
                         	<li class="<?php if(Request::current()->controller() == 'Pages') echo 'current-menu-item'; ?>"><a href="/">Početna</a></li>
                             <li class="<?php if(Request::current()->controller() == 'News') echo 'current-menu-item'; ?>"><a href="/novosti">Novosti</a></li>
-                           
-
-                            <li><a href="/vods">VOD's</a>
-                            	<ul>
-                                	<li><a href="/vods/snimci">Snimci</a></li>
-                                    <li><a href="/vods/stream">Stream-ovi</a></li>
-                                    <li><a href="/vods/galerija">Galerija</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="/liga">Liga</a>            
+                            <li><a href="/vods/snimci">Snimci</a></li>
+                            <li><a href="/liga">Liga</a>
                             	<ul>
                                 	<li><a href="/liga/turniri">Turniri</a></li>
                                    	<li><a href="/liga/mecevi">Mečevi</a></li>
                                     <li><a href="/liga/klanovi">Timovi</a></li>
                                     <li><a href="/liga/igraci">Igrači</a></li>
-                                   	<li><a href="/liga/statistike">Statistike</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/#addMenu=Store&t=BETA&a=closed">Store</a>
-                            <li><a href="/guides">Vodiči</a>
-                            	<ul>
-                  				 	<li><a href="/guides/heroji">Heroji</a></li>
-                                   	<li><a href="/guides/itemi">Item-i</a></li>
-                                </ul>
-                            </li>
-                           
+                            <li><a href="/teme">Forum</a></li>
                         </ul>
                         <div class="clear"></div>
                     </div>
@@ -169,17 +153,12 @@
             <div class="ft-left">
             	<h4><a href="#" class="colr">Brzi pregled</a></h4>
                 <ul class="links"> 
-                    <li><a href="/site/webteam">Tim</a></li>
-                    <li><a href="/advertisments">Oglašavanje</a></li>
-                    <li><a href="/site/valve">Copyright - Valve</a></li>
-                    <li><a href="/site/privacy">Privacy</a></li>
-                    <li><a href="/site/terms">Terms</a></li>
-                    <li><a href="/changelog?setVrID=latest&order=VrID">Changelog</a></li>
-          
+                    <li><a href="/pravila">Pravila</a></li>
+                    <li><a href="/uvjeti">Uvjeti</a></li>
                 </ul>
                 <ul class="social">
                 	<li><a href="https://www.facebook.com/DotA.Balkan" class="so-fb">&nbsp;</a></li>
-                
+                    <li><a href="https://twitter.com/dota2_balkan" class="so-twitter">&nbsp;</a></li>
                 </ul>
             </div>
             <!-- Footer Left End -->
@@ -194,7 +173,7 @@
             <!-- Footer Left End -->
             <!-- Copyrights Start -->
             <div class="copyrights">
-            	 © Sva prava pridržana <a href="#">Dota 2 Balkan</a> <?php echo date('Y'); ?> &nbsp;&nbsp;      <small>Verzija stranice: 1.0.0 BETA</small>
+                © Sva prava pridržana <a href="/">Dota 2 Balkan</a> <?php echo date('Y'); ?> &nbsp;&nbsp;      <small>Verzija stranice: 1.0.0 BETA</small>
             </div>
             <!-- Copyrights End -->
             <div class="clear"></div>
