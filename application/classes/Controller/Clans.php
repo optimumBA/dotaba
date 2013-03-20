@@ -366,25 +366,34 @@ class Controller_Clans extends Controller_Application {
 		{
 			if ($this->request->method() === Request::POST)
 			{
-				if ($this->request->param('operation') == 'odobri' AND $application->user->clan_id == NULL)
+				$user_clan = $application->user->clan_id;
+
+				if ($this->request->param('operation') == 'odobri' AND $user_clan == NULL)
 				{
 					$application->user->values(array('clan_id' => $clan->id))->update();
 				}
 
 				$application->delete();
 
-				if ($this->request->param('operation') == 'odobri')
+				if ($this->request->param('operation') == 'odbij')
 				{
 					$this->_messages[] = array(
 						'type'  => 'success',
-						'value' => 'Prijava je odobrena.',
+						'value' => 'Prijava je odbijena.',
+					);
+				}
+				elseif ($user_clan)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Igrač već ima klan.',
 					);
 				}
 				else
 				{
 					$this->_messages[] = array(
 						'type'  => 'success',
-						'value' => 'Prijava je odbijena.',
+						'value' => 'Prijava je odobrena.',
 					);
 				}
 
@@ -397,7 +406,7 @@ class Controller_Clans extends Controller_Application {
 				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
 			}
 		}
-		elseif ($clan->lord_id != $this->_user->id)
+		elseif ($clan->loaded() AND $clan->lord_id != $this->_user->id)
 		{
 			$clan = ORM::factory('clan', $this->_user->clan_id);
 
@@ -423,14 +432,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		elseif ( ! $application->loaded())
 		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nepostojeća prijava.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
+			throw HTTP_Exception::factory(404, 'Prijava nije pronađena.');
 		}
 	}
 
