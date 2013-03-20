@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<!--[if lt IE 7 ]><html class="ie ie6" lang="bs"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="bs"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="bs"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="bs"> <!--<![endif]-->
 
 
 <head>
@@ -17,37 +17,31 @@
 <link rel="stylesheet" href="/assets/stylesheets/base.css" />
 <link rel="stylesheet" href="/assets/stylesheets/skeleton.css" />
 <link rel="stylesheet" href="/assets/stylesheets/layout.css" />
-<link rel="stylesheet" href="/assets/stylesheets/player.css" />
-<link rel="stylesheet" href="/assets/stylesheets/fancybox.css" />
 
 <link rel="stylesheet" type="text/css" href="/assets/stylesheets/color.css" title="styles2" media="screen" />
 
 <link rel="alternate stylesheet" type="text/css" href="/assets/stylesheets/blue.css" title="styles2" media="screen" />
 
+<link rel="stylesheet" type="text/css" href="/assets/stylesheets/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/assets/stylesheets/jquery-ui-timepicker-addon.css" />
 <link rel="stylesheet" type="text/css" href="/assets/stylesheets/application.css" />
 
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <!--// Favicons //-->
-<link rel="shortcut icon" href="/assets//assets/images/favicon.ico" />
-<link rel="rockit-touch-icon" href="/assets//assets/images/rockit-touch-icon.html" />
-<link rel="rockit-touch-icon" sizes="72x72" href="/assets//assets/images/rockit-touch-icon-72x72.html" />
-<link rel="rockit-touch-icon" sizes="114x114" href="/assets//assets/images/rockit-touch-icon-114x114.html" />
+<link rel="shortcut icon" href="/assets/images/favicon.ico" />
+<!--<link rel="rockit-touch-icon" href="/assets/images/rockit-touch-icon.html" />
+<link rel="rockit-touch-icon" sizes="72x72" href="/assets/images/rockit-touch-icon-72x72.html" />
+<link rel="rockit-touch-icon" sizes="114x114" href="/assets/images/rockit-touch-icon-114x114.html" />-->
 <!--// Javascript //-->
 <script type="text/javascript" src="/assets/javascript/jquery.min.js"></script>
-<script type="text/javascript" src="/assets/javascript/styleswitch.js"></script>
-<script type="text/javascript" src="/assets/javascript/animatedcollapse.js"></script>
 <script type="text/javascript" src="/assets/javascript/ddsmoothmenu.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery.nivo.slider.js"></script>
 <script type="text/javascript" src="/assets/javascript/scrolltopcontrol.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery.countdown.js"></script>
-<script type="text/javascript" src="/assets/javascript/jquery.jplayer.min.js"></script>
-<script type="text/javascript" src="/assets/javascript/jplayer.playlist.min.js"></script>
-<script type="text/javascript" src="/assets/javascript/player.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/assets/javascript/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="/assets/javascript/jquery.mCustomScrollbar.js"></script>
+<script type="text/javascript" src="/assets/javascript/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript" src="/assets/javascript/application.js"></script>
 
 <script type="text/javascript">
@@ -63,15 +57,6 @@
 </script>
 </head>
 <body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/bs_BA/all.js#xfbml=1&appId=335610739861235";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
 
 <!-- Outer Wrapper Start -->
 <div id="outer-wrapper">
@@ -99,12 +84,6 @@
                                                 class="bar input-medium search-query" />
                                 <button>Traži</button>
                                 </form>
-								<script type="text/javascript">
-$(".js-search-action").on("click", function() {
-$("form.navbar-search").submit();
-});
-
-</script>
                             </div>
                         </li>
                         

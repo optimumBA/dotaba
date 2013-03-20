@@ -62,4 +62,10 @@ jQuery(function($) {
 
 		e.preventDefault();
 	});
+
+	$('#slider').nivoSlider();
+
+	$('.js-search-action').on('click', function() {
+		$(this).siblings('form.navbar-search').submit();
+	});
 });
