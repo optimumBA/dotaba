@@ -108,7 +108,7 @@ class Controller_Tournaments extends Controller_Application {
 		$this->_title   = 'Organiziraj turnir';
 		$this->_content = View::factory('tournaments/organiziraj')
 			->set('values', $this->_post)
-			->set('errors', ($errors) ? $errors : array());
+			->set('errors', (isset($errors)) ? $errors : array());
 	}
 
 	public function action_izmijeni()
@@ -160,7 +160,7 @@ class Controller_Tournaments extends Controller_Application {
 			$this->_title   = 'Izmijeni turnir - '.$tournament->name;
 			$this->_content = View::factory('tournaments/izmijeni')
 				->set('values', (empty($this->_post)) ? $tournament->as_array() : $this->_post)
-				->set('errors', ($errors) ? $errors : array());
+				->set('errors', (isset($errors)) ? $errors : array());
 		}
 		elseif ($tournament->loaded())
 		{

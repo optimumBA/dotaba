@@ -68,4 +68,9 @@ jQuery(function($) {
 	$('.js-search-action').on('click', function() {
 		$(this).siblings('form.navbar-search').submit();
 	});
+
+	$('input.datetime').datetimepicker({
+		dateFormat: 'yy-mm-dd',
+		timeFormat: 'HH:mm:ss'
+	});
 });

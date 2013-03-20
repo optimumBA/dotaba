@@ -28,6 +28,25 @@ class Model_Match extends ORM {
 		),
 	);
 
+	public function labels()
+	{
+		return array(
+			'radiant_clan_id' => 'Radiant',
+			'dire_clan_id'    => 'Dire',
+			'date'            => 'vrijeme odigravanja',
+		);
+	}
+
+	public function rules()
+	{
+		return array(
+			'date' => array(
+				array('exact_length', array(':value', 19)),
+				array('date'),
+			),
+		);
+	}
+
 	public static function details($id)
 	{
 		$match = ORM::factory('match')
