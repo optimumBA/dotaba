@@ -39,8 +39,22 @@ class Controller_Matches extends Controller_Application {
 
 			$comments = Model_Match::comments($match->id);
 
-			$this->_content = View::factory('matches/view')
-				->set('match', $match)
+			if ($match->processed)
+			{
+				$this->_content = View::factory('matches/processed');
+			}
+			else
+			{
+				$streams = $match->streams->find_all();
+
+				$can_stream = ($this->_user->stream->loaded() AND $this->_user->stream->has('matches', $match) == FALSE);
+
+				$this->_content = View::factory('matches/unprocessed')
+					->set('streams', $streams)
+					->set('can_stream', $can_stream);
+			}
+
+			$this->_content->set('match', $match)
 				->set('comments', $comments);
 		}
 		else
@@ -121,6 +135,99 @@ class Controller_Matches extends Controller_Application {
 		else
 		{
 			throw HTTP_Exception::factory(404, 'Turnir nije pronađen.');
+		}
+	}
+
+	public function action_najavi_streamanje()
+	{
+		$match = ORM::factory('match', $this->request->param('id'));
+
+		if ($match->loaded())
+		{
+			if ($this->_post)
+			{
+				if ($this->_user->stream->loaded())
+				{
+					if ($this->_user->stream->has('matches', $match))
+					{
+						$this->_messages[] = array(
+							'type'  => 'error',
+							'value' => 'Već si najavio/la streamanje ovog meča.',
+						);
+					}
+					else
+					{
+						$this->_user->stream->add('matches', $match);
+
+						$this->_messages[] = array(
+							'type'  => 'success',
+							'value' => 'Streamanje je najavljeno.',
+						);
+					}
+				}
+				else
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nemaš stream.',
+					);
+				}
+			}
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/mecevi/'.$match->id);
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Meč nije pronađen.');
+		}
+	}
+
+	public function action_otkazi_streamanje()
+	{
+		$match = ORM::factory('match', $this->request->param('id'));
+
+		if ($match->loaded())
+		{
+			if ($this->_post)
+			{
+				if ($this->_user->stream->loaded())
+				{
+					if ($this->_user->stream->has('matches', $match))
+					{
+						$this->_user->stream->remove('matches', $match);
+
+						$this->_messages[] = array(
+							'type'  => 'success',
+							'value' => 'Streamanje je otkazano.',
+						);
+					}
+					else
+					{
+
+						$this->_messages[] = array(
+							'type'  => 'error',
+							'value' => 'Nisi najavio/la streamanje ovog meča.',
+						);
+					}
+				}
+				else
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nemaš stream.',
+					);
+				}
+			}
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/mecevi/'.$match->id);
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Meč nije pronađen.');
 		}
 	}
 

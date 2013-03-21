@@ -23,6 +23,9 @@ class Model_Match extends ORM {
 	protected $_has_many = array(
 		'picksbans' => array(),
 		'slots'     => array(),
+		'streams'   => array(
+			'through' => 'matches_streams',
+		),
 		'users'     => array(
 			'through' => 'slots',
 		),
@@ -55,12 +58,15 @@ class Model_Match extends ORM {
 			->with('radiant_clan')
 			->with('dire_clan')
 			->with('mode')
-			->where('processed', '=', TRUE)
 			->find($id);
 
-		if ( ! $match->loaded())
+		if ( ! $match->loaded() OR $match->processed == FALSE AND $match->type->name != 'Tournament')
 		{
 			return FALSE;
+		}
+		elseif ($match->processed == FALSE)
+		{
+			return $match;
 		}
 
 		$slots = $match->slots

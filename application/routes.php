@@ -30,6 +30,12 @@ Route::set('video', 'vods/snimci/<id>-<name>(/<action>)', array('id' => '\d+', '
 		'action'     => 'view',
 	));
 
+Route::set('streams', 'vods/streamovi(/<page>)', array('page' => '\d+'))
+	->defaults(array(
+		'controller' => 'streams',
+		'action'     => 'index',
+	));
+
 Route::set('clans', 'liga/klanovi(/<action>)(/<page>)', array('action' => 'napravi', 'page' => '\d+'))
 	->defaults(array(
 		'controller' => 'clans',
@@ -96,6 +102,12 @@ Route::set('match', 'liga/mecevi/<id>(/<action>)', array('id' => '\d+'))
 Route::set('users', '<action>', array('action' => 'prijava|odjava'))
 	->defaults(array(
 		'controller' => 'users',
+	));
+
+Route::set('user_stream', 'igraci/<id>/stream(/<action>)', array('id' => '\d+'))
+	->defaults(array(
+		'controller' => 'streams',
+		'action'     => 'view',
 	));
 
 Route::set('user_profile', 'igraci/<id>', array('id' => '\d+'))

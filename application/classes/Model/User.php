@@ -37,4 +37,8 @@ class Model_User extends ORM {
 		'videos' => array(),
 	);
 
+	protected $_has_one = array(
+		'stream' => array(),
+	);
+
 }
