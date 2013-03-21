@@ -21,7 +21,7 @@
 							<div class="clear"></div>
 							<div class="txt"><em>Komentar je obrisan.</em></div>
 						<?php else: ?>
-							<?php if (User::instance()->id == $comment->user_id): ?>
+							<?php if (User::instance()->id == $comment->user_id OR User::instance()->has_role('Administrator/ica')): ?>
 								<?php echo HTML::anchor('#', 'izmijeni', array('class' => 'edit_comment izmijeni')); ?>
 								<?php echo HTML::anchor('#', 'obriši', array('class' => 'form_submit obrisi', 'data-form' => 'delete')); ?>
 								<?php echo Form::open('komentari/'.$comment->id.'/obrisi', array('class' => 'hidden delete')); ?>

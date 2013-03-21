@@ -105,7 +105,13 @@
                     	<ul id="nav">
                         	<li class="<?php if(Request::current()->controller() == 'Pages') echo 'current-menu-item'; ?>"><a href="/">Početna</a></li>
                             <li class="<?php if(Request::current()->controller() == 'News') echo 'current-menu-item'; ?>"><a href="/novosti">Novosti</a></li>
-                            <li><a href="/vods/snimci">Snimci</a></li>
+                            <li>
+                                <a href="/vods/snimci">VOD</a>
+                                <ul>
+                                    <li><a href="/vods/snimci">Snimci</a></li>
+                                    <li><a href="/vods/streamovi">Streamovi</a></li>
+                                </ul>
+                            </li>
                             <li><a href="/liga">Liga</a>
                             	<ul>
                                 	<li><a href="/liga/turniri">Turniri</a></li>

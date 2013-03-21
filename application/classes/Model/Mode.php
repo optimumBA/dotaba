@@ -3,7 +3,8 @@
 class Model_Mode extends ORM {
 
 	protected $_has_many = array(
-		'matches' => array(),
+		'matches'     => array(),
+		'tournaments' => array(),
 	);
 
 }
