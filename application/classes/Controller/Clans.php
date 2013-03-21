@@ -396,15 +396,11 @@ class Controller_Clans extends Controller_Application {
 						'value' => 'Prijava je odobrena.',
 					);
 				}
-
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
 			}
-			else
-			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
-			}
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
 		}
 		elseif ($clan->loaded() AND $clan->lord_id != $this->_user->id)
 		{

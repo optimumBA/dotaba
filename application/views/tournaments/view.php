@@ -4,7 +4,7 @@
 <p>Potreban broj klanova: <?php echo $tournament->num_clans; ?></p>
 <p>Počeo: <?php echo ($tournament->is_started) ? 'da' : 'ne'; ?></p>
 <?php if ($tournament->winner_id): ?>
-	<p>Pobjednici: <?php echo HTML::anchor('liga/klanovi/'.$tournament->winner->id.'-'.URL::title($tournament->winner->name), $tournament->winner->name); ?></p>
+	<p>Pobjednici: <?php echo HTML::anchor('liga/klanovi/'.$tournament->winner->id.'-'.URL::title($tournament->winner->name, '-', TRUE), $tournament->winner->name); ?></p>
 <?php endif ?>
 <p>Napravljen: <?php echo Date::formatted_time($tournament->created_at); ?></p>
 <?php if ($tournament->updated_at): ?>
@@ -53,8 +53,8 @@
 		<?php foreach ($matches as $match): ?>
 			<tr>
 				<td><?php echo HTML::anchor('liga/mecevi/'.$match->id, $match->id); ?></td>
-				<td><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name), $match->radiant_clan->name) : NULL; ?></td>
-				<td><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name), $match->dire_clan->name) : NULL; ?></td>
+				<td><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name, '-', TRUE), $match->radiant_clan->name) : NULL; ?></td>
+				<td><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name, '-', TRUE), $match->dire_clan->name) : NULL; ?></td>
 				<td><?php echo ($match->date) ? Date::formatted_time($match->date) : '-'; ?></td>
 			</tr>
 		<?php endforeach ?>

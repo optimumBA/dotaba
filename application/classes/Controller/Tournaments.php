@@ -429,4 +429,149 @@ class Controller_Tournaments extends Controller_Application {
 		}
 	}
 
+	public function action_prijave()
+	{
+		$tournament = ORM::factory('tournament', $this->request->param('id'));
+
+		if ($tournament->loaded() AND $tournament->user_id == $this->_user->id AND $tournament->is_started == FALSE AND $tournament->is_auto_approvable == FALSE)
+		{
+			$count = $tournament->participations
+				->where('is_approved', '=', TRUE)
+				->count_all();
+
+			$participations = $tournament->participations
+				->with('clan')
+				->order_by('is_approved')
+				->find_all();
+
+			$this->_title   = 'Prijave - '.$tournament->name;
+			$this->_content = View::factory('tournaments/prijave')
+				->set('tournament', $tournament)
+				->set('participations', $participations)
+				->set('count', $count);
+		}
+		elseif ($tournament->loaded())
+		{
+			if ($tournament->user_id != $this->_user->id)
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nisi organizator/ica ovog turnira.',
+				);
+			}
+			elseif ($tournament->is_started)
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Turnir je već počeo.',
+				);
+			}
+			else
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Prijave klanova se automatski odobravaju.',
+				);
+			}
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Turnir nije pronađen.');
+		}
+	}
+
+	public function action_review_participation()
+	{
+		$tournament    = ORM::factory('tournament', $this->request->param('id'));
+		$participation = $tournament->participations
+			->with('clan')
+			->where('participation.id', '=', $this->request->param('id2'))
+			->find();
+
+		if ($tournament->loaded() AND $participation->loaded() AND $tournament->user_id == $this->_user->id AND
+			$tournament->started == FALSE AND $tournament->is_auto_approvable == FALSE)
+		{
+			$count = $tournament->participations
+				->where('is_approved', '=', TRUE)
+				->count_all();
+
+			if ($this->request->method() === Request::POST)
+			{
+				if ($this->request->param('operation') == 'odobri' AND $count < $tournament->num_clans)
+				{
+					$participation->values(array('is_approved' => TRUE))->update();
+
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Prijava je odbijena.',
+					);
+				}
+				elseif ($this->request->param('operation') == 'odbij')
+				{
+					$participation->values(array('is_approved' => TRUE))->update();
+
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Prijava je odobrena.',
+					);
+				}
+				else
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Turnir već ima traženi broj klanova.',
+					);
+				}
+			}
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/prijave');
+		}
+		elseif ($tournament->loaded() AND $participation->loaded())
+		{
+			if ($tournament->user_id != $this->_user->id)
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nisi organizator/ica ovog turnira.',
+				);
+
+				Session::instance()->set('messages', $this->_messages);
+
+				HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
+			}
+			elseif ($tournament->is_started)
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Turnir je već počeo.',
+				);
+			}
+			else
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Prijave klanova se automatski odobravaju.',
+				);
+			}
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/prijave');
+		}
+		elseif ( ! $tournament->loaded())
+		{
+			throw HTTP_Exception::factory(404, 'Turnir nije pronađen.');
+		}
+		elseif ( ! $participation->loaded())
+		{
+			throw HTTP_Exception::factory(404, 'Prijava nije pronađena.');
+		}
+	}
+
 }

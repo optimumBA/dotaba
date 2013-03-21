@@ -60,8 +60,8 @@
                                         <span><?php echo $match->type->name; ?></span>
                                         <span><?php echo $match->mode->name; ?></span>
                                         <span><?php echo ($match->tournament_id) ? HTML::anchor('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE), $match->tournament->name) : NULL; ?></span>
-                                        <span><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name), $match->radiant_clan->name) : NULL; ?></span>
-                                        <span><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name), $match->dire_clan->name) : NULL; ?></span>
+                                        <span><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name, '-', TRUE), $match->radiant_clan->name) : NULL; ?></span>
+                                        <span><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name, '-', TRUE), $match->dire_clan->name) : NULL; ?></span>
                                     </li>
                                     <li class="time"><?php echo Date::formatted_time($match->date); ?></li>
                                     <li>

@@ -68,6 +68,13 @@ Route::set('tournament', 'liga/turniri/<id>-<name>(/<action>)', array('id' => '\
 		'action'     => 'view',
 	));
 
+Route::set('tournament_prijava', 'liga/turniri/<id>-<name>/prijave/<id2>/<operation>',
+	array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+', 'id2' => '\d+', 'operation' => 'odobri|odbij'))
+	->defaults(array(
+		'controller' => 'tournaments',
+		'action'     => 'review_participation',
+	));
+
 Route::set('najavi_match', 'liga/turniri/<id>-<name>/najavi_mec', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
 	->defaults(array(
 		'controller' => 'matches',

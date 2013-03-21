@@ -1,4 +1,3 @@
-<pre><?php print_r($errors); ?></pre>
 <?php echo Form::open(NULL, array('enctype' => 'multipart/form-data')); ?>
 	<?php echo Form::label('name', 'Naziv:'); ?>
 	<?php echo Form::input('name', Arr::path($values, 'name')); ?>
