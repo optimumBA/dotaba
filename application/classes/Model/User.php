@@ -29,11 +29,13 @@ class Model_User extends ORM {
 		'participations' => array(
 			'through' => 'participations_users',
 		),
+		'posts'    => array(),
 		'requests' => array(),
 		'roles'    => array(
 			'through' => 'roles_users',
 		),
 		'slots'  => array(),
+		'topics' => array(),
 		'videos' => array(),
 	);
 
