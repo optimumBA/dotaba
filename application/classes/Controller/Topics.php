@@ -276,4 +276,41 @@ class Controller_Topics extends Controller_Application {
 		}
 	}
 
+	public function action_obrisi()
+	{
+		$topic = ORM::factory('topic', $this->request->param('id'));
+
+		if ($topic->loaded())
+		{
+			if ($this->_user->has_role('Administrator/ica') AND $this->request->method() === Request::POST)
+			{
+				$topic->delete();
+
+				$this->_messages[] = array(
+					'type'  => 'success',
+					'value' => 'Tema je obrisana.',
+				);
+
+				Session::instance()->set('messages', $this->_messages);
+
+				HTTP::redirect('teme');
+			}
+			else
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nemaš ovlasti.',
+				);
+
+				Session::instance()->set('messages', $this->_messages);
+
+				HTTP::redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
+			}
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Tema nije pronađena.');
+		}
+	}
+
 }

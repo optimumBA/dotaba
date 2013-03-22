@@ -6,7 +6,7 @@
 	Tema je zaključana.
 <?php endif ?>
 
-<?php if (User::instance()->id == $topic->user_id OR User::instance()->has_role('Administrator/ica')): ?>
+<?php if (User::instance()->id == $topic->user_id AND $topic->is_locked == FALSE OR User::instance()->has_role('Administrator/ica')): ?>
 	<?php echo HTML::anchor('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/izmijeni', 'Izmijeni'); ?>
 <?php endif ?>
 
@@ -15,8 +15,14 @@
 	<?php echo Form::open('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/lock', array('class' => 'hidden lock')); ?>
 		<?php echo Form::hidden('csrf', Security::token()); ?>
 	<?php echo Form::close(); ?>
+
 	<?php echo HTML::anchor('#', ($topic->is_sticky) ? 'Odlijepi s vrha' : 'Zalijepi za vrh', array('class' => 'form_submit', 'data-form' => 'sticky')); ?>
 	<?php echo Form::open('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/sticky', array('class' => 'hidden sticky')); ?>
+		<?php echo Form::hidden('csrf', Security::token()); ?>
+	<?php echo Form::close(); ?>
+
+	<?php echo HTML::anchor('#', 'Obrisi', array('class' => 'form_submit', 'data-form' => 'obrisi')); ?>
+	<?php echo Form::open('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/obrisi', array('class' => 'hidden obrisi')); ?>
 		<?php echo Form::hidden('csrf', Security::token()); ?>
 	<?php echo Form::close(); ?>
 <?php endif ?>
