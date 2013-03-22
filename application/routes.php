@@ -143,6 +143,30 @@ Route::set('request', 'pozivnice/<id>/<action>', array('id' => '\d+', 'action' =
 		'controller' => 'requests',
 	));
 
+Route::set('topics', 'teme(/<action>)(/<page>)', array('action' => 'napravi', 'page' => '\d+'))
+	->defaults(array(
+		'controller' => 'topics',
+		'action'     => 'index',
+	));
+
+Route::set('topic', 'teme/<id>-<name>(/<page>)(/<action>)', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+', 'page' => '\d+'))
+	->defaults(array(
+		'controller' => 'topics',
+		'action'     => 'view',
+	));
+
+Route::set('posts', 'teme/<id>-<name>/postovi/napravi', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
+	->defaults(array(
+		'controller' => 'posts',
+		'action'     => 'napravi',
+	));
+
+Route::set('post', 'teme/<id>-<name>/postovi/<id2>/<action>', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+', 'id2' => '\d+'))
+	->defaults(array(
+		'controller' => 'posts',
+		'action'     => 'view',
+	));
+
 Route::set('widgets', 'widgets/<action>')
 	->defaults(array(
 		'controller' => 'widgets',

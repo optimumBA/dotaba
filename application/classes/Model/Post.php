@@ -7,4 +7,20 @@ class Model_Post extends ORM {
 		'user'  => array(),
 	);
 
+	public function labels()
+	{
+		return array(
+			'content' => 'tekst',
+		);
+	}
+
+	public function rules()
+	{
+		return array(
+			'content' => array(
+				array('not_empty'),
+			),
+		);
+	}
+
 }
