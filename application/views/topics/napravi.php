@@ -9,7 +9,7 @@
 
 	<?php if (User::instance()->has_role('Administrator/ica')): ?>
 		<?php echo Form::label('is_hidden', 'Skrivena:'); ?>
-		<?php echo Form::checkbox('is_hidden', 1, (bool) Arr::path($values, 'is_hidden', 1)); ?>
+		<?php echo Form::checkbox('is_hidden', 1, (bool) Arr::path($values, 'is_hidden', 0)); ?>
 		<?php echo Arr::path($errors, 'is_hidden'); ?>
 	<?php endif ?>
 

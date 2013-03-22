@@ -297,10 +297,13 @@ class Controller_Topics extends Controller_Application {
 			}
 			else
 			{
-				$this->_messages[] = array(
-					'type'  => 'error',
-					'value' => 'Nemaš ovlasti.',
-				);
+				if ($this->request->method() === Request::POST)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Nemaš ovlasti.',
+					);
+				}
 
 				Session::instance()->set('messages', $this->_messages);
 
