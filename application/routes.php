@@ -143,6 +143,11 @@ Route::set('request', 'pozivnice/<id>/<action>', array('id' => '\d+', 'action' =
 		'controller' => 'requests',
 	));
 
+Route::set('widgets', 'widgets/<action>')
+	->defaults(array(
+		'controller' => 'widgets',
+	));
+
 Route::set('default', '(<action>)')
 	->defaults(array(
 		'controller' => 'pages',
