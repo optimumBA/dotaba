@@ -132,9 +132,9 @@ class Controller_Streams extends Controller_Application {
 					}
 				}
 
-				$this->_title   = 'Dodaj stream';
+				$this->_title   = 'Izmijeni stream';
 				$this->_content = View::factory('vods/streams/izmijeni')
-					->set('values', $this->_post)
+					->set('values', (empty($this->_post)) ? $stream->as_array() : $this->_post)
 					->set('errors', (isset($errors)) ? $errors : array());
 
 				$this->_messages[] = array(

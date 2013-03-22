@@ -175,7 +175,7 @@ class Controller_News extends Controller_Application {
 
 			$this->_title   = 'Izmijeni novost - '.$article->title;
 			$this->_content = View::factory('news/izmijeni')
-				->set('values', $this->_post)
+				->set('values', (empty($this->_post)) ? $article->as_array() : $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array());
 		}
 		elseif ($article->loaded() AND $this->_user->id != $article->user_id)
