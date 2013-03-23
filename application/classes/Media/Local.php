@@ -7,6 +7,11 @@ abstract class Media_Local extends Media {
 		$suffix = static::suffix($type);
 		$path   = static::path().static::filename($id).$suffix.'.'.static::extension();
 
+		if ( ! file_exists($path))
+		{
+			$path = static::path().'default'.$suffix.'.'.static::extension();
+		}
+
 		return '/'.str_replace(DIRECTORY_SEPARATOR, '/', $path);
 	}
 
