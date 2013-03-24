@@ -64,57 +64,7 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
             	<!-- Column One Start -->
                 <div class="col1">
 
-                    <!-- Upcoming Events Start -->
-                	<div class="widget upcoming-eve">
-                    	<h1 class="heading colr">Nadolazeći mečevi</h1>
-                        <div class="current-eve">
-                        	<h5><a href="#" class="colr">Tim 1 vs Tim 2</a></h5>
-                        	<div id="defaultCountdown"></div>
-                        </div>
-                        <ul>
-                        	<li>
-                            	<div class="date">
-                                	<span>SEP</span>
-                                    <h1>08</h1>
-                                </div>
-                                <div class="desc">
-                                	<div class="left">
-                                    	<h4><a href="#">Tim 1 vs Tim 2</a></h4>
-                                        <p>Ime turnira</p>
-                                    </div>
-                                    <a href="#" class="buttonone right">GLEDAJ</a>
-                                </div>
-                            </li>
-                            <li>
-                            	<div class="date">
-                                	<span>SEP</span>
-                                    <h1>30</h1>
-                                </div>
-                                <div class="desc">
-                                	<div class="left">
-                                    	<h4><a href="#">Tim 1 vs Tim 2</a></h4>
-                                        <p>Ime turnira</p>
-                                    </div>
-                                    <a href="#" class="buttonone right">GLEDAJ</a>
-                                </div>
-                            </li>
-                            <li>
-                            	<div class="date">
-                                	<span>SEP</span>
-                                    <h1>28</h1>
-                                </div>
-                                <div class="desc">
-                                	<div class="left">
-                                    	<h4><a href="#">Tim 1 vs Tim 2</a></h4>
-                                        <p>Ime turnira</p>
-                                    </div>
-                                    <a href="#" class="buttonone right">GLEDAJ</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <a href="#" class="viewfullcal">POGLEDAJ SVE</a>
-                    </div>
-                    <!-- Upcoming Events End -->
+                    <?php echo Request::factory('widgets/announcements')->execute(); ?>
                   
                 </div>
                 <!-- Column One End -->

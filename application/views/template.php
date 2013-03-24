@@ -39,7 +39,8 @@
 <script type="text/javascript" src="/assets/javascript/ddsmoothmenu.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery.nivo.slider.js"></script>
 <script type="text/javascript" src="/assets/javascript/scrolltopcontrol.js"></script>
-<script type="text/javascript" src="/assets/javascript/jquery.countdown.js"></script>
+<script type="text/javascript" src="/assets/javascript/jquery.countdown.min.js"></script>
+<script type="text/javascript" src="/assets/javascript/jquery.countdown-bs.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript" src="/assets/javascript/application.js"></script>

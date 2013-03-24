@@ -7,8 +7,9 @@ class Model_Stream extends ORM {
 	);
 
 	protected $_has_many = array(
-		'matches' => array(
-			'through' => 'matches_streams',
+		'announcements' => array(),
+		'matches'       => array(
+			'through' => 'announcements',
 		),
 	);
 

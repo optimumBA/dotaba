@@ -21,12 +21,13 @@ class Model_Match extends ORM {
 	);
 
 	protected $_has_many = array(
-		'picksbans' => array(),
-		'slots'     => array(),
-		'streams'   => array(
-			'through' => 'matches_streams',
+		'announcements' => array(),
+		'picksbans'     => array(),
+		'slots'         => array(),
+		'streams'       => array(
+			'through' => 'announcements',
 		),
-		'users'     => array(
+		'users' => array(
 			'through' => 'slots',
 		),
 	);

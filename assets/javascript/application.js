@@ -73,4 +73,7 @@ jQuery(function($) {
 		dateFormat: 'yy-mm-dd',
 		timeFormat: 'HH:mm:ss'
 	});
+
+	var nextMatch = new Date($('#countdown-match').data('date'));
+	$('#countdown-match').countdown({until: nextMatch});
 });
