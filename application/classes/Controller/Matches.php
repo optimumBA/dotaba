@@ -26,11 +26,18 @@ class Controller_Matches extends Controller_Application {
 
 	public function action_view()
 	{
-		$match = Model_Match::details($this->request->param('id'));
+		$match = ORM::factory('match')
+			->with('type')
+			->with('tournament')
+			->with('radiant_clan')
+			->with('dire_clan')
+			->with('mode')
+			->where('match.id', '=', $this->request->param('id'))
+			->find();
 
-		if ($match)
+		if ($match->loaded() AND $match->processed OR $match->type->name == 'Tournament')
 		{
-			$this->_title = 'Meč broj '.$match->id;
+			$this->_title = 'Meč '.$match->id;
 
 			if ($match->radiant_clan_id AND $match->dire_clan_id)
 			{
@@ -41,7 +48,27 @@ class Controller_Matches extends Controller_Application {
 
 			if ($match->processed)
 			{
-				$this->_content = View::factory('matches/processed');
+				$slots = $match->slots
+					->with('user')
+					->with('hero')
+					->with('item_0')
+					->with('item_1')
+					->with('item_2')
+					->with('item_3')
+					->with('item_4')
+					->with('item_5')
+					->order_by('player_slot')
+					->find_all()
+					->as_array('player_slot');
+
+				$picksbans = $match->picksbans
+					->with('hero')
+					->order_by('order')
+					->find_all();
+
+				$this->_content = View::factory('matches/processed')
+					->set('slots', $slots)
+					->set('picksbans', $picksbans);
 			}
 			else
 			{

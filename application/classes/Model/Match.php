@@ -51,67 +51,6 @@ class Model_Match extends ORM {
 		);
 	}
 
-	public static function details($id)
-	{
-		$match = ORM::factory('match')
-			->with('type')
-			->with('tournament')
-			->with('radiant_clan')
-			->with('dire_clan')
-			->with('mode')
-			->find($id);
-
-		if ( ! $match->loaded() OR $match->processed == FALSE AND $match->type->name != 'Tournament')
-		{
-			return FALSE;
-		}
-		elseif ($match->processed == FALSE)
-		{
-			return $match;
-		}
-
-		$slots = $match->slots
-			->with('user')
-			->with('hero')
-			->with('item_0')
-			->with('item_1')
-			->with('item_2')
-			->with('item_3')
-			->with('item_4')
-			->with('item_5')
-			->find_all();
-
-		$picksbans = $match->picksbans
-			->with('hero')
-			->order_by('order')
-			->find_all();
-
-		$match = $match->as_array();
-
-		$match['radiant_slots'] = array();
-		$match['dire_slots']    = array();
-
-		foreach ($slots as $slot)
-		{
-			$team = ($slot->player_slot <= 4) ? 'radiant' : 'dire';
-
-			$match[$team.'_slots'][] = $slot->as_array();
-		}
-
-		unset($slots);
-
-		$match['picksbans'] = array();
-
-		foreach ($picksbans as $pickban)
-		{
-			$match['picksbans'][] = $pickban->as_array();
-		}
-
-		unset($picksbans);
-
-		return json_decode(json_encode($match));
-	}
-
 	public static function process($id, $result)
 	{
 		$db = Database::instance();

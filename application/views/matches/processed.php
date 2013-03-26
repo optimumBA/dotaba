@@ -20,43 +20,48 @@
 			<th>hero healing</th>
 			<th>inventory</th>
 		</tr>
-		<?php foreach ($match->{$team.'_slots'} as $slot): ?>
+		<?php for ($i = (int) ($team == 'dire') * 5; $i < ((int) ($team == 'dire') + 1) * 5; $i++): ?>
+			<?php if ( ! isset($slots[$i])): ?>
+				<?php continue ?>
+			<?php endif ?>
 			<tr>
 				<td>
-					<?php echo HTML::image(Media_Remote_Avatar::get($slot->user->id, $slot->user->avatar), array('alt' => $slot->user->username)); ?>
-					<?php echo HTML::anchor('igraci/'.$slot->user->accountid, $slot->user->username); ?>
+					<?php echo HTML::image(Media_Remote_Avatar::get($slots[$i]->user->id, $slots[$i]->user->avatar), array('alt' => $slots[$i]->user->username)); ?>
+					<?php echo HTML::anchor('igraci/'.$slots[$i]->user->accountid, $slots[$i]->user->username); ?>
 				</td>
 				<td>
-					<?php echo HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image), array('alt' => $slot->hero->localized_name)); ?>
-					<?php echo $slot->hero->localized_name; ?>
+					<?php echo HTML::image(Media_Remote_Hero::get($slots[$i]->hero->id, $slots[$i]->hero->image), array('alt' => $slots[$i]->hero->localized_name)); ?>
+					<?php echo $slots[$i]->hero->localized_name; ?>
 				</td>
-				<td><?php echo $slot->level; ?></td>
-				<td><?php echo $slot->kills; ?></td>
-				<td><?php echo $slot->deaths; ?></td>
-				<td><?php echo $slot->assists; ?></td>
-				<td><?php echo $slot->gold; ?></td>
-				<td><?php echo $slot->last_hits; ?></td>
-				<td><?php echo $slot->denies; ?></td>
-				<td><?php echo $slot->xp_per_min; ?></td>
-				<td><?php echo $slot->gold_per_min; ?></td>
-				<td><?php echo $slot->hero_damage; ?></td>
-				<td><?php echo $slot->tower_damage; ?></td>
-				<td><?php echo $slot->hero_healing; ?></td>
+				<td><?php echo $slots[$i]->level; ?></td>
+				<td><?php echo $slots[$i]->kills; ?></td>
+				<td><?php echo $slots[$i]->deaths; ?></td>
+				<td><?php echo $slots[$i]->assists; ?></td>
+				<td><?php echo $slots[$i]->gold; ?></td>
+				<td><?php echo $slots[$i]->last_hits; ?></td>
+				<td><?php echo $slots[$i]->denies; ?></td>
+				<td><?php echo $slots[$i]->xp_per_min; ?></td>
+				<td><?php echo $slots[$i]->gold_per_min; ?></td>
+				<td><?php echo $slots[$i]->hero_damage; ?></td>
+				<td><?php echo $slots[$i]->tower_damage; ?></td>
+				<td><?php echo $slots[$i]->hero_healing; ?></td>
 				<td>
-					<?php for ($i = 0; $i < 6; $i++): ?>
-						<?php echo HTML::image(Media_Remote_Item::get($slot->{'item_'.$i}->id, $slot->{'item_'.$i}->image), array('alt' => $slot->{'item_'.$i}->localized_name)); ?>
+					<?php for ($j = 0; $j < 6; $j++): ?>
+						<?php if ($slots[$i]->{'item_'.$j.'_id'}): ?>
+							<?php echo HTML::image(Media_Remote_Item::get($slots[$i]->{'item_'.$j}->id, $slots[$i]->{'item_'.$j}->image), array('alt' => $slots[$i]->{'item_'.$j}->localized_name)); ?>
+						<?php else: ?>
+							prazan slot
+						<?php endif ?>
 					<?php endfor ?>
 				</td>
 			</tr>
-		<?php endforeach ?>
+		<?php endfor ?>
 	</table>
-	<p>Tornjevi: <?php echo $match->{'tower_status_'.$team}; ?></p>
-	<p>Barake: <?php echo $match->{'barracks_status_'.$team}; ?></p>
 <?php endforeach ?>
 
-<?php if (count($match->picksbans) > 0): ?>
+<?php if (count($picksbans) > 0): ?>
 	<ul>
-		<?php foreach ($match->picksbans as $pickban): ?>
+		<?php foreach ($picksbans as $pickban): ?>
 			<li>
 				<?php echo ($pickban->is_pick) ? 'pick' : 'ban'; ?>
 				<?php echo ($pick->ban == 0) ? 'Radiant' : 'Dire'; ?>

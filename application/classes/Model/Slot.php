@@ -26,7 +26,7 @@ class Model_Slot extends ORM {
 		),
 		'item_5' => array(
 			'model'       => 'Item',
-			'foreign_key' => 'item_4_id',
+			'foreign_key' => 'item_5_id',
 		),
 		'match'  => array(),
 		'user'   => array(),
