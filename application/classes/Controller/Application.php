@@ -92,7 +92,7 @@ abstract class Controller_Application extends Controller {
 		// If the site is soon going under maintenance, show the message to user.
 		$maintenance = Kohana::$config->load('site.maintenance');
 
-		if ( ! in_array($this->request->action(), array('offline', 'prijava')) AND $maintenance['start'] AND
+		if ( ! in_array($this->request->action(), array('offline', 'prijava', 'odjava')) AND $maintenance['start'] AND
 			strtotime($maintenance['start']) <= time() AND ( ! $maintenance['end'] OR strtotime($maintenance['end']) >= time()) AND
 			( ! $this->_user->logged_in() OR ! $this->_user->has_role('Administrator/ica')))
 		{
@@ -133,14 +133,16 @@ abstract class Controller_Application extends Controller {
 				));
 			}
 
-			$view = View::factory($this->_template);
+			$view = View::factory($this->_template, array('title' => $this->_title, 'messages' => $this->_messages));
 
 			// If template is the default one, assign the variables to it
 			if ($this->_template == 'template')
 			{
-				$view->title    = $this->_title;
-				$view->messages = $this->_messages;
-				$view->layout   = View::factory('layouts/'.$this->_layout, array('content' => $this->_content));
+				$view->layout = View::factory('layouts/'.$this->_layout, array('content' => $this->_content));
+			}
+			elseif ($this->_template == 'maintenance')
+			{
+				$view->date = $site_config['maintenance']['end'];
 			}
 
 			$this->response->body($view);
