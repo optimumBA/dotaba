@@ -59,7 +59,14 @@ class Steam {
 
 	public static function match_results($match_id)
 	{
-		$path = Kohana::$config->load('steam')->get('matches_path').DIRECTORY_SEPARATOR.$match_id.'.json';
+		$matches_path = Kohana::$config->load('steam')->get('matches_path');
+
+		if ( ! file_exists($matches_path))
+		{
+			mkdir($matches_path);
+		}
+
+		$path = $matches_path.DIRECTORY_SEPARATOR.$match_id.'.json';
 
 		if (file_exists($path))
 		{

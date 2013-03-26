@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Task_Matches_Get extends Minion_Task {
+class Task_Matches_GetPublic extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
@@ -22,7 +22,7 @@ class Task_Matches_Get extends Minion_Task {
 			$last_month      = strtotime('-1 month');
 			$date            = ($last_month > $last_match_date) ? $last_month : $last_match_date;
 
-			$matches = Steam::match_history($user->account_id, $date);
+			$matches = Steam::match_history($user->accountid, $date);
 
 			foreach ($matches as $m)
 			{
@@ -31,8 +31,9 @@ class Task_Matches_Get extends Minion_Task {
 				if ($m->lobby_type == $type->lobby_type AND ! $match->loaded())
 				{
 					$match->values(array(
-						'mid' => $m->match_id,
-						'type_id' => $type->id
+						'mid'        => $m->match_id,
+						'type_id'    => $type->id,
+						'created_at' => DB::expr('NOW()'),
 					))->create();
 				}
 				elseif ($match->loaded())
