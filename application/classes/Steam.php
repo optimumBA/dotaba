@@ -112,7 +112,7 @@ class Steam {
 		}
 
 		$data    = file_get_contents($path);
-		$pattern = '/\/\/={113}[^(?:\/\/)]*\/\/ ([\sa-z0-9_-]+)[^(?:\/\/)]*[^"]*"([\sa-z0-9_-]+)"[^{]*{[^"]*"ID"\t{7}"(\d+)"/im';
+		$pattern = '/\/\/={113}[^(?:\/\/)]*\/\/ ([:\sa-z0-9_-]+)[^(?:\/\/)]*[^"]*"([\sa-z0-9_-]+)"[^{]*{[^"]*"ID"\t{7}"(\d+)"/im';
 
 		preg_match_all($pattern, $data, $matches, PREG_SET_ORDER);
 
