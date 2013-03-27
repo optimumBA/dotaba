@@ -4,9 +4,9 @@ class Task_Matches_CalculateStats extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
-		$type = ORM::factory('type', array('name' => 'Public matchmaking'));
+		$type = ORM::factory('Type', array('name' => 'Public matchmaking'));
 
-		$matches = ORM::factory('match')
+		$matches = ORM::factory('Match')
 			->where('match.type_id', '=', $type->id)
 			->where('date', '<', DB::expr('DATE_SUB(NOW(), INTERVAL 1 MONTH)'))
 			->find_all();
@@ -25,7 +25,7 @@ class Task_Matches_CalculateStats extends Minion_Task {
 			$match->delete();
 		}
 
-		$users = ORM::factory('user')
+		$users = ORM::factory('User')
 			->find_all();
 
 		foreach ($users as $user)

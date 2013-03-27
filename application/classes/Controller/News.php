@@ -10,13 +10,13 @@ class Controller_News extends Controller_Application {
 
 	public function action_index()
 	{
-		$count = ORM::factory('news')->count_all();
+		$count = ORM::factory('News')->count_all();
 
 		$pagination = Pagination::factory(array(
 			'total_items' => $count,
 		));
 
-		$news = ORM::factory('news')
+		$news = ORM::factory('News')
 			->with('user')
 			->order_by('created_at', 'DESC')
 			->limit($pagination->items_per_page)
@@ -32,7 +32,7 @@ class Controller_News extends Controller_Application {
 
 	public function action_view()
 	{
-		$article = ORM::factory('news')
+		$article = ORM::factory('News')
 			->with('user')
 			->where('news.id', '=', $this->request->param('id'))
 			->find();
@@ -67,7 +67,7 @@ class Controller_News extends Controller_Application {
 						$this->_post['user_id']    = $this->_user->id;
 						$this->_post['created_at'] = DB::expr('NOW()');
 
-						$article = ORM::factory('news')
+						$article = ORM::factory('News')
 							->values($this->_post, array('title', 'content', 'user_id', 'source', 'url', 'created_at'))
 							->create();
 
@@ -123,7 +123,7 @@ class Controller_News extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		$article = ORM::factory('news', $this->request->param('id'));
+		$article = ORM::factory('News', $this->request->param('id'));
 
 		if ($article->loaded() AND $this->_user->has_role('Novinar/ka') AND $article->user_id == $this->_user->id)
 		{
@@ -137,7 +137,7 @@ class Controller_News extends Controller_Application {
 					{
 						$this->_post['updated_at'] = DB::expr('NOW()');
 
-						$article = ORM::factory('news')
+						$article = ORM::factory('News')
 							->values($this->_post, array('title', 'content', 'source', 'url', 'updated_at'))
 							->create();
 

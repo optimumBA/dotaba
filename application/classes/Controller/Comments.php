@@ -11,7 +11,7 @@ class Controller_Comments extends Controller_Application {
 				$this->_post['user_id']    = $this->_user->id;
 				$this->_post['created_at'] = DB::expr('NOW()');
 
-				$comment = ORM::factory('comment')
+				$comment = ORM::factory('Comment')
 					->values($this->_post, array('body', 'object_id', 'object_type', 'user_id', 'created_at'))
 					->create();
 
@@ -42,7 +42,7 @@ class Controller_Comments extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		$comment = ORM::factory('comment', $this->request->param('id'));
+		$comment = ORM::factory('Comment', $this->request->param('id'));
 
 		if ($comment->loaded() AND $comment->user_id == $this->_user->id AND
 			$this->request->method() === Request::POST AND $this->request->is_ajax())
@@ -74,7 +74,7 @@ class Controller_Comments extends Controller_Application {
 
 	public function action_obrisi()
 	{
-		$comment = ORM::factory('comment', $this->request->param('id'));
+		$comment = ORM::factory('Comment', $this->request->param('id'));
 
 		if ($comment->loaded() AND ($comment->user_id == $this->_user->id OR 
 			$this->_user->has_role('Administrator/ica')))

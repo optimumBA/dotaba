@@ -10,11 +10,11 @@ class Controller_Requests extends Controller_Application {
 
 	public function action_index()
 	{
-		$count = ORM::factory('request')
+		$count = ORM::factory('Request')
 			->where('processed', '=', TRUE)
 			->count_all();
 
-		$max = ORM::factory('request')
+		$max = ORM::factory('Request')
 			->select(DB::expr('COUNT(*) as count'))
 			->with('giver')
 			->where('processed', '=', TRUE)
@@ -22,7 +22,7 @@ class Controller_Requests extends Controller_Application {
 			->order_by('count', 'DESC')
 			->find();
 
-		$requests = ORM::factory('request')
+		$requests = ORM::factory('Request')
 			->with('user')
 			->where('giver_id', 'IS', NULL)
 			->where('removed', '=', FALSE)
@@ -74,7 +74,7 @@ class Controller_Requests extends Controller_Application {
 
 	public function action_posalji()
 	{
-		$request      = ORM::factory('request', $this->request->param('id'));
+		$request      = ORM::factory('Request', $this->request->param('id'));
 		$user_request = $this->_user->requests->find();
 
 		if ($request->loaded() AND ( ! $user_request->loaded() OR $user_request->processed OR $user_request->removed))
@@ -102,7 +102,7 @@ class Controller_Requests extends Controller_Application {
 
 	public function action_obrisi()
 	{
-		$request = ORM::factory('request', $this->request->param('id'));
+		$request = ORM::factory('Request', $this->request->param('id'));
 
 		if ($request->loaded() AND $this->_user->id == $request->user_id)
 		{
@@ -129,7 +129,7 @@ class Controller_Requests extends Controller_Application {
 
 	public function action_otkazi()
 	{
-		$request = ORM::factory('request', $this->request->param('id'));
+		$request = ORM::factory('Request', $this->request->param('id'));
 
 		if ($request->loaded() AND $this->_user->id == $request->giver_id)
 		{
@@ -156,7 +156,7 @@ class Controller_Requests extends Controller_Application {
 
 	public function action_zavrsi()
 	{
-		$request = ORM::factory('request', $this->request->param('id'));
+		$request = ORM::factory('Request', $this->request->param('id'));
 
 		if ($request->loaded() AND $this->_user->id == $request->user_id AND $request->giver_id)
 		{

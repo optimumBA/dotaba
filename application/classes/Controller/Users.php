@@ -45,7 +45,7 @@ class Controller_Users extends Controller_Application {
 
 	public function action_view()
 	{
-		$user = ORM::factory('user')
+		$user = ORM::factory('User')
 			->with('clan')
 			->with('featured_hero')
 			->where('accountid', '=', $this->request->param('id'))

@@ -20,7 +20,7 @@ class Model_Hero extends ORM {
 
 		foreach ($remote_heroes as $remote_hero)
 		{
-			$hero = ORM::factory('hero', $remote_hero->id);
+			$hero = ORM::factory('Hero', $remote_hero->id);
 
 			$image = 'http://media.steampowered.com/apps/dota2/images/heroes/'.substr($remote_hero->name, 14).'_full.png';
 

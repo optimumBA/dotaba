@@ -10,13 +10,13 @@ class Controller_Tournaments extends Controller_Application {
 
 	public function action_index()
 	{
-		$count = ORM::factory('tournament')->count_all();
+		$count = ORM::factory('Tournament')->count_all();
 
 		$pagination = Pagination::factory(array(
 			'total_items' => $count,
 		));
 
-		$tournaments = ORM::factory('tournament')
+		$tournaments = ORM::factory('Tournament')
 			->with('user')
 			->order_by('created_at', 'DESC')
 			->limit($pagination->items_per_page)
@@ -31,7 +31,7 @@ class Controller_Tournaments extends Controller_Application {
 
 	public function action_view()
 	{
-		$tournament = ORM::factory('tournament')
+		$tournament = ORM::factory('Tournament')
 			->with('mode')
 			->with('user')
 			->with('winner')
@@ -90,7 +90,7 @@ class Controller_Tournaments extends Controller_Application {
 					$this->_post['user_id']    = $this->_user->id;
 					$this->_post['created_at'] = DB::expr('NOW()');
 
-					$tournament = ORM::factory('tournament')
+					$tournament = ORM::factory('Tournament')
 						->values($this->_post, array('name', 'description', 'mode_id', 'num_clans', 'is_auto_approvable', 'user_id', 'created_at'))
 						->create();
 
@@ -126,7 +126,7 @@ class Controller_Tournaments extends Controller_Application {
 			}
 		}
 
-		$modes = ORM::factory('mode')
+		$modes = ORM::factory('Mode')
 			->find_all();
 
 		$modes_array = array();
@@ -145,7 +145,7 @@ class Controller_Tournaments extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		$tournament = ORM::factory('tournament', $this->request->param('id'));
+		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
 		if ($tournament->loaded() AND $tournament->user_id == $this->_user->id)
 		{
@@ -230,7 +230,7 @@ class Controller_Tournaments extends Controller_Application {
 			}
 			else
 			{
-				$modes = ORM::factory('mode')
+				$modes = ORM::factory('Mode')
 					->find_all();
 
 				$modes_array = array();
@@ -262,7 +262,7 @@ class Controller_Tournaments extends Controller_Application {
 
 	public function action_prijavi()
 	{
-		$tournament = ORM::factory('tournament', $this->request->param('id'));
+		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
 		$count = $tournament->participations
 			->where('approved', '=', TRUE)
@@ -270,7 +270,7 @@ class Controller_Tournaments extends Controller_Application {
 
 		if ($tournament->loaded() AND $tournament->is_started == FALSE AND $count < $tournament->num_clans AND $this->request->method() === Request::POST)
 		{
-			$clan = ORM::factory('clan', array('lord_id' => $this->_user->id));
+			$clan = ORM::factory('Clan', array('lord_id' => $this->_user->id));
 
 			if ($clan->loaded())
 			{
@@ -283,7 +283,7 @@ class Controller_Tournaments extends Controller_Application {
 				}
 				else
 				{
-					$participation = ORM::factory('participation')->values(array(
+					$participation = ORM::factory('Participation')->values(array(
 						'clan_id'       => $clan->id,
 						'tournament_id' => $tournament->id,
 						'approved'      => $tournament->is_auto_approvable,
@@ -353,7 +353,7 @@ class Controller_Tournaments extends Controller_Application {
 
 	public function action_start()
 	{
-		$tournament = ORM::factory('tournament', $this->request->param('id'));
+		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
 		if ($tournament->loaded())
 		{
@@ -366,7 +366,7 @@ class Controller_Tournaments extends Controller_Application {
 
 				if ($tournament->user_id == $this->_user->id AND $tournament->is_started == FALSE AND $count == $tournament->num_clans)
 				{
-					$type = ORM::factory('type', array('name' => 'Turnir'));
+					$type = ORM::factory('Type', array('name' => 'Turnir'));
 
 					$participations = $participations->find_all()->as_array();
 
@@ -376,7 +376,7 @@ class Controller_Tournaments extends Controller_Application {
 					{
 						if (isset($participations[$i+1]))
 						{
-							ORM::factory('match')
+							ORM::factory('Match')
 								->values(array(
 									'type_id'         => $type->id,
 									'tournament_id'   => $tournament->id,
@@ -431,7 +431,7 @@ class Controller_Tournaments extends Controller_Application {
 
 	public function action_prijave()
 	{
-		$tournament = ORM::factory('tournament', $this->request->param('id'));
+		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
 		if ($tournament->loaded() AND $tournament->user_id == $this->_user->id AND $tournament->is_started == FALSE AND $tournament->is_auto_approvable == FALSE)
 		{
@@ -486,7 +486,7 @@ class Controller_Tournaments extends Controller_Application {
 
 	public function action_review_participation()
 	{
-		$tournament    = ORM::factory('tournament', $this->request->param('id'));
+		$tournament    = ORM::factory('Tournament', $this->request->param('id'));
 		$participation = $tournament->participations
 			->with('clan')
 			->where('participation.id', '=', $this->request->param('id2'))

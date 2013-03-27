@@ -10,7 +10,7 @@ class Controller_Matches extends Controller_Application {
 
 	public function action_index()
 	{
-		$matches = ORM::factory('match')
+		$matches = ORM::factory('Match')
 			->with('type')
 			->with('tournament')
 			->with('radiant_clan')
@@ -26,7 +26,7 @@ class Controller_Matches extends Controller_Application {
 
 	public function action_view()
 	{
-		$match = ORM::factory('match')
+		$match = ORM::factory('Match')
 			->with('type')
 			->with('tournament')
 			->with('radiant_clan')
@@ -92,7 +92,7 @@ class Controller_Matches extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		$match = ORM::factory('match')
+		$match = ORM::factory('Match')
 			->with('type')
 			->with('tournament')
 			->with('radiant_clan')
@@ -134,7 +134,7 @@ class Controller_Matches extends Controller_Application {
 									{
 										$slot['match_id'] = $match->id;
 
-										ORM::factory('slot')
+										ORM::factory('Slot')
 											->values($slot, array('match_id', 'user_id', 'hero_id', 'player_slot', 'item_0_id', 'item_1_id', 'item_2_id',
 												'item_3_id', 'item_4_id', 'item_5_id', 'kills', 'deaths', 'assists', 'leaver_status', 'gold', 'last_hits',
 												'denies', 'gold_per_min', 'xp_per_min', 'gold_spent', 'hero_damage', 'tower_damage', 'hero_healing', 'level'
@@ -183,7 +183,7 @@ class Controller_Matches extends Controller_Application {
 						}
 					}
 
-					$heroes = ORM::factory('hero')->find_all();
+					$heroes = ORM::factory('Hero')->find_all();
 
 					$heroes_array = array();
 
@@ -192,7 +192,7 @@ class Controller_Matches extends Controller_Application {
 						$heroes_array[$hero->id] = $hero->localized_name;
 					}
 
-					$items = ORM::factory('item')->find_all();
+					$items = ORM::factory('Item')->find_all();
 
 					$items_array = array(NULL);
 
@@ -233,7 +233,7 @@ class Controller_Matches extends Controller_Application {
 
 	public function action_najavi()
 	{
-		$tournament = ORM::factory('tournament', $this->request->param('id'));
+		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
 		if ($tournament->loaded() AND $this->_user->id == $tournament->user_id)
 		{
@@ -241,14 +241,14 @@ class Controller_Matches extends Controller_Application {
 			{
 				try
 				{
-					$type = ORM::factory('type', array('name' => 'Tournament'));
+					$type = ORM::factory('Type', array('name' => 'Tournament'));
 
 					$this->_post['type_id']       = $type->id;
 					$this->_post['tournament_id'] = $tournament->id;
 					$this->_post['mode_id']       = $tournament->mode_id;
 					$this->_post['created_at']    = DB::expr('NOW()');
 
-					$match = ORM::factory('match')
+					$match = ORM::factory('Match')
 						->values($this->_post, array('type_id', 'tournament_id', 'mode_id', 'radiant_clan_id', 'dire_clan_id', 'date', 'created_at'))
 						->create();
 
@@ -308,7 +308,7 @@ class Controller_Matches extends Controller_Application {
 
 	public function action_najavi_streamanje()
 	{
-		$match = ORM::factory('match', $this->request->param('id'));
+		$match = ORM::factory('Match', $this->request->param('id'));
 
 		if ($match->loaded())
 		{
@@ -354,7 +354,7 @@ class Controller_Matches extends Controller_Application {
 
 	public function action_otkazi_streamanje()
 	{
-		$match = ORM::factory('match', $this->request->param('id'));
+		$match = ORM::factory('Match', $this->request->param('id'));
 
 		if ($match->loaded())
 		{

@@ -18,7 +18,7 @@ class Controller_Widgets extends Controller {
 
 	public function action_announcements()
 	{
-		$announcements = ORM::factory('announcement')
+		$announcements = ORM::factory('Announcement')
 			->with('match')
 			->with('stream')
 			->with('match:tournament')

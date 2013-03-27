@@ -10,7 +10,7 @@ class Controller_Streams extends Controller_Application {
 
 	public function action_index()
 	{
-		$streams = ORM::factory('stream')
+		$streams = ORM::factory('Stream')
 			->with('user')
 			->order_by('created_at', 'DESC')
 			->find_all();
@@ -22,7 +22,7 @@ class Controller_Streams extends Controller_Application {
 
 	public function action_view()
 	{
-		$stream = ORM::factory('stream')
+		$stream = ORM::factory('Stream')
 			->with('user')
 			->where('user.accountid', '=', $this->request->param('id'))
 			->find();

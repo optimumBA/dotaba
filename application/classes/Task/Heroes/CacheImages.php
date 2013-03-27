@@ -4,7 +4,7 @@ class Task_Heroes_CacheImages extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
-		$heroes = ORM::factory('hero')
+		$heroes = ORM::factory('Hero')
 			->where('status', '=', FALSE)
 			->find_all();
 

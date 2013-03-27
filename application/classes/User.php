@@ -98,7 +98,7 @@ class User {
 			}
 		}
 
-		$this->user = ORM::factory('user', array('steamid' => $this->steamid));
+		$this->user = ORM::factory('User', array('steamid' => $this->steamid));
 
 		if ( ! $this->user->loaded())
 		{

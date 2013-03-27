@@ -74,7 +74,7 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                     <!-- Latest Videos Start -->
                 	<div class="latest-videos">
                     	<h1 class="heading colr">Posljednji snimci</h1>
-                       <?php $videos = ORM::factory('video')->order_by('created_at', 'DESC')->limit(2)->find_all(); 
+                       <?php $videos = ORM::factory('Video')->order_by('created_at', 'DESC')->limit(2)->find_all(); 
 					   foreach($videos as $video) {
 					   echo' <div class="desc">
                         	<h4><a href="/vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE).'" class="white">'.$video->name.'</a></h4>
@@ -97,7 +97,7 @@ urna, ut scelerisque enim elit id est. Sed felis libero, malesuada ut vestibulum
                     	<h1 class="heading colr">Posljednje novosti</h1>
                         <ul class="news-list">
                         	
-							<?php $news = ORM::factory('news')->order_by('created_at', 'DESC')->limit(2)->find_all(); 
+							<?php $news = ORM::factory('News')->order_by('created_at', 'DESC')->limit(2)->find_all(); 
 									foreach($news as $article) 
 									{
 										echo '

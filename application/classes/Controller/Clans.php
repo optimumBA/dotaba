@@ -10,13 +10,13 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_index()
 	{
-		$count = ORM::factory('clan')->count_all();
+		$count = ORM::factory('Clan')->count_all();
 
 		$pagination = Pagination::factory(array(
 			'total_items' => $count,
 		));
 
-		$clans = ORM::factory('clan')
+		$clans = ORM::factory('Clan')
 			->with('lord')
 			->order_by('created_at', 'DESC')
 			->limit($pagination->items_per_page)
@@ -31,7 +31,7 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_view()
 	{
-		$clan = ORM::factory('clan')
+		$clan = ORM::factory('Clan')
 			->with('lord')
 			->where('clan.id', '=', $this->request->param('id'))
 			->find();
@@ -40,7 +40,7 @@ class Controller_Clans extends Controller_Application {
 		{
 			$users = $clan->users->find_all();
 
-			$matches = ORM::factory('match')
+			$matches = ORM::factory('Match')
 				->with('type')
 				->with('tournament')
 				->with('radiant_clan')
@@ -93,7 +93,7 @@ class Controller_Clans extends Controller_Application {
 						$this->_post['lord_id']    = $this->_user->id;
 						$this->_post['created_at'] = DB::expr('NOW()');
 
-						$clan = ORM::factory('clan')
+						$clan = ORM::factory('Clan')
 							->values($this->_post, array('name', 'tag', 'lord_id', 'open', 'created_at'))
 							->create();
 
@@ -138,7 +138,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		else
 		{
-			$clan = ORM::factory('clan', $this->_user->clan_id);
+			$clan = ORM::factory('Clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -153,7 +153,7 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		$clan = ORM::factory('clan', $this->request->param('id'));
+		$clan = ORM::factory('Clan', $this->request->param('id'));
 
 		if ($clan->loaded() AND $clan->lord_id == $this->_user->id)
 		{
@@ -219,7 +219,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		elseif ($clan->loaded())
 		{
-			$clan = ORM::factory('clan', $this->_user->clan_id);
+			$clan = ORM::factory('Clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -245,7 +245,7 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_prijava()
 	{
-		$clan = ORM::factory('clan', $this->request->param('id'));
+		$clan = ORM::factory('Clan', $this->request->param('id'));
 
 		if ($clan->loaded() AND $this->_user->clan_id === NULL AND $clan->open)
 		{
@@ -295,7 +295,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		elseif ($this->_user->clan_id)
 		{
-			$clan = ORM::factory('clan', $this->_user->clan_id);
+			$clan = ORM::factory('Clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -314,7 +314,7 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_prijave()
 	{
-		$clan = ORM::factory('clan', $this->request->param('id'));
+		$clan = ORM::factory('Clan', $this->request->param('id'));
 
 		if ($clan->loaded() AND $clan->lord_id == $this->_user->id)
 		{
@@ -330,7 +330,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		elseif ($clan->loaded())
 		{
-			$clan = ORM::factory('clan', $this->_user->clan_id);
+			$clan = ORM::factory('Clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -356,7 +356,7 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_review_application()
 	{
-		$clan        = ORM::factory('clan', $this->request->param('id'));
+		$clan        = ORM::factory('Clan', $this->request->param('id'));
 		$application = $clan->applications
 			->with('user')
 			->where('application.id', '=', $this->request->param('id2'))
@@ -404,7 +404,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		elseif ($clan->loaded() AND $clan->lord_id != $this->_user->id)
 		{
-			$clan = ORM::factory('clan', $this->_user->clan_id);
+			$clan = ORM::factory('Clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -434,7 +434,7 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_izbaci()
 	{
-		$clan = ORM::factory('clan', $this->request->param('id'));
+		$clan = ORM::factory('Clan', $this->request->param('id'));
 		$user = $clan->users
 			->where('id', '=', $this->request->param('id2'))
 			->find();
@@ -471,7 +471,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		elseif ($clan->lord_id != $this->_user->id)
 		{
-			$clan = ORM::factory('clan', $this->_user->clan_id);
+			$clan = ORM::factory('Clan', $this->_user->clan_id);
 
 			$this->_messages[] = array(
 				'type'  => 'error',

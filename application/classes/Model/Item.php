@@ -40,7 +40,7 @@ class Model_Item extends ORM {
 
 		foreach ($remote_items as $remote_item)
 		{
-			$item = ORM::factory('item', $remote_item->id);
+			$item = ORM::factory('Item', $remote_item->id);
 
 			$image = 'http://media.steampowered.com/apps/dota2/images/items/'.substr($remote_item->name, 5).'_lg.png';
 

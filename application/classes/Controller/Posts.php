@@ -10,7 +10,7 @@ class Controller_Posts extends Controller_Application {
 
 	public function action_napravi()
 	{
-		$topic = ORM::factory('topic', $this->request->param('id'));
+		$topic = ORM::factory('Topic', $this->request->param('id'));
 
 		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->has_role('Administrator/ica')))
 		{
@@ -24,7 +24,7 @@ class Controller_Posts extends Controller_Application {
 						$this->_post['user_id']    = $this->_user->id;
 						$this->_post['created_at'] = DB::expr('NOW()');
 
-						$post = ORM::factory('post')->values($this->_post, array('content', 'topic_id', 'user_id', 'created_at'))->create();
+						$post = ORM::factory('Post')->values($this->_post, array('content', 'topic_id', 'user_id', 'created_at'))->create();
 
 						$this->_messages[] = array(
 							'type'  => 'success',
@@ -71,7 +71,7 @@ class Controller_Posts extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		$topic = ORM::factory('topic', $this->request->param('id'));
+		$topic = ORM::factory('Topic', $this->request->param('id'));
 		$post  = $topic->posts
 			->where('id', '=', $this->request->param('id2'))
 			->find();
@@ -148,7 +148,7 @@ class Controller_Posts extends Controller_Application {
 
 	public function action_obrisi()
 	{
-		$topic = ORM::factory('topic', $this->request->param('id'));
+		$topic = ORM::factory('Topic', $this->request->param('id'));
 		$post  = $topic->posts
 			->where('id', '=', $this->request->param('id2'))
 			->find();

@@ -6,7 +6,7 @@ abstract class Model extends Kohana_Model {
 	{
 		$class = explode('_', get_called_class());
 
-		$comments = ORM::factory('comment')
+		$comments = ORM::factory('Comment')
 			->with('user')
 			->where('object_id', '=', $id)
 			->where('object_type', '=', array_pop($class))
@@ -27,7 +27,7 @@ abstract class Model extends Kohana_Model {
 	{
 		$class = explode('_', get_called_class());
 
-		return ORM::factory('comment')
+		return ORM::factory('Comment')
 			->where('object_id', '=', $id)
 			->where('object_type', '=', array_pop($class))
 			->count_all();

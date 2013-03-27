@@ -59,7 +59,7 @@ class Model_Match extends ORM {
 		{
 			$db->begin();
 
-			$match = ORM::factory('match', $id)
+			$match = ORM::factory('Match', $id)
 				->values(array(
 					'mode_id'                 => $result->game_mode,
 					'cluster'                 => $result->cluster,
@@ -78,12 +78,12 @@ class Model_Match extends ORM {
 
 			foreach ($result->players as $player)
 			{
-				$user = ORM::factory('user', array('accountid' => $player->account_id));
+				$user = ORM::factory('User', array('accountid' => $player->account_id));
 
 				if ( ! $user->loaded())
 					continue;
 
-				$slot = ORM::factory('slot', array(
+				$slot = ORM::factory('Slot', array(
 					'match_id' => $match->id,
 					'user_id'  => $user->id
 				));
@@ -123,7 +123,7 @@ class Model_Match extends ORM {
 
 			if (isset($result->picks_bans))
 			{
-				$count = ORM::factory('pickban')
+				$count = ORM::factory('Pickban')
 					->where('match_id', '=', $match->id)
 					->count_all();
 
@@ -139,7 +139,7 @@ class Model_Match extends ORM {
 							'order'    => $pick_ban->order,
 						);
 
-						ORM::factory('pickban')->values($values)->create();
+						ORM::factory('Pickban')->values($values)->create();
 					}
 				}
 			}

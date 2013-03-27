@@ -10,7 +10,7 @@ class Controller_Videos extends Controller_Application {
 	
 	public function action_index()
 	{
-		$videos = ORM::factory('video')
+		$videos = ORM::factory('Video')
 			->order_by('created_at', 'DESC')
 			->find_all();
 
@@ -21,7 +21,7 @@ class Controller_Videos extends Controller_Application {
 
 	public function action_view()
 	{
-		$video = ORM::factory('video')
+		$video = ORM::factory('Video')
 			->with('user')
 			->where('video.id', '=', $this->request->param('id'))
 			->find();
@@ -50,7 +50,7 @@ class Controller_Videos extends Controller_Application {
 				$this->_post['user_id']    = $this->_user->id;
 				$this->_post['created_at'] = DB::expr('NOW()');
 
-				$video = ORM::factory('video')
+				$video = ORM::factory('Video')
 					->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
 					->create();
 
@@ -70,7 +70,7 @@ class Controller_Videos extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		$video = ORM::factory('video', $this->request->param('id'));
+		$video = ORM::factory('Video', $this->request->param('id'));
 
 		if ($video->loaded() AND $this->_user->id == $video->user_id)
 		{
@@ -115,7 +115,7 @@ class Controller_Videos extends Controller_Application {
 
 	public function action_home()
 	{
-		$videos 			= ORM::factory('video')
+		$videos 			= ORM::factory('Video')
 							->order_by('created_at', 'DESC')
 							->find_all();
 		

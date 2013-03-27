@@ -10,13 +10,13 @@ class Controller_Topics extends Controller_Application {
 
 	public function action_index()
 	{
-		$count = ORM::factory('topic')->count_all();
+		$count = ORM::factory('Topic')->count_all();
 
 		$pagination = Pagination::factory(array(
 			'total_items' => $count,
 		));
 
-		$topics = ORM::factory('topic')
+		$topics = ORM::factory('Topic')
 			->with('user')
 			->order_by('is_sticky', 'DESC')
 			->order_by('updated_at', 'DESC')
@@ -50,7 +50,7 @@ class Controller_Topics extends Controller_Application {
 
 	public function action_view()
 	{
-		$topic = ORM::factory('topic')
+		$topic = ORM::factory('Topic')
 			->with('user')
 			->where('topic.id', '=', $this->request->param('id'))
 			->find();
@@ -99,14 +99,14 @@ class Controller_Topics extends Controller_Application {
 					unset($this->_post['is_hidden']);
 				}
 
-				$post = ORM::factory('post')
+				$post = ORM::factory('Post')
 					->values($this->_post, array('content', 'user_id', 'created_at'))
 					->create();
 
 				$this->_post['main_post_id'] = $post->id;
 				$this->_post['updated_at']   = $this->_post['created_at'];
 
-				$topic = ORM::factory('topic')
+				$topic = ORM::factory('Topic')
 					->values($this->_post, array('name', 'user_id', 'main_post_id', 'is_hidden', 'created_at', 'updated_at'))
 					->create();
 
@@ -140,7 +140,7 @@ class Controller_Topics extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		$topic = ORM::factory('topic')
+		$topic = ORM::factory('Topic')
 			->with('main_post')
 			->where('topic.id', '=', $this->request->param('id'))
 			->find();
@@ -216,7 +216,7 @@ class Controller_Topics extends Controller_Application {
 
 	public function action_lock()
 	{
-		$topic = ORM::factory('topic', $this->request->param('id'));
+		$topic = ORM::factory('Topic', $this->request->param('id'));
 
 		if ($topic->loaded())
 		{
@@ -247,7 +247,7 @@ class Controller_Topics extends Controller_Application {
 
 	public function action_sticky()
 	{
-		$topic = ORM::factory('topic', $this->request->param('id'));
+		$topic = ORM::factory('Topic', $this->request->param('id'));
 
 		if ($topic->loaded())
 		{
@@ -278,7 +278,7 @@ class Controller_Topics extends Controller_Application {
 
 	public function action_obrisi()
 	{
-		$topic = ORM::factory('topic', $this->request->param('id'));
+		$topic = ORM::factory('Topic', $this->request->param('id'));
 
 		if ($topic->loaded())
 		{
