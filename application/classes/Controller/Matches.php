@@ -90,6 +90,147 @@ class Controller_Matches extends Controller_Application {
 		}
 	}
 
+	public function action_izmijeni()
+	{
+		$match = ORM::factory('match')
+			->with('type')
+			->with('tournament')
+			->with('radiant_clan')
+			->with('dire_clan')
+			->with('mode')
+			->where('match.id', '=', $this->request->param('id'))
+			->find();
+
+		if ($match->loaded() AND $match->type->name == 'Turnir')
+		{
+			if ($match->tournament->user_id == $this->_user->id)
+			{
+				if ($match->processed)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Već su uneseni rezultati ovog meča. Kontaktiraj administratore sajta.',
+					);
+
+					Session::instance()->set('messages', $this->_messages);
+
+					HTTP::redirect('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE));
+				}
+				else
+				{
+					if ($this->_post)
+					{
+						try
+						{
+							$this->_post['human_players'] = 0;
+							$this->_post['updated_at']    = DB::expr('NOW()');
+							$this->_post['processed']     = TRUE;
+
+							if (isset($this->_post['slots']))
+							{
+								foreach ($this->_post['slots'] as $slot)
+								{
+									if ($slot['user_id'])
+									{
+										$slot['match_id'] = $match->id;
+
+										ORM::factory('slot')
+											->values($slot, array('match_id', 'user_id', 'hero_id', 'player_slot', 'item_0_id', 'item_1_id', 'item_2_id',
+												'item_3_id', 'item_4_id', 'item_5_id', 'kills', 'deaths', 'assists', 'leaver_status', 'gold', 'last_hits',
+												'denies', 'gold_per_min', 'xp_per_min', 'gold_spent', 'hero_damage', 'tower_damage', 'hero_healing', 'level'
+											))->create();
+
+										$this->_post['human_players']++;
+									}
+								}
+							}
+
+							$match->values($this->_post, array('radiant_win', 'human_players', 'duration', 'first_blood_time', 'updated_at', 'processed'))
+								->update();
+
+							$this->_messages[] = array(
+								'type'  => 'success',
+								'value' => 'Rezultat je unesen.',
+							);
+
+							Session::instance()->set('messages', $this->_messages);
+
+							HTTP::redirect('liga/mecevi/'.$match->id);
+						}
+						catch (ORM_Validation_Exception $e)
+						{
+							$this->_messages[] = array(
+								'type'  => 'error',
+								'value' => 'Nepravilan unos.',
+							);
+
+							$errors = $e->errors('models');
+						}
+					}
+
+					$participations = $match->tournament->participations
+						->or_where('clan_id', '=', $match->radiant_clan_id)
+						->or_where('clan_id', '=', $match->dire_clan_id)
+						->find_all();
+
+					$users_array = array(NULL);
+
+					foreach ($participations as $participation)
+					{
+						foreach ($participation->users->find_all() as $user)
+						{
+							$users_array[$user->id] = $user->username;
+						}
+					}
+
+					$heroes = ORM::factory('hero')->find_all();
+
+					$heroes_array = array();
+
+					foreach ($heroes as $hero)
+					{
+						$heroes_array[$hero->id] = $hero->localized_name;
+					}
+
+					$items = ORM::factory('item')->find_all();
+
+					$items_array = array(NULL);
+
+					foreach ($items as $item)
+					{
+						$items_array[$item->id] = $item->localized_name;
+					}
+
+					$this->_title = 'Izmjena meča '.$match->id.' - '.$match->radiant_clan->name.' protiv '.$match->dire_clan->name;
+					$this->_content = View::factory('matches/izmijeni')
+						->set('values', $this->_post)
+						->set('errors', (isset($errors)) ? $errors : array())
+						->set('clans', array(1 => $match->radiant_clan->name, 0 => $match->dire_clan->name))
+						->set('users', $users_array)
+						->set('heroes', $heroes_array)
+						->set('items', $items_array)
+						->set('leaver_statuses', array('ne', 'da ("game safe to leave")', 'da'))
+						->set('levels', Arr::range(1, 25));
+				}
+			}
+			else
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nisi organizator/ica turnira na kojem je meč odigran.',
+				);
+
+				Session::instance()->set('messages', $this->_messages);
+
+				HTTP::redirect('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE));
+			}
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Meč nije pronađen.');
+		}
+	}
+
 	public function action_najavi()
 	{
 		$tournament = ORM::factory('tournament', $this->request->param('id'));
@@ -118,7 +259,7 @@ class Controller_Matches extends Controller_Application {
 
 					Session::instance()->set('messages', $this->_messages);
 
-					HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
+					HTTP::redirect('liga/mecevi/'.$match->id);
 				}
 				catch (ORM_Validation_Exception $e)
 				{

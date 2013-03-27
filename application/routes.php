@@ -87,7 +87,7 @@ Route::set('najavi_match', 'liga/turniri/<id>-<name>/najavi_mec', array('id' => 
 		'action'     => 'najavi',
 	));
 
-Route::set('matches', 'liga/mecevi(/<action>)', array('action' => 'dodaj'))
+Route::set('matches', 'liga/mecevi')
 	->defaults(array(
 		'controller' => 'matches',
 		'action'     => 'index',
