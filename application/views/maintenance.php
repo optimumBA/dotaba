@@ -32,39 +32,37 @@
 				<div class="overlay-image"></div>
 				<div class="panel">
 					<ul class="timeline">
-						<li class="completed" style="width:90%">90% gotov</li>
+						<li class="completed" style="width:90%">90% gotovo</li>
 
 						<li class="start" id="first">
 							<div class="content">
-								<h2>Website Started</h2>
+								<h2>O stranici</h2>
 								<p>
-									Donec vitae purus eget augue iaculis fermentum. Sed adipiscing nunc sed tellus rutrum nec sagittis orci lobortis. Pellentesque eu lectus vel enim sodales malesuada ut ac odio. Cras ut dapibus lectus. Aenean adipiscing accumsan auctor. Quisque venenatis quam eu libero scelerisque consectetur in ut neque. Fusce pellentesque gravida arcu et rhoncus. Donec in elit justo, ac sagittis nulla. Maecenas metus leo, sollicitudin ut placerat vel, pellentesque in sem.
+									Dota 2 Balkan je community sajt za igru Dota 2. Na ovom sajtu možete gledati prijenose uživo, raspravljati o svojim omiljenim herojima, taktikama i sl.
+Kao naš stari projekat DotA Balkan zajednice još od početka 2011 godine, se nije realizovao kao po planiranom, te nešto sredinom 2012 je otvorena, nova i osvježena stranica, koja prezentuje prenose aktivnih mečeva i turnira, ljetni DOTA 2 Giveaway by Frost. Dok danas bilježi rekordne posjete korisnika širom svijeta.
+Nešto više od 3 mjeseca zabilježeno je preko 1300 korisnika, dok 12.35% aktivnik i 20% novoregistriranih.
+
+U toku realizacija stranice samo za Dota 2 igru.
 								</p>
-								<h4>Founders</h4>
+								<h4>Osnivači</h4>
 								<ul class="testimonial">
 									<li>
 										<div>
-											<img src="/assets/images/timeline/testimonial.jpg" width="115" height="115" alt="test">
+											<img src="http://media.steampowered.com/steamcommunity/public/images/avatars/e2/e24cca7c7cc33047149f8d8c39e2a807639e0d85_full.jpg" width="115" height="115" alt="Grifon">
 										</div>
-										<span>Exampe Person</span>
+										<span>Grifon</span>
 									</li>
 									<li>
 										<div>
-											<img src="/assets/images/timeline/testimonial2.jpg" width="115" height="115" alt="test">
+											<img src="http://media.steampowered.com/steamcommunity/public/images/avatars/d7/d72a78d27a6eae3c7e990ace5fa208e39da3195b_full.jpg" width="115" height="115" alt="Bakcheia">
 										</div>
-										<span>Richard Selby</span>
-									</li>
-									<li>
-										<div>
-											<img src="/assets/images/timeline/testimonial3.jpg" width="115" height="115" alt="test">
-										</div>
-										<span>Baron Bryant</span>
+										<span>Bakcheia</span>
 									</li>
 								</ul>
 							</div>
 							<div class="rel">
 								<span class="arrow"></span>
-								<span class="date"><a href="#" class="currentlink">početak</a><a href="#" class="nextli">sljedeće</a><a href="#last">kraj</a></span>
+								<span class="date"><a href="#" class="currentlink">Početak</a><a href="#" class="nextli">Sljedeće</a><a href="#last">Kraj</a></span>
 							</div>
 						</li>
 
@@ -83,19 +81,57 @@
 							</div>
 							<div class="rel">
 								<span class="arrow"></span>
-								<span class="date"><a href="#" class="prevlink">prethodno</a><a href="#" class="nextli">sljedeće</a></span>
+								<span class="date"><a href="#" class="prevlink">Prethodno</a><a href="#" class="nextli">Sljedeće</a></span>
 							</div>
 						</li>
 
-						<li style="width:200px; left:89%">
-							<div class="content">
-								<h2>Testiranje</h2>
-							</div>
-							<div class="rel">
-								<span class="arrow"></span>
-								<span class="date"><a href="#" class="prevlink">prethodno</a><a href="#" class="nextli">sljedeće</a></span>
-							</div>
-						</li>
+						
+                      <li style="left:55%;">
+					<div class="content" style="width:340px;">
+					<h2>Dota 2 Balkan Logo</h2>
+					<div class="outer">
+						<div class="inner">
+							<a href="/assets/images/timeline/community-logo.jpg" class="borderless"><span class="viewport"></span><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash4/740332_466723390050770_1244247613_o.jpg" width="300" height="auto" alt="design"></a>
+						</div>
+					</div>
+				</div>
+				<div class="rel">
+					<span class="arrow"></span>
+					<span class="date"><a href="#" class="prevlink">Prethodno</a><a href="#" class="currentlink">14. januar 2013.</a><a href="#" class="nextli">Sljedeće</a></span>
+				</div>
+				</li>
+                        
+                        
+                        <li style="width:500px; left:90%" id="fourth">
+                <div class="content">
+				<h2>Testiranje</h2>
+				<div class="fhold">
+					<div class="half">
+						<p>
+							U fazi smo testiranja sljedećih sistema stranice
+						</p>
+						<ul class="features">
+							<li>Liga</li>
+							<li>Turniri</li>
+							<li>Forum</li>
+							<li>Korisnički profili</li>
+						</ul>
+					</div>
+					<div class="half">
+						<p>
+							Faza testiranja traje do 6.4.2013., gdje ćemo u tom roku provjeriti napomenute sisteme kako bi Vama omogućili lakši i sigurni pristup.
+                            <br />
+                            Trenutno niste u mogućnosti da se prijavite na stranicu. Ukoliko ste registrovani na Beta kanal, imate pristup stranici bez najave.
+                            
+                         	Nadamo se ranijem otvaranju stranice, Dota 2 Balkan Community :)
+						</p>
+					</div>
+				</div>
+                </div>
+				<div class="rel">
+					<span class="arrow"></span>
+					<span class="date"><a href="#" class="prevlink">Prethodna</a><a href="#" class="currentlink">27. mart 2013</a><a href="#" class="nextli">Sljedeće</a></span>
+				</div>
 
 						<li id="last">
 							<div class="content">
@@ -103,7 +139,7 @@
 							</div>
 							<div class="rel">
 								<span class="arrow"></span>
-								<span class="date"><a href="#start">početak</a><a href="#" class="currentlink">6. april</a></span>
+								<span class="date"><a href="#start">Početak</a><a href="#" class="currentlink">6. april</a></span>
 							</div>
 						</li>
 					</ul>
