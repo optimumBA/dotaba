@@ -39,10 +39,10 @@
 								<h2>O stranici</h2>
 								<p>
 									Dota 2 Balkan je community sajt za igru Dota 2. Na ovom sajtu možete gledati prijenose uživo, raspravljati o svojim omiljenim herojima, taktikama i sl.
-Kao naš stari projekat DotA Balkan zajednice još od početka 2011 godine, se nije realizovao kao po planiranom, te nešto sredinom 2012 je otvorena, nova i osvježena stranica, koja prezentuje prenose aktivnih mečeva i turnira, ljetni DOTA 2 Giveaway by Frost. Dok danas bilježi rekordne posjete korisnika širom svijeta.
-Nešto više od 3 mjeseca zabilježeno je preko 1300 korisnika, dok 12.35% aktivnik i 20% novoregistriranih.
+Kako se naš stari projekat DotA Balkan zajednice još od početka 2011 godine nije realizovao kao po planiranom, pa je sredinom 2012 otvorena, nova i osvježena stranica, koja prezentuje prenose aktivnih mečeva i turnira, te ljetni DOTA 2 Giveaway by Frost. 
+U nešto više od 3 mjeseca zabilježeno je preko 1300 korisnika, od čega je 12,35% aktivnih i 20% novoregistriranih.
 
-U toku realizacija stranice samo za Dota 2 igru.
+U toku je realizacija stranice samo za igru DOTA2.
 								</p>
 								<h4>Osnivači</h4>
 								<ul class="testimonial">
@@ -85,21 +85,18 @@ U toku realizacija stranice samo za Dota 2 igru.
 							</div>
 						</li>
 
-						
-                      <li style="left:55%;">
-					<div class="content" style="width:340px;">
-					<h2>Dota 2 Balkan Logo</h2>
-					<div class="outer">
-						<div class="inner">
-							<a href="/assets/images/timeline/community-logo.jpg" class="borderless"><span class="viewport"></span><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash4/740332_466723390050770_1244247613_o.jpg" width="300" height="auto" alt="design"></a>
-						</div>
-					</div>
-				</div>
-				<div class="rel">
-					<span class="arrow"></span>
-					<span class="date"><a href="#" class="prevlink">Prethodno</a><a href="#" class="currentlink">14. januar 2013.</a><a href="#" class="nextli">Sljedeće</a></span>
-				</div>
-				</li>
+						<li style="left:55%;">
+							<div class="content" style="width:340px;">
+								<h2>Logo</h2>
+								<div class="inner">
+									<a href="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash4/740332_466723390050770_1244247613_o.jpg" class="borderless"><span class="viewport"></span><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash4/740332_466723390050770_1244247613_o.jpg" width="310" height="190" alt="design"></a>
+								</div>
+							</div>
+							<div class="rel">
+								<span class="arrow"></span>
+								<span class="date"><a href="#" class="prevlink">Prethodno</a><a href="#" class="currentlink">14. januar 2013.</a><a href="#" class="nextli">Sljedeće</a></span>
+							</div>
+						</li>
                         
                         
                         <li style="width:500px; left:90%" id="fourth">
@@ -119,10 +116,9 @@ U toku realizacija stranice samo za Dota 2 igru.
 					</div>
 					<div class="half">
 						<p>
-							Faza testiranja traje do 6.4.2013., gdje ćemo u tom roku provjeriti napomenute sisteme kako bi Vama omogućili lakši i sigurni pristup.
+							Faza testiranja traje do 6.4.2013. - do tada ćemo provjeriti spomenute sisteme kako bismo vam omogućili lakši i sigurniji pristup.
                             <br />
                             Trenutno niste u mogućnosti da se prijavite na stranicu. Ukoliko ste registrovani na Beta kanal, imate pristup stranici bez najave.
-                            
                          	Nadamo se ranijem otvaranju stranice, Dota 2 Balkan Community :)
 						</p>
 					</div>
