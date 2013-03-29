@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Task_Matches_CalculateStats extends Minion_Task {
+class Task_Matches_Calculatestats extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
