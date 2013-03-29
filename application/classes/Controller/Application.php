@@ -66,7 +66,7 @@ abstract class Controller_Application extends Controller {
 		}
 
 		// Set redirection path to current URI for users not logged in
-		if ( ! $this->_user->logged_in() AND ( ! in_array($this->request->action(), array('provjera', 'prijava'))))
+		if ( ! $this->_user->logged_in() AND ( ! in_array($this->request->action(), array('offline', 'provjera', 'prijava'))))
 		{
 			Session::instance()->set('redirect', $this->request->uri());
 		}
