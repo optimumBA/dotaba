@@ -11,7 +11,7 @@ class Controller_Videos extends Controller_Application {
 	public function action_index()
 	{
 		$videos = ORM::factory('Video')
-			->order_by('created_at', 'DESC')
+			->order_by('id', 'DESC')
 			->find_all();
 
 		$this->_title 	= 'Snimci';
@@ -116,7 +116,7 @@ class Controller_Videos extends Controller_Application {
 	public function action_home()
 	{
 		$videos 			= ORM::factory('Video')
-							->order_by('created_at', 'DESC')
+							->order_by('id', 'DESC')
 							->find_all();
 		
 		$this->_title		= 'Vods';

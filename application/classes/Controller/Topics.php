@@ -36,7 +36,7 @@ class Controller_Topics extends Controller_Application {
 		{
 			$last_posts[$topic->id] = $topic->posts
 				->with('user')
-				->order_by('created_at', 'DESC')
+				->order_by('id', 'DESC')
 				->find();
 		}
 

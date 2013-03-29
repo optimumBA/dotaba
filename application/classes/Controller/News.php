@@ -18,7 +18,7 @@ class Controller_News extends Controller_Application {
 
 		$news = ORM::factory('News')
 			->with('user')
-			->order_by('created_at', 'DESC')
+			->order_by('id', 'DESC')
 			->limit($pagination->items_per_page)
 			->offset($pagination->offset)
 			->find_all();

@@ -12,7 +12,7 @@ class Controller_Streams extends Controller_Application {
 	{
 		$streams = ORM::factory('Stream')
 			->with('user')
-			->order_by('created_at', 'DESC')
+			->order_by('id', 'DESC')
 			->find_all();
 
 		$this->_title 	= 'Streamovi';

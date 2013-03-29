@@ -18,7 +18,7 @@ class Controller_Clans extends Controller_Application {
 
 		$clans = ORM::factory('Clan')
 			->with('lord')
-			->order_by('created_at', 'DESC')
+			->order_by('id', 'DESC')
 			->limit($pagination->items_per_page)
 			->offset($pagination->offset)
 			->find_all();
