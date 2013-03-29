@@ -36,6 +36,30 @@ class Controller_Widgets extends Controller {
 			->render();
 	}
 
+	public function action_news()
+	{
+		$news = ORM::factory('News')
+			->order_by('id', 'DESC')
+			->limit(2)
+			->find_all();
+
+		$this->_content = View::factory('widgets/news')
+			->set('news', $news)
+			->render();
+	}
+
+	public function action_videos()
+	{
+		$videos = ORM::factory('Video')
+			->order_by('id', 'DESC')
+			->limit(2)
+			->find_all();
+
+		$this->_content = View::factory('widgets/videos')
+			->set('videos', $videos)
+			->render();
+	}
+
 	public function after()
 	{
 		$this->response->body($this->_content);
@@ -62,7 +86,7 @@ class Controller_Widgets extends Controller {
 		if ( ! $this->_content)
 		{
 			$this->{$action}();
-			Cache::instance()->set($this->request->action(), $this->_content);
+			Cache::instance()->set($this->request->action(), $this->_content, 10*Date::MINUTE);
 		}
 
 		// Execute the "after action" method
