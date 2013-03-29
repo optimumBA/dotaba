@@ -102,7 +102,8 @@ class User {
 
 		if ( ! $this->user->loaded())
 		{
-			$summary = Steam::players_summaries($this->steamid);
+			$summaries = Steam::players_summaries($this->steamid);
+			$summary   = $summaries[0];
 
 			$this->user->values(array(
 				'steamid'    => $this->steamid,
