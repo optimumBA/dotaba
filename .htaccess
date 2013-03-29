@@ -15,6 +15,9 @@ RewriteBase /
 # Protect application and system files from being viewed
 RewriteRule ^(?:application|modules|system|data)\b.* index.php/$0 [L]
 
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
 # Allow any files or directories that exist to be displayed directly
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
