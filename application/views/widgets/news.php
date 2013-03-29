@@ -13,7 +13,7 @@
 				<div class="desc">
 					<h4><?php echo HTML::anchor('/novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE)); ?></h4>
 					<p class="post-opts"><?php echo Date::formatted_time($article->created_at); ?></p>
-					<p class="txt">Text::limit_words(strip_tags(HTML::parse_bbcode($article->content)), 40)</p>
+					<p class="txt"><?php echo Text::limit_words(strip_tags(HTML::parse_bbcode($article->content)), 40); ?></p>
 				</div>
 			</li>
 		<?php endforeach ?>
