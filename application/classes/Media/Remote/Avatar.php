@@ -30,7 +30,7 @@ class Media_Remote_Avatar extends Media_Remote {
 	{
 		if ($url == static::config()->get('default_avatar'))
 		{
-			$url = static::path().'default'.static::suffix($type).'.'.static::extension();
+			$url = Media::absolute_to_relative(static::path().'default'.static::suffix($type).'.'.static::extension());
 		}
 		else
 		{

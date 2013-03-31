@@ -12,7 +12,7 @@ abstract class Media_Local extends Media {
 			$path = static::path().'default'.$suffix.'.'.static::extension();
 		}
 
-		return '/'.str_replace(DIRECTORY_SEPARATOR, '/', $path);
+		return Media::absolute_to_relative($path);
 	}
 
 	public static function fields($files, $fields)

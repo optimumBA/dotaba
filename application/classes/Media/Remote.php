@@ -30,7 +30,7 @@ abstract class Media_Remote extends Media {
 
 		if (file_exists($path))
 		{
-			$url = '/'.str_replace(DIRECTORY_SEPARATOR, '/', $path);
+			$url = Media::absolute_to_relative($path);
 		}
 		else
 		{

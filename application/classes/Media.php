@@ -80,4 +80,14 @@ abstract class Media {
 		}
 	}
 
+	public static function absolute_to_relative($path)
+	{
+		if ($position = strpos($path, '..'.DIRECTORY_SEPARATOR))
+		{
+			$path = substr($path, $position + 3);
+		}
+
+		return '/'.str_replace(DIRECTORY_SEPARATOR, '/', $path);
+	}
+
 }
