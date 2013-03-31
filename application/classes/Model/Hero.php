@@ -28,12 +28,14 @@ class Model_Hero extends ORM {
 			{
 				$changes['added'][] = $remote_hero;
 
-				$hero->values(array(
+				$values = array(
 					'id'             => $remote_hero->id,
 					'name'           => $remote_hero->name,
 					'localized_name' => $remote_hero->localized_name,
 					'image'          => $image,
-				))->create();
+				);
+
+				$hero->values($values, array_keys($values))->create();
 
 				Media_Remote_Hero::cache($remote_hero->id, $image);
 			}

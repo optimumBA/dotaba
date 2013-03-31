@@ -48,12 +48,14 @@ class Model_Item extends ORM {
 			{
 				$changes['added'][] = $remote_item;
 
-				$item->values(array(
+				$values = array(
 					'id'             => $remote_item->id,
 					'name'           => $remote_item->name,
 					'localized_name' => $remote_item->localized_name,
 					'image'          => $image,
-				))->create();
+				);
+
+				$item->values($values, array_keys($values))->create();
 
 				Media_Remote_Item::cache($remote_item->id, $image);
 			}
