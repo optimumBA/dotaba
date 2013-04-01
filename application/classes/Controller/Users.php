@@ -53,13 +53,15 @@ class Controller_Users extends Controller_Application {
 
 		if ($user->loaded())
 		{
-			$matches = $user->matches
-				->with('type')
-				->with('tournament')
-				->with('radiant_clan')
-				->with('dire_clan')
-				->with('mode')
-				->where('processed', '=', TRUE)
+			$slots = $user->slots
+				->with('hero')
+				->with('match')
+				->with('match:type')
+				->with('match:tournament')
+				->with('match:radiant_clan')
+				->with('match:dire_clan')
+				->with('match:mode')
+				->where('match.processed', '=', TRUE)
 				->find_all();
 
 			$comments = Model_User::comments($user->id);
@@ -68,7 +70,7 @@ class Controller_Users extends Controller_Application {
 			$this->_title 	= $user->username;
 			$this->_content = View::factory('users/view')
 				->set('user', $user)
-				->set('matches', $matches)
+				->set('slots', $slots)
 				->set('comments', $comments);
 		}
 		else
