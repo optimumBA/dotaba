@@ -16,7 +16,11 @@ class Steam {
 
 	public static function players_summaries($ids)
 	{
-		$response = json_decode(Request::factory('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/')
+		$response = Request::factory('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/');
+
+		$response->client()->options(CURLOPT_ENCODING, 'gzip');
+
+		$response = json_decode($response
 			->query(array('key' => self::api_key(), 'steamids' => $ids))
 			->execute()
 			->body());
@@ -74,7 +78,11 @@ class Steam {
 		}
 		else
 		{
-			$response = Request::factory('http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/')
+			$response = Request::factory('http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/');
+
+			$response->client()->options(CURLOPT_ENCODING, 'gzip');
+
+			$response = $response
 				->query(array('key' => self::api_key(), 'match_id' => $match_id))
 				->execute()
 				->body();
@@ -94,7 +102,11 @@ class Steam {
 
 	public static function heroes()
 	{
-		$response = json_decode(Request::factory('http://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/')
+		$response = Request::factory('http://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/');
+
+		$response->client()->options(CURLOPT_ENCODING, 'gzip');
+
+		$response = json_decode($response
 			->query(array('key' => self::api_key(), 'language' => 'en_us'))
 			->execute()
 			->body());
