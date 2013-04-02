@@ -72,7 +72,7 @@
                   
                     <tr>
                         <td >
-                            <?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, '<img class="frame" src="'.$slot->hero->image.'" width="43px" title="'.$slot->hero->localized_name.'"></img>'); ?> <?php echo $slot->hero->localized_name;?>
+							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name)))); ?> <?php echo $slot->hero->localized_name;?>
                         </td>
                         <td>
                              <?php echo $slot->match->mode->name; ?> | <?php echo ($slot->match->radiant_win) ? '<a class="radiant-team">Radiant</a>' : '<a class="dire-team">Dire</a>'; ?>
