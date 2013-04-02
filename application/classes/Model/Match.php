@@ -51,7 +51,7 @@ class Model_Match extends ORM {
 		);
 	}
 
-	public static function process($id, $result)
+	public static function process($mid, $result, $type)
 	{
 		$db = Database::instance();
 
@@ -59,8 +59,16 @@ class Model_Match extends ORM {
 		{
 			$db->begin();
 
-			$match = ORM::factory('Match', $id)
-				->values(array(
+			if ($result->lobby_type != $type->lobby_type)
+				return FALSE;
+
+			$match = ORM::factory('Match', array('mid' => $mid));
+
+			if ( ! $match->loaded())
+			{
+				$match->values(array(
+					'mid'                     => $mid,
+					'type_id'                 => $type->id,
 					'mode_id'                 => $result->game_mode,
 					'cluster'                 => $result->cluster,
 					'radiant_win'             => $result->radiant_win,
@@ -72,9 +80,33 @@ class Model_Match extends ORM {
 					'duration'                => $result->duration,
 					'first_blood_time'        => $result->first_blood_time,
 					'date'                    => date('Y-m-d H:i:s', $result->start_time),
+					'created_at'              => DB::expr('NOW()'),
 					'updated_at'              => DB::expr('NOW()'),
-					'processed'               => TRUE,
-				))->update();
+				))->create();
+
+				if (isset($result->picks_bans))
+				{
+					$count = ORM::factory('Pickban')
+						->where('match_id', '=', $match->id)
+						->count_all();
+
+					if ($count == 0)
+					{
+						foreach ($result->picks_bans as $pick_ban)
+						{
+							$values = array(
+								'match_id' => $match->id,
+								'is_pick'  => $pick_ban->is_pick,
+								'hero_id'  => $pick_ban->hero_id,
+								'team'     => $pick_ban->team,
+								'order'    => $pick_ban->order,
+							);
+
+							ORM::factory('Pickban')->values($values)->create();
+						}
+					}
+				}
+			}
 
 			foreach ($result->players as $player)
 			{
@@ -119,29 +151,21 @@ class Model_Match extends ORM {
 				);
 
 				$slot->values($values)->create();
-			}
 
-			if (isset($result->picks_bans))
-			{
-				$count = ORM::factory('Pickban')
-					->where('match_id', '=', $match->id)
-					->count_all();
-
-				if ($count == 0)
+				if ($slot->leaver_status == 3)
 				{
-					foreach ($result->picks_bans as $pick_ban)
-					{
-						$values = array(
-							'match_id' => $match->id,
-							'is_pick'  => $pick_ban->is_pick,
-							'hero_id'  => $pick_ban->hero_id,
-							'team'     => $pick_ban->team,
-							'order'    => $pick_ban->order,
-						);
-
-						ORM::factory('Pickban')->values($values)->create();
-					}
+					$user->values(array('abandons' => DB::expr('abandons + 1')));
 				}
+				elseif ((int) ($slot->player_slot / 5) == $match->radiant_win)
+				{
+					$user->values(array('losses' => DB::expr('losses + 1')));
+				}
+				else
+				{
+					$user->values(array('wins' => DB::expr('wins + 1')));
+				}
+
+				$user->update();
 			}
 
 			$db->commit();

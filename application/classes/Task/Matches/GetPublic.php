@@ -6,6 +6,47 @@ class Task_Matches_Getpublic extends Minion_Task {
 	{
 		$type = ORM::factory('Type', array('name' => 'Public matchmaking'));
 
+		$matches = ORM::factory('Match')
+			->where('match.type_id', '=', $type->id)
+			->where('date', '<', DB::expr('DATE_SUB(NOW(), INTERVAL 1 MONTH)'))
+			->find_all();
+
+		$directory = Kohana::$config->load('steam')->get('matches_path').DIRECTORY_SEPARATOR;
+
+		foreach ($matches as $match)
+		{
+			$slots = $match->slots
+				->with('user')
+				->find_all();
+
+			foreach ($slots as $slot)
+			{
+				if ($slot->leaver_status == 3)
+				{
+					$slot->user->values(array('abandons' => DB::expr('abandons - 1')));
+				}
+				elseif ((int) ($slot->player_slot / 5) == $match->radiant_win)
+				{
+					$slot->user->values(array('losses' => DB::expr('losses - 1')));
+				}
+				else
+				{
+					$slot->user->values(array('wins' => DB::expr('wins - 1')));
+				}
+
+				$slot->user->update();
+			}
+
+			$path = $directory.$match->id.'.json';
+
+			if (file_exists($path))
+			{
+				unlink($path);
+			}
+
+			$match->delete();
+		}
+
 		$users = ORM::factory('User')->find_all();
 
 		foreach ($users as $user)
@@ -26,28 +67,11 @@ class Task_Matches_Getpublic extends Minion_Task {
 
 			foreach ($matches as $m)
 			{
-				$match = ORM::factory('Match', array('mid' => $m->match_id));
+				$result = Steam::match_results($m->match_id);
 
-				if ($m->lobby_type == $type->lobby_type AND ! $match->loaded())
+				if ($result)
 				{
-					$match->values(array(
-						'mid'        => $m->match_id,
-						'type_id'    => $type->id,
-						'created_at' => DB::expr('NOW()'),
-					))->create();
-				}
-				elseif ($match->loaded())
-				{
-					$slot = $match->slots
-						->where('user_id', '=', $user->id)
-						->count_all();
-
-					if ($slot == 0)
-					{
-						$match->values(array(
-							'processed' => FALSE,
-						))->update();
-					}
+					Model_Match::process($m->match_id, $result, $type);
 				}
 			}
 		}
