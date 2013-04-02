@@ -45,7 +45,7 @@ class Controller_Matches extends Controller_Application {
 
 			$comments = Model_Match::comments($match->id);
 
-			if ($match->radiant_win)
+			if ($match->radiant_win !== NULL)
 			{
 				$slots = $match->slots
 					->with('user')
