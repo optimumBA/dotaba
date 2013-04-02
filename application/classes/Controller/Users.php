@@ -61,7 +61,6 @@ class Controller_Users extends Controller_Application {
 				->with('match:radiant_clan')
 				->with('match:dire_clan')
 				->with('match:mode')
-				->where('match.processed', '=', TRUE)
 				->find_all();
 
 			$comments = Model_User::comments($user->id);

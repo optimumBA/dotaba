@@ -16,7 +16,6 @@ class Controller_Matches extends Controller_Application {
 			->with('radiant_clan')
 			->with('dire_clan')
 			->with('mode')
-			->where('processed', '=', TRUE)
 			->find_all();
 
 		$this->_title 	= 'Mečevi';
@@ -35,7 +34,7 @@ class Controller_Matches extends Controller_Application {
 			->where('match.id', '=', $this->request->param('id'))
 			->find();
 
-		if ($match->loaded() AND $match->processed OR $match->type->name == 'Tournament')
+		if ($match->loaded())
 		{
 			$this->_title = 'Meč '.$match->id;
 
@@ -46,7 +45,7 @@ class Controller_Matches extends Controller_Application {
 
 			$comments = Model_Match::comments($match->id);
 
-			if ($match->processed)
+			if ($match->radiant_win)
 			{
 				$slots = $match->slots
 					->with('user')
@@ -105,7 +104,7 @@ class Controller_Matches extends Controller_Application {
 		{
 			if ($match->tournament->user_id == $this->_user->id)
 			{
-				if ($match->processed)
+				if ($match->radiant_win)
 				{
 					$this->_messages[] = array(
 						'type'  => 'error',
@@ -124,7 +123,6 @@ class Controller_Matches extends Controller_Application {
 						{
 							$this->_post['human_players'] = 0;
 							$this->_post['updated_at']    = DB::expr('NOW()');
-							$this->_post['processed']     = TRUE;
 
 							if (isset($this->_post['slots']))
 							{
@@ -145,7 +143,7 @@ class Controller_Matches extends Controller_Application {
 								}
 							}
 
-							$match->values($this->_post, array('radiant_win', 'human_players', 'duration', 'first_blood_time', 'updated_at', 'processed'))
+							$match->values($this->_post, array('radiant_win', 'human_players', 'duration', 'first_blood_time', 'updated_at'))
 								->update();
 
 							$this->_messages[] = array(

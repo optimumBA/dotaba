@@ -26,7 +26,7 @@ class Controller_Widgets extends Controller {
 			->with('match:dire_clan')
 			->with('stream:user')
 			->where('match.date', '>', DB::expr('NOW()'))
-			->where('match.processed', '=', FALSE)
+			->where('match.radiant_win', 'IS', NULL)
 			->limit(4)
 			->order_by('match.date')
 			->find_all();

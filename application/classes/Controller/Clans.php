@@ -46,7 +46,6 @@ class Controller_Clans extends Controller_Application {
 				->with('radiant_clan')
 				->with('dire_clan')
 				->with('mode')
-				->where('processed', '=', TRUE)
 				->where_open()
 				->or_where('radiant_clan_id', '=', $clan->id)
 				->or_where('dire_clan_id', '=', $clan->id)
