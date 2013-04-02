@@ -2,7 +2,7 @@
     <!-- Banner Start -->
     <div id="sub-banner">
     	<div class="in">
-        	<a href="#"><img src="/assets/images/sub-banner3.jpg" alt="" /></a>
+        	<a href="#"><img src="/assets/images/banner-profile.jpg" alt="Korisničke statistike - Dota 2" /></a>
         </div>
     </div>
     <!-- Banner End -->
@@ -39,48 +39,63 @@
                         </div>
                         <div class="clear"></div>
                         <!-- Album Detail End -->
+                      
+                     
+            
+	
+                      
                         <!-- Album List Start -->
                         <div class="album-track-list">
-                        	<h2 class="heading colr">Posljedni mečevi</h2>
-                            <div class="tracklist">
-                           
-                                <ul>
-                                	
-                           <?php foreach ($matches as $match): ?>
-                                    <li class="play">
-                                    	<div class="cp-container cp_container_1">
-                                            <ul class="cp-controls">
-                                                <li><a style="display: block;" href="#" class="cp-play" tabindex="1">&nbsp;</a></li>
-                                                <li><a href="#" class="cp-pause" style="display: none;" tabindex="1">&nbsp;</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="title">
-                                    	<p><?php echo HTML::anchor('liga/mecevi/'.$match->id, $match->id); ?></p>
-                                        <span><?php echo $match->type->name; ?></span>
-                                        <span><?php echo $match->mode->name; ?></span>
-                                        <span><?php echo ($match->tournament_id) ? HTML::anchor('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE), $match->tournament->name) : NULL; ?></span>
-                                        <span><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name, '-', TRUE), $match->radiant_clan->name) : NULL; ?></span>
-                                        <span><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name, '-', TRUE), $match->dire_clan->name) : NULL; ?></span>
-                                    </li>
-                                    <li class="time"><?php echo Date::formatted_time($match->date); ?></li>
-                                    <li>
-                                    	<a href="#" class="download"><span>aaa</span></a>
-                                        <a href="#" class="download">bbb</a>
-                                    </li>
-                                  <?php endforeach ?> 
-                                </ul>
-                            
+                        	        <h1 class="heading colr">Matchmaking</h1>
+                                    <div class="alert alert-info">Pregled zadnjih 100 mečeva.</div>
+                                    
+                                    <div class="matchlist">
+                <table >
+                    <tr>
+                        <td>
+                            Heroj
+                        </td>
+                        <td >
+                            Meč ID
+                        </td>
+                        <td>
+                           K/D/A
+                        </td>
                         
-                                
-                                <ul>
-    
-                                    </li>
-                                
-                                
-                                </ul>
-                            </div>
+                       
+                        
+                        <td>
+                            Vrijeme
+                        </td>
+                    </tr>
+                   <?php foreach ($slots as $slot): ?>
+                  
+                    <tr>
+                        <td >
+                            <?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, '<img class="frame" src="'.$slot->hero->image.'" width="43px" title="'.$slot->hero->localized_name.'"></img>'); ?> <?php echo $slot->hero->localized_name;?>
+                        </td>
+                        <td>
+                             <?php echo $slot->match->mode->name; ?> | <?php echo ($slot->match->radiant_win) ? '<a class="radiant-team">Radiant</a>' : '<a class="dire-team">Dire</a>'; ?>
+<div class="clear"></div> <?php echo $slot->match->mid; ?> 
+                        </td>
+                        <td>
+                         <a class="kills"><?php echo $slot->kills;?></a> / <a class="deaths"><?php echo $slot->deaths;?></a> / <a class="assists"><?php echo $slot->assists;?></a>
+                        </td>
+                        
+                        <td>
+                           <?php echo Date::formatted_time($slot->match->date); ?>
+                        </td>
+                    </tr>
+                   
+                      <?php endforeach ?> 
+                   
+                </table>
+            </div>
                             <div class="clear"></div>
+                            
+                            
+                            
+                            
                             
                         </div>
                         <!-- Album List End -->
