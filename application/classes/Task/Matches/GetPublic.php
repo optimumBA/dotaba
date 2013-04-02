@@ -51,27 +51,15 @@ class Task_Matches_Getpublic extends Minion_Task {
 
 		foreach ($users as $user)
 		{
-			$last_match = ORM::factory('Match')
-				->join('slots')
-				->on('slots.match_id', '=', 'match.id')
-				->where('slots.user_id', '=', $user->id)
-				->where('match.type_id', '=', $type->id)
-				->order_by('date', 'DESC')
-				->find();
+			$matches = Steam::match_history($user->accountid, strtotime('-1 month'));
 
-			$last_match_date = ($last_match != FALSE) ? strtotime($last_match->date) : 0;
-			$last_month      = strtotime('-1 month');
-			$date            = ($last_month > $last_match_date) ? $last_month : $last_match_date;
-
-			$matches = Steam::match_history($user->accountid, $date);
-
-			foreach ($matches as $m)
+			foreach ($matches as $match)
 			{
-				$result = Steam::match_results($m->match_id);
+				$result = Steam::match_results($match->match_id);
 
 				if ($result)
 				{
-					Model_Match::process($m->match_id, $result, $type);
+					Model_Match::process($match->match_id, $result, $type);
 				}
 			}
 		}
