@@ -28,7 +28,7 @@
                                 <p><a class="buttonone" href="<?php echo $user->profileurl; ?>" target="_blank">Steam profil</a></p>
 <?php if ($user->featured_hero_id): ?>
                                 <p>
-		Omiljeni heroj: <?php echo HTML::image(Media_Remote_Hero::get($user->featured_hero->id, $user->featured_hero->image), array('alt' => $user->featured_hero->name)); ?>>
+		Omiljeni heroj: <?php echo HTML::image(Media_Remote_Hero::get($user->featured_hero->id, $user->featured_hero->image, 'small'), array('alt' => $user->featured_hero->localized_name, 'title' => $user->featured_hero->localized_name)); ?>
 								</p>
                                 
                               
@@ -72,7 +72,7 @@
                   
                     <tr>
                         <td >
-							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name)))); ?> <?php echo $slot->hero->localized_name;?>
+							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, 'small'), array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name))); ?> <?php echo $slot->hero->localized_name;?>
                         </td>
                         <td>
                              <?php echo $slot->match->mode->name; ?> | <?php echo ($slot->match->radiant_win) ? '<a class="radiant-team">Radiant</a>' : '<a class="dire-team">Dire</a>'; ?>

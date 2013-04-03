@@ -4,6 +4,10 @@ class Model_User extends ORM {
 
 	protected $_belongs_to = array(
 		'clan' => array(),
+		'featured_hero' => array(
+			'model'       => 'Hero',
+			'foreign_key' => 'featured_hero_id',
+		),
 	);
 
 	protected $_has_many = array(
@@ -13,10 +17,6 @@ class Model_User extends ORM {
 		'executions'   => array(
 			'model'       => 'Ban',
 			'foreign_key' => 'executioner_id',
-		),
-		'featured_hero' => array(
-			'model'       => 'Hero',
-			'foreign_key' => 'featured_hero_id',
 		),
 		'giveaways' => array(
 			'model'       => 'Request',
