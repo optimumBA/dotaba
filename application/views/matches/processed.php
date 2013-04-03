@@ -21,39 +21,40 @@
 			<th>inventory</th>
 		</tr>
 		<?php for ($i = (int) ($team == 'dire') * 5; $i < ((int) ($team == 'dire') + 1) * 5; $i++): ?>
-			<?php if ( ! isset($slots[$i])): ?>
-				<?php continue ?>
-			<?php endif ?>
 			<tr>
-				<td>
-					<?php echo HTML::image(Media_Remote_Avatar::get($slots[$i]->user->id, $slots[$i]->user->avatar), array('alt' => $slots[$i]->user->username)); ?>
-					<?php echo HTML::anchor('igraci/'.$slots[$i]->user->accountid, $slots[$i]->user->username); ?>
-				</td>
-				<td>
-					<?php echo HTML::image(Media_Remote_Hero::get($slots[$i]->hero->id, $slots[$i]->hero->image), array('alt' => $slots[$i]->hero->localized_name)); ?>
-					<?php echo $slots[$i]->hero->localized_name; ?>
-				</td>
-				<td><?php echo $slots[$i]->level; ?></td>
-				<td><?php echo $slots[$i]->kills; ?></td>
-				<td><?php echo $slots[$i]->deaths; ?></td>
-				<td><?php echo $slots[$i]->assists; ?></td>
-				<td><?php echo $slots[$i]->gold; ?></td>
-				<td><?php echo $slots[$i]->last_hits; ?></td>
-				<td><?php echo $slots[$i]->denies; ?></td>
-				<td><?php echo $slots[$i]->xp_per_min; ?></td>
-				<td><?php echo $slots[$i]->gold_per_min; ?></td>
-				<td><?php echo $slots[$i]->hero_damage; ?></td>
-				<td><?php echo $slots[$i]->tower_damage; ?></td>
-				<td><?php echo $slots[$i]->hero_healing; ?></td>
-				<td>
-					<?php for ($j = 0; $j < 6; $j++): ?>
-						<?php if ($slots[$i]->{'item_'.$j.'_id'}): ?>
-							<?php echo HTML::image(Media_Remote_Item::get($slots[$i]->{'item_'.$j}->id, $slots[$i]->{'item_'.$j}->image), array('alt' => $slots[$i]->{'item_'.$j}->localized_name)); ?>
-						<?php else: ?>
-							prazan slot
-						<?php endif ?>
-					<?php endfor ?>
-				</td>
+				<?php if (isset($slots[$i])): ?>
+					<td>
+						<?php echo HTML::image(Media_Remote_Avatar::get($slots[$i]->user->id, $slots[$i]->user->avatar), array('alt' => $slots[$i]->user->username)); ?>
+						<?php echo HTML::anchor('igraci/'.$slots[$i]->user->accountid, $slots[$i]->user->username); ?>
+					</td>
+					<td>
+						<?php echo HTML::image(Media_Remote_Hero::get($slots[$i]->hero->id, $slots[$i]->hero->image), array('alt' => $slots[$i]->hero->localized_name)); ?>
+						<?php echo $slots[$i]->hero->localized_name; ?>
+					</td>
+					<td><?php echo $slots[$i]->level; ?></td>
+					<td><?php echo $slots[$i]->kills; ?></td>
+					<td><?php echo $slots[$i]->deaths; ?></td>
+					<td><?php echo $slots[$i]->assists; ?></td>
+					<td><?php echo $slots[$i]->gold; ?></td>
+					<td><?php echo $slots[$i]->last_hits; ?></td>
+					<td><?php echo $slots[$i]->denies; ?></td>
+					<td><?php echo $slots[$i]->xp_per_min; ?></td>
+					<td><?php echo $slots[$i]->gold_per_min; ?></td>
+					<td><?php echo $slots[$i]->hero_damage; ?></td>
+					<td><?php echo $slots[$i]->tower_damage; ?></td>
+					<td><?php echo $slots[$i]->hero_healing; ?></td>
+					<td>
+						<?php for ($j = 0; $j < 6; $j++): ?>
+							<?php if ($slots[$i]->{'item_'.$j.'_id'}): ?>
+								<?php echo HTML::image(Media_Remote_Item::get($slots[$i]->{'item_'.$j}->id, $slots[$i]->{'item_'.$j}->image), array('alt' => $slots[$i]->{'item_'.$j}->localized_name)); ?>
+							<?php else: ?>
+								prazan slot
+							<?php endif ?>
+						<?php endfor ?>
+					</td>
+				<?php else: ?>
+					<td>prazan slot</td>
+				<?php endif ?>
 			</tr>
 		<?php endfor ?>
 	</table>
