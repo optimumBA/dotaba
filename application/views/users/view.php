@@ -25,8 +25,8 @@
                                 <p>Ime: <?php echo $user->name; ?></p>
                                 <p>Država: <?php echo $user->location; ?></p>
 								<p>Klan: <?php echo ($user->clan_id) ? HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name, '-', TRUE), $user->clan->name) : ''; ?></p>
+                                <p><a class="buttonone" href="<?php echo $user->profileurl; ?>" target="_blank">Steam profil</a></p>
 <?php if ($user->featured_hero_id): ?>
-								<p><a class="buttonone" href="<?php echo $user->profileurl;?>" target="_blank">Steam profil</a></p>
                                 <p>
 		Omiljeni heroj: <?php echo HTML::image(Media_Remote_Hero::get($user->featured_hero->id, $user->featured_hero->image), array('alt' => $user->featured_hero->name)); ?>>
 								</p>
