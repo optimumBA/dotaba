@@ -56,6 +56,9 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
 </script>
+
+<script type="text/javascript" language="javascript" src="/assets/javascript/tables/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/javascript/tables/jquery.dataTables.js"></script>
 </head>
 <body>
 
@@ -91,7 +94,7 @@
                             <?php if( ! User::instance()->logged_in()):?>
                            <li> <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a></li>
 							<?php else:?>
-                            <li><img class="steam-avatar-small offline-status" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <a href="/igraci/<?=User::instance()->accountid;?>" class="offline-status"><?=User::instance()->username;?></a></li>
+                            <li><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <a href="/igraci/<?=User::instance()->accountid;?>" class="status-<?=User::instance()->status;?>"><?=User::instance()->username;?></a></li>
                            
                             <li><a href="/odjava" class="colr">Odjava</a>
 							<?php endif ?>

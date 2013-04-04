@@ -13,7 +13,7 @@ return array(
 		'sixr@dota.ba',
 	),
 	'maintenance' => array(
-		'start'  => '2012-12-06 00:00:00',
-		'end'    => '2013-04-06 20:00:00',
+		'start'  => FALSE,
+		'end'    => FALSE,
 	),
 );

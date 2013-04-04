@@ -1162,6 +1162,21 @@ ul.news-list li .desc p.post-opts a:hover{
 	font-size:9px;
 	color:#808080;
 }
+/* Omiljeni heroj - Widget
+================================================== */
+.fhero {
+	width:100%;
+	float:left;
+	padding:5px;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	background:#0f0f0f;
+}
+.fhero span{
+	font-size:9px;
+	color:#808080;
+}
 /* Newsletter
 ================================================== */
 .newsletter {
@@ -2153,21 +2168,22 @@ img.frame {
 	padding: 3px;
 	border-radius: 6px 6px 6px 6px;
 }
-img.offline-status {
+img.status-0 {
 	border: 1px solid #727272;
 	background: none repeat scroll 0% 0% #727272;
 	box-shadow: 0px 1px 5px #727272;
 	max-width: 98.8%;
 	padding: 3px;
 }
-img.default-status {
+img.status-1 {
 	border: 1px solid #5CB1FE;
 	background: none repeat scroll 0% 0% #5CB1FE;
 	box-shadow: 0px 1px 5px #5CB1FE;
 	max-width: 98.8%;
 	padding: 3px;
 }
-img.ingame-status {
+
+img.status-2 {
 	border: 1px solid #81B900;
 	background: none repeat scroll 0% 0% #81B900;
 	box-shadow: 0px 1px 5px #81B900;
@@ -2184,21 +2200,21 @@ img.frame-s {
 	padding: 1px;
 	border-radius: 6px 6px 6px 6px;
 }
-img.offline-status-s {
+img.status-s-0 {
 	border: 1px solid #727272;
 	background: none repeat scroll 0% 0% #727272;
 	box-shadow: 0px 1px 5px #727272;
 	max-width: 98.8%;
 	padding: 1px;
 }
-img.default-status-s {
+img.status-s-1 {
 	border: 1px solid #5CB1FE;
 	background: none repeat scroll 0% 0% #5CB1FE;
 	box-shadow: 0px 1px 5px #5CB1FE;
 	max-width: 98.8%;
 padding: 1px;
 }
-img.ingame-status-s {
+img.status-s-2 {
 	border: 1px solid #81B900;
 	background: none repeat scroll 0% 0% #81B900;
 	box-shadow: 0px 1px 5px #81B900;
@@ -2206,13 +2222,13 @@ img.ingame-status-s {
 	padding: 1px;
 }
 
-.offline-status {
+.status-0 {
 	color:#727272;
 }
-.default-status {
+.status-1 {
 	color:#5CB1FE;
 }
-.ingame-status {
+.status-2 {
 	color:#81B900;
 }
 

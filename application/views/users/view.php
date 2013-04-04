@@ -1,3 +1,4 @@
+
 <div class="clear"></div>
     <!-- Banner Start -->
     <div id="sub-banner">
@@ -18,7 +19,7 @@
                         <!-- Album Detail Start -->
                         <div class="album-detail-sec">
                         	<div class="thumb">
-                            	<?php echo HTML::image(Media_Remote_Avatar::get($user->id, $user->avatar), array('alt' => $user->username, 'class' => 'steam-avatar offline-status')); ?>
+                            	<?php echo HTML::image(Media_Remote_Avatar::get($user->id, $user->avatar), array('alt' => $user->username, 'class' => 'steam-avatar status-'.$user->status.'')); ?>
                             </div>
                             <div class="desc">
                                 <p class="release">Registrovan/a: <?php echo Date::formatted_time($user->created_at); ?></p>
@@ -26,13 +27,6 @@
                                 <p>Država: <?php echo $user->location; ?></p>
 								<p>Klan: <?php echo ($user->clan_id) ? HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name, '-', TRUE), $user->clan->name) : ''; ?></p>
                                 <p><a class="buttonone" href="<?php echo $user->profileurl; ?>" target="_blank">Steam profil</a></p>
-<?php if ($user->featured_hero_id): ?>
-                                <p>
-		Omiljeni heroj: <?php echo HTML::image(Media_Remote_Hero::get($user->featured_hero->id, $user->featured_hero->image, 'small'), array('alt' => $user->featured_hero->localized_name, 'title' => $user->featured_hero->localized_name)); ?>
-								</p>
-                                
-                              
-<?php endif ?>
 
    
                             </div>
@@ -40,7 +34,7 @@
                         <div class="clear"></div>
                         <!-- Album Detail End -->
                       
-                     
+                    
             
 	
                       
@@ -48,7 +42,7 @@
                         <div class="album-track-list">
                         	        <h1 class="heading colr">Matchmaking</h1>
                                     <div class="alert alert-info">Pregled zadnjih 100 mečeva.</div>
-                                    
+                          
                                     <div class="matchlist">
                 <table >
                     <tr>
@@ -72,7 +66,7 @@
                   
                     <tr>
                         <td >
-							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, 'small'), array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name))); ?> <?php echo $slot->hero->localized_name;?>
+							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, 'small'), array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name, 'class' => 'frame'))); ?> <?php echo $slot->hero->localized_name;?>
                         </td>
                         <td>
                              <?php echo $slot->match->mode->name; ?> | <?php echo ($slot->match->radiant_win) ? '<a class="radiant-team">Radiant</a>' : '<a class="dire-team">Dire</a>'; ?>
@@ -136,17 +130,16 @@
                         </ul>
                     </div>
                     <!-- Recent Posts End -->
-                    <!-- Facebook Start -->
-                    <div class="widget facebook">
-                        <a href="#"><img src="images/facebook.jpg" alt="" /></a>
+                    
+                    <!-- Featured Hero Start -->
+                    <?php if ($user->featured_hero_id): ?>
+                    <div class="widget fhero">
+                       <img src="/assets/images/advert2.jpg" alt="" /><?php echo HTML::image(Media_Remote_Hero::get($user->featured_hero->id, $user->featured_hero->image), array('alt' => $user->featured_hero->localized_name, 'title' => $user->featured_hero->localized_name, 'class' => 'frame')); ?>
+                        <span>Omiljeni heroj: <?php echo $user->featured_hero->localized_name;?></span>
                     </div>
-                    <!-- Facebook End -->
-                    <!-- Advertisment Start -->
-                    <div class="widget advert">
-                        <a href="#"><img src="/assets/images/advert2.jpg" alt="" /></a>
-                        <span>Advertising</span>
-                    </div>
-                    <!-- Advertisment End -->
+                    <?php endif;?>
+                    <!-- Featured Hero End -->
+                    
                 </div>
                 <!-- Column One End -->
             </div>

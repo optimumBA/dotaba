@@ -12,7 +12,7 @@
 			<?php foreach ($comments as $comment): ?>
 				<li>
 					<div class="avatar">
-						<?php echo HTML::image(Media_Remote_Avatar::get($comment->user->id, $comment->user->avatar), array('alt' => $comment->user->username, 'width' => 60, 'height' => 60)); ?>
+						<?php echo HTML::image(Media_Remote_Avatar::get($comment->user->id, $comment->user->avatar), array('alt' => $comment->user->username, 'width' => 60, 'height' => 60, 'class' => 'status-'.$comment->user->status.'')); ?>
 					</div>
 					<div class="desc">
 						<h5><?php echo HTML::anchor('igraci/'.$comment->user->accountid, $comment->user->username); ?></h5>
