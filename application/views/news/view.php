@@ -2,7 +2,7 @@
     <!-- Banner Start -->
     <div id="sub-banner">
     	<div class="in">
-        	<a href="#"><img src="images/sub-banner4.jpg" alt="" /></a>
+        	<a href="#"><img src="/media/news/subbanner.jpg" alt="Dota 2 vijest - <?php echo $article->title;?>" /></a>
         </div>
     </div>
     <!-- Banner End -->
@@ -23,7 +23,7 @@
                             <div class="desc">
                                 <div class="post-opts">
                                 	<p>Objavio <a href="/igraci/<?=$article->user->accountid;?>"> <?=$article->user->username;?></a></p>
-                                    <p><img class="" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
+                                    <p><img class="status-s-<?=$article->user->status;?>" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
                                     <p><?php echo Date::formatted_time($article->created_at); ?></p>
                                     <p>Izvor <a href="<?=$article->url;?>"><?=$article->source;?></a></p>
                                     <p><?php echo count($comments) ?> komentara</p>
@@ -53,62 +53,10 @@
                 <!-- Column One End -->
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
-                	<!-- Top Sellers Start -->
-                	<div class="widget top-seller">
-                    	<h1 class="heading colr">Top Seller</h1>
-                        <div class="thumb">
-                        	<a href="album-detail.html"><img src="images/advert1.jpg" alt="" /></a>
-                        </div>
-                        <div class="desc">
-                        	<h4><a href="album-detail.html" class="white">Smile Dip (Dave Barnes)</a></h4>
-                            <p>
-                            	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tellus orci, semper et ornare dictum, varius ut tellus.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Top Sellers End -->
-                    <!-- Recent Posts Start -->
-                    <div class="widget ourteam">
-                    	<h1 class="heading colr">Our Team</h1>
-                        <ul class="teamlist">
-                        	<li>
-                            	<a href="#" class="thumb"><img src="images/img10.jpg" alt="" /></a>
-                                <div class="desc">
-                                	<h4><a href="#" class="white">Rick Jhon Wilson</a></h4>
-                                    <p>Friday, July 06 2012</p>
-                                    <p class="txt">Lorem ipsum dolor sit amet, tetur adipiscing elit...<a href="#">Read More</a></p>
-                                </div>
-                            </li>
-                            <li>
-                            	<a href="#" class="thumb"><img src="images/img11.jpg" alt="" /></a>
-                                <div class="desc">
-                                	<h4><a href="#" class="white">Rick Jhon Wilson</a></h4>
-                                    <p>Friday, July 06 2012</p>
-                                    <p class="txt">Lorem ipsum dolor sit amet, tetur adipiscing elit...<a href="#">Read More</a></p>
-                                </div>
-                            </li>
-                            <li>
-                            	<a href="#" class="thumb"><img src="images/img12.jpg" alt="" /></a>
-                                <div class="desc">
-                                	<h4><a href="#" class="white">Rick Jhon Wilson</a></h4>
-                                    <p>Friday, July 06 2012</p>
-                                    <p class="txt">Lorem ipsum dolor sit amet, tetur adipiscing elit...<a href="#">Read More</a></p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Recent Posts End -->
-                    <!-- Facebook Start -->
-                    <div class="widget facebook">
-                      <div class="fb-like-box" data-href="https://www.facebook.com/DotA.Balkan" data-width="234" data-height="325" data-show-faces="true" data-colorscheme="dark" data-stream="false" data-header="false" border-color="#151515"></div>
-                    </div>
-                    <!-- Facebook End -->
-                    <!-- Advertisment Start -->
-                    <div class="widget advert">
-                        <a href="#"><img src="images/advert2.jpg" alt="" /></a>
-                        <span>Nema reklame. <a href="/advertisments">Želite reklamu?</a></span>
-                    </div>
-                    <!-- Advertisment End -->
+                	
+                  
+                   
+                   
                 </div>
                 <!-- Column One End -->
             </div>

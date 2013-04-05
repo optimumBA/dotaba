@@ -3,7 +3,7 @@
     <!-- Banner Start -->
     <div id="sub-banner">
     	<div class="in">
-        	<a href="#"><img src="/assets/images/sub-banner3.jpg" alt="" /></a>
+        	<a href="#"><img src="/media/news/subbanner.jpg" alt="Dota 2 Balkan vijesti" /></a>
         </div>
     </div>
     <!-- Banner End -->
@@ -15,7 +15,7 @@
             	<!-- Column Three Start -->
                 <div class="col3">
                 	<div class="blog">
-                    	<h1 class="heading colr">Pregled novosti</h1>
+                    	<h1 class="heading colr">Pregled vijesti</h1>
 
 
 
@@ -31,13 +31,15 @@
                             </div>
                             <div class="desc">
                             	<div class="date">
-                                    <h1><?php echo Date::formatted_time($article->created_at);?></h1>
+                                    <h1><?php echo date('d', strtotime($article->created_at));?></h1>
+                                    <h1><?php echo date('M', strtotime($article->created_at));?></h1>
+
                                 </div>
                                 <div class="desc-sec">
                                 	<h3><a href="/novosti/<?=$article->id.'-'.URL::title($article->title, '-', TRUE);?>"><?php echo $article->title; ?></a></h3>
                                     <div class="post-opts">
                                     	<p>Objavio <a href="/igraci/<?=$article->user->accountid;?>"><?=$article->user->username;?></a></p>
-                                         <p><img class="" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
+                                         <p><img class="status-s-<?=$article->user->status;?>" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
                                         <p><?php echo Date::formatted_time($article->created_at); ?></p>
                                        
                                     </div>
@@ -69,40 +71,23 @@
                 
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
-                	<!-- Top Sellers Start -->
+                	
+                   
                 	<div class="widget aktivni-eventi">
-                    	<h1 class="heading colr">Aktivni event</h1>
+                    	<h1 class="heading colr">Info</h1>
                         <div class="thumb">
-                        	<a href="album-detail.html"><img src="/media/images/advert1.jpg" alt="" /></a>
+                        	<img class="frame" src="/media/news/index-banner.png" alt="Dota 2 Balkan Vijesti" />
                         </div>
                         <div class="desc">
-                        	<h4><a href="album-detail.html" class="white">Smile Dip (Dave Barnes)</a></h4>
+                        	<h4><a class="white">Pregled vijesti</a></h4>
                             <p>
-                            	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tellus orci, semper et ornare dictum, varius ut tellus.
+                            	Dota 2 Balkan novinari vam omogućavaju brzi pregled vijesti Dota 2 svijeta, Dota 2 update-a, svjetskih turnira i Dota 2 Balkan turnira. <br />Ukoliko želite postati Dota 2 Balkan novinar, kontaktirajte nas na podrska@dota.ba sa naslovom predmeta aplikacije.
                             </p>
                         </div>
                     </div>
-                    <!-- Top Sellers End -->
                     
-                    <!-- Other Albums Start -->
-                    <div class="widget vijesti-izdvojeno">
-                    	<h1 class="heading colr">Izdvojeno</h1>
-                        <ul>
-                        	<li>
-                            	<a href="/novosti/izdvojeno/" class="thumb"><img src="/media/images/img8.jpg" alt="" /></a>
-                                <div class="desc">
-                                	<h4><a href="/novosti/izdvojeno/" class="white">Smile Dip LOVE</a></h4>
-                                    <p class="date">Release: 7/3/2012</p>
-                                    <p>Artist: Chris Brown (R&amp;B/Vocals)</p>
-                                    <a href="/novosti/izdvojeno/" class="pogledaj">Pogledaj</a>
-                                </div>
-                            </li>
-                           
-                           
-                        </ul>
-                        <a href="/novosti/izdvojeno" class="buttonone">Pogledaj sve</a>
-                    </div>
-                    <!-- Other Albums End -->
+                    
+            
                    
                 </div>
                 <!-- Column One End -->
