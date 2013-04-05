@@ -16,6 +16,7 @@ class Controller_Matches extends Controller_Application {
 			->with('radiant_clan')
 			->with('dire_clan')
 			->with('mode')
+			->where('type.name', '=', 'Turnir')
 			->find_all();
 
 		$this->_title 	= 'Mečevi';
