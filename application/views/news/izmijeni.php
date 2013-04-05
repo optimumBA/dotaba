@@ -54,7 +54,7 @@
                 	<div class="widget aktivni-eventi">
                     	<h1 class="heading colr">Info</h1>
                         <div class="thumb">
-                        	<img class="frame" src="/media/news/index-banner.png" alt="Dota 2 Balkan Vijesti" />
+                        	<img class="frame" src="/assets/images/index-banner.png" alt="Dota 2 Balkan Vijesti" />
                         </div>
                         <div class="desc">
                         	<h4><a class="white">Pregled vijesti</a></h4>
