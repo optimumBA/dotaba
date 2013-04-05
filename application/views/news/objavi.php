@@ -1,9 +1,9 @@
-<!-- Header End -->
+pra<!-- Header End -->
     <div class="clear"></div>
     <!-- Banner Start -->
     <div id="sub-banner">
     	<div class="in">
-        	<a href="#"><img src="/media/news/subbanner.jpg" alt="Dota 2 Balkan vijesti" /></a>
+        	<a href="#"><img src="/assets/images/subbanner.jpg" alt="Dota 2 Balkan vijesti" /></a>
         </div>
     </div>
     <!-- Banner End -->

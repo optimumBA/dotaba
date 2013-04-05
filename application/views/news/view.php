@@ -2,7 +2,7 @@
     <!-- Banner Start -->
     <div id="sub-banner">
     	<div class="in">
-        	<a href="#"><img src="/media/news/subbanner.jpg" alt="Dota 2 vijest - <?php echo $article->title;?>" /></a>
+        	<a href="#"><img src="/assets/images/subbanner.jpg" alt="Dota 2 vijest - <?php echo $article->title;?>" /></a>
         </div>
     </div>
     <!-- Banner End -->
