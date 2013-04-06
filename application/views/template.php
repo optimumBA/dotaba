@@ -57,8 +57,6 @@
     })();
 </script>
 
-<script type="text/javascript" language="javascript" src="/assets/javascript/tables/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="/assets/javascript/tables/jquery.dataTables.js"></script>
 </head>
 <body>
 

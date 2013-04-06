@@ -2536,6 +2536,13 @@ img.status-s-2 {
 	text-align:center;
 	background:url(../images/sep5.png) repeat-x 0px 15px;
 }
+.gigs .thread{
+	width:100%;
+	float:left;
+	margin-bottom:20px;
+	text-align:center;
+	background:url(../images/sep5.png) repeat-x 0px 15px;
+}
 /* Blog Post
 ================================================== */
 .gig-post {
