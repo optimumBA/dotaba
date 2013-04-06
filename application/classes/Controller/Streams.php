@@ -110,7 +110,7 @@ class Controller_Streams extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		if ($this->request->param('id') == $this->_user->id)
+		if ($this->request->param('id') == $this->_user->accountid)
 		{
 			if ($this->_user->stream->loaded())
 			{
