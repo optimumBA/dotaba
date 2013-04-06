@@ -125,7 +125,7 @@ class Controller_News extends Controller_Application {
 	{
 		$article = ORM::factory('News', $this->request->param('id'));
 
-		if ($article->loaded() AND $this->_user->has_role('Novinar/ka') AND $article->user_id == $this->_user->id)
+		if ($article->loaded() AND $this->_user->has_role('Novinar/ka'))
 		{
 			if ($this->_post)
 			{
@@ -139,7 +139,7 @@ class Controller_News extends Controller_Application {
 
 						$article = ORM::factory('News')
 							->values($this->_post, array('title', 'content', 'source', 'url', 'updated_at'))
-							->create();
+							->update();
 
 						Media_Local_News::save($article->id, $files);
 
@@ -177,17 +177,6 @@ class Controller_News extends Controller_Application {
 			$this->_content = View::factory('news/izmijeni')
 				->set('values', (empty($this->_post)) ? $article->as_array() : $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array());
-		}
-		elseif ($article->loaded() AND $this->_user->id != $article->user_id)
-		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi autor/ica ove novosti.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
 		}
 		elseif ($article->loaded())
 		{
