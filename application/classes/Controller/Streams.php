@@ -36,7 +36,7 @@ class Controller_Streams extends Controller_Application {
 				->set('stream', $stream)
 				->set('comments', $comments);
 		}
-		elseif ($this->request->param('id') == $this->_user->id)
+		elseif ($this->request->param('id') == $this->_user->accountid)
 		{
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -64,47 +64,33 @@ class Controller_Streams extends Controller_Application {
 
 			Session::instance()->set('messages', $this->_messages);
 
-			HTTP::redirect('igraci/'.$this->_user->id.'-'.URL::title($this->_user->stream->name, '-', TRUE));
+			HTTP::redirect('igraci/'.$this->_user->accountid);
 		}
 		else
 		{
-			if ($this->request->param('id') == $this->_user->id)
+			if ($this->_post)
 			{
-				$this->_messages[] = array(
-					'type'  => 'error',
-					'value' => 'Nemaš stream. Popuni formu da ga dodaš.',
-				);
-
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('igraci/'.$this->_user->accountid.'/stream/dodaj');
-			}
-			else
-			{
-				if ($this->_post)
+				try
 				{
-					try
-					{
-						$this->_post['user_id']    = $this->_user->id;
-						$this->_post['created_at'] = DB::expr('NOW()');
+					$this->_post['user_id']    = $this->_user->id;
+					$this->_post['created_at'] = DB::expr('NOW()');
 
-						$this->_user->stream
-							->values($this->_post, array('channel', 'description', 'user_id', 'created_at'))
-							->create();
+					$this->_user->stream
+						->values($this->_post, array('channel', 'description', 'user_id', 'created_at'))
+						->create();
 
-						HTTP::redirect('igraci/'.$this->_user->accountid.'/stream');
-					}
-					catch (ORM_Validation_Exception $e)
-					{
-						$errors = $e->errors('models');
-					}
+					HTTP::redirect('igraci/'.$this->_user->accountid.'/stream');
 				}
-
-				$this->_title   = 'Dodaj stream';
-				$this->_content = View::factory('vods/streams/dodaj')
-					->set('values', $this->_post)
-					->set('errors', (isset($errors)) ? $errors : array());
+				catch (ORM_Validation_Exception $e)
+				{
+					$errors = $e->errors('models');
+				}
 			}
+
+			$this->_title   = 'Dodaj stream';
+			$this->_content = View::factory('vods/streams/dodaj')
+				->set('values', $this->_post)
+				->set('errors', (isset($errors)) ? $errors : array());
 		}
 	}
 
@@ -134,17 +120,8 @@ class Controller_Streams extends Controller_Application {
 
 				$this->_title   = 'Izmijeni stream';
 				$this->_content = View::factory('vods/streams/izmijeni')
-					->set('values', (empty($this->_post)) ? $stream->as_array() : $this->_post)
+					->set('values', (empty($this->_post)) ? $this->_user->stream->as_array() : $this->_post)
 					->set('errors', (isset($errors)) ? $errors : array());
-
-				$this->_messages[] = array(
-					'type'  => 'error',
-					'value' => 'Već imaš stream.',
-				);
-
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('igraci/'.$this->_user->id.'-'.URL::title($this->_user->stream->name, '-', TRUE));
 			}
 			else
 			{
