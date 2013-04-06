@@ -76,4 +76,9 @@ jQuery(function($) {
 
 	var nextMatch = new Date($('#countdown-match').data('date'));
 	$('#countdown-match').countdown({until: nextMatch});
+
+	$('a.liga').on('click', function(e) {
+		$('div.liga-notification').slideDown();
+		e.preventDefault();
+	});
 });
