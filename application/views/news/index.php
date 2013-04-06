@@ -87,7 +87,19 @@
                     </div>
                     
                     
-            
+            <?php if (User::instance()->logged_in() AND (User::instance()->has_role('Administrator/ka') OR User::instance()->has_role('Novinar/ka'))): ?>
+	
+
+                   
+                	<div class="widget opcije">
+                    	<h1 class="heading colr">Opcije</h1>
+                        <div class="desc">
+                        	<h4><?php echo HTML::anchor('novosti/objavi', 'Objavi vijesti'); ?></h4>
+                        </div>
+                    </div>
+                   
+              
+                  <?php endif ?>
                    
                 </div>
                 <!-- Column One End -->
