@@ -57,7 +57,7 @@ class Controller_Topics extends Controller_Application {
 
 		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->has_role('Administrator/ica')))
 		{
-			$topic->values(array('views_count' => 'views_count + 1'))
+			$topic->values(array('views_count' => DB::expr('views_count + 1')))
 				->update();
 
 			$count = $topic->posts->count_all();

@@ -26,6 +26,9 @@ class Controller_Posts extends Controller_Application {
 
 						$post = ORM::factory('Post')->values($this->_post, array('content', 'topic_id', 'user_id', 'created_at'))->create();
 
+						$topic->values(array('posts_count' => DB::expr('posts_count + 1')))
+							->update();
+
 						$this->_messages[] = array(
 							'type'  => 'success',
 							'value' => 'Post je napravljen.',
@@ -173,6 +176,9 @@ class Controller_Posts extends Controller_Application {
 					if ($this->_user->has_role('Administrator/ica') AND $this->request->method() === Request::POST)
 					{
 						$post->delete();
+
+						$topic->values(array('posts_count' => DB::expr('posts_count - 1')))
+							->update();
 
 						$this->_messages[] = array(
 							'type'  => 'success',
