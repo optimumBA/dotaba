@@ -49,12 +49,20 @@ class Steam {
 
 			$response = json_decode($response);
 
-			$matches = array_merge($matches, $response->result->matches);
-
-			if ($response->result->results_remaining > 0)
+			if (isset($response->result->matches))
 			{
-				$start_at_match_id = end($response->result->matches)->match_id;
-				sleep(1);
+				$matches = array_merge($matches, $response->result->matches);
+
+				if ($response->result->results_remaining > 0)
+				{
+					$start_at_match_id = end($response->result->matches)->match_id;
+					sleep(1);
+				}
+			}
+			else
+			{
+				$matches = array();
+				break;
 			}
 		} while ($response->result->results_remaining > 0);
 
