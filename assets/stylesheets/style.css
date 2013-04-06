@@ -1177,6 +1177,51 @@ ul.news-list li .desc p.post-opts a:hover{
 	font-size:9px;
 	color:#808080;
 }
+/* Streamer - Widget
+================================================== */
+.streamer {
+	width:100%;
+	float:left;
+	padding:5px;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	background:#0f0f0f;
+}
+.streamer span{
+	font-size:9px;
+	color:#808080;
+}
+/* Dodaj stream - Widget
+================================================== */
+.dodajstream {
+	width:100%;
+	float:left;
+	padding:5px;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	background:#0f0f0f;
+}
+.dodajstream span{
+	font-size:9px;
+	color:#808080;
+}
+/* Dodaj stream - Widget
+================================================== */
+.opcije {
+	width:100%;
+	float:left;
+	padding:5px;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	background:#0f0f0f;
+}
+.opcije span{
+	font-size:9px;
+	color:#808080;
+}
 /* Newsletter
 ================================================== */
 .newsletter {
@@ -2555,12 +2600,35 @@ img.status-s-2 {
 	padding:0px 20px 0px 20px;
 	background:url(../images/clock.png) no-repeat 0px 3px;
 }
+.gig-post .desc .txt-sec p.viewers{
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	padding:0px 20px 0px 20px;
+	background:url(../images/name.png) no-repeat 0px 3px;
+}
 .gig-post .desc .txt-sec p.location{
 	float:left;
 	font-size:12px;
 	font-weight:bold;
 	padding:0px 0px 0px 20px;
 	background:url(../images/location.png) no-repeat 0px 3px;
+}
+.offline{
+	color:#CC0000;
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	padding:0px 0px 0px 20px;
+
+}
+.online{
+	color:#0F0;
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	padding:0px 0px 0px 20px;
+
 }
 .gig-post .desc .txt-sec p.txt{
 	line-height:18px;

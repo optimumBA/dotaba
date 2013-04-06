@@ -107,22 +107,17 @@
                 <div class="navigation">
                 	<div id="smoothmenu1" class="ddsmoothmenu">
                     	<ul id="nav">
-                        	<li class="<?php if(Request::current()->controller() == 'Pages') echo 'current-menu-item'; ?>"><a href="/">Početna</a></li>
-                            <li class="<?php if(Request::current()->controller() == 'News') echo 'current-menu-item'; ?>"><a href="/novosti">Novosti</a></li>
-                            <li>
-                                <a href="/vods/snimci">VOD</a>
+                        	<li class="<?php echo (Request::current()->controller() == 'Pages') ? 'current-menu-item' : '' ?>"><a href="/">Početna</a></li>
+                            <li class="<?php echo (Request::current()->controller() == 'News') ? 'current-menu-item' : '' ?>"><a href="/novosti">Vijesti</a></li>
+                            <li class="<?php echo (in_array(Request::current()->controller(), array('Streams', 'Videos'))) ? 'current-menu-item' : '' ?>">
+                                <a href="#vods">VODs</a>
                                 <ul>
                                     <li><a href="/vods/snimci">Snimci</a></li>
                                     <li><a href="/vods/streamovi">Streamovi</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/liga">Liga</a>
-                            	<ul>
-                                	<li><a href="/liga/turniri">Turniri</a></li>
-                                   	<li><a href="/liga/mecevi">Mečevi</a></li>
-                                    <li><a href="/liga/klanovi">Timovi</a></li>
-                                    <li><a href="/liga/igraci">Igrači</a></li>
-                                </ul>
+                           <li class="<?php echo(in_array(Request::current()->controller(), array('Tournaments', 'Matches', 'Clans'))) ? 'current-menu-item' : '' ?>"><a href="#liga" class="liga">Liga</a>
+                            	
                             </li>
                             <li><a href="/teme">Forum</a></li>
                         </ul>
@@ -136,7 +131,6 @@
        </div>
     </div>
    
-    
 	
 	 
 <div class="clear"></div>
@@ -144,7 +138,8 @@
   	<?php if( ! User::instance()->logged_in()):?>
     <div class="alert-top alert-info">Dobrodošli na <a class="link">Dota 2 Balkan Community</a>. Ukoliko je ovo Vaša prva posjeta, pročitajte <a class="link" href="/site/help">uputstvo za korištenje</a> stranice. Ako ste već korisnik ove stranice, molimo da se <a class="link" href="/provjera?mod=Prijava">prijavite</a>, kako bi imali sve mogućnosti stranice. U slučaju da nemate korisnički račun, možete se <a class="link" href="/provjera?mod=Registracija">registrovati</a>.</div>
  	<?php endif;?>
- 
+ 	
+    <div class="alert-top alert-info hidden liga-notification">Liga je zatvorena do početka sljedećeg turnira.</div>
   <?php foreach ($messages as $message): ?>
         <div class="alert-top alert-<?php echo $message['type']; ?>"><?php echo $message['value']; ?></div>
     <?php endforeach ?>

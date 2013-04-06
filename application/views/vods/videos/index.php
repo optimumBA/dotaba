@@ -6,7 +6,7 @@
             <div class="col4">
             	<div class="gallery-head">
                 	<h1 class="colr">Snimci</h1>
-                    <nav id="filter"><a class="" href="/">Naslovnica</a><a class="" href="/vods">Vods</a><a class="active" href="#">Snimci</a></nav>
+                    <nav id="filter"><a class="" href="/">Početna</a><a class="" href="/streamovi">Streamovi</a><a class="active" href="#">Snimci</a></nav>
                     <div class="clear"></div>
                 </div>
                 <section id="gal-container">
