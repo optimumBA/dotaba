@@ -137,8 +137,7 @@ class Controller_News extends Controller_Application {
 					{
 						$this->_post['updated_at'] = DB::expr('NOW()');
 
-						$article = ORM::factory('News')
-							->values($this->_post, array('title', 'content', 'source', 'url', 'updated_at'))
+						$article->values($this->_post, array('title', 'content', 'source', 'url', 'updated_at'))
 							->update();
 
 						Media_Local_News::save($article->id, $files);
