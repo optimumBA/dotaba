@@ -13,7 +13,7 @@
                 <div id="banner1" class="nivo-html-caption">
                 	<h1><a href="http://dota.ba/novosti/1-launch">Otvorenje</a></h1>
                     <p>
-                    	Nakon dužeg vremena, uspješno smo otvorili zajednicu za Dota 2 igrače gdje možete pronaći vijesti, ifnromacije o update-ima, statistike, turnire i mnogo toga.
+                        Nakon dužeg vremena, uspješno smo otvorili zajednicu za Dota 2 igrače gdje možete pronaći vijesti, informacije o <em>updateima</em>, statistike, turnire i mnogo toga.
                     </p>
                     <a href="http://dota.ba/novosti/1-launch" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
                 </div>
