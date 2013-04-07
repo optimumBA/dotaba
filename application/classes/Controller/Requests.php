@@ -49,7 +49,7 @@ class Controller_Requests extends Controller_Application {
 	{
 		$request = $this->_user->requests->find();
 
-		if ($request->loaded() AND $request->processed == FALSE AND $request->removed == FALSE)
+		if ($request->loaded() AND $request->removed == FALSE)
 		{
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -58,13 +58,26 @@ class Controller_Requests extends Controller_Application {
 		}
 		else
 		{
-			$request->values(array('user_id' => $this->_user->id, 'created_at' => DB::expr('NOW()')))
-				->create();
+			if (isset($this->_post['email']) AND Valid::email($this->_post['email']))
+			{
+				$request->values(array(
+					'user_id'    => $this->_user->id,
+					'email'      => $this->_post['email'],
+					'created_at' => DB::expr('NOW()'),
+				))->create();
 
-			$this->_messages[] = array(
-				'type'  => 'success',
-				'value' => 'Zahtjev je poslan.',
-			);
+				$this->_messages[] = array(
+					'type'  => 'success',
+					'value' => 'Zahtjev je poslan.',
+				);
+			}
+			else
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nisi unio/jela pravilnu email adresu.',
+				);
+			}
 		}
 
 		Session::instance()->set('messages', $this->_messages);

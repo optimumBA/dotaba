@@ -4,8 +4,8 @@ Pozivnica poslano: <?php echo $count; ?>.<br />
 <?php endif ?>
 
 <div class="request">
-	<?php if ($request->loaded()): ?>
-		<?php if ($request->removed OR $request->processed): ?>
+	<?php if ($request->loaded() AND $request->removed == FALSE): ?>
+		<?php if ($request->processed): ?>
 			Već si slao/la zahtjev.
 		<?php elseif ($request->giver_id): ?>
 			Korisnik/ca <?php echo HTML::anchor('igraci/'.$request->giver->accountid, $request->giver->username); ?> je odgovorio/la na zahtjev. 
@@ -23,8 +23,9 @@ Pozivnica poslano: <?php echo $count; ?>.<br />
 		<?php endif ?>
 	<?php else: ?>
 		Ako još uvijek nemaš DOTA2, možeš tražiti pozivnicu klikom na sljedeći link: 
-		<?php echo HTML::anchor('#', 'traži', array('class' => 'form_submit', 'data-form' => 'trazi')); ?>
-		<?php echo Form::open('pozivnice/trazi', array('class' => 'hidden trazi')); ?>
+		<?php echo HTML::anchor('#', 'traži', array('class' => 'form_prompt_submit', 'data-form' => 'trazi')); ?>
+		<?php echo Form::open('pozivnice/trazi', array('class' => 'hidden trazi', 'data-query' => 'Email adresa:', 'data-key' => 'email')); ?>
+			<?php echo Form::hidden('email'); ?>
 			<?php echo Form::hidden('csrf', Security::token()); ?>
 		<?php echo Form::close(); ?>
 	<?php endif ?>
@@ -59,6 +60,7 @@ Pozivnica poslano: <?php echo $count; ?>.<br />
 			<?php foreach ($giveaways as $giveaway): ?>
 				<li>
 					<?php echo HTML::anchor('igraci/'.$giveaway->user->accountid, $giveaway->user->username); ?>
+					<?php echo $giveaway->email; ?>
 					<?php echo HTML::anchor('#', 'otkaži', array('class' => 'form_submit', 'data-form' => 'otkazi')); ?>
 					<?php echo Form::open('pozivnice/'.$giveaway->id.'/otkazi', array('class' => 'hidden otkazi')); ?>
 						<?php echo Form::hidden('csrf', Security::token()); ?>

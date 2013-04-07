@@ -9,6 +9,20 @@ jQuery(function($) {
 		e.preventDefault();
 	});
 
+	$('a.form_prompt_submit').on('click', function(e) {
+		var self = $(this);
+		var form = self.siblings('form.hidden.'+self.data('form'));
+
+		var value = prompt(form.data('query'));
+
+		if (value) {
+			form.find('input[name="'+form.data('key')+'"]').val(value);
+			form.submit();
+		}
+
+		e.preventDefault();
+	});
+
 	$('a.edit_comment').on('click', function(e) {
 		var self         = $(this);
 		var text         = self.siblings('.txt').slideUp('fast');
