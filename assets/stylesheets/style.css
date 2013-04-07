@@ -1994,6 +1994,13 @@ a.print{
 	float:left;
 	padding:3px 0px 0px 10px;
 }
+.desc p.tm{
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	padding:0px 20px 0px 20px;
+	background:url(../images/clock.png) no-repeat 0px 3px;
+}
 
 a.obrisi {
 	float:right;
@@ -2606,6 +2613,19 @@ img.status-s-2 {
 	font-weight:bold;
 	padding:0px 20px 0px 20px;
 	background:url(../images/clock.png) no-repeat 0px 3px;
+}
+.gig-post .desc .txt-sec p.who{
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	padding:0px 5px 0px 0px;
+}
+.gig-post .desc .txt-sec p.by{
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	padding:0px 20px 0px 20px;
+	background:url(../images/name.png) no-repeat 0px 3px;
 }
 .gig-post .desc .txt-sec p.viewers{
 	float:left;

@@ -1,6 +1,10 @@
 <div class="clear"></div>
     <!-- Banner Start -->
- 
+ <div id="sub-banner">
+    	<div class="in">
+        	<a href="#"><img src="/assets/images/banner-profile.jpg" alt="Dota 2 Forum" /></a>
+        </div>
+    </div>
     <!-- Banner End -->
     <!-- Content Section Start -->
     <div id="content-sec">
@@ -21,16 +25,7 @@
 		
 			
             
-            <!-- Thread Start -->	<?php if ($topic->is_sticky): ?>
-				<div class="thread">
-                        	<a hclass="button">Ljepljive teme</a>
-                        </div>
-			<?php endif ?>
-			<?php if ($topic->is_locked): ?>
-				<div class="thread">
-                        	<a hclass="button">Zaključane teme</a>
-                        </div>
-			<?php endif ?>
+            <!-- Thread Start -->	
                         <div class="gig-post">
                         	<div class="upper-sec">
                                 <div class="date">
@@ -45,18 +40,29 @@
                                        
                                         
                                         
-                                        <p class="time"><?php if ($last_posts[$topic->id]->loaded()): ?>
-				Zadnji post napisao/la <?php echo HTML::anchor('igraci/'.$last_posts[$topic->id]->user->accountid, $last_posts[$topic->id]->user->username); ?>
-				<?php echo Date::formatted_time($last_posts[$topic->id]->created_at) ?>
-			<?php endif ?>   </p>
+                                      
                                    
-                                        
+                                        <p class="who">Zadnji post napisao/la </p><?php if ($last_posts[$topic->id]->loaded()): ?>
+                                        <p class="by"><?php echo HTML::anchor('igraci/'.$last_posts[$topic->id]->user->accountid, $last_posts[$topic->id]->user->username); ?></p>
+				<p class="time"><?php echo Date::formatted_time($last_posts[$topic->id]->created_at) ?></p>
+			<?php endif ?>
+            							
                                         
                                         <div class="clear"></div>
                                         <p class="txt">
-                                         
+										
+										
+										<?php if ($topic->is_sticky): ?>
+										<em>Ljepljiva tema</em>
+										<?php endif ?>
+                                        <br />
+
+										<?php if ($topic->is_locked): ?>
+				                    	<em>Zaključana tema</em>
+                    					<?php endif ?>
                                         </p>
-                                        
+                                         
+                                       
                                     </div>
                                 </div>
                             </div>
