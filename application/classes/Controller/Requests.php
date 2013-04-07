@@ -30,6 +30,7 @@ class Controller_Requests extends Controller_Application {
 
 		$request = $this->_user->requests
 			->with('giver')
+			->order_by('id', 'DESC')
 			->find();
 
 		$giveaways = $this->_user->giveaways
@@ -47,7 +48,9 @@ class Controller_Requests extends Controller_Application {
 
 	public function action_trazi()
 	{
-		$request = $this->_user->requests->find();
+		$request = $this->_user->requests
+			->order_by('id', 'DESC')
+			->find();
 
 		if ($request->loaded() AND $request->removed == FALSE)
 		{
@@ -60,7 +63,7 @@ class Controller_Requests extends Controller_Application {
 		{
 			if (isset($this->_post['email']) AND Valid::email($this->_post['email']))
 			{
-				$request->values(array(
+				ORM::factory('Request')->values(array(
 					'user_id'    => $this->_user->id,
 					'email'      => $this->_post['email'],
 					'created_at' => DB::expr('NOW()'),
