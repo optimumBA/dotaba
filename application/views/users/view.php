@@ -27,8 +27,12 @@
                                 <p>Država: <?php echo $user->location; ?></p>
 								<p>Klan: <?php echo ($user->clan_id) ? HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name, '-', TRUE), $user->clan->name) : ''; ?></p>
                                 <p><a class="buttonone" href="<?php echo $user->profileurl; ?>" target="_blank">Steam profil</a></p>
-
-   
+                                <?php if ($user->wins || $user->losses || $user->abandons): ?>
+                                    <p>
+                                        Win rate u zadnjih mjesec dana: <?php echo $user->wins / ($user->wins + $user->losses + $user->abandons) * 100 ?>% 
+                                        (pobjeda: <?php echo $user->wins; ?>, poraza: <?php echo $user->losses; ?>, izlazaka: <?php echo $user->abandons; ?>).
+                                    </p>
+                                <?php endif ?>
                             </div>
                         </div>
                         <div class="clear"></div>
@@ -41,7 +45,13 @@
                         <!-- Album List Start -->
                         <div class="album-track-list">
                         	        <h1 class="heading colr">Matchmaking</h1>
-                                    <div class="alert alert-info">Pregled zadnjih 100 mečeva.</div>
+                                    <div class="alert alert-info">Pregled mečeva odigranih u zadnjih mjesec dana (od <?php echo Date::formatted_time('-1 month'); ?>).</div>
+                                    <?php if ( ! $user->wins AND ! $user->losses AND ! $user->abandons): ?>
+                                        <div class="alert alert-notice">
+                                            Da bi vidio/jela svoju statistiku, moraš uključiti opciju dijeljenja informacija o mečevima unutar igre 
+                                            (<em>Settings</em> -> <em>Game</em> -> <em>General</em>, zatim pored "Share Match History" klikni na "On").
+                                        </div>
+                                    <?php endif ?>
                           
                                     <div class="matchlist">
                 <table >
