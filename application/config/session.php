@@ -2,10 +2,11 @@
 
 return array(
 	'database' => array(
-		'group'   => 'default',
-		'table'   => 'sessions',
-		'gc'      => 500,
-		'columns' => array(
+		'group'    => 'default',
+		'table'    => 'sessions',
+		'lifetime' => Date::DAY,
+		'gc'       => 500,
+		'columns'  => array(
 			'session_id'  => 'session_id',
 			'last_active' => 'last_active',
 			'contents'    => 'contents',
