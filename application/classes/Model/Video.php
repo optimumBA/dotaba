@@ -20,7 +20,7 @@ class Model_Video extends ORM {
 		return array(
 			'vid' => array(
 				array('not_empty'),
-				array('alpha_numeric'),
+				array('alpha_dash'),
 				array('exact_length', array(':value', 11)),
 			),
 			'name' => array(
