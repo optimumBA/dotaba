@@ -26,7 +26,7 @@ class Controller_Posts extends Controller_Application {
 
 						$post = ORM::factory('Post')->values($this->_post, array('content', 'topic_id', 'user_id', 'created_at'))->create();
 
-						$topic->values(array('posts_count' => DB::expr('posts_count + 1')))
+						$topic->values(array('posts_count' => DB::expr('posts_count + 1'), 'updated_at' => DB::expr('NOW()')))
 							->update();
 
 						$this->_messages[] = array(
