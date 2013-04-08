@@ -49,15 +49,30 @@
                 <div class="col1 hidemobile">
                 	
 
-
-
-
+					<div class="widget giveaway">
+                    <!-- Top Sellers Start -->
+                	<div class="widget giveaway">
+                    	<h1 class="heading colr">Giveaway</h1>
+                        <div class="thumb">
+                        	<a href="/pozivnice"><img src="/assets/images/betakey.jpg" alt="Dota 2 Balkan Giveaway" /></a>
+                        </div>
+                        <div class="desc">
+                        	<h4><a href="/pozivnice" class="white">Dota 2 Balkan Giveaway</a></h4>
+                            <p>
+                           Ukoliko još uvijek nemate Dota 2, imate priliku da dobijete Dota 2 Beta gift i započnete igrati prije vremena.
+                               
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Top Sellers End -->  
                     <!-- Facebook Start -->
                     <div class="widget facebook">
                        <div class="fb-like-box" data-href="https://www.facebook.com/DotA.Balkan" data-width="234" data-height="325" data-show-faces="true" data-colorscheme="dark" data-stream="false" data-header="false" border-color="#151515"></div>
                     </div>
                     <!-- Facebook End -->
-
+                    
+                    
+                    </div>
                 </div>
                 <!-- Column One End -->
                 </div>

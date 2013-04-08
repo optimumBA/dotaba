@@ -1077,6 +1077,26 @@ ul.news-list li .desc p.post-opts a:hover{
 .aktivni-eventi .desc h4{
 	margin:0px 0px 5px 0px;
 }
+/* Giveaway
+================================================== */
+.giveaway {
+	width:100%;
+	float:left;
+}
+.giveaway .thumb{
+	float:left;
+	box-shadow:0px 0px 3px #000;
+}
+.giveaway .thumb img{
+	float:left;
+}
+.giveaway .desc{
+	float:left;
+	margin:10px 0px 0px 0px;
+}
+.giveaway .desc h4{
+	margin:0px 0px 5px 0px;
+}
 /* Izdvojene vijesti
 ================================================== */
 .vijesti-izdvojeno {
@@ -2242,6 +2262,41 @@ img.status-2 {
 	max-width: 98.8%;
 	padding: 3px;
 }
+img.status-3 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+	padding: 3px;
+}
+img.status-4 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+	padding: 3px;
+}
+img.status-5 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+	padding: 3px;
+}
+img.status-6 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+	padding: 3px;
+}
+img.status-7 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+	padding: 3px;
+}
 
 
 img.frame-s {
@@ -2273,6 +2328,41 @@ img.status-s-2 {
 	max-width: 98.8%;
 	padding: 1px;
 }
+img.status-s-3 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+padding: 1px;
+}
+img.status-s-4 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+padding: 1px;
+}
+img.status-s-5 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+padding: 1px;
+}
+img.status-s-6 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+padding: 1px;
+}
+img.status-s-7 {
+	border: 1px solid #5CB1FE;
+	background: none repeat scroll 0% 0% #5CB1FE;
+	box-shadow: 0px 1px 5px #5CB1FE;
+	max-width: 98.8%;
+padding: 1px;
+}
 
 .status-0 {
 	color:#727272;
@@ -2282,6 +2372,21 @@ img.status-s-2 {
 }
 .status-2 {
 	color:#81B900;
+}
+.status-3 {
+	color:#5CB1FE;
+}
+.status-4 {
+	color:#5CB1FE;
+}
+.status-5 {
+	color:#5CB1FE;
+}
+.status-6 {
+	color:#5CB1FE;
+}
+.status-7 {
+	color:#5CB1FE;
 }
 
 /* User team
