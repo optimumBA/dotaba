@@ -87,8 +87,8 @@
 						<?php echo HTML::anchor('/igraci/'.$giveaway->user->accountid, HTML::image(Media_Remote_Avatar::get($giveaway->user->id, $giveaway->user->avatar), array('alt' => $giveaway->user->username)), array('class' => 'thumb')); ?>
 						<h3 class="colr"><?php echo $giveaway->user->username; ?></h3>
 						<p>
-							Zahtjev poslan <?php echo Date::formatted_time($r->created_at); ?>.<br />
-							Korisnik odabran <?php echo Date::formatted_time($r->updated_at); ?>.<br />
+							Zahtjev poslan <?php echo Date::formatted_time($giveaway->created_at); ?>.<br />
+							Korisnik odabran <?php echo Date::formatted_time($giveaway->updated_at); ?>.<br />
 							Email: <?php echo $giveaway->email; ?>
 						</p>
 						<?php echo HTML::anchor('#', 'otkaži', array('class' => 'form_submit bigbutton', 'data-form' => 'otkazi')); ?>
