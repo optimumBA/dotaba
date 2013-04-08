@@ -30,7 +30,6 @@ class Model_User extends ORM {
 			'through' => 'participations_users',
 		),
 		'posts'    => array(),
-		'requests' => array(),
 		'roles'    => array(
 			'through' => 'roles_users',
 		),
@@ -40,7 +39,8 @@ class Model_User extends ORM {
 	);
 
 	protected $_has_one = array(
-		'stream' => array(),
+		'stream'  => array(),
+		'request' => array(),
 	);
 
 }

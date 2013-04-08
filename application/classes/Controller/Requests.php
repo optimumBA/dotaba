@@ -25,13 +25,10 @@ class Controller_Requests extends Controller_Application {
 		$requests = ORM::factory('Request')
 			->with('user')
 			->where('giver_id', 'IS', NULL)
-			->where('removed', '=', FALSE)
 			->find_all();
 
-		$request = $this->_user->requests
-			->with('giver')
-			->order_by('id', 'DESC')
-			->find();
+		$request = $this->_user->request
+			->with('giver');
 
 		$giveaways = $this->_user->giveaways
 			->where('processed', '=', FALSE)
@@ -48,11 +45,9 @@ class Controller_Requests extends Controller_Application {
 
 	public function action_trazi()
 	{
-		$request = $this->_user->requests
-			->order_by('id', 'DESC')
-			->find();
+		$request = $this->_user->request;
 
-		if ($request->loaded() AND $request->removed == FALSE)
+		if ($request->loaded())
 		{
 			$this->_messages[] = array(
 				'type'  => 'error',
@@ -91,9 +86,9 @@ class Controller_Requests extends Controller_Application {
 	public function action_posalji()
 	{
 		$request      = ORM::factory('Request', $this->request->param('id'));
-		$user_request = $this->_user->requests->find();
+		$user_request = $this->_user->request;
 
-		if ($request->loaded() AND ( ! $user_request->loaded() OR $user_request->processed OR $user_request->removed))
+		if ($request->loaded() AND ( ! $user_request->loaded() OR $user_request->processed))
 		{
 			$request->values(array('giver_id' => $this->_user->id, 'updated_at' => DB::expr('NOW()')))
 				->update();
@@ -118,12 +113,9 @@ class Controller_Requests extends Controller_Application {
 
 	public function action_obrisi()
 	{
-		$request = ORM::factory('Request', $this->request->param('id'));
-
-		if ($request->loaded() AND $this->_user->id == $request->user_id)
+		if ($this->_user->request->loaded())
 		{
-			$request->values(array('removed' => TRUE, 'updated_at' => DB::expr('NOW()')))
-				->update();
+			$this->_user->request->delete();
 
 			$this->_messages[] = array(
 				'type'  => 'success',
