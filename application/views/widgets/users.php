@@ -9,7 +9,7 @@
 				<div class="desc">
 					<h4><?php echo HTML::anchor('igraci/'.$user->accountid, $user->username, array('class' => 'white')); ?></h4>
 					<p>Registrovan/a: <?php echo Date::formatted_time($user->created_at); ?></p>
-					<p class="txt">Win rate: <?php echo ($user->wins || $user->losses || $user->abandons) ? $user->wins / ($user->wins + $user->losses + $user->abandons) : 0; ?>%</p>
+					<p class="txt">Win rate: <?php echo ($user->wins || $user->losses || $user->abandons) ? $user->wins / ($user->wins + $user->losses + $user->abandons) * 100 : 0; ?>%</p>
 				</div>
 			</li>
 		<?php endforeach ?>

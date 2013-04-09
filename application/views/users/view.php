@@ -28,7 +28,7 @@
 								<p>Klan: <?php echo ($user->clan_id) ? HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name, '-', TRUE), $user->clan->name) : ''; ?></p>
                                 <p><a class="buttonone" href="<?php echo $user->profileurl; ?>" target="_blank">Steam profil</a></p>
                                 <p>
-                                    Win rate u zadnjih mjesec dana: <?php echo ($user->wins || $user->losses || $user->abandons) ? $user->wins / ($user->wins + $user->losses + $user->abandons) : 0; ?>% 
+                                    Win rate u zadnjih mjesec dana: <?php echo ($user->wins || $user->losses || $user->abandons) ? $user->wins / ($user->wins + $user->losses + $user->abandons) * 100 : 0; ?>% 
                                     (pobjeda: <?php echo $user->wins; ?>, poraza: <?php echo $user->losses; ?>, izlazaka: <?php echo $user->abandons; ?>).
                                 </p>
                             </div>
