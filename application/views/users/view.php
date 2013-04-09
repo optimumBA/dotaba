@@ -144,10 +144,18 @@
                     <!-- Featured Hero Start -->
                     <?php if ($user->featured_hero_id): ?>
                     <div class="widget fhero">
-                       <img src="/assets/images/advert2.jpg" alt="" /><?php echo HTML::image(Media_Remote_Hero::get($user->featured_hero->id, $user->featured_hero->image), array('alt' => $user->featured_hero->localized_name, 'title' => $user->featured_hero->localized_name, 'class' => 'frame')); ?>
+                        <?php echo HTML::image(Media_Remote_Hero::get($user->featured_hero->id, $user->featured_hero->image), array('alt' => $user->featured_hero->localized_name, 'title' => $user->featured_hero->localized_name, 'class' => 'frame')); ?>
                         <span>Omiljeni heroj: <?php echo $user->featured_hero->localized_name;?></span>
                     </div>
                     <?php endif;?>
+                    <?php if ($user->id == User::instance()->id): ?>
+                        <?php echo Form::open('igraci/'.$user->accountid.'/izmijeni'); ?>
+                            <?php echo Form::label('featured_hero_id', 'Omiljeni heroj:'); ?>
+                            <?php echo Form::select('featured_hero_id', $heroes, $user->featured_hero_id); ?>
+                            <?php echo Form::hidden('csrf', Security::token()); ?>
+                            <?php echo Form::submit(NULL, 'Izmijeni'); ?>
+                        <?php echo Form::close(); ?>
+                    <?php endif ?>
                     <!-- Featured Hero End -->
                     
                 </div>

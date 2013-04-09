@@ -110,7 +110,7 @@ Route::set('user_stream', 'igraci/<id>/stream(/<action>)', array('id' => '\d+'))
 		'action'     => 'view',
 	));
 
-Route::set('user_profile', 'igraci/<id>', array('id' => '\d+'))
+Route::set('user_profile', 'igraci/<id>(/<action>)', array('id' => '\d+'))
 	->defaults(array(
 		'controller' => 'users',
 		'action'     => 'view',

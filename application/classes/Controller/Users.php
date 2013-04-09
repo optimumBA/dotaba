@@ -73,11 +73,49 @@ class Controller_Users extends Controller_Application {
 				->set('user', $user)
 				->set('slots', $slots)
 				->set('comments', $comments);
+
+			if ($user->id == $this->_user->id)
+			{
+				$heroes = ORM::factory('Hero')
+					->order_by('localized_name')
+					->find_all();
+
+				$heroes_array = array();
+
+				foreach ($heroes as $hero)
+				{
+					$heroes_array[$hero->id] = $hero->localized_name;
+				}
+
+				$this->_content->set('heroes', $heroes_array);
+			}
 		}
 		else
 		{
 			throw HTTP_Exception::factory(404, 'Igrač nije pronađen.');
 		}
 	}
+
+	public function action_izmijeni()
+	{
+		$user = ORM::factory('User')
+			->where('accountid', '=', $this->request->param('id'))
+			->find();
+
+		if ($user->loaded())
+		{
+			if ($user->id == $this->_user->id)
+			{
+				$user->values($this->_post, array('featured_hero_id'))->update();
+			}
+
+			HTTP::redirect('igraci/'.$user->accountid);
+		}
+		else
+		{
+			HTTP::redirect();
+		}
+	}
+
 
 }
