@@ -146,6 +146,7 @@ abstract class Controller_Application extends Controller {
 			}
 
 			$this->response->body($view);
+			$this->check_cache();
 		}
 		else
 		{
