@@ -60,6 +60,18 @@ class Controller_Widgets extends Controller {
 			->render();
 	}
 
+	public function action_users()
+	{
+		$users = ORM::factory('User')
+			->order_by(DB::expr('wins / (wins + losses + abandons)'), 'DESC')
+			->limit(5)
+			->find_all();
+
+		$this->_content = View::factory('widgets/users')
+			->set('users', $users)
+			->render();
+	}
+
 	public function after()
 	{
 		$this->response->body($this->_content);
@@ -86,7 +98,11 @@ class Controller_Widgets extends Controller {
 		if ( ! $this->_content)
 		{
 			$this->{$action}();
-			Cache::instance()->set($this->request->action(), $this->_content, 10*Date::MINUTE);
+
+			if (Kohana::$environment === Kohana::PRODUCTION)
+			{
+				Cache::instance()->set($this->request->action(), $this->_content, 10*Date::MINUTE);
+			}
 		}
 
 		// Execute the "after action" method

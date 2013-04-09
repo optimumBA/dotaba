@@ -113,34 +113,6 @@
                 <!-- Column One End -->
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
-                	<!-- Top Sellers Start -->
-                	<div class="widget top-seller">
-                    	<h1 class="heading colr">Lista korisnika/ca</h1>
-                        <div class="thumb">
-                        	<a href="/igraci/"><img src="/assets/images/advert1.jpg" alt="" /></a>
-                        </div>
-                        <div class="desc">
-                        	<h4><a href="/igraci/" class="white">Trenutni profil <?php echo $user->username; ?></a></h4>
-                            <p>
-                            	Pogledaj ostale profile
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Top Sellers End -->
-                    <!-- Recent Posts Start -->
-                    <div class="widget ourteam">
-                    	<h1 class="heading colr">Prijatelji/ce</h1>
-                        <ul class="teamlist">
-                        	<li>
-                            	
-                                    <p>Korisnik <?php echo $user->username; ?> nema prijatelja/ca</p>
-                                   
-                            </li>
-       
-                        </ul>
-                    </div>
-                    <!-- Recent Posts End -->
-                    
                     <!-- Featured Hero Start -->
                     <?php if ($user->featured_hero_id): ?>
                     <div class="widget fhero">
@@ -157,7 +129,7 @@
                         <?php echo Form::close(); ?>
                     <?php endif ?>
                     <!-- Featured Hero End -->
-                    
+                    <?php echo Request::factory('widgets/users')->execute(); ?>
                 </div>
                 <!-- Column One End -->
             </div>
