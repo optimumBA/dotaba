@@ -160,8 +160,20 @@
 	border-width:0px 0px 1px 1px;
 }
 
-
-
+/* Statsi
+================================================== */
+.stats-wins {
+	color:#00FF00;
+	font-weight:bold;
+}
+.stats-losses {
+	color:#F90;
+	font-weight:bold;
+}
+.stats-abandons {
+	color:#CC0000;
+	font-weight:bold;
+}
 
 /* Top links
 ================================================== */

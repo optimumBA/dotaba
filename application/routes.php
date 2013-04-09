@@ -116,6 +116,12 @@ Route::set('user_profile', 'igraci/<id>(/<action>)', array('id' => '\d+'))
 		'action'     => 'view',
 	));
 
+Route::set('users_list', 'igraci/lista(/<page>)', array('page' => '\d+'))
+	->defaults(array(
+		'controller' => 'users',
+		'action'	 => 'index',
+	));
+
 Route::set('search', 'pretraga')
 	->defaults(array(
 		'controller' => 'search',

@@ -1,7 +1,7 @@
 <div class="clear"></div>
 <div id="sub-banner">
 	<div class="in">
-		<a href="#"><img src="/assets/images/banner-profile.jpg" alt="Dota 2 Balkan Forum" /></a>
+		<a href="#"><img src="/assets/images/banner-profile.jpg" alt="Dota 2 Balkan Giveaway" /></a>
 	</div>
 </div>
 <div id="album-shelves">

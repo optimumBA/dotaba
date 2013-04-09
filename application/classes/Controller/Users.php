@@ -43,6 +43,30 @@ class Controller_Users extends Controller_Application {
 		HTTP::redirect();
 	}
 
+	public function action_index()
+	{
+		$count = ORM::factory('User')->count_all();
+
+		$pagination = Pagination::factory(array(
+			'total_items' => $count,
+		));
+		
+		$users = ORM::factory('User')
+				->with('clan')
+				->order_by('created_at', 'ASC')
+				->limit(20)
+				->offset($pagination->offset)
+				->find_all();
+			
+		$this->_layout	= 'news';
+		$this->_title	= 'Pregled igrača';
+		$this->_content	= View::factory('users/index')
+						->set('users', $users)
+						->set('pagination', $pagination);
+	
+	}
+	
+	
 	public function action_view()
 	{
 		$user = ORM::factory('User')

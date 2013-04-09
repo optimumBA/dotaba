@@ -28,7 +28,7 @@
                                     <h1><?php echo date('M', strtotime($stream->created_at));?></h1>
                                 </div>
                                 <div class="desc">
-                                    <a href="<?php echo '/igraci/'.$stream->user->accountid.'/stream';?>" class="thumb"><img  src="<?=Media_Remote_Avatar::get($stream->user->id, $stream->user->avatar);?>" alt="<?php echo $stream->user->username;?>-ov/in Stream" width="120px" /></a>
+                                    <a href="<?php echo '/igraci/'.$stream->user->accountid.'/stream';?>" class="thumb"><img class="status-<?=$stream->user->status;?>" src="<?=Media_Remote_Avatar::get($stream->user->id, $stream->user->avatar);?>" alt="<?php echo $stream->user->username;?>-ov/in Stream" width="104px" /></a>
                                     <div class="txt-sec">
                                         <h3><?php echo HTML::anchor('igraci/'.$stream->user->accountid.'/stream', $stream->user->username.' stream'); ?></h3>
                                        

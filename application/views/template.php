@@ -117,7 +117,15 @@
                            <li class="<?php echo(in_array(Request::current()->controller(), array('Tournaments', 'Matches', 'Clans'))) ? 'current-menu-item' : '' ?>"><a href="#liga" class="liga">Liga</a>
                             	
                             </li>
-                            <li><a href="/teme">Forum</a></li>
+                            <li class="<?php echo (in_array(Request::current()->controller(), array('Topics', 'Posts'))) ? 'current-menu-item' : '' ?>"><a href="/teme">Forum</a>
+                             	<ul>
+                                <li><a href="/igraci/lista/">Članstvo</a></li>
+                                <?php if(User::instance()->logged_in()):?>
+                                <li><a href="/igraci/<?=User::instance()->accountid;?>">Moj profil</a></li>
+                                <?php endif; ?>
+                                </ul>   
+                            </li>
+                        
                         </ul>
                         <div class="clear"></div>
                     </div>
