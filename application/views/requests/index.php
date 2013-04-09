@@ -21,7 +21,7 @@
 					Već si slao/la zahtjev.
 				<?php elseif ($request->giver_id): ?>
 					Korisnik/ca <?php echo HTML::anchor('igraci/'.$request->giver->accountid, $request->giver->username); ?> je odgovorio/la na zahtjev. 
-					Ukoliko si primio/la pozivnicu, klikni na sljedeći link da obrišeš zahtjev:
+					Provjeri email - ukoliko si primio/la pozivnicu, klikni na sljedeći link da obrišeš zahtjev:
 					<div class="clear"></div>
 					<?php echo HTML::anchor('#', 'završi', array('class' => 'form_submit button', 'data-form' => 'zavrsi')); ?>
 					<?php echo Form::open('pozivnice/'.$request->id.'/zavrsi', array('class' => 'hidden zavrsi')); ?>
