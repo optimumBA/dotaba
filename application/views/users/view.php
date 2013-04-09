@@ -75,6 +75,7 @@
                     <tr>
                         <td >
 							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, 'small'), array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name, 'class' => 'frame'))); ?> <?php echo $slot->hero->localized_name;?>
+                            <p><?php echo ((int) ($slot->player_slot / 5) == $slot->match->radiant_win) ? 'Loser' : 'Winner'; ?></p>
                         </td>
                         <td>
                              <?php echo $slot->match->mode->name; ?> | <?php echo ($slot->match->radiant_win) ? '<a class="radiant-team">Radiant</a>' : '<a class="dire-team">Dire</a>'; ?>
