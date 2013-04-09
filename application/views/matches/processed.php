@@ -65,7 +65,7 @@
 		<?php foreach ($picksbans as $pickban): ?>
 			<li>
 				<?php echo ($pickban->is_pick) ? 'pick' : 'ban'; ?>
-				<?php echo ($pick->ban == 0) ? 'Radiant' : 'Dire'; ?>
+				<?php echo ($pickban->team == 0) ? 'Radiant' : 'Dire'; ?>
 				<?php echo HTML::image(Media_Remote_Hero::get($pickban->hero->id, $pickban->hero->image), array('alt' => $pickban->hero->localized_name)); ?>
 			</li>
 		<?php endforeach ?>
