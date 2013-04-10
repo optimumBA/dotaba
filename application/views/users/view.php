@@ -43,7 +43,7 @@
                         <!-- Album List Start -->
                         <div class="album-track-list">
                         	        <h1 class="heading colr">Matchmaking</h1>
-                                    <div class="alert alert-info">Pregled mečeva odigranih u zadnjih mjesec dana (od <?php echo Date::formatted_time('-1 month'); ?>).</div>
+                                    <div class="alert alert-info">Pregled mečeva odigranih u zadnjih mjesec dana (od <?php echo Date::formatted_time('-1 month', 'j.n.Y.'); ?>).</div>
                                     <?php if (User::instance()->id == $user->id AND ! $user->wins AND ! $user->losses AND ! $user->abandons): ?>
                                         <div class="alert alert-notice">
                                             Da bi vidio/jela svoju statistiku, moraš uključiti opciju dijeljenja informacija o mečevima unutar igre 
