@@ -48,13 +48,14 @@ class Controller_Users extends Controller_Application {
 		$count = ORM::factory('User')->count_all();
 
 		$pagination = Pagination::factory(array(
-			'total_items' => $count,
+			'total_items'    => $count,
+			'items_per_page' => 20,
 		));
 		
 		$users = ORM::factory('User')
 				->with('clan')
 				->order_by('created_at', 'ASC')
-				->limit(20)
+				->limit($pagination->items_per_page)
 				->offset($pagination->offset)
 				->find_all();
 			
