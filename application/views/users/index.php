@@ -32,7 +32,7 @@
                     <p>
                    	Registrovan: <?=$user->created_at;?><br />
                     Pobjede / Porazi / Napuštanja: <span class="stats-wins"><?=$user->wins;?></span> / <span class="stats-losses"><?=$user->losses;?></span> / <span class="stats-abandons"><?=$user->abandons;?></span><br />
-                    Lokacija: <?=$user->location;?>
+                    Lokacija: <?php echo HTML::image('/assets/images/flags/'.strtolower($user->location).'.png', array('title' => $user->location, 'alt' => $user->location)); ?>
                     </p>
                     <?php echo HTML::anchor('igraci/'.$user->accountid.'', 'Pogledaj profil', array('class' => 'bigbutton'));?>
                    

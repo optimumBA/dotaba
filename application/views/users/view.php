@@ -24,12 +24,13 @@
                             <div class="desc">
                                 <p class="release">Registrovan/a: <?php echo Date::formatted_time($user->created_at); ?></p>
                                 <p>Ime: <?php echo $user->name; ?></p>
-                                <p>Država: <?php echo $user->location; ?></p>
+                                <p>Država: <?php echo HTML::image('/assets/images/flags/'.strtolower($user->location).'.png', array('title' => $user->location, 'alt' => $user->location)); ?></p>
 								<p>Klan: <?php echo ($user->clan_id) ? HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name, '-', TRUE), $user->clan->name) : ''; ?></p>
                                 <p><a class="buttonone" href="<?php echo $user->profileurl; ?>" target="_blank">Steam profil</a></p>
                                 <p>
-                                    Win rate u zadnjih mjesec dana: <?php echo ($user->wins || $user->losses || $user->abandons) ? $user->wins / ($user->wins + $user->losses + $user->abandons) * 100 : 0; ?>% 
-                                    (pobjeda: <?php echo $user->wins; ?>, poraza: <?php echo $user->losses; ?>, izlazaka: <?php echo $user->abandons; ?>).
+                                    Win rate u zadnjih mjesec dana: <span class="stats-precent"><?php echo ($user->wins || $user->losses || $user->abandons) ? $user->wins / ($user->wins + $user->losses + $user->abandons) * 100 : 0; ?>%</span> 
+                                    <div class="clear"></div>
+                                    (pobjeda: <span class="stats-wins"><?php echo $user->wins; ?></span>, poraza: <span class="stats-losses"><?php echo $user->losses; ?></span>, izlazaka: <span class="stats-abandons"><?php echo $user->abandons; ?></span>).
                                 </p>
                             </div>
                         </div>
@@ -55,7 +56,8 @@
                 <table >
                     <tr>
                         <td>
-                            Heroj
+                            Heroj<br />
+                            <small><span class="stats-won">Pobjeda</span> | <span class="stats-lost">Poraz</span></small>
                         </td>
                         <td >
                             Meč ID
@@ -74,11 +76,15 @@
                   
                     <tr>
                         <td >
-							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, 'small'), array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name, 'class' => 'frame'))); ?> <?php echo $slot->hero->localized_name;?>
-                            <p><?php echo ((int) ($slot->player_slot / 5) == $slot->match->radiant_win) ? 'Loser' : 'Winner'; ?></p>
+							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, 'small'), array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name, 'class' => ((int) ($slot->player_slot / 5) == $slot->match->radiant_win) ? 'stats-lost' : 'stats-won'))); ?>&nbsp; &nbsp;
+							
+							
+							<?php echo $slot->hero->localized_name;?>
+                            
+                            
                         </td>
                         <td>
-                             <?php echo $slot->match->mode->name; ?> | <?php echo ($slot->match->radiant_win) ? '<a class="radiant-team">Radiant</a>' : '<a class="dire-team">Dire</a>'; ?>
+                             <?php echo $slot->match->mode->name; ?> <br /><?php echo ($slot->match->radiant_win) ? '<a class="radiant-team">The Radiant</a>' : '<a class="dire-team">The Dire</a>'; ?>
 <div class="clear"></div> <?php echo $slot->match->mid; ?> 
                         </td>
                         <td>
