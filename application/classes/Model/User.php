@@ -18,6 +18,11 @@ class Model_User extends ORM {
 			'model'       => 'Ban',
 			'foreign_key' => 'executioner_id',
 		),
+		'friends' => array(
+			'model'   => 'User',
+			'far_key' => 'friend_id',
+			'through' => 'friendships',
+		),
 		'giveaways' => array(
 			'model'       => 'Request',
 			'foreign_key' => 'giver_id',
@@ -29,8 +34,9 @@ class Model_User extends ORM {
 		'participations' => array(
 			'through' => 'participations_users',
 		),
-		'posts'    => array(),
-		'roles'    => array(
+		'posts'       => array(),
+		'friendships' => array(),
+		'roles'       => array(
 			'through' => 'roles_users',
 		),
 		'slots'  => array(),

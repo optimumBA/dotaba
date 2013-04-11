@@ -135,6 +135,7 @@
                     <?php endif ?>
                     <!-- Featured Hero End -->
                     <?php echo Request::factory('widgets/users')->execute(); ?>
+                    <?php echo Request::factory('widgets/friends/'.$user->id)->execute(); ?>
                 </div>
                 <!-- Column One End -->
             </div>

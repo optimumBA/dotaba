@@ -28,6 +28,20 @@ class Steam {
 		return $response->response->players;
 	}
 
+	public static function friends_list($id)
+	{
+		$response = Request::factory('http://api.steampowered.com/ISteamUser/GetFriendList/v0001/');
+
+		$response->client()->options(CURLOPT_ENCODING, 'gzip');
+
+		$response = json_decode($response
+			->query(array('key' => self::api_key(), 'steamid' => $id, 'relationship' => 'friend'))
+			->execute()
+			->body());
+
+		return (isset($response->friendslist) AND isset($response->friendslist->friends)) ? $response->friendslist->friends : array();
+	}
+
 	public static function match_history($account_id, $date_min = NULL, $start_at_match_id = NULL, $matches_requested = 25)
 	{
 		$matches = array();

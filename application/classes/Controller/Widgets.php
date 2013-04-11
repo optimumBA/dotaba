@@ -2,7 +2,11 @@
 
 class Controller_Widgets extends Controller {
 
+	protected $_key;
+
 	protected $_content;
+
+	protected $_lifetime;
 
 	public function before()
 	{
@@ -12,7 +16,15 @@ class Controller_Widgets extends Controller {
 		}
 		else
 		{
-			$this->_content = Cache::instance()->get($this->request->action());
+			$this->_key = $this->request->action();
+
+			if ($id = $this->request->param('id'))
+			{
+				$this->_key .= '/'.$id;
+			}
+
+			$this->_content  = Cache::instance()->get($this->_key);
+			$this->_lifetime = 10*Date::MINUTE;
 		}
 	}
 
@@ -72,6 +84,20 @@ class Controller_Widgets extends Controller {
 			->render();
 	}
 
+	public function action_friends()
+	{
+		$user  = ORM::factory('User', $this->request->param('id'));
+		$users = $user->friends
+			->order_by(DB::expr('wins / (wins + losses + abandons)'), 'DESC')
+			->find_all();
+
+		$this->_content = View::factory('widgets/friends')
+			->set('users', $users)
+			->render();
+
+		$this->_lifetime = Date::DAY;
+	}
+
 	public function after()
 	{
 		$this->response->body($this->_content);
@@ -101,7 +127,7 @@ class Controller_Widgets extends Controller {
 
 			if (Kohana::$environment === Kohana::PRODUCTION)
 			{
-				Cache::instance()->set($this->request->action(), $this->_content, 10*Date::MINUTE);
+				Cache::instance()->set($this->_key, $this->_content, $this->_lifetime);
 			}
 		}
 

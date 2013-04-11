@@ -173,7 +173,7 @@ Route::set('post', 'teme/<id>-<name>/postovi/<id2>/<action>', array('id' => '\d+
 		'action'     => 'view',
 	));
 
-Route::set('widgets', 'widgets/<action>')
+Route::set('widgets', 'widgets/<action>(/<id>)')
 	->defaults(array(
 		'controller' => 'widgets',
 	));
