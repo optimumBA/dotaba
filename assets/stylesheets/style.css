@@ -294,6 +294,64 @@ img.stats-lost {
 	color:#7a7979;
 	font-size:11px;
 }
+
+/* Kutija za opcije
+================================================== */
+#opcije-box {
+	width:300px;
+	background:#131313;
+	position:absolute;
+	top:50px;
+	z-index:8999;
+	right:0;
+	display:none;
+}
+#opcije-box h4{
+	width:270px;
+	float:left;
+	padding:15px;
+}
+#opcije-box a.closeit{
+	width:23px;
+	height:23px;
+	display:inline-block;
+	background:url(../images/cross.png) no-repeat;
+	float:right;
+}
+#opcije-box ul{
+	width:260px;
+	float:left;
+	padding:20px 20px 5px 20px;
+}
+#opcije-box ul li{
+	width:260px;
+	float:left;
+	padding:0px 0px 15px 0px;
+	background:none;
+}
+#opcije-box ul li input.bar{
+	width:238px;
+	height:40px;
+	line-height:40px;
+	padding:0px 10px !important;
+	float:left;
+	font-size:12px;
+	color:#464545;
+	margin:0px;
+	border:#0b0b0b solid 1px;
+	border-radius:3px;
+	background:#1c1c1c;
+	box-shadow:inset 2px 1px 3px #000;
+}
+#opcije-box ul li p{
+	float:left;
+	color:#7a7979;
+	padding:1px 0px 0px 5px;
+}
+#opcije-box ul li a{
+	color:#7a7979;
+	font-size:11px;
+}
 /* Pretraga
 ================================================== */
 #search-box {

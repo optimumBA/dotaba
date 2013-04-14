@@ -44,6 +44,7 @@
 <script type="text/javascript" src="/assets/javascript/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/javascript/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript" src="/assets/javascript/application.js"></script>
+<script type="text/javascript" src="/assets/javascript/animatedcollapse.js"></script>
 
 <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -89,12 +90,60 @@
                             </div>
                         </li>
                         
-                            <?php if( ! User::instance()->logged_in()):?>
-                           <li> <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a></li>
+                           	<?php if( ! User::instance()->logged_in()):?>
+                           
+                           	<li> <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a></li>
 							<?php else:?>
+                            
                             <li><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <a href="/igraci/<?=User::instance()->accountid;?>" class="status-<?=User::instance()->status;?>"><?=User::instance()->username;?></a></li>
                            
-                            <li><a href="/odjava" class="colr">Odjava</a>
+                           
+                           
+                           
+                           
+                           
+                            <li>
+                            <a href="javascript:animatedcollapse.toggle('opcije-box')" class="colr">Opcije</a>
+                            <div id="opcije-box">
+                                <h4 class="white backcolr"><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <?=User::instance()->username;?><br /> Korisničke opcije <a href="javascript:animatedcollapse.hide('opcije-box')" class="closeit">X</a></h4>
+                                <ul>
+                                    <?php if(User::instance()->has_role('Administrator/ka') OR User::instance()->has_role('Novinar/ka')):?>
+                                    <li>
+                                        <h6 class="white">Vijesti</h6>
+                                        <p><a href="/novosti/objavi">Objavi vijesti</a></p>
+                                    </li>
+                                    <?php endif;?>
+                                   
+                                    <li>
+                                      <h6 class="white">VODs</h6>
+                                      <p>
+                                      <?php if(User::instance()->has_role('Administrator/ka') OR User::instance()->has_role('Novinar/ka')):?>
+                                      <a href="/vods/snimci/dodaj">Dodaj snimak</a><br />
+                                      <?php endif;?>
+                                      
+                                      <?php if(!User::instance()->stream->loaded()):?>
+                                      <a href="/igraci/<?=User::instance()->accountid;?>/stream/dodaj">Napravi livestream</a><br />
+                                      <?php else:?>
+                                      <a href="/igraci/<?=User::instance()->accountid;?>/stream">Pogledaj svoj stream kanal</a><br />
+                                      <?php endif;?>
+                                      </p>
+                                    </li>
+                                    
+                                    <li>
+                                    <h6 class="white">Forum</h6>
+                                    <p><a href="/teme/napravi">Napravi temu</a></p>
+                                    </li>
+                                    
+                                    <li>
+                                    <h6 class="white">Autorizacija</h6>
+                                     <p>Trenutno si logiran kao <?=User::instance()->username;?>, odjavi se?</p>
+                                     <button onclick="window.location.href='/odjava'" class="backcolrhover">Odjava</button>
+                                    </li>                                
+                                    
+                                    </ul>
+                                <div class="clear"></div>
+                            </div>
+                        </li>
 							<?php endif ?>
                            
                         </li>
