@@ -3,6 +3,7 @@
 .colr																		{color:#005eb5 !important;}
 .txthover:hover																{color:#005eb5 !important;}
 .backcolr																	{background-color:#005eb5 !important;}
+.opcijecolr																	{background-color:transparent !important;}
 .backcolrhover:hover														{background-color:#005eb5 !important;}
 .backcolrdark																{background-color:#005eb5 !important; background-image:url(../images/black.png);}
 .bordercolr																	{border-color:#005eb5 !important;}

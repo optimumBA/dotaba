@@ -155,6 +155,7 @@
 	background:-moz-linear-gradient( center top, #0d0d0d 5%, #0d0d0d 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#0d0d0d", endColorstr="#0d0d0d");	background: -o-linear-gradient(top,#0d0d0d,0d0d0d);
 
+
 	background-color:#0d0d0d;
 }
 .matchlist tr:first-child td:first-child{
@@ -301,10 +302,12 @@ img.stats-lost {
 	width:300px;
 	background:#131313;
 	position:absolute;
-	top:50px;
+	top:-15px;
+	left:385px;
 	z-index:8999;
 	right:0;
 	display:none;
+	background:url(../images/black.png);
 }
 #opcije-box h4{
 	width:270px;
@@ -1791,6 +1794,7 @@ ul.teamlist li .desc p.txt{
 	margin-top:15px;
 }
 /* News
+
 ================================================== */
 .news {
 	width:100%;

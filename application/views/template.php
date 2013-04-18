@@ -105,7 +105,7 @@
                             <li>
                             <a href="javascript:animatedcollapse.toggle('opcije-box')" class="colr">Opcije</a>
                             <div id="opcije-box">
-                                <h4 class="white backcolr"><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <?=User::instance()->username;?><br /> Korisničke opcije <a href="javascript:animatedcollapse.hide('opcije-box')" class="closeit">X</a></h4>
+                                <h4 class="white opcijecolr"><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <?=User::instance()->username;?><br /> Korisničke opcije <a href="javascript:animatedcollapse.hide('opcije-box')" class="closeit">X</a></h4>
                                 <ul>
                                     <?php if(User::instance()->has_role('Administrator/ka') OR User::instance()->has_role('Novinar/ka')):?>
                                     <li>
@@ -139,9 +139,11 @@
                                      <p>Trenutno si logiran kao <?=User::instance()->username;?>, odjavi se?</p>
                                      <button onclick="window.location.href='/odjava'" class="backcolrhover">Odjava</button>
                                     </li>                                
-                                    
+                                   
                                     </ul>
                                 <div class="clear"></div>
+                                
+                                
                             </div>
                         </li>
 							<?php endif ?>
