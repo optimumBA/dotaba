@@ -17,14 +17,24 @@
                     	<h1 class="heading colr">Steam autentifikacija</h1>
                         <!-- Contact Us Start -->
                         <div class="contact-page">
-                        	  <div class="alert alert-info">Da bi se autentifikovali na stranicu i dobili željene podatke, potrebno je kliknuti na duge Steam autentifikacije, koja će vas nakon toga preusmjeriti na službenu stranicu Steam-a.</div>
+                        	  
+                              <?php if(!User::instance()->logged_in()):?>
+                              <div class="alert alert-info">Da bi se autentifikovali na stranicu i dobili željene podatke, potrebno je kliknuti na duge Steam autentifikacije, koja će vas nakon toga preusmjeriti na službenu stranicu Steam-a.</div>
                               <div class="alert alert-info">Klikom na dugme prijave se slažete sa našim pravima i uvijetima, te pravilima privatnosti.</div>
                               
                               <div class="alert alert-notice">Ukoliko je korisnički račun blokiran (banovan), prijava nije moguća.</div>
+                              <?php else:?>
+                              <div class="alert alert-error">
+                              Trenutno si prijavljen/a kao <?php echo HTML::image(Media_Remote_Avatar::get(User::instance()->id, User::instance()->avatar), array('alt' => User::instance()->username, 'class' => 'status-avatar-align steam-avatar status-s-'.User::instance()->status.'', 'width' => 16)); ?> <a class="status-<?php echo User::instance()->status;?>"><?php echo User::instance()->username;?></a>.                         <div class="clear"></div>
+
+                              Da bi se ponovo prijavio/la sa drugim računom, moraš odjaviti sa trenutnog. <a class="link" href="/odjava">Odjavi se?</a>
+                              </div>
+                              <?php endif;?>
                             <div class="cont-sec">
                                
                                 
                             </div>
+                            <?php if(!User::instance()->logged_in()):?>
                             <div class="inquiry">
                             	<h1 class="heading colr">Potvrda</h1>
                              
@@ -33,6 +43,7 @@
                                </a>
                             
                             </div>
+                            <?php endif;?>
                         </div>
                         <div class="clear"></div>
                         <!-- Post Detail End -->
@@ -62,12 +73,12 @@
                         </p>
                         
                          <p>
-                        	<span class="colr"><a href="/site/privacy">Privacy</a></span>
+                        	<span class="colr"><a href="/pravila">Pravila</a></span>
                             
 						
                         </p>
                          <p>
-                        	<span class="colr"><a href="/site/terms">Terms</a></span>
+                        	<span class="colr"><a href="/uslovi">Uslovi</a></span>
                             
 							
                         </p>

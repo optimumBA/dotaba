@@ -2496,6 +2496,9 @@ padding: 1px;
 	color:#5CB1FE;
 }
 
+img.status-avatar-align {
+	vertical-align:top;
+}
 /* User team
 ================================================== */
 #album-shelves {

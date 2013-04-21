@@ -36,18 +36,18 @@ class Controller_Pages extends Controller_Application {
 		$this->_content	= View::factory('pages/site/api');
 	}
 	
-	public function action_privacy()
+	public function action_pravila()
 	{
-		$this->_layout	= 'Privacy';
-		$this->_title	= 'Privacy';
-		$this->_content	= View::factory('pages/site/privacy');	
+		$this->_layout	= 'news';
+		$this->_title	= 'Pravila';
+		$this->_content	= View::factory('pages/pravila');	
 	}
 	
-	public function action_terms()
+	public function action_uslovi()
 	{
-		$this->_layout	= 'Terms';
-		$this->_title	= 'Terms';
-		$this->_content	= View::factory('pages/site/terms');	
+		$this->_layout	= 'news';
+		$this->_title	= 'Uslovi';
+		$this->_content	= View::factory('pages/uslovi');	
 	}
 	
 	public function action_changelog()
