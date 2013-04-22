@@ -216,7 +216,7 @@
             	<h4><a href="#" class="colr">Brzi pregled</a></h4>
                 <ul class="links"> 
                     <li><a href="/pravila">Pravila</a></li>
-                    <li><a href="/uvjeti">Uvjeti</a></li>
+                    <li><a href="/uslovi">Uslovi</a></li>
                 </ul>
                 <ul class="social">
                 	<li><a href="https://www.facebook.com/DotA.Balkan" class="so-fb">&nbsp;</a></li>
