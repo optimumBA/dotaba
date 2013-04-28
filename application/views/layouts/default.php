@@ -5,7 +5,8 @@
     	<div class="banner-in">
         	<div class="slider-wrapper theme-default">
             	<div id="slider" class="nivoSlider">
-                	<a href="#"><img src="/assets/images/banner1.jpg" title="#banner1" alt="" /></a>
+                	<a href="#"><img src="/assets/images/championsleaguebanner.jpg" title="#banner3" alt="Dota 2 Balkan Champions League" /></a>
+                    <a href="#"><img src="/assets/images/banner1.jpg" title="#banner1" alt="" /></a>
                     <a href="#"><img src="/assets/images/banner2.jpg" title="#banner2" alt="" /></a>
                   
                 </div>
@@ -16,6 +17,20 @@
                         Nakon dužeg vremena, uspješno smo otvorili zajednicu za Dota 2 igrače gdje možete pronaći vijesti, informacije o <em>updateima</em>, statistike, turnire i mnogo toga.
                     </p>
                     <a href="http://dota.ba/novosti/1-launch" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
+                </div>
+                 <div id="banner2" class="nivo-html-caption">
+                	<h1><a href="http://dota.ba/novosti/1-launch">Otvorenje</a></h1>
+                    <p>
+                        Nakon dužeg vremena, uspješno smo otvorili zajednicu za Dota 2 igrače gdje možete pronaći vijesti, informacije o <em>updateima</em>, statistike, turnire i mnogo toga.
+                    </p>
+                    <a href="http://dota.ba/novosti/1-launch" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
+                </div>
+                 <div id="banner3" class="nivo-html-caption">
+                	<h1><a href="http://dota.ba/novosti/1-launch">Champions League</a></h1>
+                    <p>
+                        Uskoro na Dota 2 Balkan. Champions League turnir okuplja ekipe širom Balkana. Više informacija o prijavama, broju učesnika i nagradama u sljedećim danima.
+                    </p>
+                    
                 </div>
                 <!-- Banner Caption End -->
             
