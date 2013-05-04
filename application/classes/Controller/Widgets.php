@@ -97,6 +97,18 @@ class Controller_Widgets extends Controller {
 
 		$this->_lifetime = Date::DAY;
 	}
+	
+	public function action_newusers()
+	{
+		$users = ORM::factory('User')
+			->order_by('id', 'DESC')
+			->limit(5)
+			->find_all();
+
+		$this->_content = View::factory('widgets/newusers')
+			->set('users', $users)
+			->render();
+	}
 
 	public function after()
 	{
