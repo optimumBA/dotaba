@@ -7,7 +7,7 @@
             	<div id="slider" class="nivoSlider">
                 	<a href="#"><img src="/assets/images/championsleaguebanner.jpg" title="#banner3" alt="Dota 2 Balkan Champions League" /></a>
                     <a href="#"><img src="/assets/images/banner1.jpg" title="#banner1" alt="" /></a>
-                    <a href="#"><img src="/assets/images/banner2.jpg" title="#banner2" alt="" /></a>
+                    <a href="#"><img src="/assets/images/TI3.jpg" title="#banner2" alt="" /></a>
                   
                 </div>
                 <!-- Banner Caption Start -->
@@ -19,9 +19,9 @@
                     <a href="http://dota.ba/novosti/1-launch" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
                 </div>
                  <div id="banner2" class="nivo-html-caption">
-                	<h1><a href="http://dota.ba/novosti/1-launch">Otvorenje</a></h1>
+                	<h1><a href="http://dota.ba/novosti/1-launch">The International 3</a></h1>
                     <p>
-                        Nakon dužeg vremena, uspješno smo otvorili zajednicu za Dota 2 igrače gdje možete pronaći vijesti, informacije o <em>updateima</em>, statistike, turnire i mnogo toga.
+                        The International se vraća ponovno u Seattle.
                     </p>
                     <a href="http://dota.ba/novosti/1-launch" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
                 </div>
@@ -58,6 +58,7 @@
                     <?php echo Request::factory('widgets/videos')->execute(); ?>
 
                     <?php echo Request::factory('widgets/news')->execute(); ?>
+                    
                 </div>
                 <!-- Column Two End -->
                 <!-- Column One Start -->
@@ -83,6 +84,10 @@
                     <!-- Facebook Start -->
                     <div class="widget facebook">
                        <div class="fb-like-box" data-href="https://www.facebook.com/DotA.Balkan" data-width="234" data-height="325" data-show-faces="true" data-colorscheme="dark" data-stream="false" data-header="false" border-color="#151515"></div>
+                    </div>
+                    
+                    <div class="widget facebook">
+                       <?php echo Request::factory('widgets/newusers')->execute(); ?>
                     </div>
                     <!-- Facebook End -->
                     
