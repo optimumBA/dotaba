@@ -1,5 +1,5 @@
 <div class="latest-news noback">
-	<h1 class="heading colr">Posljednje novosti</h1>
+	<h1 class="heading colr">Posljednje vijesti</h1>
 
 	<ul class="news-list">
 		<?php foreach ($news as $article): ?>
@@ -19,5 +19,5 @@
 		<?php endforeach ?>
 	</ul>
 
-	<a href="/novosti" class="buttonone">Pogledaj sve novosti</a>
+	<a href="/novosti" class="buttonone">Pogledaj sve vijesti</a>
 </div>

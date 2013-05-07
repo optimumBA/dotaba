@@ -6,10 +6,15 @@
         </div>
     </div>
     <!-- Banner End -->
+    
     <!-- Content Section Start -->
     <div id="content-sec">
     	<div class="inner">
-        	<!-- Columns Section Start -->
+        
+        
+        	
+            
+            <!-- Columns Section Start -->
             <div class="columns-sec twocol">
             	<!-- Column Three Start -->
                 <div class="col3">
@@ -84,8 +89,7 @@
 <?php endif ?>
 
 <?php echo $pagination; ?>
-
-
+  <?php echo Request::factory('widgets/whoisonline')->execute(); ?>
 
   </div>
                 </div>
@@ -105,7 +109,10 @@
                    
                     <!-- Dodaj stream End -->
                   <?php endif ?>
-                   
+                    <div class="widget facebook">
+				   <?php echo Request::factory('widgets/newusers')->execute(); ?>
+                   </div>
+               
                 </div>
                 <!-- Column One End -->
             </div>
@@ -113,6 +120,8 @@
         </div>
     </div>
     <!-- Content Section End -->
+    
+    
     <div class="clear"></div>
 
 

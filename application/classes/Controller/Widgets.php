@@ -109,6 +109,18 @@ class Controller_Widgets extends Controller {
 			->set('users', $users)
 			->render();
 	}
+	
+	public function action_whoisonline()
+	{
+		$users = ORM::factory('User')
+			->order_by('status')
+			->where('status', '>', '0')
+			->find_all();
+
+		$this->_content = View::factory('widgets/whoisonline')
+			->set('users', $users)
+			->render();
+	}
 
 	public function after()
 	{
