@@ -16,7 +16,7 @@
 	<?php echo Arr::path($errors, 'mode_id'); ?>
 
 	<?php echo Form::label('num_clans', 'Broj klanova:'); ?>
-	<?php echo Form::select('num_clans', range(8, 16), Arr::path($values, 'num_clans')); ?>
+	<?php echo Form::select('num_clans', array_combine(range(8, 16), range(8, 16)), Arr::path($values, 'num_clans')); ?>
 	<?php echo Arr::path($errors, 'num_clans'); ?>
 
 	<?php echo Form::label('is_auto_approvable', 'Automatsko odobravanje prijava:'); ?>
