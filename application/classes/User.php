@@ -168,7 +168,7 @@ class User {
 			$values = $attribute;
 		}
 
-		if ($user)
+		if ($this->user)
 		{
 			$this->user->values($values)->update();
 		}
