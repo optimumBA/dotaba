@@ -35,6 +35,7 @@ class Controller_Tournaments extends Controller_Application {
 			->with('mode')
 			->with('user')
 			->with('winner')
+			->with('participation')
 			->where('tournament.id', '=', $this->request->param('id'))
 			->find();
 
@@ -265,7 +266,7 @@ class Controller_Tournaments extends Controller_Application {
 		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
 		$count = $tournament->participations
-			->where('approved', '=', TRUE)
+			->where('is_approved', '=', TRUE)
 			->count_all();
 
 		if ($tournament->loaded() AND $tournament->is_started == FALSE AND $count < $tournament->num_clans AND $this->request->method() === Request::POST)
@@ -286,7 +287,7 @@ class Controller_Tournaments extends Controller_Application {
 					$participation = ORM::factory('Participation')->values(array(
 						'clan_id'       => $clan->id,
 						'tournament_id' => $tournament->id,
-						'approved'      => $tournament->is_auto_approvable,
+						'is_approved'      => $tournament->is_auto_approvable,
 						'created_at'    => DB::expr('NOW()'),
 					))->create();
 
@@ -493,7 +494,7 @@ class Controller_Tournaments extends Controller_Application {
 			->find();
 
 		if ($tournament->loaded() AND $participation->loaded() AND $tournament->user_id == $this->_user->id AND
-			$tournament->started == FALSE AND $tournament->is_auto_approvable == FALSE)
+			$tournament->is_started == FALSE AND $tournament->is_auto_approvable == FALSE)
 		{
 			$count = $tournament->participations
 				->where('is_approved', '=', TRUE)
@@ -512,11 +513,11 @@ class Controller_Tournaments extends Controller_Application {
 				}
 				elseif ($this->request->param('operation') == 'odbij')
 				{
-					$participation->values(array('is_approved' => TRUE))->update();
+					$participation->values(array('is_approved' => FALSE))->update();
 
 					$this->_messages[] = array(
 						'type'  => 'success',
-						'value' => 'Prijava je odobrena.',
+						'value' => 'Prijava je odbijena.',
 					);
 				}
 				else

@@ -98,14 +98,18 @@
                             <li><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <a href="/igraci/<?=User::instance()->accountid;?>" class="status-<?=User::instance()->status;?>"><?=User::instance()->username;?></a></li>
                            
                            
-                           
-                           
-                           
+                            	
                            
                             <li>
                             <a href="javascript:animatedcollapse.toggle('opcije-box')" class="colr">Opcije</a>
                             <div id="opcije-box">
                                 <h4 class="white opcijecolr"><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <?=User::instance()->username;?><br /> Korisničke opcije <a href="javascript:animatedcollapse.hide('opcije-box')" class="closeit">X</a></h4>
+                                
+							<?php if (User::instance()->clan_id): ?>
+                          		<a href="/liga/klanovi/<?=User::instance()->clan->id;?>-<?=URL::title(User::instance()->clan->name);?>">
+                                <h4 class="white"><?php echo HTML::image(Media_Local_Clan::get(User::instance()->clan_id), array('alt' => User::instance()->clan->name, 'class' => 'frame steam-avatar-small', 'width' => 32, 'height' => 32));?> <?php echo User::instance()->clan->name;?><br />Tag: <?php echo User::instance()->clan->tag;?></h4>
+                                </a>
+                           <?php endif;?>
                                 <ul>
                                     <?php if(User::instance()->has_role('Administrator/ka') OR User::instance()->has_role('Novinar/ka')):?>
                                     <li>
@@ -127,6 +131,15 @@
                                       <a href="/igraci/<?=User::instance()->accountid;?>/stream">Pogledaj svoj stream kanal</a><br />
                                       <?php endif;?>
                                       </p>
+                                    </li>
+                                    
+                               
+                                    <li>
+                                    <h6 class="white">Liga</h6>
+                                   	<?php if (!User::instance()->clan_id): ?>    
+                                    <p><a href="/liga/klanovi/napravi">Napravi tim</a>
+                                    <?php endif;?>
+                                    
                                     </li>
                                     
                                     <li>
@@ -166,7 +179,11 @@
                                 </ul>
                             </li>
                            <li class="<?php echo(in_array(Request::current()->controller(), array('Tournaments', 'Matches', 'Clans'))) ? 'current-menu-item' : '' ?>"><a href="#liga" class="liga">Liga</a>
-                            	
+                            	<ul>
+                               		<li><a href="/liga/turniri">Turniri</a></li>
+                                	<li><a href="/liga/mecevi/">Mečevi</a></li>
+                                	<li><a href="/liga/klanovi/">Timovi</a></li>
+                                </ul>
                             </li>
                             <li class="<?php echo (in_array(Request::current()->controller(), array('Topics', 'Posts'))) ? 'current-menu-item' : '' ?>"><a href="/teme">Forum</a>
                              	<ul>

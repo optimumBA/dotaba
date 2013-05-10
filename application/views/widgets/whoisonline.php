@@ -4,13 +4,25 @@
 					<li>
 						<?php foreach ($users as $user): ?>
 
-						<a href="/igraci/<?=$user->accountid;?>" class="status-<?=$user->status;?>"><?=$user->username;?></a>,
-				
+						
+                        <?php if($user->id == 1 OR $user->id == 2 OR $user->id == 3):?>
+                        
+                       <img src="/assets/images/d2ba.png" width="24px" height="auto" title="Dota 2 Balkan Staff" /> <a href="/igraci/<?=$user->accountid;?>"><font color="#EB4B47"><?=$user->username;?></font></a>,
+                        
+                        <?php elseif($user->id == 14):?>
+                        
+                        
+                        <a href="/igraci/<?=$user->accountid;?>"><font color="#D32DC4"><?=$user->username;?></font></a>,
+                        
+                        <?php else:?>
 					
+                     	<a href="/igraci/<?=$user->accountid;?>"><?=$user->username;?></a>,
+                        <?php endif;?>
+						
 						<?php endforeach ?>
                     </li>
                     
-            <li><h4 class="colr">Legenda:</h4> <span class="status-2">In-Game</span>, <span class="status-1">Online</span></li>
+            <li><h4 class="colr">Legenda:</h4> <font color="#EB4B47">Administrator/ica</font>, <font color="#8847EC">Organizator/ica turnira</font>, <font color="#D32DC4">Novinar/ica</font></li>
 	</ul>
 </div>
 
