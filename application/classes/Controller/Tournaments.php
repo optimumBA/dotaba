@@ -17,7 +17,6 @@ class Controller_Tournaments extends Controller_Application {
 		));
 
 		$tournaments = ORM::factory('Tournament')
-			->with('user')
 			->order_by('id', 'DESC')
 			->limit($pagination->items_per_page)
 			->offset($pagination->offset)
@@ -33,7 +32,6 @@ class Controller_Tournaments extends Controller_Application {
 	{
 		$tournament = ORM::factory('Tournament')
 			->with('mode')
-			->with('user')
 			->with('winner')
 			->with('participation')
 			->where('tournament.id', '=', $this->request->param('id'))
@@ -80,75 +78,88 @@ class Controller_Tournaments extends Controller_Application {
 
 	public function action_organiziraj()
 	{
-		if ($this->_post)
+		if ($this->_user->has_role('Organizator/ica turnira'))
 		{
-			try
+			if ($this->_post)
 			{
-				$files = Media_Local_Tournament::validate($_FILES);
-
-				if ( ! is_uploaded_file($files['default']['tmp_name']) OR $files->check())
+				try
 				{
-					$this->_post['user_id']    = $this->_user->id;
-					$this->_post['created_at'] = DB::expr('NOW()');
+					$files = Media_Local_Tournament::validate($_FILES);
 
-					$tournament = ORM::factory('Tournament')
-						->values($this->_post, array('name', 'description', 'mode_id', 'num_clans', 'is_auto_approvable', 'user_id', 'created_at'))
-						->create();
+					if ( ! is_uploaded_file($files['default']['tmp_name']) OR $files->check())
+					{
+						$this->_post['created_at'] = DB::expr('NOW()');
 
-					Media_Local_Tournament::save($tournament->id, $files);
+						$tournament = ORM::factory('Tournament')
+							->values($this->_post, array('name', 'description', 'mode_id', 'num_clans', 'is_auto_approvable', 'created_at'))
+							->create();
 
-					$this->_messages[] = array(
-						'type'  => 'success',
-						'value' => 'Turnir je uspješno napravljen.',
-					);
+						Media_Local_Tournament::save($tournament->id, $files);
 
-					Session::instance()->set('messages', $this->_messages);
+						$this->_messages[] = array(
+							'type'  => 'success',
+							'value' => 'Turnir je uspješno napravljen.',
+						);
 
-					HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
+						Session::instance()->set('messages', $this->_messages);
+
+						HTTP::redirect('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE));
+					}
+					else
+					{
+						$this->_messages[] = array(
+							'type'  => 'error',
+							'value' => 'Nepravilan unos.',
+						);
+
+						$errors = $files->errors('media');
+					}
 				}
-				else
+				catch (ORM_Validation_Exception $e)
 				{
 					$this->_messages[] = array(
 						'type'  => 'error',
 						'value' => 'Nepravilan unos.',
 					);
 
-					$errors = $files->errors('media');
+					$errors = $e->errors('models');
 				}
 			}
-			catch (ORM_Validation_Exception $e)
+
+			$modes = ORM::factory('Mode')
+				->find_all();
+
+			$modes_array = array();
+
+			foreach ($modes as $mode)
 			{
-				$this->_messages[] = array(
-					'type'  => 'error',
-					'value' => 'Nepravilan unos.',
-				);
-
-				$errors = $e->errors('models');
+				$modes_array[$mode->id] = $mode->name;
 			}
+
+			$this->_title   = 'Organiziraj turnir';
+			$this->_content = View::factory('tournaments/organiziraj')
+				->set('values', $this->_post)
+				->set('errors', (isset($errors)) ? $errors : array())
+				->set('modes', $modes_array);
 		}
-
-		$modes = ORM::factory('Mode')
-			->find_all();
-
-		$modes_array = array();
-
-		foreach ($modes as $mode)
+		else
 		{
-			$modes_array[$mode->id] = $mode->name;
-		}
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Nisi organizator/ica turnira.',
+			);
 
-		$this->_title   = 'Organiziraj turnir';
-		$this->_content = View::factory('tournaments/organiziraj')
-			->set('values', $this->_post)
-			->set('errors', (isset($errors)) ? $errors : array())
-			->set('modes', $modes_array);
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('liga/turniri');
+		}
 	}
 
 	public function action_izmijeni()
 	{
 		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
-		if ($tournament->loaded() AND $tournament->user_id == $this->_user->id)
+		if ($tournament->loaded() AND $this->_user->has_role('Organizator/ica turnira'))
 		{
 			if ($this->_post)
 			{
@@ -248,7 +259,7 @@ class Controller_Tournaments extends Controller_Application {
 		{
 			$this->_messages[] = array(
 				'type'  => 'error',
-				'value' => 'Nisi organizator/ica ovog turnira.',
+				'value' => 'Nisi organizator/ica turnira.',
 			);
 
 			Session::instance()->set('messages', $this->_messages);
@@ -365,7 +376,7 @@ class Controller_Tournaments extends Controller_Application {
 
 				$count = $participations->count_all();
 
-				if ($tournament->user_id == $this->_user->id AND $tournament->is_started == FALSE AND $count == $tournament->num_clans)
+				if ($this->_user->has_role('Organizator/ica turnira') AND $tournament->is_started == FALSE AND $count == $tournament->num_clans)
 				{
 					$type = ORM::factory('Type', array('name' => 'Turnir'));
 
@@ -397,11 +408,11 @@ class Controller_Tournaments extends Controller_Application {
 						'value' => 'Turnir je započeo.',
 					);
 				}
-				elseif ($tournament->user_id != $this->_user->id)
+				elseif ( ! $this->_user->has_role('Organizator/ica turnira'))
 				{
 					$this->_messages[] = array(
 						'type'  => 'error',
-						'value' => 'Nisi organizator/ica ovog turnira.',
+						'value' => 'Nisi organizator/ica turnira.',
 					);
 				}
 				elseif ($count != $tournament->num_clans)
@@ -434,7 +445,7 @@ class Controller_Tournaments extends Controller_Application {
 	{
 		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
-		if ($tournament->loaded() AND $tournament->user_id == $this->_user->id AND $tournament->is_started == FALSE AND $tournament->is_auto_approvable == FALSE)
+		if ($tournament->loaded() AND $this->_user->has_role('Organizator/ica turnira') AND $tournament->is_started == FALSE AND $tournament->is_auto_approvable == FALSE)
 		{
 			$count = $tournament->participations
 				->where('is_approved', '=', TRUE)
@@ -453,11 +464,11 @@ class Controller_Tournaments extends Controller_Application {
 		}
 		elseif ($tournament->loaded())
 		{
-			if ($tournament->user_id != $this->_user->id)
+			if ( ! $this->_user->has_role('Organizator/ica turnira'))
 			{
 				$this->_messages[] = array(
 					'type'  => 'error',
-					'value' => 'Nisi organizator/ica ovog turnira.',
+					'value' => 'Nisi organizator/ica turnira.',
 				);
 			}
 			elseif ($tournament->is_started)
@@ -493,7 +504,7 @@ class Controller_Tournaments extends Controller_Application {
 			->where('participation.id', '=', $this->request->param('id2'))
 			->find();
 
-		if ($tournament->loaded() AND $participation->loaded() AND $tournament->user_id == $this->_user->id AND
+		if ($tournament->loaded() AND $participation->loaded() AND $this->_user->has_role('Organizator/ica turnira') AND
 			$tournament->is_started == FALSE AND $tournament->is_auto_approvable == FALSE)
 		{
 			$count = $tournament->participations
@@ -535,11 +546,11 @@ class Controller_Tournaments extends Controller_Application {
 		}
 		elseif ($tournament->loaded() AND $participation->loaded())
 		{
-			if ($tournament->user_id != $this->_user->id)
+			if ( ! $this->_user->has_role('Organizator/ica turnira'))
 			{
 				$this->_messages[] = array(
 					'type'  => 'error',
-					'value' => 'Nisi organizator/ica ovog turnira.',
+					'value' => 'Nisi organizator/ica turnira.',
 				);
 
 				Session::instance()->set('messages', $this->_messages);

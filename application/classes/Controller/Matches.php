@@ -103,13 +103,13 @@ class Controller_Matches extends Controller_Application {
 
 		if ($match->loaded() AND $match->type->name == 'Turnir')
 		{
-			if ($match->tournament->user_id == $this->_user->id)
+			if ($this->_user->has_role('Organizator/ica turnira'))
 			{
 				if ($match->radiant_win)
 				{
 					$this->_messages[] = array(
 						'type'  => 'error',
-						'value' => 'Već su uneseni rezultati ovog meča. Kontaktiraj administratore sajta.',
+						'value' => 'Već su uneseni rezultati ovog meča.',
 					);
 
 					Session::instance()->set('messages', $this->_messages);
@@ -216,7 +216,7 @@ class Controller_Matches extends Controller_Application {
 			{
 				$this->_messages[] = array(
 					'type'  => 'error',
-					'value' => 'Nisi organizator/ica turnira na kojem je meč odigran.',
+					'value' => 'Nisi organizator/ica turnira.',
 				);
 
 				Session::instance()->set('messages', $this->_messages);
@@ -234,7 +234,7 @@ class Controller_Matches extends Controller_Application {
 	{
 		$tournament = ORM::factory('Tournament', $this->request->param('id'));
 
-		if ($tournament->loaded() AND $this->_user->id == $tournament->user_id)
+		if ($tournament->loaded() AND $this->_user->has_role('Organizator/ica turnira'))
 		{
 			if ($this->_post)
 			{

@@ -22,8 +22,6 @@
                             </div>
                             <div class="desc">
                                 <div class="post-opts">
-                                	<p>Organizator <a href="/igraci/<?=$tournament->user->accountid;?>"> <?=$tournament->user->username;?></a></p>
-                                    <p><img class="status-s-<?=$tournament->user->status;?>" src="<?=Media_Remote_Avatar::get($tournament->user->id, $tournament->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
                                    	<p>Počeo: <?php echo ($tournament->is_started) ? 'Da' : 'Ne'; ?></p>
                                     <p><?php echo Date::formatted_time($tournament->created_at); ?></p>
                                     <p>Potreban broj klanova: <?php echo $tournament->num_clans; ?></p>
@@ -39,7 +37,7 @@
                                 <hr />
                                  
                                   
-                                <?php if (User::instance()->id == $tournament->user_id): ?>
+                                <?php if (User::instance()->has_role('Organizator/ica turnira')): ?>
 									<?php if ( ! $tournament->is_started AND $count == $tournament->num_clans): ?>
 									<?php echo HTML::anchor('#', 'Započni turnir', array('class' => 'form_submit', 'data-form' => 'start')); ?>
                                <?php echo Form::open('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/start', array('class' => 'hidden start')); ?>
@@ -118,7 +116,7 @@
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
                 	
-                  <?php if(User::instance()->logged_in() AND User::instance()->has_role('Administrator/ica')):?>
+                  <?php if(User::instance()->logged_in() AND User::instance()->has_role('Organizator/ica turnira')):?>
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">
