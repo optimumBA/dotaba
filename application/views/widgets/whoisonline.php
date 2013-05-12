@@ -27,7 +27,7 @@
 						<?php endforeach ?>
                     </li>
                     
-            <li><h4 class="colr">Legenda:</h4> <font color="#EB4B47">Administrator/ica</font>, <font color="#8847EC">Organizator/ica turnira</font>, <font color="#D32DC4">Novinar/ica</font></li>
+            <li><h4 class="colr">Legenda:</h4> <font color="#EB4B47">Administrator/ica</font>, <font color="#8847EC">Organizator/ica turnira</font>, <font color="#D32DC4">Novinar/ka</font></li>
 	</ul>
 </div>
 

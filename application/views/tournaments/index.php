@@ -36,10 +36,8 @@
 
                                 </div>
                                 <div class="desc-sec">
-                                	<h3><a href="/turniri/liga/<?=$tournament->id.'-'.URL::title($tournament->name, '-', TRUE);?>"></a></h3>
+                                	<h3><a href="/liga/turniri/<?=$tournament->id.'-'.URL::title($tournament->name, '-', TRUE);?>"></a></h3>
                                     <div class="post-opts">
-                                    	<p>Organizator <a href="/igraci/<?=$tournament->user->accountid;?>"><?=$tournament->user->username;?></a></p>
-                                         <p><img class="status-s-<?=$tournament->user->status;?>" src="<?=Media_Remote_Avatar::get($tournament->user->id, $tournament->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
                                         <p>Organizovan <?php echo Date::formatted_time($tournament->created_at); ?></p>
                                         <p>Završen 
 										<?php echo ($tournament->finished_at == NULL) ? '<span class="white">Ne</span>' : Date::formatted_time($tournament->created_at) ?>

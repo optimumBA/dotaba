@@ -178,7 +178,7 @@
                                     <li><a href="/vods/streamovi">Streamovi</a></li>
                                 </ul>
                             </li>
-                           <li class="<?php echo(in_array(Request::current()->controller(), array('Tournaments', 'Matches', 'Clans'))) ? 'current-menu-item' : '' ?>"><a href="#liga" class="liga">Liga</a>
+                           <li class="<?php echo(in_array(Request::current()->controller(), array('Tournaments', 'Matches', 'Clans'))) ? 'current-menu-item' : '' ?>"><a href="#" class="liga">Liga</a>
                             	<ul>
                                		<li><a href="/liga/turniri">Turniri</a></li>
                                 	<li><a href="/liga/mecevi/">Mečevi</a></li>
