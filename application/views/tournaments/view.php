@@ -2,7 +2,7 @@
     <!-- Banner Start -->
     <div id="sub-banner">
     	<div class="in">
-        	<a href="#"><img src="/assets/images/subbanner.jpg" alt="Dota 2 turnir - <?php echo $tournament->name; ?>" /></a>
+        	<a href="#"><img src="/assets/images/banner-profile.jpg" alt="Dota 2 turnir - <?php echo $tournament->name; ?>" /></a>
         </div>
     </div>
     <!-- Banner End -->

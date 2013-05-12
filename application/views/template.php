@@ -136,10 +136,16 @@
                                
                                     <li>
                                     <h6 class="white">Liga</h6>
-                                   	<?php if (!User::instance()->clan_id): ?>    
-                                    <p><a href="/liga/klanovi/napravi">Napravi tim</a>
+                                   	<p>
+									<?php if (!User::instance()->clan_id): ?>    
+                                    <a href="/liga/klanovi/napravi">Napravi tim</a>
                                     <?php endif;?>
                                     
+                                    <?php if(User::instance()->has_role('Organizator/ica turnira')):?>
+                                    <a href="/liga/turniri/organiziraj">Organiziraj turnir</a>
+                                    <?php endif;?>
+                                    
+                                    </p>  
                                     </li>
                                     
                                     <li>
