@@ -14,6 +14,11 @@
                         
                         <a href="/igraci/<?=$user->accountid;?>"><font color="#D32DC4"><?=$user->username;?></font></a>,
                         
+                         <?php elseif($user->id == 42):?>
+                        
+                        
+                        <a href="/igraci/<?=$user->accountid;?>"><font color="#8847EC"><?=$user->username;?></font></a>,
+                        
                         <?php else:?>
 					
                      	<a href="/igraci/<?=$user->accountid;?>"><?=$user->username;?></a>,
