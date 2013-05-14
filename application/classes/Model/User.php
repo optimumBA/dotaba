@@ -30,10 +30,7 @@ class Model_User extends ORM {
 		'matches' => array(
 			'through' => 'slots',
 		),
-		'news'           => array(),
-		'participations' => array(
-			'through' => 'participations_users',
-		),
+		'news'        => array(),
 		'posts'       => array(),
 		'friendships' => array(),
 		'roles'       => array(

@@ -302,13 +302,6 @@ class Controller_Tournaments extends Controller_Application {
 						'created_at'    => DB::expr('NOW()'),
 					))->create();
 
-					$users = $clan->users->find_all();
-
-					foreach ($users as $user)
-					{
-						$participation->add('users', $user);
-					}
-
 					$this->_messages[] = array(
 						'type'  => 'success',
 						'value' => 'Klan je prijavljen na turnir.',

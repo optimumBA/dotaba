@@ -7,10 +7,4 @@ class Model_Participation extends ORM {
 		'tournament' => array(),
 	);
 
-	protected $_has_many = array(
-		'users' => array(
-			'through' => 'participations_users',
-		),
-	);
-
 }
