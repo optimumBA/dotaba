@@ -2,7 +2,7 @@
 	<h1 class="heading colr">Nadolazeći mečevi</h1>
 	<?php if (count($matches) > 0): ?>
 		<div class="current-eve">
-			<h5><?php echo HTML::anchor('liga/mecevi/'.$matches[0]->id ,$matches[0]->radiant_clan->name.' vs '.$matches[0]->dire_clan->name, array('class' => 'colr')); ?></h5>
+			<h5><?php echo HTML::anchor('liga/mecevi/'.$matches[0]->id ,'<span class="radiant-team">'.$matches[0]->radiant_clan->name.'</span> vs <span class="dire-team">'.$matches[0]->dire_clan->name.'</span>', array('class' => 'colr')); ?></h5>
 			<div id="countdown-match" data-date="<?php echo strtotime($matches[0]->date)*1000; ?>"></div>
 		</div>
 		<ul>
@@ -14,10 +14,10 @@
 					</div>
 					<div class="desc">
 						<div class="left">
-							<h4>
-								<?php echo HTML::anchor('liga/mecevi/'.$matches[$i]->id, $matches[$i]->radiant_clan->name.' vs '.$matches[$i]->dire_clan->name); ?>
-							</h4>
-							<p><?php echo HTML::anchor($matches[$i]->tournament->id.'-'.URL::title($matches[$i]->tournament->name, '-', TRUE), $matches[$i]->tournament->name); ?></p>
+							<h6>
+								<?php echo HTML::anchor('liga/mecevi/'.$matches[$i]->id, '<span class="radiant-team">'.$matches[$i]->radiant_clan->name.'</span> vs <span class="dire-team">'.$matches[$i]->dire_clan->name.'</span>'); ?>
+							</h6>
+							<p><h6 class="colr"><?php echo HTML::anchor($matches[$i]->tournament->id.'-'.URL::title($matches[$i]->tournament->name, '-', TRUE), $matches[$i]->tournament->name); ?></h6></p>
 						</div>
 					</div>
 				</li>

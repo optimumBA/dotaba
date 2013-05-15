@@ -82,7 +82,6 @@
 		<div class="alert alert-error">Moraš biti prijavljen/a kako bi ostavio/la komentar. Prijavi se <a href="/provjera">ovdje</a></div>
 	<?php endif; ?>
      
-     <?php echo $pagination; ?>
     
      
                     </div>
