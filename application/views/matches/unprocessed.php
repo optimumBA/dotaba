@@ -1,10 +1,35 @@
-<?php echo HTML::image(Media_Local_Clan::get($match->radiant_clan->id)); ?>
-<?php echo HTML::image(Media_Local_Clan::get($match->dire_clan->id)); ?>
-<?php echo HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name, '-', TRUE)); ?> 
-protiv 
-<?php echo HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name, '-', TRUE)); ?>
+<!-- Header End -->
+    <div class="clear"></div>
+  
+<!-- Content Section Start -->
+    <div id="content-sec">
+    	<div class="inner">
+        	<!-- Columns Section Start -->
+            <div class="columns-sec twocol">
+            	<!-- Column Three Start -->
+                <div class="col3">
+                	<div class="blog">
+                    	<h1 class="heading colr">Pregled meča</h1>
+                        
+                         <div class="matchlist">
 
-Streamovi:
+  
+    <table>
+	
+    <tr>
+		<td>Radiant</td>
+        <td>Dire</td>
+     </tr>
+        
+        <tr>
+        <td><h2><?php echo HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name, '-', TRUE), '<span class="radiant-team">'.$match->radiant_clan->name.'</span>'); ?> </h2></td>
+        <td><h2>
+<?php echo HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name, '-', TRUE), '<span class="dire-team">'.$match->dire_clan->name.'</span>'); ?></h2></td>
+        </tr>
+        
+        </table>
+        
+  
 <ul>
 	<?php foreach ($streams as $stream): ?>
 		<li>
@@ -26,4 +51,30 @@ Streamovi:
 	<?php echo Form::close(); ?>
 <?php endif ?>
 
+
+
+
+
+                    </div>
+                </div>
+                
+                <br />
+                <div class="clear"></div>
+                
 <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $match->id, 'object_type' => 'Match')); ?>
+                <!-- Column One End -->
+              
+                
+                <!-- Column One Start -->
+                <div class="col1 hidemobile">
+                	
+                   
+                	
+                </div>
+                <!-- Column One End -->
+            </div>
+            <!-- Columns Section End -->
+        </div>
+    </div>
+    <!-- Content Section End -->
+    <div class="clear"></div>

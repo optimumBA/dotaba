@@ -161,10 +161,10 @@
                        <h1 class="heading colr">Opcije</h1>
                        <div class="desc">
 					   	<h4><?php echo HTML::anchor('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/izmijeni', 'Izmijeni klan'); ?></h4>
+						 <h6 class="colr"><?php echo HTML::anchor('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/prijave', 'Pogledaj prijave'); ?></h6>
 						<?php if (isset($clan->updated_at)): ?>
 						<h6 class="white">Zadnji put izmijenjen: <?php echo Date::formatted_time($clan->updated_at); ?></h6>
-                        <h6 class="colr"><?php echo HTML::anchor('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name).'/prijave', 'Pogledaj prijave'); ?></h6>
-						<?php endif ?>
+                       	<?php endif ?>
                         
                         </div>
 
