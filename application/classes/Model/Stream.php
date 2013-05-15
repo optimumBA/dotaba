@@ -7,10 +7,7 @@ class Model_Stream extends ORM {
 	);
 
 	protected $_has_many = array(
-		'announcements' => array(),
-		'matches'       => array(
-			'through' => 'announcements',
-		),
+		'matches' => array(),
 	);
 
 	public function labels()

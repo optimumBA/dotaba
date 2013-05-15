@@ -12,6 +12,7 @@ class Model_Match extends ORM {
 			'foreign_key' => 'dire_clan_id',
 		),
 		'mode'         => array(),
+		'stream'       => array(),
 		'tournament'   => array(),
 		'type'         => array(),
 		'winner'       => array(
@@ -21,12 +22,8 @@ class Model_Match extends ORM {
 	);
 
 	protected $_has_many = array(
-		'announcements' => array(),
 		'picksbans'     => array(),
 		'slots'         => array(),
-		'streams'       => array(
-			'through' => 'announcements',
-		),
 		'users' => array(
 			'through' => 'slots',
 		),

@@ -30,25 +30,26 @@
         </table>
         
   
-<ul>
-	<?php foreach ($streams as $stream): ?>
-		<li>
-			<?php echo HTML::anchor('igraci/'.$stream->user->accountid.'/stream', $stream->user->username.'ov/in stream'); ?>
-			<?php if ($stream->user_id == User::instance()->id): ?>
-				<?php echo HTML::anchor('#', 'Otkaži streamanje', array('class' => 'form_submit', 'data-form' => 'otkazi_streamanje')); ?>
-				<?php echo Form::open('liga/mecevi/'.$match->id.'/otkazi_streamanje', array('class' => 'hidden otkazi_streamanje')); ?>
-					<?php echo Form::hidden('csrf', Security::token()); ?>
-				<?php echo Form::close(); ?>
-			<?php endif ?>
-		</li>
-	<?php endforeach ?>
-</ul>
-
-<?php if ($can_stream): ?>
-	<?php echo HTML::anchor('#', 'Najavi streamanje', array('class' => 'form_submit', 'data-form' => 'najavi_streamanje')); ?>
-	<?php echo Form::open('liga/mecevi/'.$match->id.'/najavi_streamanje', array('class' => 'hidden najavi_streamanje')); ?>
-		<?php echo Form::hidden('csrf', Security::token()); ?>
-	<?php echo Form::close(); ?>
+<?php if ($match->stream->loaded()): ?>
+    <?php echo HTML::anchor('igraci/'.$match->stream->user->accountid.'/stream', HTML::image(Media_Remote_Avatar::get($match->stream->user->id, $match->stream->user->avatar), array('alt' => $match->stream->user->username.'ov/in stream', 'width' => '104px'), array('class' => 'thumb'))); ?>
+    <div class="txt-sec">
+        <h3><?php echo HTML::anchor('igraci/'.$match->stream->user->accountid.'/stream', $match->stream->user->username.' stream'); ?></h3>
+        <p class="viewers">Gledalaca <?php echo $match->stream->viewers;?></p>
+        <p class="location"><?php echo ($match->stream->online) ? '<a class="online">Online</a>' : '<a class="offline">Offline</a>'?></p>
+        <div class="clear"></div>
+        <?php echo HTML::anchor('igraci/'.$match->stream->user->accountid.'/stream', 'Pogledaj', array('class' => 'readmore')); ?>
+    </div>
+    <?php if ($match->stream->user_id == User::instance()->id): ?>
+        <?php echo HTML::anchor('#', 'Otkaži streamanje', array('class' => 'form_submit button', 'data-form' => 'otkazi_streamanje')); ?>
+        <?php echo Form::open('liga/mecevi/'.$match->id.'/otkazi_streamanje', array('class' => 'hidden otkazi_streamanje')); ?>
+            <?php echo Form::hidden('csrf', Security::token()); ?>
+        <?php echo Form::close(); ?>
+    <?php endif ?>
+<?php elseif (User::instance()->logged_in() AND User::instance()->stream->loaded()): ?>
+    <?php echo HTML::anchor('#', 'Najavi streamanje', array('class' => 'form_submit button', 'data-form' => 'najavi_streamanje')); ?>
+    <?php echo Form::open('liga/mecevi/'.$match->id.'/najavi_streamanje', array('class' => 'hidden najavi_streamanje')); ?>
+        <?php echo Form::hidden('csrf', Security::token()); ?>
+    <?php echo Form::close(); ?>
 <?php endif ?>
 
 <?php if (User::instance()->has_role('Organizator/ica turnira')): ?>

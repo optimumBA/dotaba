@@ -28,23 +28,20 @@ class Controller_Widgets extends Controller {
 		}
 	}
 
-	public function action_announcements()
+	public function action_matches()
 	{
-		$announcements = ORM::factory('Announcement')
-			->with('match')
-			->with('stream')
-			->with('match:tournament')
-			->with('match:radiant_clan')
-			->with('match:dire_clan')
-			->with('stream:user')
-			->where('match.date', '>', DB::expr('NOW()'))
-			->where('match.radiant_win', 'IS', NULL)
+		$matches = ORM::factory('Match')
+			->with('tournament')
+			->with('radiant_clan')
+			->with('dire_clan')
+			->where('date', '>', DB::expr('NOW()'))
+			->where('radiant_win', 'IS', NULL)
 			->limit(4)
-			->order_by('match.date')
+			->order_by('date')
 			->find_all();
 
-		$this->_content = View::factory('widgets/announcements')
-			->set('announcements', $announcements)
+		$this->_content = View::factory('widgets/matches')
+			->set('matches', $matches)
 			->render();
 	}
 

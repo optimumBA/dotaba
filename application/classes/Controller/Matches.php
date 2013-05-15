@@ -32,6 +32,8 @@ class Controller_Matches extends Controller_Application {
 			->with('radiant_clan')
 			->with('dire_clan')
 			->with('mode')
+			->with('stream')
+			->with('stream:user')
 			->where('match.id', '=', $this->request->param('id'))
 			->find();
 
@@ -72,13 +74,8 @@ class Controller_Matches extends Controller_Application {
 			}
 			else
 			{
-				$streams = $match->streams->find_all();
-
-				$can_stream = ($this->_user->stream->loaded() AND $this->_user->stream->has('matches', $match) == FALSE);
-
 				$this->_content = View::factory('matches/unprocessed')
-					->set('streams', $streams)
-					->set('can_stream', $can_stream);
+					->set('match', $match);
 			}
 
 			$this->_content->set('match', $match)
@@ -312,16 +309,26 @@ class Controller_Matches extends Controller_Application {
 			{
 				if ($this->_user->stream->loaded())
 				{
-					if ($this->_user->stream->has('matches', $match))
+					if ($match->stream_id)
 					{
-						$this->_messages[] = array(
-							'type'  => 'error',
-							'value' => 'Već si najavio/la streamanje ovog meča.',
-						);
+						if ($this->_user->stream->id == $match->stream_id)
+						{
+							$this->_messages[] = array(
+								'type'  => 'error',
+								'value' => 'Već si najavio/la streamanje ovog meča.',
+							);
+						}
+						else
+						{
+							$this->_messages[] = array(
+								'type'  => 'error',
+								'value' => 'Neko je već najavio streamanje ovog meča.',
+							);
+						}
 					}
 					else
 					{
-						$this->_user->stream->add('matches', $match);
+						$match->values(array('stream_id' => $this->_user->stream->id))->update();
 
 						$this->_messages[] = array(
 							'type'  => 'success',
@@ -358,9 +365,9 @@ class Controller_Matches extends Controller_Application {
 			{
 				if ($this->_user->stream->loaded())
 				{
-					if ($this->_user->stream->has('matches', $match))
+					if ($this->_user->stream->id == $match->stream_id)
 					{
-						$this->_user->stream->remove('matches', $match);
+						$match->values(array('stream_id' => NULL))->update();
 
 						$this->_messages[] = array(
 							'type'  => 'success',

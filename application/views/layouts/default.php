@@ -49,7 +49,7 @@
             	<!-- Column One Start -->
                 <div class="col1">
 
-                    <?php echo Request::factory('widgets/announcements')->execute(); ?>
+                    <?php echo Request::factory('widgets/matches')->execute(); ?>
                   
                 </div>
                 <!-- Column One End -->
