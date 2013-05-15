@@ -33,7 +33,6 @@ class Controller_Tournaments extends Controller_Application {
 		$tournament = ORM::factory('Tournament')
 			->with('mode')
 			->with('winner')
-			->with('participation')
 			->where('tournament.id', '=', $this->request->param('id'))
 			->find();
 
@@ -365,15 +364,15 @@ class Controller_Tournaments extends Controller_Application {
 			if ($this->request->method() === Request::POST)
 			{
 				$participations = $tournament->participations
-					->where('is_approved', '=', TRUE);
+					->where('is_approved', '=', TRUE)
+					->find_all()
+					->as_array();
 
-				$count = $participations->count_all();
+				$count = count($participations);
 
 				if ($this->_user->has_role('Organizator/ica turnira') AND $tournament->is_started == FALSE AND $count == $tournament->num_clans)
 				{
 					$type = ORM::factory('Type', array('name' => 'Turnir'));
-
-					$participations = $participations->find_all()->as_array();
 
 					shuffle($participations);
 
