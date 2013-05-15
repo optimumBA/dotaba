@@ -3,7 +3,7 @@
 	<?php if (count($matches) > 0): ?>
 		<div class="current-eve">
 			<h5><?php echo HTML::anchor('liga/mecevi/'.$matches[0]->id ,$matches[0]->radiant_clan->name.' vs '.$matches[0]->dire_clan->name, array('class' => 'colr')); ?></h5>
-			<div id="countdown-match" data-date="<?php echo Date::formatted_time($matches[0]->date, 'D, d M y H:i:s').' +0100'; ?>"></div>
+			<div id="countdown-match" data-date="<?php echo strtotime($matches[0]->date)*1000; ?>"></div>
 		</div>
 		<ul>
 			<?php for ($i = 1; $i < count($matches); $i++): ?>
