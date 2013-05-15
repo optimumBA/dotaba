@@ -2,15 +2,11 @@
 
 class Task_Items_Populate extends Minion_Task {
 
-	protected $_options = array(
-		'update' => 0,
-	);
-
 	protected function _execute(array $params)
 	{
-		$changes = Model_Item::populate(Steam::items(), $params['update']);
+		$changes = Model_Item::populate(Steam::items());
 
-		if ($changes !== FALSE AND $params['update'] == FALSE)
+		if ($changes)
 		{
 			$config     = Kohana::$config->load('site');
 			$site_name  = $config->get('site_name');

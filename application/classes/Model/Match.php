@@ -94,10 +94,12 @@ class Model_Match extends ORM {
 					{
 						foreach ($result->picks_bans as $pick_ban)
 						{
+							$hero = ORM::factory('Hero', array('remote_id' => $pick_ban->hero_id));
+
 							$values = array(
 								'match_id' => $match->id,
 								'is_pick'  => $pick_ban->is_pick,
-								'hero_id'  => $pick_ban->hero_id,
+								'hero_id'  => $hero->id,
 								'team'     => $pick_ban->team,
 								'order'    => $pick_ban->order,
 							);
@@ -123,17 +125,13 @@ class Model_Match extends ORM {
 				if ($slot->loaded())
 					continue;
 
+				$hero = ORM::factory('Hero', array('remote_id' => $player->hero_id));
+
 				$values = array(
 					'match_id'      => $match->id,
 					'user_id'       => $user->id,
 					'player_slot'   => Steam::convert_player_slot($player->player_slot),
-					'hero_id'       => $player->hero_id,
-					'item_0_id'     => $player->item_0,
-					'item_1_id'     => $player->item_1,
-					'item_2_id'     => $player->item_2,
-					'item_3_id'     => $player->item_3,
-					'item_4_id'     => $player->item_4,
-					'item_5_id'     => $player->item_5,
+					'hero_id'       => $hero->id,
 					'kills'         => $player->kills,
 					'deaths'        => $player->deaths,
 					'assists'       => $player->assists,
@@ -149,6 +147,11 @@ class Model_Match extends ORM {
 					'hero_healing'  => $player->hero_healing,
 					'level'         => $player->level,
 				);
+
+				for ($i = 0; $i < 6; $i++)
+				{
+					$values['item_'.$i.'_id'] = ORM::factory('Item', array('remote_id' => $player->{'item_'.$i}))->id;
+				}
 
 				$slot->values($values)->create();
 

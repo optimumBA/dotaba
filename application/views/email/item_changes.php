@@ -7,7 +7,7 @@
 		<?php endif ?>
 		<table border="1">
 			<tr>
-				<th>ID</th>
+				<th>Remote ID</th>
 				<th>Ključ</th>
 				<th>Naziv</th>
 			</tr>
@@ -27,23 +27,23 @@
 		<?php if ($count === 1): ?>
 			Izmjenjen je postojeći item:
 		<?php else: ?>
-			Izmijenjeni su postojeći itemi:
+			Izmjenjeni su postojeći itemi:
 		<?php endif ?>
 		<table border="1">
 			<tr>
 				<th>ID</th>
 				<th>Ključ</th>
-				<th>Novi ključ</th>
 				<th>Naziv</th>
-				<th>Novi naziv</th>
+				<th>Remote ID</th>
+				<th>Novi remote ID</th>
 			</tr>
 			<?php foreach ($changes['altered'] as $item): ?>
 				<tr>
 					<td><?php echo $item['local']->id; ?></td>
 					<td><?php echo $item['local']->name; ?></td>
-					<td><?php echo $item['remote']->name; ?></td>
 					<td><?php echo $item['local']->localized_name; ?></td>
-					<td><?php echo $item['remote']->localized_name; ?></td>
+					<td><?php echo $item['local']->remote_id; ?></td>
+					<td><?php echo $item['remote']->id; ?></td>
 				</tr>
 			<?php endforeach ?>
 		</table>

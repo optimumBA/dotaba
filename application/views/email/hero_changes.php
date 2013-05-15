@@ -7,7 +7,7 @@
 		<?php endif ?>
 		<table border="1">
 			<tr>
-				<th>ID</th>
+				<th>Remote ID</th>
 				<th>Ključ</th>
 				<th>Naziv</th>
 			</tr>
@@ -27,23 +27,23 @@
 		<?php if ($count === 1): ?>
 			Izmjenjen je postojeći heroj:
 		<?php else: ?>
-			Izmijenjeni su postojeći heroji:
+			Izmjenjeni su postojeći heroji:
 		<?php endif ?>
 		<table border="1">
 			<tr>
 				<th>ID</th>
 				<th>Ključ</th>
-				<th>Novi ključ</th>
 				<th>Naziv</th>
-				<th>Novi naziv</th>
+				<th>Remote ID</th>
+				<th>Novi remote ID</th>
 			</tr>
 			<?php foreach ($changes['altered'] as $hero): ?>
 				<tr>
 					<td><?php echo $hero['local']->id; ?></td>
 					<td><?php echo $hero['local']->name; ?></td>
-					<td><?php echo $hero['remote']->name; ?></td>
 					<td><?php echo $hero['local']->localized_name; ?></td>
-					<td><?php echo $hero['remote']->localized_name; ?></td>
+					<td><?php echo $hero['local']->remote_id; ?></td>
+					<td><?php echo $hero['remote']->id; ?></td>
 				</tr>
 			<?php endforeach ?>
 		</table>

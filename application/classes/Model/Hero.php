@@ -9,65 +9,45 @@ class Model_Hero extends ORM {
 		),
 	);
 
-	public static function populate($remote_heroes, $update)
+	public static function populate($remote_heroes)
 	{
-		$db = Database::instance();
-
-		$db->begin();
-
-		$changes['added']   = array();
-		$changes['altered'] = array();
+		$changes = array(
+			'added'   => array(),
+			'altered' => array(),
+		);
 
 		foreach ($remote_heroes as $remote_hero)
 		{
-			$hero = ORM::factory('Hero', $remote_hero->id);
+			$hero = ORM::factory('Hero', array('name' => $remote_hero->name));
 
-			$image = 'http://media.steampowered.com/apps/dota2/images/heroes/'.substr($remote_hero->name, 14).'_full.png';
-
-			if ( ! $hero->loaded())
+			if ($hero->loaded())
 			{
-				$changes['added'][] = $remote_hero;
+				if ($remote_hero->id != $hero->remote_id)
+				{
+					$changes['altered'][] = array('remote' => $remote_hero, 'local' => $hero);
 
-				$values = array(
-					'id'             => $remote_hero->id,
-					'name'           => $remote_hero->name,
-					'localized_name' => $remote_hero->localized_name,
-					'image'          => $image,
-				);
-
-				$hero->values($values, array_keys($values))->create();
-
-				Media_Remote_Hero::cache($remote_hero->id, $image);
+					$hero->values(array(
+						'remote_id' => $remote_hero->id,
+					))->update();
+				}
 			}
 			else
 			{
-				foreach ($hero as $key => $value)
-				{
-					if (strpos($key, '_') === 0)
-						continue;
+				$changes['added'][] = $remote_hero;
 
-					if ($remote_hero->{$key} != $value)
-					{
-						$changes['altered'][] = array('remote' => $remote_hero, 'local' => $hero);
+				$image = 'http://media.steampowered.com/apps/dota2/images/heroes/'.substr($remote_hero->name, 14).'_full.png';
 
-						if ($update == TRUE)
-						{
-							$hero->values(array(
-								'name'           => $remote_hero->name,
-								'localized_name' => $remote_hero->localized_name,
-								'image'          => $image,
-							))->update();
-						}
+				$values = array(
+					'name'           => $remote_hero->name,
+					'localized_name' => $remote_hero->localized_name,
+					'image'          => $image,
+					'remote_id'      => $remote_hero->id,
+				);
 
-						break;
-					}
-				}
+				$hero->values($values)->create();
+
+				Media_Remote_Hero::cache($hero->id, $image);
 			}
-		}
-
-		if (empty($changes['altered']) OR $update == TRUE)
-		{
-			$db->commit();
 		}
 
 		if (empty($changes['added']) AND empty($changes['altered']))

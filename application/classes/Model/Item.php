@@ -29,65 +29,45 @@ class Model_Item extends ORM {
 		),
 	);
 
-	public static function populate($remote_items, $update)
+	public static function populate($remote_items)
 	{
-		$db = Database::instance();
-
-		$db->begin();
-
-		$changes['added']   = array();
-		$changes['altered'] = array();
+		$changes = array(
+			'added'   => array(),
+			'altered' => array(),
+		);
 
 		foreach ($remote_items as $remote_item)
 		{
-			$item = ORM::factory('Item', $remote_item->id);
+			$item = ORM::factory('Item', array('name' => $remote_item->name));
 
-			$image = 'http://media.steampowered.com/apps/dota2/images/items/'.substr($remote_item->name, 5).'_lg.png';
-
-			if ( ! $item->loaded())
+			if ($item->loaded())
 			{
-				$changes['added'][] = $remote_item;
+				if ($remote_item->id != $item->remote_id)
+				{
+					$changes['altered'][] = array('remote' => $remote_item, 'local' => $item);
 
-				$values = array(
-					'id'             => $remote_item->id,
-					'name'           => $remote_item->name,
-					'localized_name' => $remote_item->localized_name,
-					'image'          => $image,
-				);
-
-				$item->values($values, array_keys($values))->create();
-
-				Media_Remote_Item::cache($remote_item->id, $image);
+					$item->values(array(
+						'remote_id' => $remote_item->id,
+					))->update();
+				}
 			}
 			else
 			{
-				foreach ($item as $key => $value)
-				{
-					if (strpos($key, '_') === 0)
-						continue;
+				$changes['added'][] = $remote_item;
 
-					if ($remote_item->{$key} != $value)
-					{
-						$changes['altered'][] = array('remote' => $remote_item, 'local' => $item);
+				$image = 'http://media.steampowered.com/apps/dota2/images/items/'.substr($remote_item->name, 5).'_lg.png';
 
-						if ($update == TRUE)
-						{
-							$item->values(array(
-								'name'           => $remote_item->name,
-								'localized_name' => $remote_item->localized_name,
-								'image'          => $image,
-							))->update();
-						}
+				$values = array(
+					'name'           => $remote_item->name,
+					'localized_name' => $remote_item->localized_name,
+					'image'          => $image,
+					'remote_id'      => $remote_item->id,
+				);
 
-						break;
-					}
-				}
+				$item->values($values)->create();
+
+				Media_Remote_Item::cache($item->id, $image);
 			}
-		}
-
-		if (empty($changes['altered']) OR $update == TRUE)
-		{
-			$db->commit();
 		}
 
 		if (empty($changes['added']) AND empty($changes['altered']))
