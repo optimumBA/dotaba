@@ -105,7 +105,7 @@ class Controller_Matches extends Controller_Application {
 		{
 			if ($this->_user->has_role('Organizator/ica turnira'))
 			{
-				if ($match->radiant_win)
+				if ($match->radiant_win !== NULL)
 				{
 					$this->_messages[] = array(
 						'type'  => 'error',
@@ -167,19 +167,16 @@ class Controller_Matches extends Controller_Application {
 						}
 					}
 
-					$participations = $match->tournament->participations
+					$users = ORM::factory('User')
 						->or_where('clan_id', '=', $match->radiant_clan_id)
 						->or_where('clan_id', '=', $match->dire_clan_id)
 						->find_all();
 
 					$users_array = array(NULL);
 
-					foreach ($participations as $participation)
+					foreach ($users as $user)
 					{
-						foreach ($participation->users->find_all() as $user)
-						{
-							$users_array[$user->id] = $user->username;
-						}
+						$users_array[$user->id] = $user->username;
 					}
 
 					$heroes = ORM::factory('Hero')->find_all();
@@ -391,6 +388,79 @@ class Controller_Matches extends Controller_Application {
 			Session::instance()->set('messages', $this->_messages);
 
 			HTTP::redirect('liga/mecevi/'.$match->id);
+		}
+		else
+		{
+			throw HTTP_Exception::factory(404, 'Meč nije pronađen.');
+		}
+	}
+
+	public function action_izmijeni_vrijeme()
+	{
+		$match = ORM::factory('Match')
+			->with('type')
+			->with('tournament')
+			->where('match.id', '=', $this->request->param('id'))
+			->find();
+
+		if ($match->loaded() AND $match->type->name == 'Turnir')
+		{
+			if ($this->_user->has_role('Organizator/ica turnira'))
+			{
+				if ($match->radiant_win !== NULL)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Meč je već odigran.',
+					);
+
+					Session::instance()->set('messages', $this->_messages);
+
+					HTTP::redirect('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE));
+				}
+				else
+				{
+					if ($this->_post)
+					{
+						try
+						{
+							$this->_post['updated_at'] = DB::expr('NOW()');
+
+							$match->values($this->_post, array('date', 'updated_at'))
+								->update();
+
+							$this->_messages[] = array(
+								'type'  => 'success',
+								'value' => 'Vrijeme odigravanja je izmijenjeno.',
+							);
+						}
+						catch (ORM_Validation_Exception $e)
+						{
+							$this->_messages[] = array(
+								'type'  => 'error',
+								'value' => 'Nepravilan unos.',
+							);
+
+							$errors = $e->errors('models');
+						}
+
+						Session::instance()->set('messages', $this->_messages);
+
+						HTTP::redirect('liga/mecevi/'.$match->id);
+					}
+				}
+			}
+			else
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nisi organizator/ica turnira.',
+				);
+
+				Session::instance()->set('messages', $this->_messages);
+
+				HTTP::redirect('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE));
+			}
 		}
 		else
 		{

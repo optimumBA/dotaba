@@ -2,9 +2,7 @@
 	<h1 class="heading colr">Nadolazeći mečevi</h1>
 	<?php if (count($announcements) > 0): ?>
 		<div class="current-eve">
-			<h5><a href="#" class="colr">
-				<?php echo $announcements[0]->match->radiant_clan->name; ?> vs <?php echo $announcements[0]->match->dire_clan->name; ?>
-			</a></h5>
+			<h5><?php echo HTML::anchor('liga/mecevi/'.$announcements[0]->match->id,$announcements[0]->match->radiant_clan->name.' vs '.$announcements[0]->match->dire_clan->name, array('class' => 'colr')); ?></h5>
 			<div id="countdown-match" data-date="<?php echo Date::formatted_time($announcements[0]->match->date, 'D, d M y H:i:s').' +0100'; ?>"></div>
 		</div>
 		<ul>

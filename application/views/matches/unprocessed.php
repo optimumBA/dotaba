@@ -35,7 +35,7 @@
 		<li>
 			<?php echo HTML::anchor('igraci/'.$stream->user->accountid.'/stream', $stream->user->username.'ov/in stream'); ?>
 			<?php if ($stream->user_id == User::instance()->id): ?>
-				<?php echo HTML::anchor('#', 'Otkaži stremanje', array('class' => 'form_submit', 'data-form' => 'otkazi_streamanje')); ?>
+				<?php echo HTML::anchor('#', 'Otkaži streamanje', array('class' => 'form_submit', 'data-form' => 'otkazi_streamanje')); ?>
 				<?php echo Form::open('liga/mecevi/'.$match->id.'/otkazi_streamanje', array('class' => 'hidden otkazi_streamanje')); ?>
 					<?php echo Form::hidden('csrf', Security::token()); ?>
 				<?php echo Form::close(); ?>
@@ -45,9 +45,21 @@
 </ul>
 
 <?php if ($can_stream): ?>
-	<?php echo HTML::anchor('#', 'Najavi stremanje', array('class' => 'form_submit', 'data-form' => 'najavi_streamanje')); ?>
+	<?php echo HTML::anchor('#', 'Najavi streamanje', array('class' => 'form_submit', 'data-form' => 'najavi_streamanje')); ?>
 	<?php echo Form::open('liga/mecevi/'.$match->id.'/najavi_streamanje', array('class' => 'hidden najavi_streamanje')); ?>
 		<?php echo Form::hidden('csrf', Security::token()); ?>
+	<?php echo Form::close(); ?>
+<?php endif ?>
+
+<?php if (User::instance()->has_role('Organizator/ica turnira')): ?>
+	<?php echo HTML::anchor('liga/mecevi/'.$match->id.'/izmijeni', 'Unesi rezultate meča'); ?>
+
+	<?php echo Form::open('liga/mecevi/'.$match->id.'/izmijeni_vrijeme'); ?>
+		<?php echo Form::label('date', 'Vrijeme odigravanja (formata YYYY-mm-dd HH:mm:ss, primjer: 2013-05-15 03:20:00):'); ?>
+		<?php echo Form::input('date', $match->date); ?>
+
+		<?php echo Form::hidden('csrf', Security::token()); ?>
+		<?php echo Form::submit(NULL, 'Izmijeni vrijeme odigravanja'); ?>
 	<?php echo Form::close(); ?>
 <?php endif ?>
 
