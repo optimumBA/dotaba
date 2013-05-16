@@ -29,6 +29,20 @@ class Model_Match extends ORM {
 		),
 	);
 
+	public function filters()
+	{
+		return array(
+			'date' => array(
+				array(
+					function($value)
+					{
+						return ($value) ? $value : NULL;
+					}
+				),
+			),
+		);
+	}
+
 	public function labels()
 	{
 		return array(
