@@ -239,6 +239,7 @@ class Controller_Matches extends Controller_Application {
 					$this->_post['type_id']       = $type->id;
 					$this->_post['tournament_id'] = $tournament->id;
 					$this->_post['mode_id']       = $tournament->mode_id;
+					$this->_post['date']          = ($this->_post['date']) ? $this->_post['date'] : NULL;
 					$this->_post['created_at']    = DB::expr('NOW()');
 
 					$match = ORM::factory('Match')
