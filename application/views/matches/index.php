@@ -34,7 +34,7 @@
 			<td><h6 class="white"><?php echo ($match->tournament_id) ? HTML::anchor('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE), $match->tournament->name) : NULL; ?></h6></td>
 			<td><h6><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name, '-', TRUE), '<span class="radiant-team">'.$match->radiant_clan->name.'</span>') : NULL; ?></h6></td>
 			<td><h6><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name, '-', TRUE), '<span class="dire-team">'.$match->dire_clan->name.'</span>') : NULL; ?></h6></td>
-			<td><h6 class="white"><?php echo Date::formatted_time($match->date); ?></h6></td>
+			<td><h6 class="white"><?php echo ($match->date) ? Date::formatted_time($match->date) : '-'; ?></h6></td>
 		</tr>
 	<?php endforeach ?>
 </table>
