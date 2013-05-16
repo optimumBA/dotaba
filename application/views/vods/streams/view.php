@@ -52,6 +52,35 @@
                         </div>
                         <div class="clear"></div>
                         <!-- Post Detail End -->
+
+<div class="album-track-list">
+    <h1 class="heading colr">Mečevi</h1>
+    <div class="matchlist">
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>Tip</td>
+                <td>Mod</td>
+                <td>Turnir</td>
+                <td>Radiant</td>
+                <td>Dire</td>
+                <td>Vrijeme odigravanja</th>
+            </tr>
+            <?php foreach ($matches as $match): ?>
+                <tr>
+                    <td><h6><?php echo HTML::anchor('liga/mecevi/'.$match->id, $match->id); ?></h6></td>
+                    <td><h6 class="colr"><?php echo $match->type->name; ?></h6></td>
+                    <td><h6 class="white"><?php echo $match->mode->name; ?></h6></td>
+                    <td><h6><?php echo ($match->tournament_id) ? HTML::anchor('liga/turniri/'.$match->tournament->id.'-'.URL::title($match->tournament->name, '-', TRUE), $match->tournament->name) : NULL; ?></h6></td>
+                    <td><h6><?php echo ($match->radiant_clan_id) ? HTML::anchor('liga/klanovi/'.$match->radiant_clan->id.'-'.URL::title($match->radiant_clan->name, '-', TRUE), '<span class="radiant-team">'.$match->radiant_clan->name.'</a>') : NULL; ?></h6></td>
+                    <td><h6><?php echo ($match->dire_clan_id) ? HTML::anchor('liga/klanovi/'.$match->dire_clan->id.'-'.URL::title($match->dire_clan->name, '-', TRUE), '<span class="dire-team">'.$match->dire_clan->name.'</a>') : NULL; ?></h6></td>
+                    <td><h6 class="white"><?php echo ($match->date) ? date('d M Y H:i:s', strtotime($match->date)) : '-'; ?></h6></td>
+                </tr>
+            <?php endforeach ?>
+        </table>
+    </div>
+</div>
+<div class="clear"></div>
                         
 <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $stream->id, 'object_type' => 'Stream')); ?>                    </div>
                

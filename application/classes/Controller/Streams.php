@@ -29,11 +29,20 @@ class Controller_Streams extends Controller_Application {
 
 		if ($stream->loaded())
 		{
+			$matches = $stream->matches
+				->with('type')
+				->with('tournament')
+				->with('radiant_clan')
+				->with('dire_clan')
+				->with('mode')
+				->find_all();
+
 			$comments = Model_Stream::comments($stream->id);
 
 			$this->_title 	= $stream->user->username.'ov/in stream';
 			$this->_content = View::factory('vods/streams/view')
 				->set('stream', $stream)
+				->set('matches', $matches)
 				->set('comments', $comments);
 		}
 		elseif ($this->request->param('id') == $this->_user->accountid)
