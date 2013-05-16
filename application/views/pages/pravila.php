@@ -52,6 +52,22 @@ Korisnik može komentirati svaku vijest, korisnički profil, stream, video i sl.
                                 
                                 </div>
                                 
+                                
+                                <div class="clear"></div>
+                              
+                             	<div class="alert alert-note">
+                                <h5 class="white">Anonimni igrači</h5>
+                             	<div class="clear"></div>
+                               Prikaz detalja mečeva za Public Matchmaking prikazuje samo Vaše stanje, dok ostali neregistrovani igrači na Dota 2 Balkan stranicu nisu prikazani. Razlog tome je njihova privatnost. Ukoliko igrač želi da se prikazuju njegovi, isti se mora registrovati i prihvatiti pravila i uvjete koje stranica nalaže.<br  />
+                               Imena igrača, detalji i inventory neće biti prikazani.
+                                
+                                
+                                
+                                
+                                </div>
+                                
+                                
+                                
                                 <div class="clear"></div>
                               
                              	<div class="alert alert-danger">

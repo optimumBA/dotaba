@@ -68,6 +68,9 @@
 .assists  {
 	color:#960;
 }
+.gold  {
+	color:gold;
+}
 
 .matchlist {
 	margin:0px;padding:0px;
@@ -97,6 +100,10 @@
 	-moz-border-radius-bottomright:0px;
 	-webkit-border-bottom-right-radius:0px;
 	border-bottom-right-radius:0px;
+	
+}
+.matchlist img {
+vertical-align:middle;
 }
 .matchlist table tr:first-child td:first-child {
 	-moz-border-radius-topleft:0px;
@@ -193,20 +200,21 @@
 	font-weight:bold;
 }
 img.stats-won {
-	border: 1px solid rgba(0, 0, 0, 0.75);
+	border: 1px solid #6F0;
 	background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.7);
-	box-shadow: 0px 1px 5px #6F0;
+	box-shadow: 0px 1px 10px #6F0;
 	max-width: 98.8%;
-	padding: 3px;
-	border-radius: 6px 6px 6px 6px;
+	padding: 1px;
+	border-radius: 1px 1px 1px 1px;
+	
 }
 img.stats-lost {
-	border: 1px solid rgba(0, 0, 0, 0.75);
+	border: 1px solid #CC0000;
 	background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.7);
-	box-shadow: 0px 1px 5px #CC0000;
+	box-shadow: 0px 1px 10px #CC0000;
 	max-width: 98.8%;
-	padding: 3px;
-	border-radius: 6px 6px 6px 6px;
+	padding: 1px;
+	border-radius: 1px 1px 1px 1px;
 }
 
 /* Top links
@@ -1885,6 +1893,11 @@ ul.teamlist li .desc p.txt{
 	width:100%;
 	float:left;
 }
+.matchdetails {
+	width:170%;
+	float:left;
+}
+
 /* Blog Post
 ================================================== */
 .post {
@@ -2347,6 +2360,15 @@ img.frame {
 	padding: 3px;
 	border-radius: 6px 6px 6px 6px;
 }
+img.frame-item {
+	border: 1px solid rgba(0, 0, 0, 0.75);
+	background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.7);
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.6);
+	max-width: 98.8%;
+	padding: 1px;
+	border-radius: 1px 1px 1px 1px;
+}
+
 img.status-0 {
 	border: 1px solid #727272;
 	background: none repeat scroll 0% 0% #727272;
@@ -2823,6 +2845,16 @@ img.status-avatar-align {
 	border-radius:3px;
 	position:relative;
 }
+.gig-post#mythical {
+
+	-webkit-box-shadow:  2px 0px 5px 5px #8847FF;
+ 	box-shadow:  2px 0px 5px 5px #8847FF;
+	border-radius:0px;
+
+	
+}
+
+
 .gig-post .upper-sec{
 	width:100%;
 	height:144px;

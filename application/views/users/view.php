@@ -55,19 +55,16 @@
                                     <div class="matchlist">
                 <table >
                     <tr>
-                        <td>
-                            Heroj<br />
-                            <small><span class="stats-won">Pobjeda</span> | <span class="stats-lost">Poraz</span></small>
-                        </td>
-                        <td >
-                            Meč ID
-                        </td>
-                        <td>
-                           K/D/A
-                        </td>
+                        <td>Heroj<br /><small><span class="stats-won">Pobjeda</span> | <span class="stats-lost">Poraz</span></small></td>
+                        <td>Ime heroja<br /><small><span class="radiant-team">The Radiant</span> | <span class="dire-team">The Dire</span></small></td>
+                        <td>Tip</td>
+                        <td>Meč ID</td>
+                        <td>K</td>
+                        <td>D</td>
+                        <td>A</td>
                         
                        
-                        
+                        <td></
                         <td>
                             Vrijeme
                         </td>
@@ -75,25 +72,23 @@
                    <?php foreach ($slots as $slot): ?>
                   
                     <tr>
-                        <td >
+                        <td width="85px">
 							<?php echo HTML::anchor('liga/mecevi/'.$slot->match->id, HTML::image(Media_Remote_Hero::get($slot->hero->id, $slot->hero->image, 'small'), array('alt' => $slot->hero->localized_name, 'title' => $slot->hero->localized_name, 'class' => ((int) ($slot->player_slot / 5) == $slot->match->radiant_win) ? 'stats-lost' : 'stats-won'))); ?>&nbsp; &nbsp;
 							
 							
-							<?php echo $slot->hero->localized_name;?>
+							
                             
                             
                         </td>
-                        <td>
-                             <?php echo $slot->match->mode->name; ?> <br /><?php echo ($slot->match->radiant_win) ? '<a class="radiant-team">The Radiant</a>' : '<a class="dire-team">The Dire</a>'; ?>
-<div class="clear"></div> <?php echo $slot->match->mid; ?> 
-                        </td>
-                        <td>
-                         <a class="kills"><?php echo $slot->kills;?></a> / <a class="deaths"><?php echo $slot->deaths;?></a> / <a class="assists"><?php echo $slot->assists;?></a>
-                        </td>
-                        
-                        <td>
-                           <?php echo Date::formatted_time($slot->match->date); ?>
-                        </td>
+                       
+                       <td width="125px"><a href="/liga/mecevi/<?php echo $slot->match->id;?>"><h6 class="<?php echo ($slot->match->radiant_win) ? 'radiant' : 'dire'; ?>-team"><?php echo $slot->hero->localized_name;?></h6></a></td>
+                       
+                       	<td><h6 class="colr"><?php echo $slot->match->mode->name; ?></h6></td>
+                        <td width="50px"><h6 class="white"><?php echo $slot->match->mid; ?></h6></td>
+                        <td><h6 class="kills"><?php echo $slot->kills;?></h6></td>
+                        <td><h6 class="deaths"><?php echo $slot->deaths;?></h6></td>
+                        <td><h6 class="assists"><?php echo $slot->assists;?></h6></td>
+						<td><h6 class="white"><?php echo Date::formatted_time($slot->match->date); ?></h6></td>
                     </tr>
                    
                       <?php endforeach ?> 
