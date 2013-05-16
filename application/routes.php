@@ -68,6 +68,12 @@ Route::set('tournaments', 'liga/turniri(/<action>)(/<page>)', array('action' => 
 		'action'     => 'index',
 	));
 
+Route::set('najavi_match', 'liga/turniri/<id>-<name>/najavi_mec', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
+	->defaults(array(
+		'controller' => 'matches',
+		'action'     => 'najavi',
+	));
+
 Route::set('tournament', 'liga/turniri/<id>-<name>(/<action>)', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
 	->defaults(array(
 		'controller' => 'tournaments',
@@ -79,12 +85,6 @@ Route::set('tournament_prijava', 'liga/turniri/<id>-<name>/prijave/<id2>/<operat
 	->defaults(array(
 		'controller' => 'tournaments',
 		'action'     => 'review_participation',
-	));
-
-Route::set('najavi_match', 'liga/turniri/<id>-<name>/najavi_mec', array('id' => '\d+', 'name' => '[a-zA-Z0-9_-]+'))
-	->defaults(array(
-		'controller' => 'matches',
-		'action'     => 'najavi',
 	));
 
 Route::set('matches', 'liga/mecevi')
