@@ -56,8 +56,8 @@
 	<?php echo HTML::anchor('liga/mecevi/'.$match->id.'/izmijeni', 'Unesi rezultate meča'); ?>
 
 	<?php echo Form::open('liga/mecevi/'.$match->id.'/izmijeni_vrijeme'); ?>
-		<?php echo Form::label('date', 'Vrijeme odigravanja (formata YYYY-mm-dd HH:mm:ss, primjer: 2013-05-15 03:20:00):'); ?>
-		<?php echo Form::input('date', $match->date); ?>
+		<?php echo Form::label('date', 'Vrijeme odigravanja:'); ?>
+		<?php echo Form::input('date', $match->date, array('class' => 'datetime')); ?>
 
 		<?php echo Form::hidden('csrf', Security::token()); ?>
 		<?php echo Form::submit(NULL, 'Izmijeni vrijeme odigravanja'); ?>
