@@ -234,7 +234,7 @@ class Controller_Matches extends Controller_Application {
 			{
 				try
 				{
-					$type = ORM::factory('Type', array('name' => 'Tournament'));
+					$type = ORM::factory('Type', array('name' => 'Turnir'));
 
 					$this->_post['type_id']       = $type->id;
 					$this->_post['tournament_id'] = $tournament->id;
