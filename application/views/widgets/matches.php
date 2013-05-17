@@ -17,7 +17,7 @@
 							<h6>
 								<?php echo HTML::anchor('liga/mecevi/'.$matches[$i]->id, '<span class="radiant-team">'.$matches[$i]->radiant_clan->name.'</span> vs <span class="dire-team">'.$matches[$i]->dire_clan->name.'</span>'); ?>
 							</h6>
-							<p><h6 class="colr"><?php echo HTML::anchor($matches[$i]->tournament->id.'-'.URL::title($matches[$i]->tournament->name, '-', TRUE), $matches[$i]->tournament->name); ?></h6></p>
+							<p><h6 class="colr"><?php echo HTML::anchor('liga/turniri/'.$matches[$i]->tournament->id.'-'.URL::title($matches[$i]->tournament->name, '-', TRUE), $matches[$i]->tournament->name); ?></h6></p>
 						</div>
 					</div>
 				</li>
