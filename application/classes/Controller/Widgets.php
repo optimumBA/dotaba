@@ -101,9 +101,12 @@ class Controller_Widgets extends Controller {
 			->order_by('id', 'DESC')
 			->limit(5)
 			->find_all();
+			
+		$total = ORM::factory('User')->find_all();
 
 		$this->_content = View::factory('widgets/newusers')
 			->set('users', $users)
+			->set('total', $total)
 			->render();
 	}
 	

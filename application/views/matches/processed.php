@@ -96,17 +96,7 @@
     </div>
 <?php endforeach ?>
 
-<?php if (count($picksbans) > 0): ?>
-	<ul>
-		<?php foreach ($picksbans as $pickban): ?>
-			<li>
-				<?php echo ($pickban->is_pick) ? 'pick' : 'ban'; ?>
-				<?php echo ($pickban->team == 0) ? 'Radiant' : 'Dire'; ?>
-				<?php echo HTML::image(Media_Remote_Hero::get($pickban->hero->id, $pickban->hero->image), array('alt' => $pickban->hero->localized_name)); ?>
-			</li>
-		<?php endforeach ?>
-	</ul>
-<?php endif ?>
+
 <div class="clear"></div>
 
 </div>

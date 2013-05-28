@@ -25,7 +25,6 @@
                                 <p class="release">Registrovan/a: <?php echo Date::formatted_time($user->created_at); ?></p>
                                 <p>Ime: <?php echo $user->name; ?></p>
                                 <p>Država: <?php echo HTML::image('/assets/images/flags/'.strtolower($user->location).'.png', array('title' => $user->location, 'alt' => $user->location)); ?></p>
-								<p>Klan: <?php echo ($user->clan_id) ? HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name, '-', TRUE), $user->clan->name) : ''; ?></p>
                                 <p><a class="buttonone" href="<?php echo $user->profileurl; ?>" target="_blank">Steam profil</a></p>
                                 <p>
                                     Win rate u zadnjih mjesec dana: <span class="stats-precent"><?php echo ($user->wins || $user->losses || $user->abandons) ? $user->wins / ($user->wins + $user->losses + $user->abandons) * 100 : 0; ?>%</span> 
@@ -36,10 +35,7 @@
                         </div>
                         <div class="clear"></div>
                         <!-- Album Detail End -->
-                      
-                    
-            
-	
+ 
                       
                         <!-- Album List Start -->
                         <div class="album-track-list">
@@ -129,8 +125,21 @@
                         <?php echo Form::close(); ?>
                     <?php endif ?>
                     <!-- Featured Hero End -->
-                    <?php echo Request::factory('widgets/users')->execute(); ?>
+                 
+                    <?php if($user->clan_id):?>
+                    <div class="widget fhero">
+                          <div class="desc"><h2 class="colr">Tim</h2></div>
+						  <?php echo HTML::anchor('liga/klanovi/'.$user->clan->id.'-'.URL::title($user->clan->name), HTML::image(Media_Local_Clan::get($user->clan->id), array('alt' => $user->clan->name, 'class' => 'frame')));?>
+                          <span><h4 class="white"><?php echo $user->clan->name;?></h4></span>
+                         </div>
+                     <?php endif;?>
+                
+					
+					<?php echo Request::factory('widgets/users')->execute(); ?>
                     <?php echo Request::factory('widgets/friends/'.$user->id)->execute(); ?>
+                		 
+                
+                
                 </div>
                 <!-- Column One End -->
             </div>

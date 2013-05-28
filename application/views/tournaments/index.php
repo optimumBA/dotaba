@@ -25,7 +25,7 @@
 	
 	
 	<!-- Post Start -->
-                        <div class="post">
+                        <div class="post" id="<?php echo ($tournament->id == in_array($tournament->id, array(2))) ? 'rare' : 'common' ?>">
                         	<div class="thumb">
                             <a href="/liga/turniri/<?=$tournament->id.'-'.URL::title($tournament->name, '-', TRUE);?>"><img src="<?=Media_Local_Tournament::get($tournament->id);?>" alt="<?php echo $tournament->name;?>" width="680px" /></a>
                             </div>

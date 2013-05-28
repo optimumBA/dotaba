@@ -68,14 +68,14 @@
 					<div class="widget giveaway">
                     
                 	<div class="widget">
-                    	<h1 class="heading colr">Champions League turnir</h1>
+                    	<h1 class="heading colr">Champions League 2 turnir</h1>
                         <div class="thumb">
-                        	<a href="/liga/turniri/1-dota-2-balkan-champions-league"><img src="/assets/images/champleagueann.jpg" alt="Dota 2 Balkan Champions League turnir" /></a>
+                        	<a href="/liga/turniri/2-dota-2-balkan-champions-league-2"><img src="/assets/images/champleagueann2.jpg" alt="Dota 2 Balkan Champions League 2 turnir" /></a>
                         </div>
                         <div class="desc">
-                        	<h4><a href="/liga/turniri/1-dota-2-balkan-champions-league" class="white">Dota 2 Balkan Champions League</a></h4>
+                        	<h4><a href="/liga/turniri/2-dota-2-balkan-champions-league-2" class="white">Dota 2 Balkan Champions League 2</a></h4>
                             <p>
-                           Prijave timova na Dota 2 Balkan Champions League turnir.
+                           Prijave timova na Dota 2 Balkan Champions League 2 turnir.
                                
                             </p>
                         </div>

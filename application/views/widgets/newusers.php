@@ -15,6 +15,7 @@
 		<?php endforeach ?>
 	</ul>
 </div>
+<h4 class="white">Ukupno korisnika: <?php echo count($total);?></h6>
 
 
 

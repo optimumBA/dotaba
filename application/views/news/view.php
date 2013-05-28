@@ -58,7 +58,7 @@
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">
-                        	<h4><?php echo HTML::anchor('novosti/'.$article->id.'-'.URL::title($article->title).'/izmijeni', 'Izmijeni vijesti'); ?></h4>
+                        	<h4><?php echo HTML::anchor('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE).'/izmijeni', 'Izmijeni vijesti'); ?></h4>
                         </div>
                     </div>
                     <?php endif;?>

@@ -45,11 +45,11 @@
                                     <?php echo Form::close(); ?>
 								<?php endif ?>
 	
-								<?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/izmijeni', 'Izmijeni'); ?>
+								<?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/izmijeni', 'Izmijeni', array('class' => 'bigbutton')); ?>
 								<?php endif ?>
                                 
                                 <?php if ($can_apply): ?>
-                                    <?php echo HTML::anchor('#', 'Prijava klana', array('class' => 'form_submit', 'data-form' => 'prijavi')); ?>
+                                    <?php echo HTML::anchor('#', 'Prijava klana', array('class' => 'form_submit bigbutton', 'data-form' => 'prijavi')); ?>
                                     <?php echo Form::open('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/prijavi', array('class' => 'hidden prijavi')); ?>
                                         <?php echo Form::hidden('csrf', Security::token()); ?>
                                     <?php echo Form::close(); ?>

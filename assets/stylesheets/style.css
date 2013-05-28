@@ -1906,6 +1906,51 @@ ul.teamlist li .desc p.txt{
 	background:#0f0f0f;
 	margin-bottom:20px;
 }
+
+.post#common {
+	border: 3px solid #B0C3D9;	
+	box-shadow: 0px 1px 5px #B0C3D9;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
+}
+.post#uncommon {
+	border: 3px solid #5E98D9;	
+	box-shadow: 0px 1px 5px #5E98D9;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
+}
+.post#rare {
+	border: 3px solid #4B69FF;	
+	box-shadow: 0px 1px 5px #4B69FF;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
+}
+.post#mythical {
+	border: 3px solid #8847FF;	
+	box-shadow: 0px 1px 5px #8847FF;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
+}
+.post#legendary {
+	border: 3px solid #D32CC5;	
+	box-shadow: 0px 1px 5px #D32CC5;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
+}
+.post#ancient {
+	border: 3px solid #EB4437;	
+	box-shadow: 0px 1px 5px #EB4437;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
+}
+.post#immortal {
+	border: 3px solid #E4AE39;	
+	box-shadow: 0px 1px 5px #E4AE39;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
+}
+
+
 .post .thumb{
 	width:100%;
 	float:left;
@@ -2846,10 +2891,10 @@ img.status-avatar-align {
 	position:relative;
 }
 .gig-post#mythical {
-
-	-webkit-box-shadow:  2px 0px 5px 5px #8847FF;
- 	box-shadow:  2px 0px 5px 5px #8847FF;
-	border-radius:0px;
+	border: 3px solid #8847FF;	
+	box-shadow: 0px 1px 5px #8847FF;
+	padding: 3px;
+	border-radius: 6px 6px 6px 6px;
 
 	
 }
