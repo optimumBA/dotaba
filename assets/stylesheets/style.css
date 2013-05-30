@@ -11,7 +11,7 @@
 	position:relative;
 }
 .shadow {
-	box-shadow:0px 5px 12px #666;
+	box-shadow: inset 0px 5px 12px #666;
 }
 /* Header
 ================================================== */
@@ -2262,8 +2262,14 @@ a.obrisi:hover {
 /* Leave A Reply Section
 ================================================== */
 .leavereply {
-	width:100%;
+	width:88%;
+	float:right;
+
+}
+.leavereply-avatar {
 	float:left;
+	position:relative;
+	padding-top:40px;
 }
 .forms ul{
 	width:100%;
@@ -2276,7 +2282,7 @@ a.obrisi:hover {
 }
 .forms ul li textarea{
 	width:100%;
-	height:120px;
+	height:65px;
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
 	box-sizing:border-box;
@@ -2392,9 +2398,9 @@ img.steam-avatar-small {
 	margin:0 15px 5px 0;
 	vertical-align:auto;
 	width:32px;
-	height:32px;
-	
+	height:32px;	
 }
+
 /* Statusi
 ================================================== */
 img.frame {
@@ -2415,61 +2421,233 @@ img.frame-item {
 }
 
 img.status-0 {
-	border: 1px solid #727272;
-	background: none repeat scroll 0% 0% #727272;
-	box-shadow: 0px 1px 5px #727272;
-	max-width: 98.8%;
+	background: linear-gradient(to bottom, rgb(112, 108, 107) 5%, rgb(78, 77, 77) 95%) repeat scroll 0% 0% transparent;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, rgb(112, 108, 107) 5%, rgb(78, 77, 77) 95%);
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	filter: none;
+
 	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-1 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
+		
+	    background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
 	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+	
 }
 
+
 img.status-2 {
-	border: 1px solid #81B900;
-	background: none repeat scroll 0% 0% #81B900;
-	box-shadow: 0px 1px 5px #81B900;
-	max-width: 98.8%;
+	background: linear-gradient(to bottom, rgb(155, 200, 97) 5%, rgb(120, 158, 76) 95%) repeat scroll 0% 0% transparent;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, rgb(155, 200, 97) 5%, rgb(120, 158, 76) 95%);
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	filter: none;
+	
 	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+	
 }
 img.status-3 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
 	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-4 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
 	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-5 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
 	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-6 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
 	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-7 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
 	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 
 
@@ -2482,84 +2660,284 @@ img.frame-s {
 	border-radius: 6px 6px 6px 6px;
 }
 img.status-s-0 {
-	border: 1px solid #727272;
-	background: none repeat scroll 0% 0% #727272;
-	box-shadow: 0px 1px 5px #727272;
-	max-width: 98.8%;
-	padding: 1px;
+	background: linear-gradient(to bottom, rgb(112, 108, 107) 5%, rgb(78, 77, 77) 95%) repeat scroll 0% 0% transparent;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, rgb(112, 108, 107) 5%, rgb(78, 77, 77) 95%);
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	filter: none;
+
+	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-s-1 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
-padding: 1px;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
+	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-s-2 {
-	border: 1px solid #81B900;
-	background: none repeat scroll 0% 0% #81B900;
-	box-shadow: 0px 1px 5px #81B900;
-	max-width: 98.8%;
-	padding: 1px;
+	background: linear-gradient(to bottom, rgb(155, 200, 97) 5%, rgb(120, 158, 76) 95%) repeat scroll 0% 0% transparent;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, rgb(155, 200, 97) 5%, rgb(120, 158, 76) 95%);
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+	filter: none;
+	
+	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+	
 }
 img.status-s-3 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
-padding: 1px;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
+	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-s-4 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
-padding: 1px;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
+	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-s-5 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
-padding: 1px;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
+	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-s-6 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
-padding: 1px;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
+	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 img.status-s-7 {
-	border: 1px solid #5CB1FE;
-	background: none repeat scroll 0% 0% #5CB1FE;
-	box-shadow: 0px 1px 5px #5CB1FE;
-	max-width: 98.8%;
-padding: 1px;
+	background: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%) repeat scroll 0% 0% transparent;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, rgb(123, 175, 214) 5%, rgb(80, 109, 146) 95%);
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+    filter: none;
+
+	padding: 3px;
+    padding-top: 3px;
+    padding-right-value: 3px;
+    padding-bottom: 3px;
+    padding-left-value: 3px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+	
+	border-radius: 3px 3px 3px 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 
 .status-0 {
 	color:#727272;
 }
-.status-1 {
-	color:#5CB1FE;
+.status-0:visited {
+	color:#727272;
 }
+
+.status-1 {
+	color:#5CB1FE;	
+}
+.status-1:visited {
+color:#5CB1FE;
+}
+
 .status-2 {
 	color:#81B900;
 }
+.status-2:visited {
+	color:#81B900;
+}
+
 .status-3 {
 	color:#5CB1FE;
 }
+.status-3:visited {
+	color:#5CB1FE;
+}
+
 .status-4 {
 	color:#5CB1FE;
 }
+.status-4:visited {
+	color:#5CB1FE;
+}
+
 .status-5 {
 	color:#5CB1FE;
 }
+.status-5:visited {
+	color:#5CB1FE;
+}
+
 .status-6 {
 	color:#5CB1FE;
 }
+.status-6:visited {
+	color:#5CB1FE;
+}
+
 .status-7 {
+	color:#5CB1FE;
+}
+.status-7:visited {
 	color:#5CB1FE;
 }
 
@@ -2677,7 +3055,7 @@ img.status-avatar-align {
 	background:url(../images/line-hr.gif) repeat-x bottom;
 }
 .album-detail-sec .thumb{
-	width:210px;
+	width:166px;
 	float:left;
 	margin-right:20px;
 }

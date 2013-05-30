@@ -50,12 +50,16 @@
 	<?php endif; ?>
 </div>
 <?php if (User::instance()->logged_in()): ?>
-	<div class="leavereply">
+	<div class="leavereply-avatar">
+						<?php echo HTML::image(Media_Remote_Avatar::get(User::instance()->id, User::instance()->avatar), array('alt' => User::instance()->username, 'width' => 60, 'height' => 60, 'class' => 'status-'.User::instance()->status.'', 'title' => User::instance()->username)); ?>
+                        </div>
+    <div class="leavereply">
 		<h1 class="heading colr">Dodaj komentar</h1>
+		
 		<?php echo Form::open('komentari/dodaj', array('class' => 'forms')); ?>
 			<ul>
 				<li>
-					<?php echo Form::textarea('body', '', array('placeholder' => 'Tekst')); ?>
+					<?php echo Form::textarea('body', '', array('placeholder' => 'Dodaj komentar')); ?>
 				</li>
 				<li>
 					<?php echo Form::hidden('object_id', $object_id); ?>

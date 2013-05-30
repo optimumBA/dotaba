@@ -156,7 +156,7 @@
                                     <li>
                                     <h6 class="white">Autorizacija</h6>
                                      <p>Trenutno si logiran kao <?=User::instance()->username;?>, odjavi se?</p>
-                                     <button onclick="window.location.href='/odjava'" class="backcolrhover">Odjava</button>
+                                     <button onclick="window.location.href='/odjava'" class="backcolrhover">Odjava</button>                       
                                     </li>                                
                                    
                                     </ul>
