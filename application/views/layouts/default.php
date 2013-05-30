@@ -12,21 +12,21 @@
                 </div>
                 <!-- Banner Caption Start -->
                 <div id="banner1" class="nivo-html-caption">
-                	<h1><a href="http://dota.ba/novosti/1-launch">Otvorenje</a></h1>
+                	<h1><a href="/novosti/1-launch">Otvorenje</a></h1>
                     <p>
                         Nakon dužeg vremena, uspješno smo otvorili zajednicu za Dota 2 igrače gdje možete pronaći vijesti, informacije o <em>updateima</em>, statistike, turnire i mnogo toga.
                     </p>
-                    <a href="http://dota.ba/novosti/1-launch" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
+                    <a href="/novosti/1-launch" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
                 </div>
                  <div id="banner2" class="nivo-html-caption">
-                	<h1><a href="http://dota.ba/novosti/14-the-international">The International 3</a></h1>
+                	<h1><a href="/novosti/14-the-international">The International 3</a></h1>
                     <p>
                         The International se vraća ponovno u Seattle.
                     </p>
-                    <a href="http://dota.ba/novosti/14-the-international" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
+                    <a href="/novosti/14-the-international" class="banner-more"><span class="backcolr">Pročitaj više</span><span class="corner">&nbsp;</span></a>
                 </div>
                  <div id="banner3" class="nivo-html-caption">
-                	<h1><a href="http://dota.ba/novosti/1-launch">Champions League</a></h1>
+                	<h1><a href="/novosti/1-launch">Champions League</a></h1>
                     <p>
                         Uskoro na Dota 2 Balkan. Champions League turnir okuplja ekipe širom Balkana. Više informacija o prijavama, broju učesnika i nagradama u sljedećim danima.
                     </p>
