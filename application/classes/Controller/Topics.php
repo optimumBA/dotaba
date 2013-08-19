@@ -14,6 +14,7 @@ class Controller_Topics extends Controller_Application {
 
 		$pagination = Pagination::factory(array(
 			'total_items' => $count,
+			'items_per_page' => 10,
 		));
 
 		$topics = ORM::factory('Topic')

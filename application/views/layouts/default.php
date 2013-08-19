@@ -50,6 +50,11 @@
                 <div class="col1">
 
                     <?php echo Request::factory('widgets/matches')->execute(); ?>
+                   
+                    <div class="widget advert">
+                       <a target="_new" href="http://dota2feed.com/?sid=<?=Session::instance()->id();?>&token=<?=sha1(Session::instance()->id());?>&refname=Dota2Balkan&ref=PartnerLogo&open.ns=true"><img width="250px" src="/assets/images/d2feedpartner.png" /></a>
+                       <span>Dota 2 Feed - Partnerski sajt</span>
+                    </div>
                   
                 </div>
                 <!-- Column One End -->
@@ -65,25 +70,20 @@
                 <div class="col1 hidemobile">
                 	
 
-					<div class="widget giveaway">
+					<div class="widget">
                     
-                	<div class="widget">
-                    	<h1 class="heading colr">Champions League 2 turnir</h1>
-                        <div class="thumb">
-                        	<a href="/liga/turniri/2-dota-2-balkan-champions-league-2"><img src="/assets/images/champleagueann2.jpg" alt="Dota 2 Balkan Champions League 2 turnir" /></a>
-                        </div>
-                        <div class="desc">
-                        	<h4><a href="/liga/turniri/2-dota-2-balkan-champions-league-2" class="white">Dota 2 Balkan Champions League 2</a></h4>
-                            <p>
-                           Prijave timova na Dota 2 Balkan Champions League 2 turnir.
-                               
-                            </p>
-                        </div>
+                  
+                       
+                      <a class="getDotaLink" href="/thebetaisover"></a>
+                    
+                    
                     </div>
                     
+                   
+                   
                     <div class="widget giveaway">
-                    
-                	<div class="widget">
+               	
+                <div class="widget">
                     	<h1 class="heading colr">The International 3</h1>
                         <div class="thumb">
                         	<a href="http://www.dota2.com/international"><img src="/assets/images/ti3prize.png" alt="The International 3" /></a>
@@ -134,19 +134,7 @@
         }
     );
   </script>
-                    <div class="widget giveaway">
-                    	<h1 class="heading colr">Giveaway</h1>
-                        <div class="thumb">
-                        	<a href="/pozivnice"><img src="/assets/images/betakey.jpg" alt="Dota 2 Balkan Giveaway" /></a>
-                        </div>
-                        <div class="desc">
-                        	<h4><a href="/pozivnice" class="white">Dota 2 Balkan Giveaway</a></h4>
-                            <p>
-                           Ukoliko još uvijek nemate Dota 2, imate priliku da dobijete Dota 2 Beta gift i započnete igrati prije vremena.
-                               
-                            </p>
-                        </div>
-                    </div>
+                    
                     
                     
                   

@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* Text color */
+.colr																		{color:#499400 !important;}
+.txthover:hover																{color:#499400 !important;}
+.backcolr																	{background-color:#499400 !important;}
+.backcolrhover:hover														{background-color:#499400 !important;}
+.backcolrdark																{background-color:#499400 !important; background-image:url(../images/black.png);}
+.bordercolr																	{border-color:#499400 !important;}
+.bordercolrover:hover														{border-color:#499400 !important;}
+#login-box 																	{border-top:#499400 2px solid;}
+/* Navigation */
+.ddsmoothmenu > ul > li > a:hover, 
+.ddsmoothmenu > ul > li.current-menu-item > a,
+.ddsmoothmenu > ul > li > a.selected										{background-color:#499400 !important;}
+/* Banner Hover */
+.nivo-prevNav:hover 														{background-color:#499400 !important;}
+.nivo-nextNav:hover 														{background-color:#499400 !important;}
+#mcs5_container .dragger													{background-color:#499400 !important;}
+.jp-title li:hover,
+.jp-playlist li:hover														{background:#499400 !important;}
+a.ticket:hover																{background:#499400 !important;}
+a.buttonone:hover 															{background:#499400;}
+.ft-left ul.links li a:hover 												{color:#499400;}
+.other-albums .desc a.buynow:hover											{background:#499400;}
+.post:hover .desc .date h1													{color:#499400;}
+.post .desc .desc-sec h3 a:hover											{color:#499400;}
+.post .desc .desc-sec .post-opts p a:hover									{color:#499400;}
+.post-detail .desc h3 a:hover												{color:#499400;}
+.post-detail .desc .post-opts p a:hover										{color:#499400;}
+.comments ul li:hover .desc h5 a											{color:#499400;}
+.comments ul li .desc a.reply:hover											{background:#499400;}
+a.bigbutton:hover															{background:#499400;}
+.tracklist li a.lyrics:hover												{background:#499400;}
+.tracklist li a.download:hover												{background:#499400;}
+.tracklist li.title p a:hover												{color:#499400;}
+.gig-post .desc .txt-sec h3 a:hover											{color:#499400;}
+.gig-post:hover .date h1													{color:#499400;}
+.gallery-head nav a:hover, .gallery-head nav a.active						{color:#499400;}
+.gallery-two-col li:hover													{border:#499400 solid 2px;}
+#gallery #images .slide .caption h3 a 										{color:#499400;}

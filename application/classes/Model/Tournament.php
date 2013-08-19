@@ -51,7 +51,7 @@ class Model_Tournament extends ORM {
 			'num_clans' => array(
 				array('not_empty'),
 				array('digit'),
-				array('range', array(':value', 7, 25)),
+				array('range', array(':value', 7, 33)),
 			),
 		);
 	}

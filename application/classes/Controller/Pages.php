@@ -56,6 +56,12 @@ class Controller_Pages extends Controller_Application {
 		$this->_title	= 'Changelog';
 		$this->_content	= View::factory('pages/changelog');	
 	}
+	public function action_thebetaisover()
+	{
+		$this->_layout	= 'news';
+		$this->_title	= 'The Beta is Over';
+		$this->_content	= View::factory('pages/thebetaisover');	
+	}
 
 	public function action_offline()
 	{
