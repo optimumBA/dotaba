@@ -100,7 +100,7 @@
                         </div>
                         <!-- Album List End -->
                         <!-- Comments Start -->
-                      <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $user->id, 'object_type' => 'User')); ?>
+                      <?php echo Request::factory('komentari/User/'.$user->id)->execute(); ?>
                         <div class="clear"></div>
                         <!-- Comments End -->
                        

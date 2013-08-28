@@ -61,15 +61,12 @@ class Controller_Clans extends Controller_Application {
 				$can_apply = ($application == 0);
 			}
 
-			$comments = Model_Clan::comments($clan->id);
-
 			$this->_title 	= $clan->name;
 			$this->_content = View::factory('clans/view')
 				->set('clan', $clan)
 				->set('users', $users)
 				->set('matches', $matches)
-				->set('can_apply', $can_apply)
-				->set('comments', $comments);
+				->set('can_apply', $can_apply);
 		}
 		else
 		{

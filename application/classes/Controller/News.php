@@ -39,12 +39,10 @@ class Controller_News extends Controller_Application {
 
 		if ($article->loaded())
 		{
-			$comments = Model_News::comments($article->id);
-
 			$this->_title 	= $article->title;
 			$this->_content = View::factory('news/view')
 				->set('article', $article)
-				->set('comments', $comments);
+				->set('comments_count', Model_News::comments_count($article->id));
 		}
 		else
 		{

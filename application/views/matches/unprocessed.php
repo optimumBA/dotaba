@@ -74,7 +74,7 @@
                 <br />
                 <div class="clear"></div>
                 
-<?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $match->id, 'object_type' => 'Match')); ?>
+<?php echo Request::factory('komentari/Match/'.$match->id)->execute(); ?>
                 <!-- Column One End -->
               
                 

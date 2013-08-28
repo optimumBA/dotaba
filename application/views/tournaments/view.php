@@ -27,7 +27,7 @@
                                     <p>Potreban broj klanova: <?php echo $tournament->num_clans; ?></p>
                                     <p>Môd: <?php echo $tournament->mode->name; ?></p>
                                     <?php if ($tournament->finished_at): ?><p>Završen: <?php echo Date::formatted_time($tournament->finished_at); ?></p><?php endif ?>
-                                    <p><?php echo count($comments) ?> komentara</p>
+                                    <p><?php echo $comments_count; ?> komentara</p>
                                    
                                 </div>
                                 <p>
@@ -108,7 +108,7 @@
                         <div class="clear"></div>
                         <!-- Post Detail End -->
                         
-     <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $tournament->id, 'object_type' => 'Tournament')); ?>
+     <?php echo Request::factory('komentari/Tournament/'.$tournament->id)->execute(); ?>
                     </div>
                
                 </div>

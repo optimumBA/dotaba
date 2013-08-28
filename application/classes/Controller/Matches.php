@@ -46,8 +46,6 @@ class Controller_Matches extends Controller_Application {
 				$this->_title .= ' - '.$match->radiant_clan->name.' protiv '.$match->dire_clan->name;
 			}
 
-			$comments = Model_Match::comments($match->id);
-
 			if ($match->radiant_win !== NULL)
 			{
 				$slots = $match->slots
@@ -74,12 +72,10 @@ class Controller_Matches extends Controller_Application {
 			}
 			else
 			{
-				$this->_content = View::factory('matches/unprocessed')
-					->set('match', $match);
+				$this->_content = View::factory('matches/unprocessed');
 			}
 
-			$this->_content->set('match', $match)
-				->set('comments', $comments);
+			$this->_content->set('match', $match);
 		}
 		else
 		{

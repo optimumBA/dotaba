@@ -144,7 +144,7 @@
                     
                     
                     
-                    <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $clan->id, 'object_type' => 'Clan')); ?>
+                    <?php echo Request::factory('komentari/Clan/'.$clan->id)->execute(); ?>
                     
                     
                     

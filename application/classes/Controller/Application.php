@@ -148,6 +148,10 @@ abstract class Controller_Application extends Controller {
 			$this->response->body($view);
 			$this->check_cache();
 		}
+		elseif ($this->request->is_ajax())
+		{
+			$this->response->body(json_encode($this->_content));
+		}
 		else
 		{
 			$this->response->body($this->_content);

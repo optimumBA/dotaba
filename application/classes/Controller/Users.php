@@ -90,14 +90,11 @@ class Controller_Users extends Controller_Application {
 				->where('match.id', 'IS NOT', NULL)
 				->find_all();
 
-			$comments = Model_User::comments($user->id);
-
 			$this->_layout  = 'news';
 			$this->_title 	= $user->username;
 			$this->_content = View::factory('users/view')
 				->set('user', $user)
-				->set('slots', $slots)
-				->set('comments', $comments);
+				->set('slots', $slots);
 
 			if ($user->id == $this->_user->id)
 			{

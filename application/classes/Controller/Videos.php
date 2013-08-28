@@ -28,12 +28,10 @@ class Controller_Videos extends Controller_Application {
 
 		if ($video->loaded())
 		{
-			$comments = Model_Video::comments($video->id);
-
 			$this->_title 	= $video->name;
 			$this->_content = View::factory('vods/videos/view')
 				->set('video', $video)
-				->set('comments', $comments);
+				->set('comments_count', Model_Video::comments_count($video->id));
 		}
 		else
 		{

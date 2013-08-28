@@ -58,8 +58,6 @@ class Controller_Tournaments extends Controller_Application {
 				$can_apply = ($participation == 0);
 			}
 
-			$comments = Model_Tournament::comments($tournament->id);
-
 			$this->_title 	= $tournament->name;
 			$this->_content = View::factory('tournaments/view')
 				->set('tournament', $tournament)
@@ -67,7 +65,7 @@ class Controller_Tournaments extends Controller_Application {
 				->set('count', $count)
 				->set('matches', $matches)
 				->set('can_apply', $can_apply)
-				->set('comments', $comments);
+				->set('comments_count', Model_Tournament::comments_count($tournament->id));
 		}
 		else
 		{

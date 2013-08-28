@@ -128,12 +128,13 @@ Route::set('search', 'pretraga')
 		'action' 	 => 'index',
 	));
 
-Route::set('comments', 'komentari/<action>', array('action' => 'dodaj'))
+Route::set('comments', 'komentari/<type>/<id>(/<last_id>)', array('id' => '\d+', 'action' => 'dodaj'))
 	->defaults(array(
 		'controller' => 'comments',
+		'action'     => 'index',
 	));
 
-Route::set('comment', 'komentari/<id>/<action>', array('id' => '\d+', 'action' => 'obrisi|izmijeni'))
+Route::set('comment', 'komentari(/<id>)/<action>', array('id' => '\d+', 'action' => 'dodaj|obrisi|izmijeni'))
 	->defaults(array(
 		'controller' => 'comments',
 	));

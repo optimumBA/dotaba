@@ -37,13 +37,11 @@ class Controller_Streams extends Controller_Application {
 				->with('mode')
 				->find_all();
 
-			$comments = Model_Stream::comments($stream->id);
-
 			$this->_title 	= $stream->user->username.'ov/in stream';
 			$this->_content = View::factory('vods/streams/view')
 				->set('stream', $stream)
 				->set('matches', $matches)
-				->set('comments', $comments);
+				->set('comments_count', Model_Stream::comments_count($stream->id));
 		}
 		elseif ($this->request->param('id') == $this->_user->accountid)
 		{
