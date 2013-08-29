@@ -23,10 +23,6 @@ class Model_User extends ORM {
 			'far_key' => 'friend_id',
 			'through' => 'friendships',
 		),
-		'giveaways' => array(
-			'model'       => 'Request',
-			'foreign_key' => 'giver_id',
-		),
 		'matches' => array(
 			'through' => 'slots',
 		),
@@ -43,7 +39,6 @@ class Model_User extends ORM {
 
 	protected $_has_one = array(
 		'stream'  => array(),
-		'request' => array(),
 	);
 
 }
