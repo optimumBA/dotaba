@@ -30,7 +30,7 @@
                   
 
 	<?php if ( ! User::instance()->logged_in()): ?>
-		<div class="alert alert-error">Moraš biti prijavljen/a kako bi ostavio/la komentar. Prijavi se <a href="/provjera">ovdje</a></div>
+		<div class="alert alert-error">Moraš biti prijavljen/a kako bi ostavio/la komentar. <a class="steamloginBttn-barTop  steamLoginText-wlcmsg embossed-link" href="/provjera#steamLogin">Prijavi se putem Steam-a</a></div>
 	<?php endif; ?>
               <?php if ($topic->is_locked): ?>
 	<h4><a class="white">Tema je zaključana.</a></h4>
@@ -61,7 +61,7 @@
 				<?php echo Form::hidden('csrf', Security::token()); ?>
 			<?php echo Form::close(); ?>
 		<?php endif ?>
-                                        
+                                      
                                         
                                         <div class="clear"></div> 
                                         <p class="txt">
@@ -79,7 +79,7 @@
                         </div>
      <div class="clear"></div>
      <?php if ( ! User::instance()->logged_in()): ?>
-		<div class="alert alert-error">Moraš biti prijavljen/a kako bi ostavio/la komentar. Prijavi se <a href="/provjera">ovdje</a></div>
+		<div class="alert alert-error">Moraš biti prijavljen/a kako bi ostavio/la komentar. <a class="steamloginBttn-barTop  steamLoginText-wlcmsg embossed-link" href="/provjera#steamLogin">Prijavi se putem Steam-a</a></div>
 	<?php endif; ?>
      
     <?php echo $pagination; ?>
