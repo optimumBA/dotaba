@@ -25,9 +25,9 @@
                               <div class="alert alert-notice">Ukoliko je korisnički račun blokiran (banovan), prijava nije moguća.</div>
                               <?php else:?>
                               <div class="alert alert-error">
-                              Trenutno si prijavljen/a kao <?php echo HTML::image(Media_Remote_Avatar::get(User::instance()->id, User::instance()->avatar), array('alt' => User::instance()->username, 'class' => 'status-avatar-align steam-avatar status-s-'.User::instance()->status.'', 'width' => 16)); ?> <a class="status-<?php echo User::instance()->status;?>"><?php echo User::instance()->username;?></a>.                         <div class="clear"></div>
+                              Trenutno si prijavljen/a kao <?php echo HTML::image(Media_Remote_Avatar::get(User::instance()->id, User::instance()->avatar), array('alt' => User::instance()->username, 'class' => 'status-avatar-align steam-avatar status-s-'.User::instance()->status.'', 'width' => 16)); ?> <span class="status-<?php echo User::instance()->status;?>"><?php echo User::instance()->username;?></span>.                         <div class="clear"></div>
 
-                              Da bi se ponovo prijavio/la sa drugim računom, moraš odjaviti sa trenutnog. <a class="link" href="/odjava">Odjavi se?</a>
+                              Da bi se ponovo prijavio/la sa drugim računom, moraš odjaviti sa trenutnog. <a class="steamloginBttn-wlcmsg  steamLoginText-wlcmsg embossed-link" href="/odjava#steamLogout">Odjavi se?</a>
                               </div>
                               <?php endif;?>
                             <div class="cont-sec">
@@ -38,9 +38,7 @@
                             <div class="inquiry">
                             	<h1 class="heading colr">Potvrda</h1>
                              
-                               <a href="/prijava">
-                               <div class="SteamSITSLarge"></div>
-                               </a>
+                           <a href="/prijava" class="steamloginBttn-check  steamLoginText-check embossed-link">Potvrdi prijavu putem Steam-a</a>
                             
                             </div>
                             <?php endif;?>

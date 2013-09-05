@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="/assets/stylesheets/base.css" />
 <link rel="stylesheet" href="/assets/stylesheets/skeleton.css" />
 <link rel="stylesheet" href="/assets/stylesheets/layout.css" />
+<link rel="stylesheet" href="/assets/stylesheets/buttons.css" />
+
+
 
 <link rel="stylesheet" type="text/css" href="/assets/stylesheets/color.css" title="styles2" media="screen" />
 
@@ -91,8 +94,8 @@
                         </li>
                         
                            	<?php if( ! User::instance()->logged_in()):?>
-                           
-                           	<li> <a href="/provjera" class="colr"><div class="SteamSITSSmall"></div></a></li>
+                         
+                           	<li><a href="/provjera#steamLogin" class="steamloginBttn-barTop  steamLoginText-barTop embossed-link">Prijavi se putem Steam-a</a></li>
 							<?php else:?>
                             
                             <li><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <a href="/igraci/<?=User::instance()->accountid;?>" class="status-<?=User::instance()->status;?>"><?=User::instance()->username;?></a></li>
@@ -101,7 +104,8 @@
                             	
                            
                             <li>
-                            <a href="javascript:animatedcollapse.toggle('opcije-box')" class="colr">Opcije</a>
+                      
+                            <a href="javascript:animatedcollapse.toggle('opcije-box')" class="steamloginBttn-barTop  steamLoginText-barTop embossed-link">Opcije</a>
                             <div id="opcije-box">
                                 <h4 class="white opcijecolr"><img class="steam-avatar-small status-<?=User::instance()->status;?>" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" /> <?=User::instance()->username;?><br /> Korisničke opcije <a href="javascript:animatedcollapse.hide('opcije-box')" class="closeit">X</a></h4>
                                 
@@ -155,8 +159,9 @@
                                     
                                     <li>
                                     <h6 class="white">Autorizacija</h6>
-                                     <p>Trenutno si logiran kao <?=User::instance()->username;?>, odjavi se?</p>
-                                     <button onclick="window.location.href='/odjava'" class="backcolrhover">Odjava</button>                       
+                                    
+                                     <a class="steamloginBttn-panel steamLoginText-panel embossed-link" href="/odjava#steamLogout"><img class="steamLoginImage-panel" src="<?=User::instance()->avatar;?>" title="<?=User::instance()->username;?>-ov avatar" />Odjavi se sa računa (<span><?=User::instance()->username;?></span>)</a>
+                                                       
                                     </li>                                
                                    
                                     </ul>
@@ -210,13 +215,13 @@
             <!-- Container End -->
        </div>
     </div>
-   
+  
 	
 	 
 <div class="clear"></div>
     <!-- Notification box -->
   	<?php if( ! User::instance()->logged_in()):?>
-    <div class="alert-top alert-info">Dobrodošli na <a class="link">Dota 2 Balkan Community</a>. Ukoliko je ovo Vaša prva posjeta, pročitajte <a class="link" href="/site/help">uputstvo za korištenje</a> stranice. Ako ste već korisnik ove stranice, molimo da se <a class="link" href="/provjera?mod=Prijava">prijavite</a>, kako bi imali sve mogućnosti stranice. U slučaju da nemate korisnički račun, možete se <a class="link" href="/provjera?mod=Registracija">registrovati</a>.</div>
+    <div class="alert-top alert-info">Dobrodošli na <a class="link">Dota 2 Balkan Community</a>. Ukoliko je ovo Vaša prva posjeta stranici, pročitajte <a class="link" href="/pravila">pravila</a> i <a class="link" href="/uslovi">uslove korištenja</a>. Ako ste već korisnik stranice, molimo da se <a class="steamloginBttn-wlcmsg  steamLoginText-wlcmsg embossed-link" href="/provjera#steamLogin">prijavite putem Steam-a</a>, kako bi imali sve mogućnosti stranice.</div>
  	<?php endif;?>
  	
     <div class="alert-top alert-info hidden liga-notification">Liga je zatvorena do početka sljedećeg turnira.</div>

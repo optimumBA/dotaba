@@ -30,7 +30,7 @@
                              <?php if(!User::instance()->logged_in()):?>
                              <div class="alert alert-error">
  							<h5 class="white">Preuzmi Dota 2 besplatno</h5>
-                              <div class="clear"></div>Moraš biti prijavljen na stranicu kako bi mogao preuzeti besplatno Dota 2 igru. Ukoliko si već registrovan korisnik stranice, <a class="link" href="/prijava">prijavi se</a>. Ako si novi korisnik, potrebno je izvršiti <a class="link" href="/provjera">registraciju</a>.</div>
+                              <div class="clear"></div>Moraš biti prijavljen na stranicu kako bi mogao preuzeti besplatno Dota 2 igru. Ukoliko si već registrovan korisnik stranice, <a class="steamloginBttn-wlcmsg  steamLoginText-wlcmsg embossed-link" href="/prijava#steamLogin">prijavi se</a>.</div>
                              <div class="clear"></div>
                              <?php else:?>
                               <div class="alert alert-info">
