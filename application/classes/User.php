@@ -174,4 +174,9 @@ class User {
 		}
 	}
 
+	public function can($action, $aco)
+	{
+		return Model_Permission::check($this->user, $aco, $action);
+	}
+
 }
