@@ -52,42 +52,21 @@ abstract class Controller_Application extends Controller {
 		$this->_user     = User::instance();
 		$this->_messages = Session::instance()->get_once('messages', array());
 
-		// Check the CSRF token for POST requests
-		if ($this->request->method() === Request::POST AND ! Security::check($this->_post['csrf']))
-		{
-			$this->_messages[] = array(
-				'type'   => 'error',
-				'value'  => 'Samo probaj još jednom ako smiješ',
-			);
+		$this->maintenance();
+		$this->check_permissions();
+		$this->csrf();
+	}
 
-			Session::instance()->set('messages', $this->_messages);
+	public function after()
+	{
+		$this->template();
 
-			HTTP::redirect();
-		}
+		// Save the fresh instance of User ORM model in session
+		$this->_user->refresh();
+	}
 
-		// Set redirection path to current URI for users not logged in
-		if ( ! $this->_user->logged_in() AND ( ! in_array($this->request->action(), array('offline', 'provjera', 'prijava'))))
-		{
-			Session::instance()->set('redirect', $this->request->uri());
-		}
-
-		// Redirect to login page and show message if the action requires authorization
-		if ( ! $this->_user->logged_in() AND (in_array($this->request->action(),
-			array(
-				'objavi', 'dodaj', 'organiziraj', 'izmijeni', 'prijavi', 'napravi', 'prijave', 'review_application', 'obrisi',
-				'start', 'najavi', 'review_participation', 'najavi_streamanje', 'otkazi_streamanje'
-			)) OR $this->request->action() == 'prijava' AND $this->request->controller() != 'Users'))
-		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi ulogovan/na.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('provjera');
-		}
-
+	private function maintenance()
+	{
 		// Redirect to '/offline' if site is under maintenance and user isn't admin.
 		// If the site is soon going under maintenance, show the message to user.
 		$maintenance = Kohana::$config->load('site.maintenance');
@@ -110,7 +89,49 @@ abstract class Controller_Application extends Controller {
 		}
 	}
 
-	public function after()
+	private function check_permissions()
+	{
+		// Set redirection path to current URI for users not logged in
+		if ( ! $this->_user->logged_in() AND ( ! in_array($this->request->action(), array('offline', 'provjera', 'prijava'))))
+		{
+			Session::instance()->set('redirect', $this->request->uri());
+		}
+
+		// Redirect to login page and show message if the action requires authorization
+		if ( ! $this->_user->logged_in() AND (in_array($this->request->action(),
+			array(
+				'objavi', 'dodaj', 'organiziraj', 'izmijeni', 'prijavi', 'napravi', 'prijave', 'review_application', 'obrisi',
+				'start', 'najavi', 'review_participation', 'najavi_streamanje', 'otkazi_streamanje'
+			)) OR $this->request->action() == 'prijava' AND $this->request->controller() != 'Users'))
+		{
+			$this->_messages[] = array(
+				'type'  => 'error',
+				'value' => 'Nisi ulogovan/na.',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect('provjera');
+		}
+	}
+
+	private function csrf()
+	{
+		// Check the CSRF token for POST requests
+		if ($this->request->method() === Request::POST AND ! Security::check($this->_post['csrf']))
+		{
+			$this->_messages[] = array(
+				'type'   => 'error',
+				'value'  => 'Samo probaj još jednom ako smiješ',
+			);
+
+			Session::instance()->set('messages', $this->_messages);
+
+			HTTP::redirect();
+		}
+	}
+
+	private function template()
 	{
 		// If the request is neither internal nor AJAX, render template,
 		// else just show the content
@@ -156,9 +177,6 @@ abstract class Controller_Application extends Controller {
 		{
 			$this->response->body($this->_content);
 		}
-
-		// Save the fresh instance of User ORM model in session
-		$this->_user->refresh();
 	}
 
 }
