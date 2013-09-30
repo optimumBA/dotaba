@@ -20,6 +20,14 @@
 	<?php echo Form::textarea('content', Arr::path($values, 'content')); ?>
 	<?php echo Arr::path($errors, 'content'); ?>
 
+	<div class="alert alert-info">Samo za Developere: Upiši putanju CSS klase ukoliko želiš promijeniti izgled teme.<br />
+    Dostupne klase: commmon, uncommon, rare, myhtical, legendary, ancient, immortal<br />
+    Klase su osjetljive na početno slovo. Svaka klasa mora počinjati malim slovom.</div>
+    <div class="alert alert-danger">Ukoliko ne znaš šta je ovo, ostavi prazno.</div>
+	<?php echo Form::label('devclass', 'CSS klasa:'); ?>
+	<?php echo Form::input('devclass', Arr::path($values, 'devclass')); ?>
+	<?php echo Arr::path($errors, 'devclass'); ?>
+
 	<?php if (User::instance()->has_role('Administrator/ica')): ?>
 		<?php echo Form::label('is_hidden', 'Skrivena:'); ?>
 		<?php echo Form::checkbox('is_hidden', 1, (bool) Arr::path($values, 'is_hidden', 0)); ?>

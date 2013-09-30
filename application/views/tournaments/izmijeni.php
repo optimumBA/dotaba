@@ -20,6 +20,14 @@
 	<?php echo Form::textarea('description', Arr::path($values, 'description')); ?>
 	<?php echo Arr::path($errors, 'description'); ?>
 
+	<div class="alert alert-info">Tipovi turnira daju vrijednost turniru. Što je veći tip, turnir je vrijedniji (nagrade i sl.).<br />
+    Dozvoljeni tipovi: <font color="#B0C3D9">Common</font>, <font color="#5e98d9">Uncommon</font>, <font color="#4b69ff">Rare</font>, <font color="#8847ff">Mythical</font>, <font color="#D32CC5">Legendary</font>, <font color="#EB4437">Ancient</font>, <font color="#e4ae39">Immortal</font>.</div>
+	<?php if (isset($colors)): ?>
+		<?php echo Form::label('rarity', 'Tip turnira:'); ?>
+        <?php echo Form::select('rarity', $colors, Arr::path($values, 'rarity')); ?>
+        <?php echo Arr::path($errors, 'rarity'); ?>
+    <?php endif ?>
+	
 	<?php echo Form::label('default', 'Slika:'); ?>
 	<?php echo Form::file('default'); ?>
 	<?php echo Arr::path($errors, 'default'); ?>

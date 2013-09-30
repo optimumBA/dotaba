@@ -25,7 +25,7 @@
 	
 	
 	<!-- Post Start -->
-                        <div class="post" id="<?php echo ($tournament->id == in_array($tournament->id, array(2))) ? 'rare' : 'common' ?>">
+                        <div class="post" id="<?php echo strtolower($tournament->rarity);?>">
                         	<div class="thumb">
                             <a href="/liga/turniri/<?=$tournament->id.'-'.URL::title($tournament->name, '-', TRUE);?>"><img src="<?=Media_Local_Tournament::get($tournament->id);?>" alt="<?php echo $tournament->name;?>" width="680px" /></a>
                             </div>
@@ -42,7 +42,12 @@
                                         <p>Završen 
 										<?php echo ($tournament->finished_at == NULL) ? '<span class="white">Ne</span>' : Date::formatted_time($tournament->created_at) ?>
 										</p>
-
+                                        
+                                        <p>
+                                         <?php if ($tournament->winner_id): ?> 
+										 	Pobijednik: <?php echo HTML::anchor('liga/klanovi/'.$tournament->winner->id.'-'.URL::title($tournament->winner->name, '-', TRUE), $tournament->winner->name); ?>
+                                         <?php endif ?>
+                                        </p>
                                        
                                     </div>
                                     <p>

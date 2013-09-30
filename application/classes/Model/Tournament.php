@@ -4,6 +4,7 @@ class Model_Tournament extends ORM {
 
 	protected $_belongs_to = array(
 		'mode'   => array(),
+		'color'  => array(),
 		'user'   => array(),
 		'winner' => array(
 			'model'       => 'Clan',

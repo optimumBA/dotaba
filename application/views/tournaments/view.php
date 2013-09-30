@@ -45,7 +45,7 @@
                                     <?php echo Form::close(); ?>
 								<?php endif ?>
 	
-								<?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/izmijeni', 'Izmijeni', array('class' => 'bigbutton')); ?>
+								<?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/izmijeni', 'Izmijeni', array('class' => 'bigbutton ')); ?>
 								<?php endif ?>
                                 
                                 <?php if ($can_apply): ?>

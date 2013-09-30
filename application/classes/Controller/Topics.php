@@ -108,7 +108,7 @@ class Controller_Topics extends Controller_Application {
 				$this->_post['updated_at']   = $this->_post['created_at'];
 
 				$topic = ORM::factory('Topic')
-					->values($this->_post, array('name', 'user_id', 'main_post_id', 'is_hidden', 'created_at', 'updated_at'))
+					->values($this->_post, array('name', 'user_id', 'main_post_id', 'devclass', 'is_hidden', 'created_at', 'updated_at'))
 					->create();
 
 				$post->values(array('topic_id' => $topic->id))->update();
@@ -156,7 +156,7 @@ class Controller_Topics extends Controller_Application {
 					{
 						$this->_post['updated_at'] = DB::expr('NOW()');
 
-						$topic->values($this->_post, array('name', 'updated_at'))
+						$topic->values($this->_post, array('name', 'devclass', 'updated_at'))
 							->update();
 
 						$topic->main_post->values($this->_post, array('content', 'updated_at'))

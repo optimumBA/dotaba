@@ -90,7 +90,7 @@ class Controller_Tournaments extends Controller_Application {
 						$this->_post['created_at'] = DB::expr('NOW()');
 
 						$tournament = ORM::factory('Tournament')
-							->values($this->_post, array('name', 'description', 'mode_id', 'num_clans', 'is_auto_approvable', 'created_at'))
+							->values($this->_post, array('name', 'description', 'mode_id', 'rarity', 'num_clans', 'is_auto_approvable', 'created_at'))
 							->create();
 
 						Media_Local_Tournament::save($tournament->id, $files);
@@ -134,12 +134,16 @@ class Controller_Tournaments extends Controller_Application {
 			{
 				$modes_array[$mode->id] = $mode->name;
 			}
+			
+			
+			$colors = ORM::factory('Color')->find_all()->as_array('id', 'name', 'hex');
 
 			$this->_title   = 'Organiziraj turnir';
 			$this->_content = View::factory('tournaments/organiziraj')
 				->set('values', $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array())
-				->set('modes', $modes_array);
+				->set('modes', $modes_array)
+				->set('colors', $colors);
 		}
 		else
 		{
@@ -188,7 +192,7 @@ class Controller_Tournaments extends Controller_Application {
 
 						$this->_post['updated_at'] = DB::expr('NOW()');
 
-						$tournament->values($this->_post, array('name', 'description', 'mode_id', 'winner_id', 'updated_at', 'finished_at'))
+						$tournament->values($this->_post, array('name', 'description', 'mode_id', 'rarity', 'winner_id', 'updated_at', 'finished_at'))
 							->update();
 
 						Media_Local_Tournament::save($tournament->id, $files);
@@ -250,8 +254,20 @@ class Controller_Tournaments extends Controller_Application {
 				{
 					$modes_array[$mode->id] = $mode->name;
 				}
+				
+				$colors = ORM::factory('Color')
+				->find_all();
+
+				$colors_array = array();
+
+				foreach ($colors as $color)
+				{
+				$colors_array[$color->name] = $color->name;
+				}
 
 				$this->_content->set('modes', $modes_array);
+				$this->_content->set('colors', $colors_array);
+				
 			}
 		}
 		elseif ($tournament->loaded())

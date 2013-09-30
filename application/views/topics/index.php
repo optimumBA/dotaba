@@ -31,7 +31,7 @@
 			
             
             <!-- Thread Start -->	
-                        <div class="gig-post" id="<?php echo ($topic->id == 31) ? 'rare' : '' ?>">
+                        <div class="gig-post" id="<?php echo $topic->devclass; ?>">
                         	<div class="upper-sec">
                                 <div class="date">
                                     <h1><?php echo date('d', strtotime($topic->created_at));?></h1>
