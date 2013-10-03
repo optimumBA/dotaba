@@ -87,7 +87,7 @@
                     </div>
                     
                     
-            <?php if (User::instance()->logged_in() AND (User::instance()->has_role('Administrator/ka') OR User::instance()->has_role('Novinar/ka'))): ?>
+            <?php if (User::instance()->can('create', 'News')): ?>
 	
 
                    

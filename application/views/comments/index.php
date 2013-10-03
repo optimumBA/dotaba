@@ -1,4 +1,4 @@
-<?php if (User::instance()->logged_in()): ?>
+<?php if (User::instance()->can('create', 'Comments')): ?>
 	<div class="leavereply-avatar">
 		<?php echo HTML::image(Media_Remote_Avatar::get(User::instance()->id, User::instance()->avatar), array('alt' => User::instance()->username, 'width' => 60, 'height' => 60, 'class' => 'status-'.User::instance()->status.'', 'title' => User::instance()->username)); ?>
 	</div>

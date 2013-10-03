@@ -54,7 +54,7 @@
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
                 	
-                  <?php if(User::instance()->logged_in() AND (User::instance()->has_role('Administrator/ica') OR User::instance()->has_role('Novinar/ka'))):?>
+                  <?php if(User::instance()->can('update', $article)):?>
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">

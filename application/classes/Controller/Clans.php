@@ -52,7 +52,7 @@ class Controller_Clans extends Controller_Application {
 				->where_close()
 				->find_all();
 
-			if ($can_apply = ($clan->open AND $this->_user->clan_id === NULL))
+			if ($can_apply = ($clan->open AND $this->_user->clan_id === NULL AND $this->_user->can('create', 'Applications')))
 			{
 				$application = $this->_user->applications
 					->where('clan_id', '=', $clan->id)
@@ -76,9 +76,14 @@ class Controller_Clans extends Controller_Application {
 
 	public function action_napravi()
 	{
+		if ($this->_user->cannot('create', 'Clans'))
+		{
+			$this->deny_access();
+		}
+
 		if ($this->_user->clan_id === NULL)
 		{
-			if ($this->_post)
+			if ($this->request->method() === Request::POST)
 			{
 				try
 				{
@@ -102,29 +107,22 @@ class Controller_Clans extends Controller_Application {
 							'value' => 'Klan je uspješno napravljen.',
 						);
 
-						Session::instance()->set('messages', $this->_messages);
-
-						HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
+						$this->redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 					}
 					else
 					{
-						$this->_messages[] = array(
-							'type'  => 'error',
-							'value' => 'Nepravilan unos.',
-						);
-
 						$errors = $files->errors('media');
 					}
 				}
 				catch (ORM_Validation_Exception $e)
 				{
-					$this->_messages[] = array(
-						'type'  => 'error',
-						'value' => 'Nepravilan unos.',
-					);
-
 					$errors = $e->errors('models');
 				}
+
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nepravilan unos.',
+				);
 			}
 
 			$this->_title   = 'Napravi klan';
@@ -141,9 +139,7 @@ class Controller_Clans extends Controller_Application {
 				'value' => 'Već si u klanu.',
 			);
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
+			$this->redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 		}
 	}
 
@@ -151,9 +147,14 @@ class Controller_Clans extends Controller_Application {
 	{
 		$clan = ORM::factory('Clan', $this->request->param('id'));
 
-		if ($clan->loaded() AND $clan->lord_id == $this->_user->id)
+		if ($clan->loaded())
 		{
-			if ($this->_post)
+			if ($this->_user->cannot('update', $clan))
+			{
+				$this->deny_access();
+			}
+
+			if ($this->request->method() === Request::POST)
 			{
 				try
 				{
@@ -173,29 +174,22 @@ class Controller_Clans extends Controller_Application {
 							'value' => 'Klan je uspješno izmijenjen.',
 						);
 
-						Session::instance()->set('messages', $this->_messages);
-
-						HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
+						$this->redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 					}
 					else
 					{
-						$this->_messages[] = array(
-							'type'  => 'error',
-							'value' => 'Nepravilan unos.',
-						);
-
 						$errors = $files->errors('media');
 					}
 				}
 				catch (ORM_Validation_Exception $e)
 				{
-					$this->_messages[] = array(
-						'type'  => 'error',
-						'value' => 'Nepravilan unos.',
-					);
-
 					$errors = $e->errors('models');
 				}
+
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nepravilan unos.',
+				);
 			}
 
 			$users = $clan->users->find_all();
@@ -213,26 +207,6 @@ class Controller_Clans extends Controller_Application {
 				->set('errors', (isset($errors)) ? $errors : array())
 				->set('users', $users_array);
 		}
-		elseif ($clan->loaded())
-		{
-			$clan = ORM::factory('Clan', $this->_user->clan_id);
-
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi lord ovog klana.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			if ($clan->loaded())
-			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
-			}
-			else
-			{
-				HTTP::redirect('liga/klanovi');
-			}
-		}
 		else
 		{
 			throw HTTP_Exception::factory(404, 'Klan nije pronađen.');
@@ -243,9 +217,14 @@ class Controller_Clans extends Controller_Application {
 	{
 		$clan = ORM::factory('Clan', $this->request->param('id'));
 
-		if ($clan->loaded() AND $this->_user->clan_id === NULL AND $clan->open)
+		if ($clan->loaded())
 		{
-			if ($this->request->method() === Request::POST)
+			if ($this->_user->cannot('create', 'Applications'))
+			{
+				$this->deny_access();
+			}
+
+			if ($this->request->method() === Request::POST AND $clan->open AND ! $this->_user->clan_id)
 			{
 				$application = $clan->applications
 					->where('user_id', '=', $this->_user->id)
@@ -268,39 +247,23 @@ class Controller_Clans extends Controller_Application {
 						'value' => 'Već si se prijavio/la u klan.',
 					);
 				}
-
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
-			else
+			elseif ( ! $clan->open)
 			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Klan nije otvoren za nove prijave.',
+				);
 			}
-		}
-		elseif ( ! $clan->open)
-		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Klan nije otvoren za nove prijave.',
-			);
+			elseif ($this->_user->clan_id)
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Već si u klanu.',
+				);
+			}
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
-		}
-		elseif ($this->_user->clan_id)
-		{
-			$clan = ORM::factory('Clan', $this->_user->clan_id);
-
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Već si u klanu.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
+			$this->redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 		}
 		else
 		{
@@ -312,8 +275,13 @@ class Controller_Clans extends Controller_Application {
 	{
 		$clan = ORM::factory('Clan', $this->request->param('id'));
 
-		if ($clan->loaded() AND $clan->lord_id == $this->_user->id)
+		if ($clan->loaded())
 		{
+			if ($this->_user->cannot('*', $clan))
+			{
+				$this->deny_access();
+			}
+
 			$applications = $clan->applications
 				->with('user')
 				->order_by('id', 'DESC')
@@ -323,26 +291,6 @@ class Controller_Clans extends Controller_Application {
 			$this->_content = View::factory('clans/prijave')
 				->set('clan', $clan)
 				->set('applications', $applications);
-		}
-		elseif ($clan->loaded())
-		{
-			$clan = ORM::factory('Clan', $this->_user->clan_id);
-
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi lord ovog klana.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			if ($clan->loaded())
-			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
-			}
-			else
-			{
-				HTTP::redirect('liga/klanovi');
-			}
 		}
 		else
 		{
@@ -358,8 +306,13 @@ class Controller_Clans extends Controller_Application {
 			->where('application.id', '=', $this->request->param('id2'))
 			->find();
 
-		if ($clan->loaded() AND $application->loaded() AND $clan->lord_id == $this->_user->id)
+		if ($clan->loaded() AND $application->loaded())
 		{
+			if ($this->_user->cannot('*', $clan))
+			{
+				$this->deny_access();
+			}
+
 			if ($this->request->method() === Request::POST)
 			{
 				$user_clan = $application->user->clan_id;
@@ -394,29 +347,7 @@ class Controller_Clans extends Controller_Application {
 				}
 			}
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
-		}
-		elseif ($clan->loaded() AND $clan->lord_id != $this->_user->id)
-		{
-			$clan = ORM::factory('Clan', $this->_user->clan_id);
-
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi lord ovog klana.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			if ($clan->loaded())
-			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
-			}
-			else
-			{
-				HTTP::redirect('liga/klanovi');
-			}
+			$this->redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/prijave');
 		}
 		elseif ( ! $clan->loaded())
 		{
@@ -435,11 +366,23 @@ class Controller_Clans extends Controller_Application {
 			->where('id', '=', $this->request->param('id2'))
 			->find();
 
-		if ($clan->loaded() AND $user->loaded() AND $clan->lord_id == $this->_user->id)
+		if ($clan->loaded() AND $user->loaded())
 		{
+			if ($this->_user->cannot('*', $clan))
+			{
+				$this->deny_access();
+			}
+
 			if ($this->request->method() === Request::POST)
 			{
-				if ($user->id != $clan->lord->id)
+				if ($user->id == $clan->lord->id)
+				{
+					$this->_messages[] = array(
+						'type'  => 'error',
+						'value' => 'Lord klana ne može biti izbačen.',
+					);
+				}
+				else
 				{
 					$user->values(array('clan_id' => NULL))->update();
 
@@ -448,42 +391,9 @@ class Controller_Clans extends Controller_Application {
 						'value' => 'Igrač je izbačen iz klana.',
 					);
 				}
-				else
-				{
-					$this->_messages[] = array(
-						'type'  => 'error',
-						'value' => 'Lord klana ne može biti izbačen.',
-					);
-				}
-
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 			}
-			else
-			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
-			}
-		}
-		elseif ($clan->lord_id != $this->_user->id)
-		{
-			$clan = ORM::factory('Clan', $this->_user->clan_id);
 
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi lord ovog klana.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			if ($clan->loaded())
-			{
-				HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
-			}
-			else
-			{
-				HTTP::redirect('liga/klanovi');
-			}
+			$this->redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
 		}
 		elseif ( ! $clan->loaded())
 		{
@@ -491,14 +401,7 @@ class Controller_Clans extends Controller_Application {
 		}
 		elseif ( ! $user->loaded())
 		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Igrač nije u klanu.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE));
+			throw HTTP_Exception::factory(404, 'Igrač nije pronađen.');
 		}
 	}
 

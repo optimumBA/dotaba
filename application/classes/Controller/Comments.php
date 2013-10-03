@@ -4,12 +4,10 @@ class Controller_Comments extends Controller_Application {
 
 	public function before()
 	{
-		parent::before();
-
 		if ($this->request->is_initial() AND ! $this->request->is_ajax()
 			OR in_array($this->request->action(), array('dodaj', 'izmijeni', 'obrisi')) AND $this->request->method() != Request::POST)
 		{
-			HTTP::redirect();
+			$this->redirect();
 		}
 	}
 
@@ -35,7 +33,12 @@ class Controller_Comments extends Controller_Application {
 
 	public function action_dodaj()
 	{
-		if ($this->_post AND $this->_user->logged_in())
+		if ($this->_user->cannot('create', 'Comments'))
+		{
+			$this->deny_access();
+		}
+
+		if ($this->request->method() === Request::POST)
 		{
 			try
 			{
@@ -62,7 +65,7 @@ class Controller_Comments extends Controller_Application {
 		}
 		else
 		{
-			HTTP::redirect();
+			$this->redirect();
 		}
 	}
 
@@ -70,8 +73,13 @@ class Controller_Comments extends Controller_Application {
 	{
 		$comment = ORM::factory('Comment', $this->request->param('id'));
 
-		if ($comment->loaded() AND $comment->user_id == $this->_user->id)
+		if ($comment->loaded())
 		{
+			if ($this->_user->cannot('update', $comment))
+			{
+				$this->deny_access();
+			}
+
 			try
 			{
 				$this->_post['updated_at'] = DB::expr('NOW()');
@@ -94,7 +102,7 @@ class Controller_Comments extends Controller_Application {
 		}
 		else
 		{
-			HTTP::redirect();
+			$this->redirect();
 		}
 	}
 
@@ -102,8 +110,13 @@ class Controller_Comments extends Controller_Application {
 	{
 		$comment = ORM::factory('Comment', $this->request->param('id'));
 
-		if ($comment->loaded() AND ($comment->user_id == $this->_user->id OR $this->_user->has_role('Administrator/ica')))
+		if ($comment->loaded())
 		{
+			if ($this->_user->cannot('delete', $comment))
+			{
+				$this->deny_access();
+			}
+
 			$comment->values(array('removed' => TRUE, 'updated_at' => DB::expr('NOW()')))
 				->update();
 

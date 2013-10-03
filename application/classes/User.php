@@ -179,4 +179,9 @@ class User {
 		return Model_Permission::check($this->user, $aco, $action);
 	}
 
+	public function cannot($action, $aco)
+	{
+		return ! $this->can($action, $aco);
+	}
+
 }

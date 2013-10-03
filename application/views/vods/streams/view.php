@@ -101,7 +101,7 @@
                     </div>
                   
                    
-                   <?php if(User::instance()->logged_in() AND (User::instance()->has_role('Administrator/ica') OR User::instance()->id == $stream->user_id)):?>
+                   <?php if (User::instance()->can('update', $stream)):?>
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">

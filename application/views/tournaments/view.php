@@ -37,14 +37,14 @@
                                 <hr />
                                  
                                   
-                                <?php if (User::instance()->has_role('Organizator/ica turnira')): ?>
-									<?php if ( ! $tournament->is_started AND $count == $tournament->num_clans): ?>
+                                <?php if ( ! $tournament->is_started AND $count == $tournament->num_clans AND User::instance()->can('*', $tournament)): ?>
 									<?php echo HTML::anchor('#', 'Započni turnir', array('class' => 'form_submit', 'data-form' => 'start')); ?>
                                <?php echo Form::open('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/start', array('class' => 'hidden start')); ?>
                                     <?php echo Form::hidden('csrf', Security::token()); ?>
                                     <?php echo Form::close(); ?>
 								<?php endif ?>
 	
+                                <?php if (User::instance()->can('update', $tournament)): ?>
 								<?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/izmijeni', 'Izmijeni', array('class' => 'bigbutton')); ?>
 								<?php endif ?>
                                 
@@ -116,7 +116,7 @@
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
                 	
-                  <?php if(User::instance()->logged_in() AND User::instance()->has_role('Organizator/ica turnira')):?>
+                  <?php if (User::instance()->can('*', $tournament) OR User::instance()->can('update', $tournament)): ?>
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">
@@ -127,10 +127,10 @@
                             
                           
                            
-                          
+                            <?php if (User::instance()->can('*', $tournament)): ?>
 							<p class="white"><?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name).'/prijave', 'Pogledaj prijave timova'); ?>
                            </p>
-                           
+                           <?php endif ?>
                         </div>
                     </div>
                     <?php endif;?>

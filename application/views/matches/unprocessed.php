@@ -52,7 +52,7 @@
     <?php echo Form::close(); ?>
 <?php endif ?>
 
-<?php if (User::instance()->has_role('Organizator/ica turnira')): ?>
+<?php if (User::instance()->can('*', 'Tournament')): ?>
 	<?php echo HTML::anchor('liga/mecevi/'.$match->id.'/izmijeni', 'Unesi rezultate meča'); ?>
 
 	<?php echo Form::open('liga/mecevi/'.$match->id.'/izmijeni_vrijeme'); ?>

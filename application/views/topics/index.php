@@ -96,7 +96,7 @@
                 <!-- Column One End -->
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
-<?php if (User::instance()->logged_in()): ?>
+<?php if (User::instance()->can('create', 'Topics')): ?>
 	
 
                     <!-- Dodaj stream Start -->

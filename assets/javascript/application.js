@@ -199,4 +199,12 @@ jQuery(function($) {
 
 	var nextMatch = new Date($('#countdown-match').data('date'));
 	$('#countdown-match').countdown({until: nextMatch});
+
+	$(document).ajaxComplete(function(event, xhr, options) {
+		var response = (typeof xhr.responseJSON == 'undefined') ? {} : xhr.responseJSON;
+
+		if (typeof response.STATUS != 'undefined' && response.STATUS == 'REDIRECT') {
+			window.location = response.URI;
+		}
+	});
 });

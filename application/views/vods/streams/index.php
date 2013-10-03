@@ -104,7 +104,7 @@
                 <!-- Column One End -->
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
-                	<?php if (User::instance()->logged_in() AND ! User::instance()->stream->loaded()): ?>
+                	<?php if (User::instance()->can('create', 'Streams') AND ! User::instance()->stream->loaded()): ?>
 	
 
                     <!-- Dodaj stream Start -->

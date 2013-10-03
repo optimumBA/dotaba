@@ -115,7 +115,7 @@
                                 </a>
                            <?php endif;?>
                                 <ul>
-                                    <?php if(User::instance()->has_role('Administrator/ka') OR User::instance()->has_role('Novinar/ka')):?>
+                                    <?php if(User::instance()->can('create', 'News')):?>
                                     <li>
                                         <h6 class="white">Vijesti</h6>
                                         <p><a href="/novosti/objavi">Objavi vijesti</a></p>
@@ -125,36 +125,40 @@
                                     <li>
                                       <h6 class="white">VODs</h6>
                                       <p>
-                                      <?php if(User::instance()->has_role('Administrator/ka') OR User::instance()->has_role('Novinar/ka')):?>
-                                      <a href="/vods/snimci/dodaj">Dodaj snimak</a><br />
+                                      <?php if(User::instance()->can('create', 'Videos')):?>
+                                        <a href="/vods/snimci/dodaj">Dodaj snimak</a><br />
                                       <?php endif;?>
                                       
-                                      <?php if(!User::instance()->stream->loaded()):?>
-                                      <a href="/igraci/<?=User::instance()->accountid;?>/stream/dodaj">Napravi livestream</a><br />
+                                      <?php if(User::instance()->stream->loaded()):?>
+                                        <a href="/igraci/<?=User::instance()->accountid;?>/stream">Pogledaj svoj stream kanal</a><br />
                                       <?php else:?>
-                                      <a href="/igraci/<?=User::instance()->accountid;?>/stream">Pogledaj svoj stream kanal</a><br />
+                                        <a href="/igraci/<?=User::instance()->accountid;?>/stream/dodaj">Napravi livestream</a><br />
                                       <?php endif;?>
                                       </p>
                                     </li>
                                     
-                               
-                                    <li>
-                                    <h6 class="white">Liga</h6>
-                                   	<p>
-									<?php if (!User::instance()->clan_id): ?>    
-                                    <a href="/liga/klanovi/napravi">Napravi tim</a>
-                                    <?php endif;?>
-                                    
-                                    <?php if(User::instance()->has_role('Organizator/ica turnira')):?>
-                                    <a href="/liga/turniri/organiziraj">Organiziraj turnir</a>
-                                    <?php endif;?>
-                                    
-                                    </p>  
-                                    </li>
+                                    <?php if ( ! User::instance()->clan_id AND User::instance()->can('create', 'Clans') OR User::instance()->can('create', 'Tournaments')): ?>
+                                        <li>
+                                            <h6 class="white">Liga</h6>
+                                            <p>
+                                                <?php if ( ! User::instance()->clan_id AND User::instance()->can('create', 'Clans')): ?>
+                                                    <a href="/liga/klanovi/napravi">Napravi tim</a>
+                                                <?php endif;?>
+
+                                                <?php if (User::instance()->can('create', 'Tournaments')): ?>
+                                                    <a href="/liga/turniri/organiziraj">Organiziraj turnir</a>
+                                                <?php endif;?>
+                                            </p>
+                                        </li>
+                                    <?php endif ?>
                                     
                                     <li>
                                     <h6 class="white">Forum</h6>
-                                    <p><a href="/teme/napravi">Napravi temu</a></p>
+                                    <p>
+                                        <?php if (User::instance()->can('create', 'Topics')): ?>
+                                            <a href="/teme/napravi">Napravi temu</a>
+                                        <?php endif ?>
+                                    </p>
                                     </li>
                                     
                                     <li>
