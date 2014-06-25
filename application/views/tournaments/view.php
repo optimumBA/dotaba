@@ -27,7 +27,7 @@
                                     <p>Potreban broj klanova: <?php echo $tournament->num_clans; ?></p>
                                     <p>Môd: <?php echo $tournament->mode->name; ?></p>
                                     <?php if ($tournament->finished_at): ?><p>Završen: <?php echo Date::formatted_time($tournament->finished_at); ?></p><?php endif ?>
-                                    <p><?php echo count($comments) ?> komentara</p>
+                                    <p><?php echo $comments_count; ?> komentara</p>
                                    
                                 </div>
                                 <p>
@@ -37,16 +37,16 @@
                                 <hr />
                                  
                                   
-                                <?php if (User::instance()->has_role('Organizator/ica turnira')): ?>
-									<?php if ( ! $tournament->is_started AND $count == $tournament->num_clans): ?>
+                                <?php if ( ! $tournament->is_started AND $count == $tournament->num_clans AND User::instance()->can('*', $tournament)): ?>
 									<?php echo HTML::anchor('#', 'Započni turnir', array('class' => 'form_submit', 'data-form' => 'start')); ?>
                                <?php echo Form::open('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/start', array('class' => 'hidden start')); ?>
                                     <?php echo Form::hidden('csrf', Security::token()); ?>
                                     <?php echo Form::close(); ?>
 								<?php endif ?>
 	
-								<?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/izmijeni', 'Izmijeni', array('class' => 'bigbutton ')); ?>
-								<?php endif ?>
+                                <?php if (User::instance()->can('update', $tournament)): ?>
+					<?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name, '-', TRUE).'/izmijeni', 'Izmijeni', array('class' => 'bigbutton ')); ?>
+				<?php endif ?>
                                 
                                 <?php if ($can_apply): ?>
                                     <?php echo HTML::anchor('#', 'Prijava klana', array('class' => 'form_submit bigbutton', 'data-form' => 'prijavi')); ?>
@@ -108,7 +108,7 @@
                         <div class="clear"></div>
                         <!-- Post Detail End -->
                         
-     <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $tournament->id, 'object_type' => 'Tournament')); ?>
+     <?php echo Request::factory('komentari/Tournament/'.$tournament->id)->execute(); ?>
                     </div>
                
                 </div>
@@ -116,7 +116,7 @@
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
                 	
-                  <?php if(User::instance()->logged_in() AND User::instance()->has_role('Organizator/ica turnira')):?>
+                  <?php if (User::instance()->can('*', $tournament) OR User::instance()->can('update', $tournament)): ?>
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">
@@ -127,10 +127,10 @@
                             
                           
                            
-                          
+                            <?php if (User::instance()->can('*', $tournament)): ?>
 							<p class="white"><?php echo HTML::anchor('liga/turniri/'.$tournament->id.'-'.URL::title($tournament->name).'/prijave', 'Pogledaj prijave timova'); ?>
                            </p>
-                           
+                           <?php endif ?>
                         </div>
                     </div>
                     <?php endif;?>

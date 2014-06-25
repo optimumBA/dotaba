@@ -39,12 +39,10 @@ class Controller_News extends Controller_Application {
 
 		if ($article->loaded())
 		{
-			$comments = Model_News::comments($article->id);
-
 			$this->_title 	= $article->title;
 			$this->_content = View::factory('news/view')
 				->set('article', $article)
-				->set('comments', $comments);
+				->set('comments_count', Model_News::comments_count($article->id));
 		}
 		else
 		{
@@ -54,80 +52,74 @@ class Controller_News extends Controller_Application {
 
 	public function action_objavi()
 	{
-		if ($this->_user->has_role('Novinar/ka'))
+		if ($this->_user->cannot('create', 'News'))
 		{
-			if ($this->_post)
+			$this->deny_access();
+		}
+
+		if ($this->request->method() === Request::POST)
+		{
+			try
 			{
-				try
+				$files = Media_Local_News::validate($_FILES);
+
+				if ( ! is_uploaded_file($files['default']['tmp_name']) OR $files->check())
 				{
-					$files = Media_Local_News::validate($_FILES);
+					$this->_post['user_id']    = $this->_user->id;
+					$this->_post['created_at'] = DB::expr('NOW()');
 
-					if ( ! is_uploaded_file($files['default']['tmp_name']) OR $files->check())
-					{
-						$this->_post['user_id']    = $this->_user->id;
-						$this->_post['created_at'] = DB::expr('NOW()');
+					$article = ORM::factory('News')
+						->values($this->_post, array('title', 'content', 'user_id', 'source', 'url', 'created_at'))
+						->create();
 
-						$article = ORM::factory('News')
-							->values($this->_post, array('title', 'content', 'user_id', 'source', 'url', 'created_at'))
-							->create();
+					Media_Local_News::save($article->id, $files);
 
-						Media_Local_News::save($article->id, $files);
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Novost je objavljena.',
+					);
 
-						$this->_messages[] = array(
-							'type'  => 'success',
-							'value' => 'Novost je objavljena.',
-						);
-
-						Session::instance()->set('messages', $this->_messages);
-
-						HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
-					}
-					else
-					{
-						$this->_messages[] = array(
-							'type'  => 'error',
-							'value' => 'Nepravilan unos.',
-						);
-
-						$errors = $files->errors('media');
-					}
+					$this->redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
 				}
-				catch (ORM_Validation_Exception $e)
+				else
 				{
 					$this->_messages[] = array(
 						'type'  => 'error',
 						'value' => 'Nepravilan unos.',
 					);
 
-					$errors = $e->errors('models');
+					$errors = $files->errors('media');
 				}
 			}
+			catch (ORM_Validation_Exception $e)
+			{
+				$this->_messages[] = array(
+					'type'  => 'error',
+					'value' => 'Nepravilan unos.',
+				);
 
-			$this->_title   = 'Objavi novost';
-			$this->_content = View::factory('news/objavi')
-				->set('values', $this->_post)
-				->set('errors', (isset($errors)) ? $errors : array());
+				$errors = $e->errors('models');
+			}
 		}
-		else
-		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi novinar/ka.',
-			);
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('novosti');
-		}
+		$this->_title   = 'Objavi novost';
+		$this->_content = View::factory('news/objavi')
+			->set('values', $this->_post)
+			->set('errors', (isset($errors)) ? $errors : array());
 	}
 
 	public function action_izmijeni()
 	{
 		$article = ORM::factory('News', $this->request->param('id'));
 
-		if ($article->loaded() AND $this->_user->has_role('Novinar/ka'))
+		if ($article->loaded())
 		{
-			if ($this->_post)
+			if ($this->_user->cannot('update', $article))
+			{
+				$this->deny_access();
+			}
+
+			if ($this->request->method() === Request::POST)
 			{
 				try
 				{
@@ -147,9 +139,7 @@ class Controller_News extends Controller_Application {
 							'value' => 'Novost je izmijenjena.',
 						);
 
-						Session::instance()->set('messages', $this->_messages);
-
-						HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
+						$this->redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
 					}
 					else
 					{
@@ -176,17 +166,6 @@ class Controller_News extends Controller_Application {
 			$this->_content = View::factory('news/izmijeni')
 				->set('values', (empty($this->_post)) ? $article->as_array() : $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array());
-		}
-		elseif ($article->loaded())
-		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi novinar/ka.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('novosti/'.$article->id.'-'.URL::title($article->title, '-', TRUE));
 		}
 		else
 		{

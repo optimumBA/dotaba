@@ -52,7 +52,7 @@
     <?php echo Form::close(); ?>
 <?php endif ?>
 
-<?php if (User::instance()->has_role('Organizator/ica turnira')): ?>
+<?php if (User::instance()->can('*', 'Tournament')): ?>
 	<?php echo HTML::anchor('liga/mecevi/'.$match->id.'/izmijeni', 'Unesi rezultate meča'); ?>
 
 	<?php echo Form::open('liga/mecevi/'.$match->id.'/izmijeni_vrijeme'); ?>
@@ -74,7 +74,7 @@
                 <br />
                 <div class="clear"></div>
                 
-<?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $match->id, 'object_type' => 'Match')); ?>
+<?php echo Request::factory('komentari/Match/'.$match->id)->execute(); ?>
                 <!-- Column One End -->
               
                 

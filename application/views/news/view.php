@@ -26,7 +26,7 @@
                                     <p><img class="status-s-<?=$article->user->status;?>" src="<?=Media_Remote_Avatar::get($article->user->id, $article->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
                                     <p><?php echo Date::formatted_time($article->created_at); ?></p>
                                     <p>Izvor <a href="<?=$article->url;?>"><?=$article->source;?></a></p>
-                                    <p><?php echo count($comments) ?> komentara</p>
+                                    <p><?php echo $comments_count; ?> komentara</p>
                                    
                                 </div>
                                 <p>
@@ -45,8 +45,8 @@
                         </div>
                         <div class="clear"></div>
                         <!-- Post Detail End -->
-                        
-     <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $article->id, 'object_type' => 'News')); ?>
+
+                        <?php echo Request::factory('komentari/News/'.$article->id)->execute(); ?>
                     </div>
                
                 </div>
@@ -54,7 +54,7 @@
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
                 	
-                  <?php if(User::instance()->logged_in() AND (User::instance()->has_role('Administrator/ica') OR User::instance()->has_role('Novinar/ka'))):?>
+                  <?php if(User::instance()->can('update', $article)):?>
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">

@@ -4,43 +4,41 @@ class Controller_Users extends Controller_Application {
 
 	public function action_prijava()
 	{
-		$user = User::instance()->login();
+		$this->_user->login();
 
-		$ban = $user->bans
+		$ban = $this->_user->bans
 			->where('expires_at', '>', DB::expr('NOW()'))
 			->order_by('expires_at', 'DESC')
 			->find();
 
 		if ($ban->loaded())
 		{
-			$user->logout();
+			$this->_user->logout();
 
 			$this->_messages[] = array(
 				'type'  => 'error',
 				'value' => 'Banovan/a si do '.date('j.n.Y. G:i:s', strtotime($ban->expires_at)).'. Razlog: '.$ban->reason.'.',
 			);
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect();
+			$this->redirect();
 		}
 
 		$uri = Session::instance()->get('redirect');
 
 		if ($uri)
 		{
-			HTTP::redirect($uri);
+			$this->redirect($uri);
 		}
 		else
 		{
-			HTTP::redirect();
+			$this->redirect();
 		}
 	}
 
 	public function action_odjava()
 	{
-		User::instance()->logout();
-		HTTP::redirect();
+		$this->_user->logout();
+		$this->redirect();
 	}
 
 	public function action_index()
@@ -53,18 +51,17 @@ class Controller_Users extends Controller_Application {
 		));
 		
 		$users = ORM::factory('User')
-				->with('clan')
-				->order_by('created_at', 'ASC')
-				->limit($pagination->items_per_page)
-				->offset($pagination->offset)
-				->find_all();
+			->with('clan')
+			->order_by('created_at', 'ASC')
+			->limit($pagination->items_per_page)
+			->offset($pagination->offset)
+			->find_all();
 			
 		$this->_layout	= 'news';
 		$this->_title	= 'Pregled igrača';
 		$this->_content	= View::factory('users/index')
-						->set('users', $users)
-						->set('pagination', $pagination);
-	
+			->set('users', $users)
+			->set('pagination', $pagination);
 	}
 	
 	
@@ -90,14 +87,11 @@ class Controller_Users extends Controller_Application {
 				->where('match.id', 'IS NOT', NULL)
 				->find_all();
 
-			$comments = Model_User::comments($user->id);
-
 			$this->_layout  = 'news';
 			$this->_title 	= $user->username;
 			$this->_content = View::factory('users/view')
 				->set('user', $user)
-				->set('slots', $slots)
-				->set('comments', $comments);
+				->set('slots', $slots);
 
 			if ($user->id == $this->_user->id)
 			{
@@ -129,16 +123,23 @@ class Controller_Users extends Controller_Application {
 
 		if ($user->loaded())
 		{
-			if ($user->id == $this->_user->id)
+			if ($this->_user->cannot('update', $user))
 			{
-				$user->values($this->_post, array('featured_hero_id'))->update();
+				$this->deny_access();
 			}
 
-			HTTP::redirect('igraci/'.$user->accountid);
+			$user->values($this->_post, array('featured_hero_id'))->update();
+
+			$this->_messages[] = array(
+				'type'  => 'success',
+				'value' => 'Profil je izmijenjen.',
+			);
+
+			$this->redirect('igraci/'.$user->accountid);
 		}
 		else
 		{
-			HTTP::redirect();
+			throw HTTP_Exception::factory(404, 'Igrač nije pronađen.');
 		}
 	}
 

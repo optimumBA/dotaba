@@ -3,7 +3,18 @@
 class Model_Comment extends ORM {
 
 	protected $_belongs_to = array(
-		'user' => array(),
+		'user'   => array(),
+		'parent' => array(
+			'model'       => 'Comment',
+			'foreign_key' => 'parent_id',
+		),
+	);
+
+	protected $_has_many = array(
+		'children' => array(
+			'model'       => 'Comment',
+			'foreign_key' => 'parent_id',
+		),
 	);
 
 	public function labels()

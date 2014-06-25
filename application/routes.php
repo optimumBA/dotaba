@@ -128,25 +128,15 @@ Route::set('search', 'pretraga')
 		'action' 	 => 'index',
 	));
 
-Route::set('comments', 'komentari/<action>', array('action' => 'dodaj'))
+Route::set('comments', 'komentari/<type>/<id>(/<last_id>)', array('id' => '\d+', 'action' => 'dodaj'))
 	->defaults(array(
 		'controller' => 'comments',
-	));
-
-Route::set('comment', 'komentari/<id>/<action>', array('id' => '\d+', 'action' => 'obrisi|izmijeni'))
-	->defaults(array(
-		'controller' => 'comments',
-	));
-
-Route::set('requests', 'pozivnice(/<action>)', array('action' => 'trazi|obrisi'))
-	->defaults(array(
-		'controller' => 'requests',
 		'action'     => 'index',
 	));
 
-Route::set('request', 'pozivnice/<id>/<action>', array('id' => '\d+', 'action' => 'posalji|otkazi|zavrsi'))
+Route::set('comment', 'komentari(/<id>)/<action>', array('id' => '\d+', 'action' => 'dodaj|obrisi|izmijeni'))
 	->defaults(array(
-		'controller' => 'requests',
+		'controller' => 'comments',
 	));
 
 Route::set('topics', 'teme(/<action>)(/<page>)', array('action' => 'napravi', 'page' => '\d+'))

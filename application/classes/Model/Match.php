@@ -62,7 +62,7 @@ class Model_Match extends ORM {
 		);
 	}
 
-	public static function process($mid, $result, $type)
+	public static function process($result, $type, $user)
 	{
 		$db = Database::instance();
 
@@ -73,12 +73,12 @@ class Model_Match extends ORM {
 			if ($result->lobby_type != $type->lobby_type)
 				return FALSE;
 
-			$match = ORM::factory('Match', array('mid' => $mid));
+			$match = ORM::factory('Match', array('mid' => $result->match_id));
 
 			if ( ! $match->loaded())
 			{
 				$match->values(array(
-					'mid'                     => $mid,
+					'mid'                     => $result->match_id,
 					'type_id'                 => $type->id,
 					'mode_id'                 => $result->game_mode,
 					'cluster'                 => $result->cluster,
@@ -123,9 +123,7 @@ class Model_Match extends ORM {
 
 			foreach ($result->players as $player)
 			{
-				$user = ORM::factory('User', array('accountid' => $player->account_id));
-
-				if ( ! $user->loaded())
+				if ($user->accountid != $player->account_id)
 					continue;
 
 				$slot = ORM::factory('Slot', array(
@@ -134,7 +132,7 @@ class Model_Match extends ORM {
 				));
 
 				if ($slot->loaded())
-					continue;
+					break;
 
 				$hero = ORM::factory('Hero', array('remote_id' => $player->hero_id));
 

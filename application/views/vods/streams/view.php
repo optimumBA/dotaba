@@ -82,7 +82,7 @@
 </div>
 <div class="clear"></div>
                         
-<?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $stream->id, 'object_type' => 'Stream')); ?>                    </div>
+<?php echo Request::factory('komentari/Stream/'.$stream->id)->execute(); ?>                    </div>
                
                 </div>
                 <!-- Column One End -->
@@ -96,14 +96,12 @@
                         </div>
                         <div class="desc">
                         	<h4><?php echo HTML::anchor('igraci/'.$stream->user->accountid.'', $stream->user->username); ?></a></h4>
-                            <p>
-                            	<?php echo count($comments);?> komentara
-                            </p>
+                            <p><?php echo $comments_count; ?> komentara</p>
                         </div>
                     </div>
                   
                    
-                   <?php if(User::instance()->logged_in() AND (User::instance()->has_role('Administrator/ica') OR User::instance()->id == $stream->user_id)):?>
+                   <?php if (User::instance()->can('update', $stream)):?>
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">

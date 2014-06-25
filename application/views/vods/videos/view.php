@@ -24,10 +24,8 @@
                                 <div class="post-opts">
                                 	<p>Objavio  <?php echo HTML::anchor('igraci/'.$video->user->accountid, $video->user->username); ?>
 </p> 								<p><img class="status-s-<?=$video->user->status;?>" src="<?=Media_Remote_Avatar::get($video->user->id, $video->user->avatar);?>" width="16px" height="16px" align="absmiddle" /></p>
-                                    <p><?php echo count($comments) ?> komentara</p
-                                   
-                                   
-                                ></div>
+                                    <p><?php echo $comments_count; ?> komentara</p>
+                                </div>
                                
                                 <div class="clear"></div>
                             
@@ -52,13 +50,14 @@
                         <div class="clear"></div>
                         <!-- Post Detail End -->
                         
-<?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $video->id, 'object_type' => 'Video')); ?>                    </div>
+                        <?php echo Request::factory('komentari/Video/'.$video->id)->execute(); ?>
+                    </div>
                
                 </div>
                 <!-- Column One End -->
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
-                	<?php if(User::instance()->logged_in() AND (User::instance()->has_role('Administrator/ica') OR User::instance()->has_role('Novinar/ka'))):?>
+                	<?php if (User::instance()->can('update', $video)):?>
                   <div class="widget opcije">
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">

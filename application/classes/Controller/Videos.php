@@ -28,12 +28,10 @@ class Controller_Videos extends Controller_Application {
 
 		if ($video->loaded())
 		{
-			$comments = Model_Video::comments($video->id);
-
 			$this->_title 	= $video->name;
 			$this->_content = View::factory('vods/videos/view')
 				->set('video', $video)
-				->set('comments', $comments);
+				->set('comments_count', Model_Video::comments_count($video->id));
 		}
 		else
 		{
@@ -43,7 +41,12 @@ class Controller_Videos extends Controller_Application {
 
 	public function action_dodaj()
 	{
-		if ($this->_post)
+		if ($this->_user->cannot('create', 'Videos'))
+		{
+			$this->deny_access();
+		}
+
+		if ($this->request->method() === Request::POST)
 		{
 			try
 			{
@@ -54,7 +57,12 @@ class Controller_Videos extends Controller_Application {
 					->values($this->_post, array('vid', 'name', 'description', 'user_id', 'created_at'))
 					->create();
 
-				HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE));
+				$this->_messages[] = array(
+					'type'  => 'success',
+					'value' => 'Snimak je dodan.',
+				);
+
+				$this->redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE));
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -72,9 +80,14 @@ class Controller_Videos extends Controller_Application {
 	{
 		$video = ORM::factory('Video', $this->request->param('id'));
 
-		if ($video->loaded() AND $this->_user->id == $video->user_id)
+		if ($video->loaded())
 		{
-			if ($this->_post)
+			if ($this->_user->cannot('update', $video))
+			{
+				$this->deny_access();
+			}
+
+			if ($this->request->method() === Request::POST)
 			{
 				try
 				{
@@ -83,7 +96,12 @@ class Controller_Videos extends Controller_Application {
 					$video->values($this->_post, array('name', 'description', 'updated_at'))
 						->update();
 
-					HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE));
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Snimak je izmijenjen.',
+					);
+
+					$this->redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE));
 				}
 				catch (ORM_Validation_Exception $e)
 				{
@@ -96,17 +114,6 @@ class Controller_Videos extends Controller_Application {
 				->set('values', (empty($this->_post)) ? $video->as_array() : $this->_post)
 				->set('errors', (isset($errors)) ? $errors : array());
 		}
-		elseif ($video->loaded())
-		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Nisi autor/ica ovog snimka.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('vods/snimci/'.$video->id.'-'.URL::title($video->name, '-', TRUE));
-		}
 		else
 		{
 			throw HTTP_Exception::factory(404, 'Snimak nije pronađen.');
@@ -115,13 +122,13 @@ class Controller_Videos extends Controller_Application {
 
 	public function action_home()
 	{
-		$videos 			= ORM::factory('Video')
-							->order_by('id', 'DESC')
-							->find_all();
-		
-		$this->_title		= 'Vods';
-		$this->_content		= View::factory('vods/index')
-							->set('videos', $videos);	
+		$videos = ORM::factory('Video')
+			->order_by('id', 'DESC')
+			->find_all();
+
+		$this->_title   = 'Vods';
+		$this->_content = View::factory('vods/index')
+			->set('videos', $videos);
 	}
 
 }

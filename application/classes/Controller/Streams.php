@@ -37,13 +37,11 @@ class Controller_Streams extends Controller_Application {
 				->with('mode')
 				->find_all();
 
-			$comments = Model_Stream::comments($stream->id);
-
 			$this->_title 	= $stream->user->username.'ov/in stream';
 			$this->_content = View::factory('vods/streams/view')
 				->set('stream', $stream)
 				->set('matches', $matches)
-				->set('comments', $comments);
+				->set('comments_count', Model_Stream::comments_count($stream->id));
 		}
 		elseif ($this->request->param('id') == $this->_user->accountid)
 		{
@@ -52,9 +50,7 @@ class Controller_Streams extends Controller_Application {
 				'value' => 'Nemaš stream. Popuni formu da ga dodaš.',
 			);
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('igraci/'.$this->_user->accountid.'/stream/dodaj');
+			$this->redirect('igraci/'.$this->_user->accountid.'/stream/dodaj');
 		}
 		else
 		{
@@ -64,6 +60,11 @@ class Controller_Streams extends Controller_Application {
 
 	public function action_dodaj()
 	{
+		if ($this->_user->cannot('create', 'Streams'))
+		{
+			$this->deny_access();
+		}
+
 		if ($this->_user->stream->loaded())
 		{
 			$this->_messages[] = array(
@@ -71,13 +72,11 @@ class Controller_Streams extends Controller_Application {
 				'value' => 'Već imaš stream.',
 			);
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('igraci/'.$this->_user->accountid);
+			$this->redirect('igraci/'.$this->_user->accountid);
 		}
 		else
 		{
-			if ($this->_post)
+			if ($this->request->method() === Request::POST)
 			{
 				try
 				{
@@ -88,7 +87,12 @@ class Controller_Streams extends Controller_Application {
 						->values($this->_post, array('channel', 'description', 'user_id', 'created_at'))
 						->create();
 
-					HTTP::redirect('igraci/'.$this->_user->accountid.'/stream');
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Stream je dodan.',
+					);
+
+					$this->redirect('igraci/'.$this->_user->accountid.'/stream');
 				}
 				catch (ORM_Validation_Exception $e)
 				{
@@ -105,55 +109,48 @@ class Controller_Streams extends Controller_Application {
 
 	public function action_izmijeni()
 	{
-		if ($this->request->param('id') == $this->_user->accountid)
+		$stream = ORM::factory('Stream')
+			->with('user')
+			->where('user.accountid', '=', $this->request->param('id'))
+			->find();
+
+		if ($stream->loaded())
 		{
-			if ($this->_user->stream->loaded())
+			if ($this->_user->cannot('update', $stream))
 			{
-				if ($this->_post)
+				$this->deny_access();
+			}
+
+			if ($this->request->method() === Request::POST)
+			{
+				try
 				{
-					try
-					{
-						$this->_post['updated_at'] = DB::expr('NOW()');
+					$this->_post['updated_at'] = DB::expr('NOW()');
 
-						$this->_user->stream
-							->values($this->_post, array('channel', 'description', 'updated_at'))
-							->update();
+					$stream->values($this->_post, array('channel', 'description', 'updated_at'))
+						->update();
 
-						HTTP::redirect('igraci/'.$this->_user->accountid.'/stream');
-					}
-					catch (ORM_Validation_Exception $e)
-					{
-						$errors = $e->errors('models');
-					}
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Stream je izmijenjen.',
+					);
+
+					$this->redirect('igraci/'.$stream->user->accountid.'/stream');
 				}
-
-				$this->_title   = 'Izmijeni stream';
-				$this->_content = View::factory('vods/streams/izmijeni')
-					->set('values', (empty($this->_post)) ? $this->_user->stream->as_array() : $this->_post)
-					->set('errors', (isset($errors)) ? $errors : array());
+				catch (ORM_Validation_Exception $e)
+				{
+					$errors = $e->errors('models');
+				}
 			}
-			else
-			{
-				$this->_messages[] = array(
-					'type'  => 'error',
-					'value' => 'Nemaš stream. Popuni formu da ga dodaš.',
-				);
 
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('igraci/'.$this->_user->accountid.'/stream/dodaj');
-			}
+			$this->_title   = 'Izmijeni stream';
+			$this->_content = View::factory('vods/streams/izmijeni')
+				->set('values', (empty($this->_post)) ? $stream->as_array() : $this->_post)
+				->set('errors', (isset($errors)) ? $errors : array());
 		}
 		else
 		{
-			$this->_messages[] = array(
-				'type'  => 'error',
-				'value' => 'Ne možeš mijenjati tuđi stream.',
-			);
-
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('igraci/'.$this->_user->accountid.'/stream/izmijeni');
+			throw HTTP_Exception::factory(404, 'Korisnik nije pronađen ili nema svoj stream.');
 		}
 	}
 

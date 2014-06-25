@@ -2203,12 +2203,13 @@ a.print{
 	background:url(../images/clock.png) no-repeat 0px 3px;
 }
 
+a.comment-reply,
+a.izmijeni,
 a.obrisi {
 	float:right;
 	position:absolute;
-	right:10px;
 	top:10px;
-	
+
 	color:#999999;
 	padding:1px 10px;
 	font-size:11px;
@@ -2216,28 +2217,21 @@ a.obrisi {
 	background:#2B2B2B;
 	border-radius:10px;
 	box-shadow:inset 0 1px 1px #3F3F3F;
+}
+a.obrisi {
+	right: 10px;
 }
 a.izmijeni {
-	float:right;
-	position:absolute;
-	right:70px;
-	top:10px;
-	
-	color:#999999;
-	padding:1px 10px;
-	font-size:11px;
-	text-transform:uppercase;
-	background:#2B2B2B;
-	border-radius:10px;
-	box-shadow:inset 0 1px 1px #3F3F3F;
+	right: 70px;
 }
-a.izmijeni:hover {
-	color:#FFF;
-	text-shadow: #FF0 0.1em 0.2em 0.5em;
+a.comment-reply {
+	right: 135px;
 }
+a.comment-reply:hover,
+a.izmijeni:hover,
 a.obrisi:hover {
 	color:#FFF;
-	text-shadow: #F00 0.1em 0.2em 0.5em;
+	text-shadow: #FF0 0.1em 0.2em 0.5em;
 }
 .desc a.reply{
 	float:right;

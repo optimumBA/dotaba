@@ -10,26 +10,34 @@ class Controller_Topics extends Controller_Application {
 
 	public function action_index()
 	{
-		$count = ORM::factory('Topic')->count_all();
+		$topics = ORM::factory('Topic');
 
-		$pagination = Pagination::factory(array(
-			'total_items' => $count,
-			'items_per_page' => 10,
-		));
-
-		$topics = ORM::factory('Topic')
-			->with('user')
-			->order_by('is_sticky', 'DESC')
-			->order_by('updated_at', 'DESC')
-			->limit($pagination->items_per_page)
-			->offset($pagination->offset);
-
-		if ( ! $this->_user->has_role('Administrator/ica'))
+		if ($this->_user->cannot('*', 'Topics'))
 		{
 			$topics->where('is_hidden', '=', FALSE);
 		}
 
-		$topics = $topics->find_all();
+		$count = $topics->count_all();
+
+		$pagination = Pagination::factory(array(
+			'total_items'    => $count,
+			'items_per_page' => 10,
+		));
+
+		$topics = ORM::factory('Topic')
+			->with('user');
+
+		if ($this->_user->cannot('*', 'Topics'))
+		{
+			$topics->where('is_hidden', '=', FALSE);
+		}
+
+		$topics = $topics
+			->order_by('is_sticky', 'DESC')
+			->order_by('updated_at', 'DESC')
+			->limit($pagination->items_per_page)
+			->offset($pagination->offset)
+			->find_all();
 
 		$last_posts = array();
 
@@ -56,7 +64,7 @@ class Controller_Topics extends Controller_Application {
 			->where('topic.id', '=', $this->request->param('id'))
 			->find();
 
-		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->has_role('Administrator/ica')))
+		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->can('*', $topic)))
 		{
 			$topic->values(array('views_count' => DB::expr('views_count + 1')))
 				->update();
@@ -88,14 +96,19 @@ class Controller_Topics extends Controller_Application {
 
 	public function action_napravi()
 	{
-		if ($this->_post)
+		if ($this->_user->cannot('create', 'Topics'))
+		{
+			$this->deny_access();
+		}
+
+		if ($this->request->method() === Request::POST)
 		{
 			try
 			{
 				$this->_post['user_id']    = $this->_user->id;
 				$this->_post['created_at'] = DB::expr('NOW()');
 
-				if (isset($this->_post['is_hidden']) AND $this->_user->has_role('Administrator/ica') == FALSE)
+				if (isset($this->_post['is_hidden']) AND $this->_user->cannot('*', 'Topics'))
 				{
 					unset($this->_post['is_hidden']);
 				}
@@ -118,9 +131,7 @@ class Controller_Topics extends Controller_Application {
 					'value' => 'Tema je napravljena.',
 				);
 
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
+				$this->redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -146,68 +157,47 @@ class Controller_Topics extends Controller_Application {
 			->where('topic.id', '=', $this->request->param('id'))
 			->find();
 
-		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->has_role('Administrator/ica')))
+		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->can('*', $topic)))
 		{
-			if ($this->_user->has_role('Administrator/ica') OR $topic->user_id == $this->_user->id AND $topic->is_locked == FALSE)
+			if ($this->_user->cannot('update', $topic))
 			{
-				if ($this->_post)
-				{
-					try
-					{
-						$this->_post['updated_at'] = DB::expr('NOW()');
-
-						$topic->values($this->_post, array('name', 'devclass', 'updated_at'))
-							->update();
-
-						$topic->main_post->values($this->_post, array('content', 'updated_at'))
-							->update();
-
-						$this->_messages[] = array(
-							'type'  => 'success',
-							'value' => 'Tema je izmijenjena.',
-						);
-
-						Session::instance()->set('messages', $this->_messages);
-
-						HTTP::redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
-					}
-					catch (ORM_Validation_Exception $e)
-					{
-						$this->_messages[] = array(
-							'type'  => 'error',
-							'value' => 'Nepravilan unos.',
-						);
-
-						$errors = $e->errors('models');
-					}
-				}
-
-				$this->_title   = 'Izmijeni temu - '.$topic->name;
-				$this->_content = View::factory('topics/izmijeni')
-					->set('values', (empty($this->_post)) ? array_merge($topic->main_post->as_array(), $topic->as_array()) : $this->_post)
-					->set('errors', (isset($errors)) ? $errors : array());
+				$this->deny_access();
 			}
-			else
+
+			if ($this->request->method() === Request::POST)
 			{
-				if ($topic->user_id != $this->_user->id)
+				try
+				{
+					$this->_post['updated_at'] = DB::expr('NOW()');
+
+					$topic->values($this->_post, array('name', 'devclass', 'updated_at'))
+						->update();
+
+					$topic->main_post->values($this->_post, array('content', 'updated_at'))
+						->update();
+
+					$this->_messages[] = array(
+						'type'  => 'success',
+						'value' => 'Tema je izmijenjena.',
+					);
+
+					$this->redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
+				}
+				catch (ORM_Validation_Exception $e)
 				{
 					$this->_messages[] = array(
 						'type'  => 'error',
-						'value' => 'Nisi autor/ica ove teme.',
+						'value' => 'Nepravilan unos.',
 					);
-				}
-				else
-				{
-					$this->_messages[] = array(
-						'type'  => 'error',
-						'value' => 'Tema je zaključana.',
-					);
-				}
 
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
+					$errors = $e->errors('models');
+				}
 			}
+
+			$this->_title   = 'Izmijeni temu - '.$topic->name;
+			$this->_content = View::factory('topics/izmijeni')
+				->set('values', (empty($this->_post)) ? array_merge($topic->main_post->as_array(), $topic->as_array()) : $this->_post)
+				->set('errors', (isset($errors)) ? $errors : array());
 		}
 		else
 		{
@@ -219,9 +209,14 @@ class Controller_Topics extends Controller_Application {
 	{
 		$topic = ORM::factory('Topic', $this->request->param('id'));
 
-		if ($topic->loaded())
+		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->can('*', $topic)))
 		{
-			if ($this->_user->has_role('Administrator/ica') AND $this->request->method() === Request::POST)
+			if ($this->_user->cannot('*', $topic))
+			{
+				$this->deny_access();
+			}
+
+			if ($this->request->method() === Request::POST)
 			{
 				$values = array(
 					'is_locked'  => ( ! $topic->is_locked),
@@ -236,9 +231,7 @@ class Controller_Topics extends Controller_Application {
 				);
 			}
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
+			$this->redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
 		}
 		else
 		{
@@ -250,9 +243,14 @@ class Controller_Topics extends Controller_Application {
 	{
 		$topic = ORM::factory('Topic', $this->request->param('id'));
 
-		if ($topic->loaded())
+		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->can('*', $topic)))
 		{
-			if ($this->_user->has_role('Administrator/ica') AND $this->request->method() === Request::POST)
+			if ($this->_user->cannot('*', $topic))
+			{
+				$this->deny_access();
+			}
+
+			if ($this->request->method() === Request::POST)
 			{
 				$values = array(
 					'is_sticky'  => ( ! $topic->is_sticky),
@@ -267,9 +265,7 @@ class Controller_Topics extends Controller_Application {
 				);
 			}
 
-			Session::instance()->set('messages', $this->_messages);
-
-			HTTP::redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
+			$this->redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
 		}
 		else
 		{
@@ -281,9 +277,14 @@ class Controller_Topics extends Controller_Application {
 	{
 		$topic = ORM::factory('Topic', $this->request->param('id'));
 
-		if ($topic->loaded())
+		if ($topic->loaded() AND ( ! $topic->is_hidden OR $this->_user->can('*', $topic)))
 		{
-			if ($this->_user->has_role('Administrator/ica') AND $this->request->method() === Request::POST)
+			if ($this->_user->cannot('delete', $topic))
+			{
+				$this->deny_access();
+			}
+
+			if ($this->request->method() === Request::POST)
 			{
 				$topic->delete();
 
@@ -292,23 +293,11 @@ class Controller_Topics extends Controller_Application {
 					'value' => 'Tema je obrisana.',
 				);
 
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('teme');
+				$this->redirect('teme');
 			}
 			else
 			{
-				if ($this->request->method() === Request::POST)
-				{
-					$this->_messages[] = array(
-						'type'  => 'error',
-						'value' => 'Nemaš ovlasti.',
-					);
-				}
-
-				Session::instance()->set('messages', $this->_messages);
-
-				HTTP::redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
+				$this->redirect('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE));
 			}
 		}
 		else

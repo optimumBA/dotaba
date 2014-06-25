@@ -74,7 +74,7 @@ class Controller_Pages extends Controller_Application {
 		}
 		else
 		{
-			HTTP::redirect();
+			$this->redirect();
 		}
 	}
 }

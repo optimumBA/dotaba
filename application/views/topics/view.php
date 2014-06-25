@@ -29,7 +29,7 @@
                             <h1 class="heading colr">Odgovori na temu "<?php echo $topic->name;?>"</h1>
                   
 
-	<?php if ( ! User::instance()->logged_in()): ?>
+	<?php if (User::instance()->cannot('create', 'Posts')): ?>
 		<div class="alert alert-error">Moraš biti prijavljen/a kako bi ostavio/la komentar. <a class="steamloginBttn-barTop  steamLoginText-wlcmsg embossed-link" href="/provjera#steamLogin">Prijavi se putem Steam-a</a></div>
 	<?php endif; ?>
               <?php if ($topic->is_locked): ?>
@@ -52,10 +52,10 @@
 										<p class="tm">Zadnja izmjena u <?php echo Date::formatted_time($post->updated_at); ?></p>
 										<?php endif ?>
                                         
-										<?php if ($post->id != $topic->main_post_id AND ($post->user_id == User::instance()->id OR User::instance()->has_role('Administrator/ica'))): ?>
+		<?php if ($post->id != $topic->main_post_id AND User::instance()->can('update', $post)): ?>
 			<?php echo HTML::anchor('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/postovi/'.$post->id.'/izmijeni', 'Izmijeni', array('class' => 'izmijeni')); ?>
 		<?php endif ?>
-                                        <?php if ($post->id != $topic->main_post_id AND User::instance()->has_role('Administrator/ica')): ?>
+                <?php if ($post->id != $topic->main_post_id AND User::instance()->can('delete', $post)): ?>
 			<?php echo HTML::anchor('#', 'Obriši', array('class' => 'form_submit obrisi', 'data-form' => 'obrisi')); ?>
 			<?php echo Form::open('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/postovi/'.$post->id.'/obrisi', array('class' => 'hidden obrisi')); ?>
 				<?php echo Form::hidden('csrf', Security::token()); ?>
@@ -98,15 +98,15 @@
                     	<h1 class="heading colr">Opcije</h1>
                         <div class="desc">
                         
-						<?php if ($topic->is_locked == FALSE OR User::instance()->has_role('Administrator/ica')): ?>
+						<?php if ($topic->is_locked == FALSE AND User::instance()->can('create', 'Posts') OR User::instance()->can('*', $topic)): ?>
                         <h4><?php echo HTML::anchor('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/postovi/napravi', 'Napravi post'); ?></h4>
                        	<?php endif ?>
                         
-                        <?php if (User::instance()->id == $topic->user_id AND $topic->is_locked == FALSE OR User::instance()->has_role('Administrator/ica')): ?>
+                        <?php if (User::instance()->can('update', $topic) AND $topic->is_locked == FALSE OR User::instance()->can('*', $topic)): ?>
 						<h4><?php echo HTML::anchor('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/izmijeni', 'Izmijeni'); ?></h4>
                     	<?php endif ?>
 
-					<?php if (User::instance()->has_role('Administrator/ica')): ?>
+					<?php if (User::instance()->can('*', $topic)): ?>
                         <h4>
 							<?php echo HTML::anchor('#', ($topic->is_locked) ? 'Otključaj' : 'Zaključaj', array('class' => 'form_submit', 'data-form' => 'lock')); ?>
                             <?php echo Form::open('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/lock', array('class' => 'hidden lock')); ?>
@@ -120,15 +120,18 @@
                             <?php echo Form::hidden('csrf', Security::token()); ?>
                         <?php echo Form::close(); ?>
                        </h4>
+          <?php endif ?>
                         
-                    
+
+           <?php if (User::instance()->can('delete', $topic)): ?>         
                        <h4>
 					   <?php echo HTML::anchor('#', 'Obriši', array('class' => 'form_submit', 'data-form' => 'obrisi')); ?>
                        <?php echo Form::open('teme/'.$topic->id.'-'.URL::title($topic->name, '-', TRUE).'/obrisi', array('class' => 'hidden obrisi')); ?>
                             <?php echo Form::hidden('csrf', Security::token()); ?>
                         <?php echo Form::close(); ?>
-                    	<?php endif ?>
                        </h4>
+
+          <?php endif ?>
                         
                        
                         </div>

@@ -63,16 +63,13 @@
                 
                 <td><h4><?php echo HTML::anchor('igraci/'.$user->accountid, $user->username, array('class' => 'white')); ?></h4></td>
 				<td>
-				<?php if (User::instance()->id == $clan->lord_id AND User::instance()->id != $user->id): ?>
+				<?php if (User::instance()->can('*', $clan) AND User::instance()->id != $user->id): ?>
 				
                 <?php echo HTML::anchor('#', 'Izbaci', array('class' => 'form_submit buttonone', 'data-form' => 'izbaci')); ?>
 				
 				<?php echo Form::open('liga/klanovi/'.$clan->id.'-'.URL::title($clan->name, '-', TRUE).'/igraci/'.$user->id.'/izbaci', array('class' => 'hidden izbaci')); ?>
 						<?php echo Form::hidden('csrf', Security::token()); ?>
 						<?php echo Form::close(); ?>
-				
-                <?php elseif(User::instance()->id == $clan->lord_id):?>
-                <div class="alert alert-info">Vi ste Lord klana.</div>
                 <?php endif ?>
                 </td>
 			</tr>
@@ -144,7 +141,7 @@
                     
                     
                     
-                    <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $clan->id, 'object_type' => 'Clan')); ?>
+                    <?php echo Request::factory('komentari/Clan/'.$clan->id)->execute(); ?>
                     
                     
                     
@@ -155,7 +152,7 @@
                 <!-- Column One Start -->
                 <div class="col1 hidemobile">
                     <!-- Featured Hero Start -->
-                   <?php if(User::instance()->id == $clan->lord_id):?>
+                   <?php if(User::instance()->can('*', $clan)):?>
                     <div class="widget opcije">
                         
                        <h1 class="heading colr">Opcije</h1>

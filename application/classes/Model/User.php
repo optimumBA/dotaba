@@ -23,10 +23,6 @@ class Model_User extends ORM {
 			'far_key' => 'friend_id',
 			'through' => 'friendships',
 		),
-		'giveaways' => array(
-			'model'       => 'Request',
-			'foreign_key' => 'giver_id',
-		),
 		'matches' => array(
 			'through' => 'slots',
 		),
@@ -43,7 +39,19 @@ class Model_User extends ORM {
 
 	protected $_has_one = array(
 		'stream'  => array(),
-		'request' => array(),
 	);
+
+	public function with_last_match()
+	{
+		$sub = DB::select(DB::expr('MAX(dotaba_matches.date) as date_min'), 'slots.user_id')
+			->from('slots')
+			->join('matches', 'LEFT')
+			->on('matches.id', '=', 'slots.match_id')
+			->group_by('slots.user_id');
+
+		return $this->join(array($sub, 's'), 'LEFT')
+			->on('s.user_id', '=', 'id')
+			->select('date_min');
+	}
 
 }

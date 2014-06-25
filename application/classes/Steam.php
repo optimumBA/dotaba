@@ -42,43 +42,51 @@ class Steam {
 		return (isset($response->friendslist) AND isset($response->friendslist->friends)) ? $response->friendslist->friends : array();
 	}
 
-	public static function match_history($account_id, $date_min = NULL, $start_at_match_id = NULL, $matches_requested = 25)
+	public static function match_history($account_id, $date_min = NULL)
 	{
-		$matches = array();
+		$matches       = array();
+		$last_response = '';
 
-		do {
-			$response = Request::factory('http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/');
-
-			$response->client()->options(CURLOPT_ENCODING, 'gzip');
-
-			$response = $response->query(array(
-				'key'               => self::api_key(),
-				'account_id'        => $account_id,
-				'date_min'          => $date_min,
-				'start_at_match_id' => $start_at_match_id,
-				'matches_requested' => $matches_requested,
-			))
-				->execute()
-				->body();
-
-			$response = json_decode($response);
-
-			if (isset($response->result->matches))
+		do
+		{
+			do
 			{
-				$matches = array_merge($matches, $response->result->matches);
+				$response = Request::factory('http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/');
 
-				if ($response->result->results_remaining > 0)
+				$response->client()->options(CURLOPT_ENCODING, 'gzip');
+
+				$response = $response->query(array(
+					'key'               => self::api_key(),
+					'account_id'        => $account_id,
+					'date_min'          => $date_min,
+					'start_at_match_id' => (isset($start_at_match_id)) ? $start_at_match_id : NULL,
+					'date_max'          => (isset($date_max)) ? $date_max : NULL,
+				))
+					->execute()
+					->body();
+
+				if ($response == $last_response)
+					break;
+
+				$last_response = $response;
+
+				$response = json_decode($response);
+
+				if (isset($response->result->matches))
 				{
-					$start_at_match_id = end($response->result->matches)->match_id;
-					sleep(1);
+					$matches = array_merge($matches, $response->result->matches);
+
+					if ($response->result->results_remaining > 0)
+					{
+						$last_match        = end($response->result->matches);
+						$start_at_match_id = $last_match->match_id;
+						$date_max          = $last_match->start_time;
+
+						sleep(1);
+					}
 				}
-			}
-			else
-			{
-				$matches = array();
-				break;
-			}
-		} while ($response->result->results_remaining > 0);
+			} while ($response->result->results_remaining > 0);
+		} while ($response->result->total_results == 500);
 
 		return $matches;
 	}

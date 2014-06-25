@@ -100,7 +100,7 @@
                         </div>
                         <!-- Album List End -->
                         <!-- Comments Start -->
-                      <?php echo View::factory('comments', array('comments' => $comments, 'object_id' => $user->id, 'object_type' => 'User')); ?>
+                      <?php echo Request::factory('komentari/User/'.$user->id)->execute(); ?>
                         <div class="clear"></div>
                         <!-- Comments End -->
                        
@@ -116,7 +116,7 @@
                         <span>Omiljeni heroj: <?php echo $user->featured_hero->localized_name;?></span>
                     </div>
                     <?php endif;?>
-                    <?php if ($user->id == User::instance()->id): ?>
+                    <?php if (User::instance()->can('update', $user)): ?>
                         <?php echo Form::open('igraci/'.$user->accountid.'/izmijeni'); ?>
                             <?php echo Form::label('featured_hero_id', 'Omiljeni heroj:'); ?>
                             <?php echo Form::select('featured_hero_id', $heroes, $user->featured_hero_id); ?>
